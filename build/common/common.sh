@@ -28,9 +28,10 @@ Compte=$(date +%Y年%m月%d号%H时%M分)
 Diy_lede() {
 find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-argon' | xargs -i rm -rf {}
 
-git clone -b openwrt-19.07 --single-branch https://github.com/waynesg/OpenWrt-Software package/waynesg
-rm -rf package/waynesg/luci-app-pptp-server
-rm -rf package/waynesg/luci-lib-docker
+git clone https://github.com/gd0772/package package/gd772
+rm -rf package/gd772/luci-app-pptp-server
+rm -rf package/gd772/luci-lib-docker
+curl -fsSL https://raw.githubusercontent.com/gd0772/patch/main/gd772.sh | sh
 
 if [[ "${Modelfile}" == "Lede_source" ]]; then
 	sed -i '/IMAGES_GZIP/d' "${PATH1}/${CONFIG_FILE}" > /dev/null 2>&1
@@ -48,7 +49,7 @@ if [[ "${Modelfile}" == "openwrt_amlogic" ]]; then
 	"
 	sed -i '/FEATURES+=/ { s/cpiogz //; s/ext4 //; s/ramdisk //; s/squashfs //; }' \
     		target/linux/armvirt/Makefile
-	for x in $packages; do
+	for x in $pack ages; do
     		sed -i "/DEFAULT_PACKAGES/ s/$/ $x/" target/linux/armvirt/Makefile
 	done
 
@@ -64,11 +65,9 @@ fi
 # LIENOL源码通用diy.sh文件
 ################################################################################################################
 Diy_lienol() {
-find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-argon' -o -name 'luci-app-fileassistant' | xargs -i rm -rf {}
 rm -rf feeds/packages/libs/libcap
 
-git clone https://github.com/fw876/helloworld package/luci-app-ssr-plus
-git clone https://github.com/xiaorouji/openwrt-passwall package/luci-app-passwall
+git clone -b openwrt-19.07 --single-branch https://github.com/waynesg/OpenWrt-Software package/waynesg
 
 }
 
