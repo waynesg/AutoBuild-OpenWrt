@@ -28,10 +28,7 @@ Compte=$(date +%Y年%m月%d号%H时%M分)
 Diy_lede() {
 find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-argon' | xargs -i rm -rf {}
 
-git clone https://github.com/gd0772/package package/gd772
-rm -rf package/gd772/luci-app-pptp-server
-rm -rf package/gd772/luci-lib-docker
-curl -fsSL https://raw.githubusercontent.com/gd0772/patch/main/gd772.sh | sh
+git clone https://github.com/waynesg/OpenWrt-Software package/waynesg
 
 if [[ "${Modelfile}" == "Lede_source" ]]; then
 	sed -i '/IMAGES_GZIP/d' "${PATH1}/${CONFIG_FILE}" > /dev/null 2>&1
