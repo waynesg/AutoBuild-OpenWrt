@@ -14,16 +14,16 @@ sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date
 # K3专用，编译K3的时候只会出K3固件
 #sed -i 's|^TARGET_|# TARGET_|g; s|# TARGET_DEVICES += phicomm-k3|TARGET_DEVICES += phicomm-k3|' target/linux/bcm53xx/image/Makefile
 # 修改插件名字
-sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
-sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' `grep "Turbo ACC 网络加速" -rl ./`
-sed -i 's/"实时流量监测"/"流量"/g' `grep "实时流量监测" -rl ./`
-sed -i 's/"KMS 服务器"/"KMS激活"/g' `grep "KMS 服务器" -rl ./`
-sed -i 's/"TTYD 终端"/"终端"/g' `grep "TTYD 终端" -rl ./`
-sed -i 's/"USB 打印服务器"/"打印服务"/g' `grep "USB 打印服务器" -rl ./`
-sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
-sed -i 's/"阿里云盘 WebDAV"/"阿里云盘"/g' `grep "阿里云盘 WebDAV" -rl ./`
-sed -i 's/"京东签到服务"/"京东签到"/g' `grep "京东签到服务" -rl ./`
-sed -i 's/"DDNS.to内网穿透"/"DDNSTO"/g' `grep "DDNS.to内网穿透" -rl ./`
-sed -i 's/"解锁网易云灰色歌曲"/"网易云音乐"/g' `grep "解锁网易云灰色歌曲" -rl ./`
-sed -i 's/"天翼家庭云/天翼云盘提速"/"天翼云盘"/g' `grep "天翼家庭云/天翼云盘提速" -rl ./`
-sed -i 's/"Argon 主题设置"/"Argon设置"/g' `grep "Argon 主题设置" -rl ./`
+#sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
+#sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' `grep "Turbo ACC 网络加速" -rl ./`
+#sed -i 's/"实时流量监测"/"流量"/g' `grep "实时流量监测" -rl ./`
+#sed -i 's/"KMS 服务器"/"KMS激活"/g' `grep "KMS 服务器" -rl ./`
+#sed -i 's/"TTYD 终端"/"终端"/g' `grep "TTYD 终端" -rl ./`
+#sed -i 's/"USB 打印服务器"/"打印服务"/g' `grep "USB 打印服务器" -rl ./`
+#sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
+#sed -i 's/"阿里云盘 WebDAV"/"阿里云盘"/g' `grep "阿里云盘 WebDAV" -rl ./`
+#sed -i 's/"京东签到服务"/"京东签到"/g' `grep "京东签到服务" -rl ./`
+#sed -i 's/"DDNS.to内网穿透"/"DDNSTO"/g' `grep "DDNS.to内网穿透" -rl ./`
+#sed -i 's/"解锁网易云灰色歌曲"/"网易云音乐"/g' `grep "解锁网易云灰色歌曲" -rl ./`
+#sed -i 's/"天翼家庭云/天翼云盘提速"/"天翼云盘"/g' `grep "天翼家庭云/天翼云盘提速" -rl ./`
+#sed -i 's/"Argon 主题设置"/"Argon设置"/g' `grep "Argon 主题设置" -rl ./`
