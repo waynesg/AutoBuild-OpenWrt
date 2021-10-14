@@ -18,12 +18,17 @@ sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
 sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' `grep "Turbo ACC 网络加速" -rl ./`
 sed -i 's/"实时流量监测"/"流量"/g' `grep "实时流量监测" -rl ./`
 sed -i 's/"KMS 服务器"/"KMS激活"/g' `grep "KMS 服务器" -rl ./`
-sed -i 's/"TTYD 终端"/"终端"/g' `grep "TTYD 终端" -rl ./`
+sed -i 's/"TTYD 终端"/"系统终端"/g' `grep "TTYD 终端" -rl ./`
 sed -i 's/"USB 打印服务器"/"打印服务"/g' `grep "USB 打印服务器" -rl ./`
 sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
 sed -i 's/"阿里云盘 WebDAV"/"阿里云盘"/g' `grep "阿里云盘 WebDAV" -rl ./`
 sed -i 's/"京东签到服务"/"京东签到"/g' `grep "京东签到服务" -rl ./`
 sed -i 's/"DDNS.to内网穿透"/"DDNSTO"/g' `grep "DDNS.to内网穿透" -rl ./`
-sed -i 's/"解锁网易云灰色歌曲"/"网易云音乐"/g' `grep "解锁网易云灰色歌曲" -rl ./`
-sed -i 's/"天翼家庭云/天翼云盘提速"/"天翼云盘"/g' `grep "天翼家庭云/天翼云盘提速" -rl ./`
-sed -i 's/"Argon 主题设置"/"Argon设置"/g' `grep "Argon 主题设置" -rl ./`
+sed -i 's/"解锁网易云灰色歌曲"/"网易音乐"/g' `grep "解锁网易云灰色歌曲" -rl ./`
+sed -i 's/"天翼家庭云/云盘提速"/"天翼云盘"/g' `grep "天翼家庭云/天翼云盘提速" -rl ./`
+sed -i 's/"Argon 主题设置"/"主题设置"/g' `grep "Argon 主题设置" -rl ./`
+sed -i 's/"重启"/"重启路由"/g' `grep "重启" -rl ./`
+sed -i 's/"Web 管理"/"页面管理"/g' `grep "Web 管理" -rl ./`
+sed -i 's/"ShadowSocksR Plus+"/"SSR Plus+"/g' `grep "ShadowSocksR Plus+" -rl ./`
+sed -i 's/"UU游戏加速器"/"游戏加速"/g' `grep "UU游戏加速器" -rl ./`
+sed -i 's/"Frp 内网穿透"/"内网穿透"/g' `grep "Frp 内网穿透" -rl ./`
