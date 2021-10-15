@@ -14,21 +14,35 @@ sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date
 # K3专用，编译K3的时候只会出K3固件
 #sed -i 's|^TARGET_|# TARGET_|g; s|# TARGET_DEVICES += phicomm-k3|TARGET_DEVICES += phicomm-k3|' target/linux/bcm53xx/image/Makefile
 # 修改插件名字
+#system menu
+sed -i 's/"Web 管理"/"页面管理"/g' `grep "Web 管理" -rl ./`
+sed -i 's/"管理权"/"权限管理"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
+sed -i 's/"重启"/"立即重启"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
+sed -i 's/"系统"/"系统设置"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
+sed -i 's/"挂载点"/"挂载路径"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
+sed -i 's/"启动项"/"启动管理"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
+sed -i 's/"软件包"/"软件管理"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
+sed -i 's/"TTYD 终端"/"命令终端"/g' package/lean/luci-app-ttyd/po/zh-cn/terminal.po
+sed -i 's/"Argon 主题设置"/"主题设置"/g' `grep "Argon 主题设置" -rl ./`
+
+#others
 sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
-sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' `grep "Turbo ACC 网络加速" -rl ./`
+sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' package/lean/luci-app-flowoffload/po/zh-cn/flowoffload.po
+sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' package/lean/luci-app-sfe/po/zh-cn/sfe.po
 sed -i 's/"实时流量监测"/"流量"/g' `grep "实时流量监测" -rl ./`
-sed -i 's/"KMS 服务器"/"KMS激活"/g' `grep "KMS 服务器" -rl ./`
-sed -i 's/"TTYD 终端"/"系统终端"/g' `grep "TTYD 终端" -rl ./`
 sed -i 's/"USB 打印服务器"/"打印服务"/g' `grep "USB 打印服务器" -rl ./`
 sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
+
+#services menu
 sed -i 's/"阿里云盘 WebDAV"/"阿里云盘"/g' `grep "阿里云盘 WebDAV" -rl ./`
-sed -i 's/"京东签到服务"/"京东签到"/g' `grep "京东签到服务" -rl ./`
-sed -i 's/"DDNS.to内网穿透"/"DDNSTO"/g' `grep "DDNS.to内网穿透" -rl ./`
-sed -i 's/"解锁网易云灰色歌曲"/"网易音乐"/g' `grep "解锁网易云灰色歌曲" -rl ./`
-sed -i 's/"天翼家庭云/云盘提速"/"天翼云盘"/g' `grep "天翼家庭云/天翼云盘提速" -rl ./`
-sed -i 's/"Argon 主题设置"/"主题设置"/g' `grep "Argon 主题设置" -rl ./`
-sed -i 's/"重启"/"重启路由"/g' `grep "重启" -rl ./`
-sed -i 's/"Web 管理"/"页面管理"/g' `grep "Web 管理" -rl ./`
-sed -i 's/"ShadowSocksR Plus+"/"SSR Plus+"/g' `grep "ShadowSocksR Plus+" -rl ./`
-sed -i 's/"UU游戏加速器"/"游戏加速"/g' `grep "UU游戏加速器" -rl ./`
-sed -i 's/"Frp 内网穿透"/"内网穿透"/g' `grep "Frp 内网穿透" -rl ./`
+sed -i 's/京东签到服务/京东签到/g' package/waynesg/luci-app-jd-dailybonus/luasrc/controller/jd-dailybonus.lua
+sed -i 's/"DDNS.to内网穿透"/"DDNSTO服务"/g' `grep "DDNS.to内网穿透" -rl ./`
+sed -i 's/"解锁网易云灰色歌曲"/"网易音乐"/g' package/lean/luci-app-unblockmusic/po/zh-cn/unblockmusic.po
+sed -i 's/"天翼家庭云/云盘提速"/"天翼云盘"/g' package/lean/luci-app-familycloud/luasrc/controller/familycloud.lua
+sed -i 's/"KMS 服务器"/"KMS激活"/g' `grep "KMS 服务器" -rl ./`
+sed -i 's/"UU游戏加速器"/"UU加速器"/g' `grep "UU游戏加速器" -rl ./`
+sed -i 's/"Frp 内网穿透"/"Frp 客户端"/g' `grep "Frp 内网穿透" -rl ./`
+sed -i 's/UU游戏加速器/UU加速器/g' package/lean/luci-app-uugamebooster/po/zh-cn/uuplugin.po
+sed -i 's/ShadowSocksR Plus+/SSR Plus+/g' package/waynesg/ssrplus/luci-app-ssr-plus/luasrc/controller/shadowsocksr.lua
+sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh-cn/upnp.po
+sed -i 's/"Adblock Plus+"/"广告过滤"/g' `grep "Adblock Plus+" -rl ./`
