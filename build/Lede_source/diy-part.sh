@@ -34,7 +34,7 @@ sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
 
 #services menu
 sed -i 's/"阿里云盘 WebDAV"/"阿里云盘"/g' `grep "阿里云盘 WebDAV" -rl ./`
-sed -i 's/"京东签到服务"/"京东签到"/g' package/lean/luci-app-jd-dailybonus/luasrc/controller/jd-dailybonus.lua
+sed -i 's/京东签到服务/京东签到/g' package/lean/luci-app-jd-dailybonus/luasrc/controller/jd-dailybonus.lua
 sed -i 's/"DDNS.to内网穿透"/"DDNSTO"/g' `grep "DDNS.to内网穿透" -rl ./`
 sed -i 's/"解锁网易云灰色歌曲"/"网易音乐"/g' package/lean/luci-app-unblockmusic/po/zh-cn/unblockmusic.po
 sed -i 's/天翼家庭云\/云盘提速/天翼云盘/g' package/lean/luci-app-familycloud/luasrc/controller/familycloud.lua
