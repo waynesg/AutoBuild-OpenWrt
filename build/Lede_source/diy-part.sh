@@ -46,4 +46,4 @@ sed -i 's/ShadowSocksR Plus+/SSR Plus+/g' package/waynesg/luci-app-ssr-plus/luci
 sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh-cn/upnp.po
 sed -i 's/"Adblock Plus+"/"广告过滤"/g' `grep "Adblock Plus+" -rl ./`
 sed -i 's/"Rclone"/"Rclone挂载"/g' package/lean/luci-app-rclone/luasrc/controller/rclone.lua
-sed -i 's/"WebGuide"/"网页导航"/g' package/lean/luci-app-webguide/luasrc/controller/webguide.lua
+sed -i 's/"WebGuide"/"网页导航"/g' package/waynesg/luci-app-webguide/luasrc/controller/webguide.lua
