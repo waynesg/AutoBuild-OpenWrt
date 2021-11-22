@@ -48,3 +48,15 @@ sed -i 's/"Adblock Plus+"/"广告过滤"/g' `grep "Adblock Plus+" -rl ./`
 sed -i 's/"Rclone"/"Rclone挂载"/g' package/lean/luci-app-rclone/luasrc/controller/rclone.lua
 sed -i 's/"WebGuide"/"网页导航"/g' package/waynesg/luci-app-webguide/luasrc/controller/webguide.lua
 sed -i 's/"Go 阿里云盘 WebDAV"/"阿里云盘"/g' `grep "Go 阿里云盘 WebDAV" -rl ./`
+
+
+cat >${GITHUB_WORKSPACE}/Clear <<-EOF
+rm -rf config.buildinfo
+rm -rf feeds.buildinfo
+rm -rf openwrt-x86-64-generic-kernel.bin
+rm -rf openwrt-x86-64-generic.manifest
+rm -rf openwrt-x86-64-generic-squashfs-combined-efi.img.gz
+rm -rf openwrt-x86-64-generic-squashfs-rootfs.img.gz
+rm -rf sha256sums
+rm -rf version.buildinfo
+EOF
