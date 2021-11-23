@@ -13,6 +13,14 @@ on:
         description: 'ssh-action'
         required: false
         default: 'ssh-actions'
+      days:
+        description: '清理Actions操作记录'
+        required: true
+        default: '10'
+      rele:
+        description: '保留Releases不删除'
+        required: true
+        default: '3'
 
 #定时触发开始编译(把下面两个#去掉开启,时间设置请看定时编译说明)
   schedule:
@@ -67,6 +75,23 @@ jobs:
         echo "BY_INFORMATION=${BY_INFORMATION}" >> $GITHUB_ENV
         echo "CangKu=${Apidz##*/}" >> $GITHUB_ENV
         echo "Modelfile=${{matrix.target}}" >> $GITHUB_ENV
+        
+    - name: 清理Actions
+      uses: GitRML/delete-workflow-runs@main
+      continue-on-error: true
+      with:
+        retain_days: ${{ github.event.inputs.days }}
+        keep_minimum_runs: 1
+
+    - name: 清理Releases
+      uses: dev-drprasad/delete-older-releases@master
+      continue-on-error: true
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      with:
+        keep_latest: ${{ github.event.inputs.rele }}
+        delete_tags: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
 
     - name: 整理脚本
       run: |
