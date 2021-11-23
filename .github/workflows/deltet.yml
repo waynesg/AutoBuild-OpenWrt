@@ -30,7 +30,7 @@ jobs:
           keep_minimum_runs: 0
           retain_days: ${{ github.event.inputs.days }}
     
-    - name: 删除releases
+      - name: 删除releases
       if: env.REPO_TOKEN
       uses: dev-drprasad/delete-older-releases@master
       with:
