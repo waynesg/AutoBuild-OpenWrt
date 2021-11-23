@@ -267,8 +267,7 @@ fi
 ################################################################################################################
 # 编译信息
 ################################################################################################################
-Diy_xinxi_Base() {
-GET_TARGET_INFO
+Diy_xinxi() {
 if [[ "${TARGET_PROFILE}" =~ (friendlyarm_nanopi-r2s|friendlyarm_nanopi-r4s|armvirt) ]]; then
 	REGULAR_UPDATE="false"
 fi
@@ -277,7 +276,7 @@ TIME b "编译源码: ${CODE}"
 TIME b "源码链接: ${REPO_URL}"
 TIME b "源码分支: ${REPO_BRANCH}"
 TIME b "源码作者: ${ZUOZHE}"
-TIME b "默认内核: ${PATCHVER}"
+TIME b "内核版本: ${PATCHVER}"
 TIME b "Luci版本: ${OpenWrt_name}"
 [[ "${Modelfile}" == "openwrt_amlogic" ]] && {
 	TIME b "编译机型: ${TARGET_model}"
@@ -290,25 +289,26 @@ TIME b "仓库地址: ${Github}"
 TIME b "启动编号: #${Run_number}（${CangKu}仓库第${Run_number}次启动[${Run_workflow}]工作流程）"
 TIME b "编译时间: ${Compte}"
 [[ "${Modelfile}" == "openwrt_amlogic" ]] && {
-	TIME g "提示：您当前使用【${Modelfile}】文件夹编译【${TARGET_model}】固件"
+	TIME g "友情提示：您当前使用【${Modelfile}】文件夹编译【${TARGET_model}】固件"
 } || {
-	TIME g "提示：您当前使用【${Modelfile}】文件夹编译【${TARGET_PROFILE}】固件"
+	TIME g "友情提示：您当前使用【${Modelfile}】文件夹编译【${TARGET_PROFILE}】固件"
 }
 echo
+echo
 if [[ ${UPLOAD_FIRMWARE} == "true" ]]; then
-	TIME y "上传固件: 开启"
+	TIME y "上传固件在github actions: 开启"
 else
-	TIME r "上传固件: 关闭"
+	TIME r "上传固件在github actions: 关闭"
 fi
 if [[ ${UPLOAD_CONFIG} == "true" ]]; then
-	TIME y "上传配置文件: 开启"
+	TIME y "上传[.config]配置文件: 开启"
 else
-	TIME r "上传配置文件: 关闭"
+	TIME r "上传[.config]配置文件: 关闭"
 fi
 if [[ ${UPLOAD_BIN_DIR} == "true" ]]; then
-	TIME y "上传BIN文件: 开启"
+	TIME y "上传BIN文件夹(固件+IPK): 开启"
 else
-	TIME r "上传BIN文件: 关闭"
+	TIME r "上传BIN文件夹(固件+IPK): 关闭"
 fi
 if [[ ${UPLOAD_COWTRANSFER} == "true" ]]; then
 	TIME y "上传固件至【奶牛快传】和【WETRANSFER】: 开启"
@@ -325,25 +325,17 @@ if [[ ${SERVERCHAN_SCKEY} == "true" ]]; then
 else
 	TIME r "微信/电报通知: 关闭"
 fi
-if [[ ${SSH_ACTIONS} == "true" ]]; then
-	TIME y "SSH远程连接: 开启"
-else
-	TIME r "SSH远程连接: 关闭"
-fi
 if [[ ${BY_INFORMATION} == "true" ]]; then
 	TIME y "编译信息显示: 开启"
 fi
-if [[ ${SSHYC} == "true" ]]; then
-	TIME y "SSH远程连接临时开关: 开启"
-fi
 if [[ ${REGULAR_UPDATE} == "true" ]]; then
-	TIME y "在线更新 固件: 开启"
+	TIME y "把定时自动更新插件编译进固件: 开启"
 else
-	TIME r "在线更新 固件: 关闭"
+	TIME r "把定时自动更新插件编译进固件: 关闭"
 fi
 if [[ ${REGULAR_UPDATE} == "true" ]]; then
 	echo
-	TIME l "在线更新 固件信息"
+	TIME l "定时自动更新信息"
 	TIME z "插件版本: ${AutoUpdate_Version}"
 	if [[ ${TARGET_PROFILE} == "x86-64" ]]; then
 		TIME b "传统固件: ${Legacy_Firmware}"
@@ -355,24 +347,19 @@ if [[ ${REGULAR_UPDATE} == "true" ]]; then
 	fi
 	TIME b "固件版本: ${Openwrt_Version}"
 	TIME b "云端路径: ${Github_UP_RELEASE}"
+	TIME g "《编译成功后，会自动把固件发布到指定地址，然后才会生成云端路径》"
+	TIME g "《普通的那个发布固件跟云端的发布路径是两码事，如果你不需要普通发布的可以不用打开发布功能》"
 	echo
 else
 	echo
 fi
 echo
-TIME z " 系统空间      类型   容量  已用  可用 使用率"
+TIME z " 系统空间      类型   总数  已用  可用 使用率"
 cd ../ && df -hT $PWD && cd openwrt
 echo
-TIME z "  本编译 服务器的 CPU型号为 [ ${CPUNAME} ]"
 echo
-TIME z "  使用 核心数 为 [ ${CPUCORES} ], 线程数为 [ $(nproc) ]"
-echo
-TIME z "  随机分配到 E5系列CPU 编译是 最慢的, 8171M 的CPU 快很多，8272CL 的又比 8171M 快些！"
-echo
-TIME z "  如果编译的插件较多，而又分配到 E5系列 的 CPU，建议关闭 重新再来！"
-echo
-TIME z "  下面将使用 [ $(nproc) 线程 ] 编译固件"
 if [ -n "$(ls -A "${Home}/EXT4" 2>/dev/null)" ]; then
+	echo
 	echo
 	chmod -R +x ${Home}/EXT4
 	source ${Home}/EXT4
@@ -380,12 +367,14 @@ if [ -n "$(ls -A "${Home}/EXT4" 2>/dev/null)" ]; then
 fi
 if [ -n "$(ls -A "${Home}/Chajianlibiao" 2>/dev/null)" ]; then
 	echo
+	echo
 	chmod -R +x ${Home}/CHONGTU
 	source ${Home}/CHONGTU
 	rm -rf {CHONGTU,Chajianlibiao}
+	echo
+	echo
 fi
 if [ -n "$(ls -A "${Home}/Plug-in" 2>/dev/null)" ]; then
-	echo
 	TIME r "	      已选插件列表"
 	chmod -R +x ${Home}/Plug-in
 	source ${Home}/Plug-in
