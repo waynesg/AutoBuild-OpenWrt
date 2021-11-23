@@ -22,7 +22,7 @@ jobs:
     steps:
     
       - name: 清理Actions空间
-        if: env.REPO_TOKEN
+        if: env.OLDER_WORKFLOW == 'true' || (github.event.inputs.delete-older-workflow == 'true')
         uses: Mattraks/delete-workflow-runs@main
         with:
             token: ${{ secrets.REPO_TOKEN }}
@@ -31,7 +31,7 @@ jobs:
             retain_days: ${{ github.event.inputs.days }}
     
       - name: 删除releases
-        if: env.REPO_TOKEN
+        if: env.OLDER_RELEASES == 'true' || (github.event.inputs.delete-older-releases == 'true')
         uses: dev-drprasad/delete-older-releases@master
         with:
           repo: ${{ github.repository }}
