@@ -1,22 +1,26 @@
-使用 AutoUpdate 一键更新固件脚本
-首先需要打开TTYD 终端或者使用SSH,按需输入下方指令:
+使用一键更新固件脚本
+首先需要打开TTYD 终端或者使用SSH, 按需输入下方指令:
 
-更新固件: autoupdate或bash /bin/AutoUpdate.sh
+常规更新固件: autoupdate或完整指令bash /bin/AutoUpdate.sh
 
-更新固件(镜像加速 Ghproxy | FastGit): autoupdate -P <G | F>
+使用镜像加速更新固件: autoupdate -P
 
 更新固件(不保留配置): autoupdate -n
 
 强制刷入固件: autoupdate -F
 
-"我不管,我就是要更新!": autoupdate -f
+"我不管, 我就是要更新!": autoupdate -f
+
+更新脚本: autoupdate -x
+
+列出相关信息: autoupdate --list
 
 查看所有可用参数: autoupdate --help
 
-注意: 部分参数可一起使用,例如: autoupdate -n -P G -F --skip --path /mnt/sda1
+**注意: **部分参数可一起使用, 例如 autoupdate -n -P -F --path /mnt/sda1
 
 使用 tools 固件工具箱
-打开TTYD 终端或者使用SSH,执行指令tools或bash /bin/AutoBuild_Tools.sh即可启动固件工具箱
+打开TTYD 终端或者使用SSH, 执行指令tools或bash /bin/AutoBuild_Tools.sh即可启动固件工具箱
 
 当前支持以下功能:
 
