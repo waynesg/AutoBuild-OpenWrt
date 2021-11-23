@@ -186,25 +186,6 @@ jobs:
           source "${PATH1}/common.sh" && Diy_xinxi
           chmod -R 755 .
         fi
-    
-    - name: 清理空间
-      if: env.REPO_TOKEN
-      uses: Mattraks/delete-workflow-runs@main
-      with:
-          token: ${{ secrets.REPO_TOKEN }}
-          repository: ${{ github.repository }}
-          keep_minimum_runs: 0
-          retain_days: ${{ github.event.inputs.days }}
-    
-    - name: 清理固件
-      if: env.REPO_TOKEN
-      uses: dev-drprasad/delete-older-releases@master
-      with:
-        repo: ${{ github.repository }}
-        keep_latest: ${{ github.event.inputs.rele }}
-        delete_tags: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
 
     - name: 下载dl库
       id: package
