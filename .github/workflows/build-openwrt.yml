@@ -10,15 +10,15 @@ on:
   workflow_dispatch:
     inputs:
       ssh:
-        description: '[ssh-actions]改成[ssh],再按[Run workflow]按钮启动,则开启SSH连接配置固件'
+        description: 'ssh-action'
         required: false
         default: 'ssh-actions'
       days:
-        description: '清理[X]天之前的Actions空间操作记录(可改)'
+        description: 'delete actions'
         required: true
         default: '7'
       rele:
-        description: '保留[X]个Releases不被删除(可改)'
+        description: 'delete releases'
         required: true
         default: '3'
 
@@ -32,6 +32,11 @@ env:
   Apidz: ${{github.repository}}
   Run_number: ${{github.run_number}}
   Run_workflow: ${{github.workflow}}
+  REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+  SCKEY: ${{ secrets.SCKEY }}
+  PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
   TZ: Asia/Shanghai
 
 jobs:
@@ -74,6 +79,8 @@ jobs:
     - name: 整理脚本
       run: |
         chmod -R +x "${GITHUB_WORKSPACE}/build/common"
+        echo "NETIP=package/base-files/files/etc/networkip" >> $GITHUB_ENV
+        echo "DELETE=package/base-files/files/etc/deletefile" >> $GITHUB_ENV
         if [[ "${REPO_BRANCH}" == "master" ]]; then
           echo "ZZZ=package/lean/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
           echo "CODE=Lede" >> $GITHUB_ENV
@@ -87,7 +94,6 @@ jobs:
           echo "CODE=Mortal" >> $GITHUB_ENV
           echo "OpenWrt_name=21.02" >> $GITHUB_ENV
         fi
-        echo "NETIP=package/base-files/files/etc/networkip" >> $GITHUB_ENV
 
     - name: 部署环境
       env:
@@ -136,6 +142,13 @@ jobs:
         if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           source "${PATH1}/upgrade.sh" && Diy_Part1
         fi
+    
+    - name: 缓存加速
+      if: env.USE_CACHEWRTBUILD == 'true'
+      uses: klever1988/cachewrtbuild@test
+      with:
+        ccache: 'true'
+        prefix: ${{ github.workspace }}/openwrt
 
     - name: SSH连接
       uses: danshui-git/debugger-action@master
@@ -143,13 +156,6 @@ jobs:
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        
-    - name: 缓存加速
-      if: env.USE_CACHEWRTBUILD == 'true'
-      uses: klever1988/cachewrtbuild@test
-      with:
-        ccache: 'true'
-        prefix: ${{ github.workspace }}/openwrt
 
     - name: 生成配置
       run: |
@@ -181,42 +187,42 @@ jobs:
           chmod -R 755 .
         fi
     
-    - name: 清理Actions空间
+    - name: 清理空间
       if: env.REPO_TOKEN
       uses: Mattraks/delete-workflow-runs@main
-      env:
-        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
       with:
           token: ${{ secrets.REPO_TOKEN }}
           repository: ${{ github.repository }}
           keep_minimum_runs: 0
           retain_days: ${{ github.event.inputs.days }}
     
-    - name: 删除releases
+    - name: 清理固件
       if: env.REPO_TOKEN
       uses: dev-drprasad/delete-older-releases@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
       with:
         repo: ${{ github.repository }}
         keep_latest: ${{ github.event.inputs.rele }}
         delete_tags: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
 
     - name: 下载dl库
       id: package
       run: |
         cd openwrt
+        make defconfig
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
     
     - name: 微信通知
-      uses: emon100/Action-Serverchan@v2
-      if: env.SERVERCHAN_SCKEY == 'true'
-      with:
-        SCKEY: ${{ secrets.SCKEY }}
-        text: 主人${{matrix.target}}编译开始啦
-        desp: 您正在使用【${{matrix.target}}】文件夹编译固件中(${{env.CangKu}}仓库的#${{env.Run_number}}号),请耐心等待...... 😋
+      if: env.PUSH_PLUS_TOKEN && env.SERVERCHAN_SCKEY == 'PUSH' || env.TELEGRAM_BOT_TOKEN && env.SERVERCHAN_SCKEY == 'TELE'
+      run: |
+        if [[ "${SERVERCHAN_SCKEY}" == "TELE" ]]; then
+          curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=🎉 主人：您正在使用【${{matrix.target}}】文件夹编译固件中(${{env.CangKu}}仓库的#${{env.Run_number}}号),请耐心等待...... 😋" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+        elif [[ "${SERVERCHAN_SCKEY}" == "PUSH" ]]; then
+          curl -k --data token="${{ secrets.PUSH_PLUS_TOKEN }}" --data title="开始编译【${{matrix.target}}】" --data "content=🎉 主人：您正在使用【${{matrix.target}}】文件夹编译固件中(${{env.CangKu}}仓库的#${{env.Run_number}}号),请耐心等待...... 😋💐" "http://www.pushplus.plus/send"
+        fi
 
     - name: 编译固件
       id: compile
@@ -228,9 +234,16 @@ jobs:
         echo "date=$(date "+%Y%m%d%H%M%S")" >> $GITHUB_ENV
         echo "date1=$(date +'%m.%d')" >> $GITHUB_ENV
 
-    - name: 上传文件
+    - name: 上传配置
+      if: env.UPLOAD_CONFIG == 'true'
       uses: actions/upload-artifact@v2
+      with:
+        name: .config_${{ env.CODE }}_${{ env.TARGET_PROFILE }}_${{ env.Compile_Date }}
+        path: config.txt
+        
+    - name: 上传文件
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      uses: actions/upload-artifact@v2
       with:
         name: filename+ipk_${{ env.CODE }}_${{ env.TARGET_PROFILE }}_${{ env.Compile_Date }}
         path: openwrt/bin
@@ -251,43 +264,26 @@ jobs:
         find -name "*manifest*" | xargs -i rm -rf {}
         find -name "*vmlinuz*" | xargs -i rm -rf {}
         find -name "*Image*" | xargs -i rm -rf {}
+        find -name "*roofs*" | xargs -i rm -rf {}
+        find -name "*efi.img.gz*" | xargs -i rm -rf {}
+        find -name "*kernel.bin*" | xargs -i rm -rf {}
         rm -rf packages
+        rename -v "s/^openwrt/${{ env.date1 }}-${{ env.CODE }}/" *
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "BOT=TRUE" >> $GITHUB_ENV
         echo "::set-output name=status::success"
     
-    - name: 上传配置
-      uses: actions/upload-artifact@v2
-      if: steps.organizer.outputs.status == 'success' && env.UPLOAD_CONFIG == 'true'
-      with:
-        name: .config_${{ env.CODE }}_${{ env.TARGET_PROFILE }}_${{ env.Compile_Date }}
-        path: openwrt/bin/config
-
     - name: 上传固件
       uses: actions/upload-artifact@v2
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true'
       with:
         name: ${{ env.OpenWrt_name }}-${{ env.CODE }}-${{ env.TARGET_PROFILE }}-firmware-${{ env.Compile_Date }}
         path: ${{ env.FIRMWARE }}
-
-    - name: 固件转存
-      if: steps.organizer.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
-      run: |
-        curl -fsSL git.io/file-transfer | sh
-        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
-        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
-        ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
-        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
     
     - name: 发布信息
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true'
       run: |
         echo "### $(date +"%Y年%m月%d号-%H点%M分")" > update_log.txt
-        curl -fsSL git.io/file-transfer | sh
-        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
-        echo "##### 奶牛快传：$(cat cowtransfer.log | grep https | cut -f3 -d" ")" >> update_log.txt
-        ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
-        echo "##### WETRANSFER：$(cat wetransfer.log | grep https | cut -f3 -d" ")" >> update_log.txt
     
     - name: 发布固件
       uses: ncipollo/release-action@v1
@@ -299,26 +295,44 @@ jobs:
         bodyFile: "update_log.txt"
         artifacts: "${{ env.FIRMWARE }}/*"
         
-    - name: 整理云端更新固件
-      if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true'
+    - name: 发送[在线更新固件]至云端1
+      if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
       run: |
        cd openwrt
        source "${PATH1}/upgrade.sh" && Diy_Part3
         
-    - name: 发布云端更新
-      uses: softprops/action-gh-release@v1
-      if: steps.organizer.outputs.status == 'success' && env.REGULAR_UPDATE == 'true'
-      env:
-        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+    - name: 发送[在线更新固件]至云端2
+      if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
+      uses: svenstaro/upload-release-action@v2
       with:
-        name: update_Firmware
-        tag_name: AutoUpdate
-        files: openwrt/bin/Firmware/*
-    
-    - name: 微信通知
-      uses: emon100/Action-Serverchan@v2
-      if: steps.organizer.outputs.status == 'success' && env.SERVERCHAN_SCKEY == 'true'
+        repo_token: ${{ secrets.REPO_TOKEN }}
+        file: openwrt/bin/Firmware/*
+        tag: AutoUpdate
+        overwrite: true
+        file_glob: true
+        
+    - name: 发送[在线更新固件]至云端3
+      if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
+      run: |
+        mkdir -p Github_Tags
+        cd Github_Tags
+        wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/AutoUpdate -O Github_Tags
+        
+    - name: 发送[在线更新固件]至云端4
+      if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
+      uses: svenstaro/upload-release-action@v2
       with:
-        SCKEY: ${{ secrets.SCKEY }}
-        text: 恭喜主人${{matrix.target}}固件编译成功！
-        desp: 您使用【${{matrix.target}}】文件夹编译的[${{ env.CODE }}-${{ env.TARGET_PROFILE }}]固件(${{env.CangKu}}仓库的#${{env.Run_number}}号)顺利编译完成了！💐
+        repo_token: ${{ secrets.REPO_TOKEN }}
+        file: Github_Tags/*
+        tag: AutoUpdate
+        overwrite: true
+        file_glob: true
+        
+    - name: 完成通知
+      if: steps.compile.outputs.status == 'success' && env.PUSH_PLUS_TOKEN && env.SERVERCHAN_SCKEY == 'PUSH' || steps.compile.outputs.status == 'success' && env.TELEGRAM_BOT_TOKEN && env.SERVERCHAN_SCKEY == 'TELE'
+      run: |
+        if [[ "${SERVERCHAN_SCKEY}" == "TELE" ]]; then
+          curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的✨主人✨：您使用【${{matrix.target}}】文件夹编译的[${{ env.CODE }}-${{ env.TARGET_PROFILE }}]固件(${{env.CangKu}}仓库的#${{env.Run_number}}号)顺利编译完成了！💐" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+        elif [[ "${SERVERCHAN_SCKEY}" == "PUSH" ]]; then
+          curl -k --data token="${{ secrets.PUSH_PLUS_TOKEN }}" --data title="[${{ env.CODE }}-${{ env.TARGET_PROFILE }}]编译成功" --data "content=我亲爱的✨主人✨：您使用【${{matrix.target}}】文件夹编译的[${{ env.CODE }}-${{ env.TARGET_PROFILE }}]固件(${{env.CangKu}}仓库的#${{env.Run_number}}号)顺利编译完成了！💐" "http://www.pushplus.plus/send"
+        fi
