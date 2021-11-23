@@ -208,8 +208,6 @@ jobs:
         repo: ${{ github.repository }}
         keep_latest: ${{ github.event.inputs.rele }}
         delete_tags: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
 
     - name: 下载dl库
       id: package
