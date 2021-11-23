@@ -1,0 +1,41 @@
+name: delete
+on:
+  workflow_dispatch:
+    inputs:
+      delete-older-workflow:
+        description: '删除github空间旧固件'
+        required: false
+        default: 'true'
+      delete-older-releases:
+        description: '删除旧的发布'
+        required: false
+        default: 'true'
+        
+env:
+  OLDER_WORKFLOW: true
+  OLDER_RELEASES: true
+  
+jobs:
+  del_runs:
+    runs-on: Ubuntu-20.04
+    name: delete-workflow-runs
+    steps:
+    
+      - name: 清理Actions空间
+      if: env.REPO_TOKEN
+      uses: Mattraks/delete-workflow-runs@main
+      with:
+          token: ${{ secrets.REPO_TOKEN }}
+          repository: ${{ github.repository }}
+          keep_minimum_runs: 0
+          retain_days: ${{ github.event.inputs.days }}
+    
+    - name: 删除releases
+      if: env.REPO_TOKEN
+      uses: dev-drprasad/delete-older-releases@master
+      with:
+        repo: ${{ github.repository }}
+        keep_latest: ${{ github.event.inputs.rele }}
+        delete_tags: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
