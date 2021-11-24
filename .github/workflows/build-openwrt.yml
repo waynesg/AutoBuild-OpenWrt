@@ -230,7 +230,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: .config_${{ env.CODE }}_${{ env.TARGET_PROFILE }}_${{ env.Compile_Date }}
-        path: config.txt
+        path: openwrt/bin/config
         
     - name: 上传文件
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
@@ -255,9 +255,10 @@ jobs:
         find -name "*manifest*" | xargs -i rm -rf {}
         find -name "*vmlinuz*" | xargs -i rm -rf {}
         find -name "*Image*" | xargs -i rm -rf {}
-        find -name "*roofs*" | xargs -i rm -rf {}
+        find -name "*rootfs*" | xargs -i rm -rf {}
         find -name "*efi.img*" | xargs -i rm -rf {}
         find -name "*kernel*" | xargs -i rm -rf {}
+        find -name "*UEFI*" | xargs -i rm -rf {}
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "BOT=TRUE" >> $GITHUB_ENV
