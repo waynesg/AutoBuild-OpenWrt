@@ -133,59 +133,35 @@ swap_usage=$( (awk '/Swap/ { printf("%3.0f", $3/$2*100) }' <<<${swap_info} 2>/de
 swap_total=$(awk '{print $(2)}' <<<${swap_info})
 
 
-if grep -q "ipq40xx" "/etc/openwrt_release"; then
-	cpu_temp="$(sensors | grep -Eo '\+[0-9]+.+C' | sed ':a;N;$!ba;s/\n/ /g;s/+//g')"
-else
-	cpu_temp="$(awk '{ printf("%.1f °C", $0 / 1000) }' /sys/class/thermal/thermal_zone0/temp)"
-fi
-cpu_tempx=`echo $cpu_temp | sed 's/°C//g'`
-
-if [ -x /usr/bin/cpustat ];then
-    sys_temp=$(/usr/bin/cpustat -A)
-else
-    sys_temp=$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c)
-fi
+# cpu info
+cpu_temp=$(cpuinfo | grep -v '.sh')
+sys_temp=$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c)
 sys_tempx=`echo $sys_temp | sed 's/ / /g'`
+
 
 
 # display info
 printf "设备信息： 软路由迷你电脑工控机"
 echo ""
 
-machine_model=$(cat /proc/device-tree/model|tr -d "\000")
-echo -e "设备信息： \033[93m${machine_model}\033[0m"
 printf "CPU 型号:  \x1B[93m%s\x1B[0m" "$sys_tempx"
 echo ""
+
+printf "CPU 信息:  \x1B[92m%s\x1B[0m" "$cpu_temp"
+echo ""
+
 display "系统负载" "${load%% *}" "${critical_load}" "0" "" "${load#* }"
 printf "运行时间:  \x1B[92m%s\x1B[0m\t\t" "$time"
-echo ""
-
-display "环境温度" "$cpu_tempx" "60" "0" "°C"  ""  
-if [ -x /usr/bin/cpustat ];then
-    cpu_freq=$(/usr/bin/cpustat -F1500)
-    echo -n "当前频率:  $cpu_freq"
-else
-    display "当前频率" "$cpu_freq" "1500" "0" " Mhz"  ""  
-fi
-echo ""
+echo "" # fixed newline
 
 display "内存已用" "$memory_usage" "70" "0" "%" " of ${memory_total}MB"
+display "交换内存" "$swap_usage" "10" "0" "%" " of $swap_total""Mb"
 printf "IP  地址:  \x1B[92m%s\x1B[0m" "$ip_address"
-#display "交换内存" "$swap_usage" "10" "0" "%" " of $swap_total""Mb"
-echo ""
-
-#echo "" # fixed newline
+echo "" # fixed newline
 
 display "启动存储" "$boot_usage" "90" "1" "%" " of $boot_total"
 display "系统存储" "$root_usage" "90" "1" "%" " of $root_total"
 echo ""
 
-if [ "$data_usage" != "" ];then
-    display "数据存储" "$data_usage" "90" "1" "%" " of $data_total"
-    echo ""
-fi
-if [ "$media_usage" != "" ];then
-    display "媒体存储" "$media_usage" "90" "1" "%" " of $media_total"
-    echo ""
-fi
+
 echo ""
