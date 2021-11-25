@@ -142,14 +142,14 @@ cpuinfox=$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c)
 cpuinfo=`echo $cpuinfox | sed 's/.*G*./& 核心x/g' | sed -r 's/^(..)(.*)/\2\1/'`
 
 # chassis vendor
-chassis_vendor=`cat /sys/class/dmi/id/chassis_vendor`
+bios_vendor=`cat /sys/class/dmi/id/bios_vendor`
 product_version=`cat /sys/class/dmi/id/product_version`
 
 # display info
 printf "设备信息： 软路由迷你电脑工控机"
 echo ""
 
-printf "制 造 商:  \x1B[94m%s\x1B[0m" "$product_version $chassis_vendor"
+printf "制 造 商:  \x1B[94m%s\x1B[0m" "$bioss_vendor $product_version"
 echo ""
 
 printf "处 理 器:  \x1B[91m%s\x1B[0m" "$cpuinfo"
