@@ -224,7 +224,7 @@ fi
 Diy_chuli() {
 
 grep -i CONFIG_PACKAGE_luci-app .config | grep  -v \# > Plug-in
-#grep -i CONFIG_PACKAGE_luci-theme .config | grep  -v \# >> Plug-in
+grep -i CONFIG_PACKAGE_luci-theme .config | grep  -v \# >> Plug-in
 if [[ `grep -c "CONFIG_PACKAGE_luci-i18n-qbittorrent-zh-cn=y" ${Home}/.config` -eq '0' ]]; then
 	sed -i '/qbittorrent/d' Plug-in
 fi
