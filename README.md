@@ -1,10 +1,15 @@
 ## 使用一键更新固件脚本
 
 bash /bin/AutoUpdate.sh				[保留配置更新]
+
 bash /bin/AutoUpdate.sh	-n			[不保留配置更新]
+
 bash /bin/AutoUpdate.sh	-g			[把固件更改成其他作者固件,前提是你编译了有附带定时更新插件的其他作者的固件]
+
 bash /bin/AutoUpdate.sh	-c			[更换Github地址]
+
 bash /bin/AutoUpdate.sh	-t			[执行测试模式(只运行,不安装,查看更新固件操作流程)]
+
 bash /bin/AutoUpdate.sh	-h			[列出帮助信息]
 
 
