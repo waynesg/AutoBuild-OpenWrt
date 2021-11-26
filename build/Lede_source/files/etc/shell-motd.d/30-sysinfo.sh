@@ -149,7 +149,7 @@ product_version=`cat /sys/class/dmi/id/product_version`
 printf "设备信息： 软路由迷你电脑工控机"
 echo ""
 
-printf "制 造 商:  \x1B[94m%s\x1B[0m" "$bioss_vendor $product_version"
+printf "制 造 商:  \x1B[94m%s\x1B[0m" "$bios_vendor $product_version"
 echo ""
 
 printf "处 理 器:  \x1B[91m%s\x1B[0m" "$cpuinfo"
