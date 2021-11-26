@@ -10,7 +10,6 @@
 /etc/shinit
 /etc/sysctl.conf
 /etc/rc.local
-/etc/config/luci
 /mnt/network
 /etc/docker/daemon.json
 /etc/docker/key.json
