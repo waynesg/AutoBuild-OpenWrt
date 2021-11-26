@@ -148,12 +148,12 @@ Diy_Part3() {
 			SHA5BIT="${MD5}${SHA256}"
 			cp ${Legacy_Firmware} ${Home}/bin/Firmware/${AutoBuild_Firmware}-Legacy-${SHA5BIT}.${Firmware_sfx}
 		}
-		[[ -e ${UEFI_Firmware} ]] && {
-			MD5=$(md5sum ${UEFI_Firmware} | cut -c1-3)
-			SHA256=$(sha256sum ${UEFI_Firmware} | cut -c1-3)
-			SHA5BIT="${MD5}${SHA256}"
-			cp ${UEFI_Firmware} ${Home}/bin/Firmware/${AutoBuild_Firmware}-UEFI-${SHA5BIT}.${Firmware_sfx}
-		}
+#		[[ -e ${UEFI_Firmware} ]] && {
+#			MD5=$(md5sum ${UEFI_Firmware} | cut -c1-3)
+#			SHA256=$(sha256sum ${UEFI_Firmware} | cut -c1-3)
+#			SHA5BIT="${MD5}${SHA256}"
+#			cp ${UEFI_Firmware} ${Home}/bin/Firmware/${AutoBuild_Firmware}-UEFI-${SHA5BIT}.${Firmware_sfx}
+#		}
 	;;
 	friendlyarm_nanopi-r2s | friendlyarm_nanopi-r4s | armvirt)
 		echo "R2S/R4S/N1/晶晨系列,暂不支持定时更新固件!" > Update_Logs.json
