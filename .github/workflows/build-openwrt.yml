@@ -251,7 +251,6 @@ jobs:
         find -name "*rootfs*" | xargs -i rm -rf {}
         find -name "*efi.img*" | xargs -i rm -rf {}
         find -name "*kernel*" | xargs -i rm -rf {}
-        find -name "*UEFI*" | xargs -i rm -rf {}
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "BOT=TRUE" >> $GITHUB_ENV
