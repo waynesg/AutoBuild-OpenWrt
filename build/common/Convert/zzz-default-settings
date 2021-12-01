@@ -33,6 +33,22 @@ ln -sf /sbin/ip /usr/bin/ip
 
 sed -i "s/# //g" /etc/opkg/distfeeds.conf
 
+# Modify admin/status/overview <td id="wan4_i" style="width:16px; text-align:center; padding:3px">
+echo 'Modify admin/status/overview <td id="wan4_i" style="width:16px; text-align:center; padding:3px">...'
+sed -i 's/<td id="wan4_i" style="width:16px; text-align:center; padding:3px">/<td id="wan4_i" style="width:10%; text-align:center; padding:3px">/g' package/lean/autocore/files/x86/index.htm
+
+# Modify admin/status/overview <td id="wan6_i" style="width:16px; text-align:center; padding:3px">
+echo 'Modify admin/status/overview <td id="wan6_i" style="width:16px; text-align:center; padding:3px">...'
+sed -i 's/<td id="wan6_i" style="width:16px; text-align:center; padding:3px">/<td id="wan6_i" style="width:10%; text-align:center; padding:3px">/g' package/lean/autocore/files/x86/index.htm
+
+echo 'Replace openwrt.org in diagnostics.htm with www.baidu.com...'
+sed -i "/exit 0/d" package/lean/default-settings/files/zzz-default-settings
+cat <<EOF >>package/lean/default-settings/files/zzz-default-settings
+uci set luci.diag.ping=www.baidu.com
+uci set luci.diag.route=www.baidu.com
+uci set luci.diag.dns=www.baidu.com
+uci commit luci
+
 sed -i 's/root::0:0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.:0:0:99999:7:::/g' /etc/shadow
 [ -f '/bin/bash' ] && sed -i 's|root:x:0:0:root:/root:/bin/ash|root:x:0:0:root:/root:/bin/bash|g' /etc/passwd
 
