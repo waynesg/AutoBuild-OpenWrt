@@ -7,13 +7,25 @@
 
 
 #sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile           # 选择argon为默认主题
-
+echo 'Add Build Date in Homepage...'
 sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ          # 增加个性名字${Author}默认为你的github账号
 
 #sed -i 's/PATCHVER:=4.14/PATCHVER:=4.19/g' target/linux/x86/Makefile                             # 默认内核为4.14，修改内核为4.19
 # K3专用，编译K3的时候只会出K3固件
 #sed -i 's|^TARGET_|# TARGET_|g; s|# TARGET_DEVICES += phicomm-k3|TARGET_DEVICES += phicomm-k3|' target/linux/bcm53xx/image/Makefile
+
+echo 'Replace openwrt.org in diagnostics.htm with www.baidu.com...'
+sed -i "/exit 0/d" package/lean/default-settings/files/zzz-default-settings
+cat <<EOF >>package/lean/default-settings/files/zzz-default-settings
+uci set luci.diag.ping=www.baidu.com
+uci set luci.diag.route=www.baidu.com
+uci set luci.diag.dns=www.baidu.com
+uci commit luci
+exit 0
+EOF
+
 # 修改插件名字
+echo 'Modify default name in menu'
 #system menu
 sed -i 's/"Web 管理"/"Web管理"/g' `grep "Web 管理" -rl ./`
 sed -i 's/"管理权"/"权限管理"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
@@ -50,14 +62,3 @@ sed -i 's/"Rclone"/"Rclone挂载"/g' package/lean/luci-app-rclone/luasrc/control
 sed -i 's/"WebGuide"/"网页导航"/g' package/waynesg/luci-app-webguide/luasrc/controller/webguide.lua
 sed -i 's/"Go 阿里云盘 WebDAV"/"阿里云盘"/g' `grep "Go 阿里云盘 WebDAV" -rl ./`
 sed -i 's/CPU占用率限制/CPU调节/g' package/waynesg/luci-app-cpulimit/po/zh_Hans/cpulimit.po
-
-cat >${GITHUB_WORKSPACE}/Clear <<-EOF
-rm -rf config.buildinfo
-rm -rf feeds.buildinfo
-rm -rf openwrt-x86-64-generic-kernel.bin
-rm -rf openwrt-x86-64-generic.manifest
-rm -rf openwrt-x86-64-generic-squashfs-combined-efi.img.gz
-rm -rf openwrt-x86-64-generic-squashfs-rootfs.img.gz
-rm -rf sha256sums
-rm -rf version.buildinfo
-EOF
