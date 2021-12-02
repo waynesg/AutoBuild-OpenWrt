@@ -89,8 +89,8 @@ jobs:
     - name: 整理脚本
       run: |
         chmod -R +x "${GITHUB_WORKSPACE}/build/common"
-#        echo "NETIP=package/base-files/files/etc/networkip" >> $GITHUB_ENV
-#        echo "DELETE=package/base-files/files/etc/deletefile" >> $GITHUB_ENV
+        echo "NETIP=package/base-files/files/etc/networkip" >> $GITHUB_ENV
+        echo "DELETE=package/base-files/files/etc/deletefile" >> $GITHUB_ENV
         if [[ "${REPO_BRANCH}" == "master" ]]; then
           echo "ZZZ=package/lean/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
           echo "CODE=Lede" >> $GITHUB_ENV
