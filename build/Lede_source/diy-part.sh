@@ -66,4 +66,4 @@ sed -i 's/CPU占用率限制/CPU调节/g' package/waynesg/luci-app-cpulimit/po/z
 sed -i 's/"iKoolProxy 滤广告"/"广告过滤"/g' package/waynesg/luci-app-ikoolproxy/luasrc/controller/koolproxy.lua
 
 #network
-sed -i 's/内网测速网页版/内网测速/g' package/waynesg/luci-app-speedtest-web/po/zh_cn/speedtest-web.po
+sed -i 's/内网测速网页版/内网测速/g' package/waynesg/luci-app-speedtest-web/po/zh-cn/speedtest-web.po
