@@ -15,6 +15,8 @@ sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date
 # K3专用，编译K3的时候只会出K3固件
 #sed -i 's|^TARGET_|# TARGET_|g; s|# TARGET_DEVICES += phicomm-k3|TARGET_DEVICES += phicomm-k3|' target/linux/bcm53xx/image/Makefile
 
+sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' package/base-files/files/etc/sysctl.conf
+
 echo 'Replace openwrt.org in diagnostics.htm with www.baidu.com...'
 sed -i "/exit 0/d" package/lean/default-settings/files/zzz-default-settings
 cat <<EOF >>package/lean/default-settings/files/zzz-default-settings
