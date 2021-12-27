@@ -62,7 +62,8 @@ fi
 # Offical源码通用diy.sh文件
 ################################################################################################################
 Diy_Offical() {
-
+rm -rf ./feeds
+make distclean
 git clone -b openwrt-19.07 --single-branch https://github.com/waynesg/OpenWrt-Software package/waynesg
 
 }
