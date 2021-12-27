@@ -67,10 +67,10 @@ if [[ -n "$(ls -A "openwrt/.bf_config" 2>/dev/null)" ]]; then
 		firmware="Lede_source"
 		Core=".Lede_core"
 		source openwrt/.Lede_core
-	elif [[ -n "$(ls -A "openwrt/.Lienol_core" 2>/dev/null)" ]]; then
-		firmware="Lienol_source"
-		Core=".Lienol_core"
-		source openwrt/.Lienol_core
+	elif [[ -n "$(ls -A "openwrt/.Offical_core" 2>/dev/null)" ]]; then
+		firmware="Offical_source"
+		Core=".Offical_core"
+		source openwrt/.Offical_core
 	elif [[ -n "$(ls -A "openwrt/.Mortal_core" 2>/dev/null)" ]]; then
 		firmware="Mortal_source"
 		Core=".Mortal_core"
@@ -86,7 +86,7 @@ if [[ -n "$(ls -A "openwrt/.bf_config" 2>/dev/null)" ]]; then
 		echo
 		TIME r "没检测到openwrt文件夹有执行文件，自动转换成首次编译命令编译固件，请稍后..."
 		rm -rf {openwrt,openwrtl,dl,.bf_config,compile.sh}
-		rm -rf {.Lede_core,.Lienol_core,.amlogic_core}
+		rm -rf {.Lede_core,.Offical_core,.amlogic_core}
 		bash <(curl -fsSL git.io/JcGDV)
 	fi
 	echo
@@ -118,7 +118,7 @@ if [[ -n "$(ls -A "openwrt/.bf_config" 2>/dev/null)" ]]; then
 			echo
 			TIME r "您选择更改源码，正在清理旧文件中，请稍后..."
 			rm -rf {openwrt,openwrtl,dl,.bf_config,compile.sh}
-			rm -rf {.Lede_core,.Lienol_core,.amlogic_core}
+			rm -rf {.Lede_core,.Offical_core,.amlogic_core}
 			bash <(curl -fsSL git.io/JcGDV)
 		;;
 		*)
@@ -156,7 +156,7 @@ fi
 	echo
 	TIME l " 1. Lede_5.10内核,LUCI 18.06版本"
 	echo
-	TIME l " 2. Lienol_4.14内核,LUCI 19.07版本"
+	TIME l " 2. Offical_4.14内核,LUCI 19.07版本"
 	echo
 	TIME l " 3. Immortalwrt_5.4内核,LUCI 21.02版本"
 	echo
@@ -176,8 +176,8 @@ fi
 		break
 		;;
 		2)
-			firmware="Lienol_source"
-			TIME y "您选择了：Lienol_4.14内核,LUCI 19.07版本"
+			firmware="Offical_source"
+			TIME y "您选择了：Offical_4.14内核,LUCI 19.07版本"
 		break
 		;;
 		3)
@@ -275,11 +275,11 @@ if [[ $firmware == "Lede_source" ]]; then
 	OpenWrt_name="18.06"
 	echo -e "\nipdz=$ip" > openwrt/.Lede_core
 	echo -e "\nGit=$Github" >> openwrt/.Lede_core
-elif [[ $firmware == "Lienol_source" ]]; then
+elif [[ $firmware == "Offical_source" ]]; then
 	[[ -d openwrt ]] && {
-		rm -rf openwrtl && git clone -b 19.07 --single-branch https://github.com/Lienol/openwrt openwrtl
+		rm -rf openwrtl && git clone -b openwrt-19.07 --single-branch https://github.com/openwrt/openwrt openwrtl
 	} || {
-		git clone -b 19.07 --single-branch https://github.com/Lienol/openwrt openwrt
+		git clone -b openwrt-19.07 --single-branch https://github.com/openwrt/openwrt openwrt
 	}
 	[[ $? -ne 0 ]] && {
 		TIME r "源码下载失败，请检测网络或更换节点再尝试!"
@@ -291,8 +291,8 @@ elif [[ $firmware == "Lienol_source" ]]; then
 	}
 	ZZZ="package/default-settings/files/zzz-default-settings"
 	OpenWrt_name="19.07"
-	echo -e "\nipdz=$ip" > openwrt/.Lienol_core
-	echo -e "\nGit=$Github" >> openwrt/.Lienol_core
+	echo -e "\nipdz=$ip" > openwrt/.Offical_core
+	echo -e "\nGit=$Github" >> openwrt/.Offical_core
 elif [[ $firmware == "Mortal_source" ]]; then
 	[[ -d openwrt ]] && {
 		rm -rf openwrtl && git clone -b openwrt-21.02 --single-branch https://github.com/immortalwrt/immortalwrt openwrtl
@@ -351,7 +351,7 @@ Home="$PWD/openwrt"
 PATH1="$PWD/openwrt/build/${firmware}"
 [[ -e ${Core} ]] && cp -Rf {.bf_config,compile.sh,${Core},dl} $Home
 rm -rf {.bf_config,compile.sh,dl}
-rm -rf {.Lede_core,.Lienol_core,.amlogic_core}
+rm -rf {.Lede_core,.Offical_core,.amlogic_core}
 echo "Compile_Date=$(date +%Y%m%d%H%M)" > $Home/Openwrt.info
 [ -f $Home/Openwrt.info ] && . $Home/Openwrt.info
 svn co https://github.com/281677160/AutoBuild-OpenWrt/trunk/build $Home/build > /dev/null 2>&1
@@ -381,10 +381,10 @@ if [[ "${REPO_BRANCH}" == "master" ]]; then
           cp -Rf build/common/LEDE/diy/* ./
 	  cp -Rf build/common/LEDE/patches/* "${PATH1}/patches"
 elif [[ "${REPO_BRANCH}" == "19.07" ]]; then
-          source build/${firmware}/common.sh && Diy_lienol
-          cp -Rf build/common/LIENOL/files ./
-          cp -Rf build/common/LIENOL/diy/* ./
-	  cp -Rf build/common/LIENOL/patches/* "${PATH1}/patches"
+          source build/${firmware}/common.sh && Diy_Offical
+          cp -Rf build/common/OFFICAL/files ./
+          cp -Rf build/common/OFFICAL/diy/* ./
+	  cp -Rf build/common/OFFICAL/patches/* "${PATH1}/patches"
 fi
 source build/${firmware}/common.sh && Diy_all
 [[ $? -ne 0 ]] && {
