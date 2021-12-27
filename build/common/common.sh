@@ -93,7 +93,7 @@ if [[ "${REPO_BRANCH}" == "master" ]]; then
 	cp -Rf "${Home}"/build/common/LEDE/files "${Home}"
 	cp -Rf "${Home}"/build/common/LEDE/diy/* "${Home}"
 	cp -Rf "${Home}"/build/common/LEDE/patches/* "${PATH1}/patches"
-elif [[ "${REPO_BRANCH}" == "19.07" ]]; then
+elif [[ "${REPO_BRANCH}" == "openwrt-19.07" ]]; then
 	cp -Rf "${Home}"/build/common/OFFICAL/files "${Home}"
 	cp -Rf "${Home}"/build/common/OFFICAL/diy/* "${Home}"
 	cp -Rf "${Home}"/build/common/OFFICAL/patches/* "${PATH1}/patches"
