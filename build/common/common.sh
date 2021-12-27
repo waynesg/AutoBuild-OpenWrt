@@ -59,9 +59,9 @@ fi
 
 
 ################################################################################################################
-# LIENOL源码通用diy.sh文件
+# Offical源码通用diy.sh文件
 ################################################################################################################
-Diy_lienol() {
+Diy_Offical() {
 
 git clone -b openwrt-19.07 --single-branch https://github.com/waynesg/OpenWrt-Software package/waynesg
 
@@ -94,9 +94,9 @@ if [[ "${REPO_BRANCH}" == "master" ]]; then
 	cp -Rf "${Home}"/build/common/LEDE/diy/* "${Home}"
 	cp -Rf "${Home}"/build/common/LEDE/patches/* "${PATH1}/patches"
 elif [[ "${REPO_BRANCH}" == "19.07" ]]; then
-	cp -Rf "${Home}"/build/common/LIENOL/files "${Home}"
-	cp -Rf "${Home}"/build/common/LIENOL/diy/* "${Home}"
-	cp -Rf "${Home}"/build/common/LIENOL/patches/* "${PATH1}/patches"
+	cp -Rf "${Home}"/build/common/OFFICAL/files "${Home}"
+	cp -Rf "${Home}"/build/common/OFFICAL/diy/* "${Home}"
+	cp -Rf "${Home}"/build/common/OFFICAL/patches/* "${PATH1}/patches"
 elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
 	cp -Rf "${Home}"/build/common/MORTAL/files "${Home}"
 	cp -Rf "${Home}"/build/common/MORTAL/diy/* "${Home}"
