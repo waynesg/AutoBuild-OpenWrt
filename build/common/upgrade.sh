@@ -34,8 +34,8 @@ GET_TARGET_INFO() {
 	;;
 	"19.07")
 		LUCI_Name="19.07"
-		REPO_Name="lienol"
-		ZUOZHE="Lienol's"
+		REPO_Name="offical"
+		ZUOZHE="Offical's"
 		if [[ "${TARGET_PROFILE}" == "x86-64" ]]; then
 			Legacy_Firmware="openwrt-x86-64-combined-squashfs.${Firmware_sfxo}"
 			UEFI_Firmware="openwrt-x86-64-combined-squashfs-efi.${Firmware_sfxo}"
