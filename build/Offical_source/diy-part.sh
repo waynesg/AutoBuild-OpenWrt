@@ -13,7 +13,7 @@ uci set network.lan.ipaddr='192.168.1.1'                                    # IP
 uci set network.lan.netmask='255.255.255.0'                                 # IPv4 子网掩码
 uci set network.lan.gateway='192.168.1.1'                                   # IPv4 网关
 uci set network.lan.broadcast='192.168.1.255'                               # IPv4 广播
-uci set network.lan.dns='114.114.114.114 223.5.5.5'                         # DNS(多个DNS要用空格分开)
+#uci set network.lan.dns='114.114.114.114 223.5.5.5'                         # DNS(多个DNS要用空格分开)
 uci set network.lan.delegate='0'                                            # 去掉LAN口使用内置的 IPv6 管理
 uci commit network                                                          # 不要删除跟注释,除非上面全部删除或注释掉了
 #uci set dhcp.lan.ignore='1'                                                 # 关闭DHCP功能
@@ -28,8 +28,23 @@ sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date
 
 #sed -i 's/PATCHVER:=4.14/PATCHVER:=4.19/g' target/linux/x86/Makefile                             # 默认内核为4.14，修改内核为4.19
 
-# K3专用，编译K3的时候只会出K3固件
-#sed -i 's|^TARGET_|# TARGET_|g; s|# TARGET_DEVICES += phicomm-k3|TARGET_DEVICES += phicomm-k3|' target/linux/bcm53xx/image/Makefile
+#sed -i 's/\"services\"/\"control\"/g' feeds/luci/applications/luci-app-wol/luasrc/controller/wol.lua
+
+#sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile           # 选择argon为默认主题
+echo 'Add Build Date in Homepage...'
+sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ          # 增加个性名字${Author}默认为你的github账号
+
+sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' package/base-files/files/etc/sysctl.conf
+
+echo 'Replace openwrt.org in diagnostics.htm with www.baidu.com...'
+sed -i "/exit 0/d" package/lean/default-settings/files/zzz-default-settings
+cat <<EOF >>package/lean/default-settings/files/zzz-default-settings
+uci set luci.diag.ping=www.baidu.com
+uci set luci.diag.route=www.baidu.com
+uci set luci.diag.dns=www.baidu.com
+uci commit luci
+exit 0
+EOF
 
 
 # 修改插件名字
