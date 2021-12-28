@@ -43,7 +43,7 @@ jobs:
       matrix:
         target: [Lede_source]
 
-        # [Lede_source,Offical_source,Mortal_source]
+        # [Lede_source,Lienol_source,Mortal_source]
 
     steps:
     - name: 准备结束
@@ -97,7 +97,7 @@ jobs:
           echo "OpenWrt_name=18.06" >> $GITHUB_ENV
         elif [[ "${REPO_BRANCH}" == "openwrt-19.07" ]]; then
           echo "ZZZ=package/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
-          echo "CODE=Offical" >> $GITHUB_ENV
+          echo "CODE=Lienol" >> $GITHUB_ENV
           echo "OpenWrt_name=19.07" >> $GITHUB_ENV
         elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
           echo "ZZZ=package/emortal/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
@@ -139,7 +139,7 @@ jobs:
         if [[ "${REPO_BRANCH}" == "master" ]]; then
           source "${PATH1}/common.sh" && Diy_lede
         elif [[ "${REPO_BRANCH}" == "openwrt-19.07" ]]; then
-          source "${PATH1}/common.sh" && Diy_Offical
+          source "${PATH1}/common.sh" && Diy_Lienol
         elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
           source "${PATH1}/common.sh" && Diy_mortal
         fi
