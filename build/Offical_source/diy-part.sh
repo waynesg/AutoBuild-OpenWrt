@@ -38,13 +38,13 @@ sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' packag
 
 echo 'Replace openwrt.org in diagnostics.htm with www.baidu.com...'
 sed -i "/exit 0/d" package/lean/default-settings/files/zzz-default-settings
-cat <<EOF >>package/lean/default-settings/files/zzz-default-settings
-uci set luci.diag.ping=www.baidu.com
-uci set luci.diag.route=www.baidu.com
-uci set luci.diag.dns=www.baidu.com
-uci commit luci
-exit 0
-EOF
+#cat <<EOF >>package/lean/default-settings/files/zzz-default-settings
+#uci set luci.diag.ping=www.baidu.com
+#uci set luci.diag.route=www.baidu.com
+#uci set luci.diag.dns=www.baidu.com
+#uci commit luci
+#exit 0
+#EOF
 
 
 # 修改插件名字
