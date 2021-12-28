@@ -138,7 +138,7 @@ jobs:
         cd openwrt
         if [[ "${REPO_BRANCH}" == "master" ]]; then
           source "${PATH1}/common.sh" && Diy_lede
-        elif [[ "${REPO_BRANCH}" == "openwrt-19.07" ]]; then
+        elif [[ "${REPO_BRANCH}" == "19.07" ]]; then
           source "${PATH1}/common.sh" && Diy_Lienol
         elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
           source "${PATH1}/common.sh" && Diy_mortal
