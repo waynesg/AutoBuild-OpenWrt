@@ -59,9 +59,9 @@ fi
 
 
 ################################################################################################################
-# Offical源码通用diy.sh文件
+# Lienol源码通用diy.sh文件
 ################################################################################################################
-Diy_Offical() {
+Diy_Lienol() {
 sed -i "/exit 0/i\chmod +x /etc/webweb.sh && source /etc/webweb.sh" $ZZZ
 
 }
@@ -95,9 +95,9 @@ if [[ "${REPO_BRANCH}" == "master" ]]; then
 	cp -Rf "${Home}"/build/common/LEDE/diy/* "${Home}"
 	cp -Rf "${Home}"/build/common/LEDE/patches/* "${PATH1}/patches"
 elif [[ "${REPO_BRANCH}" == "openwrt-19.07" ]]; then
-	cp -Rf "${Home}"/build/common/OFFICAL/files "${Home}"
-	cp -Rf "${Home}"/build/common/OFFICAL/diy/* "${Home}"
-	cp -Rf "${Home}"/build/common/OFFICAL/patches/* "${PATH1}/patches"
+	cp -Rf "${Home}"/build/common/LIENOL/files "${Home}"
+	cp -Rf "${Home}"/build/common/LIENOL/diy/* "${Home}"
+	cp -Rf "${Home}"/build/common/LIENOL/patches/* "${PATH1}/patches"
 elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
 	cp -Rf "${Home}"/build/common/MORTAL/files "${Home}"
 	cp -Rf "${Home}"/build/common/MORTAL/diy/* "${Home}"
