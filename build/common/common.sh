@@ -62,7 +62,7 @@ fi
 # Lienol源码通用diy.sh文件
 ################################################################################################################
 Diy_Lienol() {
-git clone -b openwrt-19.07 --single-branch https://github.com/waynesg/OpenWrt-Software feeds/luci/applications/
+git clone -b openwrt-19.07 --single-branch https://github.com/waynesg/OpenWrt-Software package/waynesg
 sed -i "/exit 0/i\chmod +x /etc/webweb.sh && source /etc/webweb.sh" $ZZZ
 
 }
