@@ -28,7 +28,7 @@ Compte=$(date +%Y年%m月%d号%H时%M分)
 Diy_lede() {
 #find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-argon' | xargs -i rm -rf {}
 rm -rf package/lean/luci-app-pushbot
-git clone https://github.com/waynesg/OpenWrt-Software package/waynesg
+#git clone https://github.com/waynesg/OpenWrt-Software package/waynesg
 
 if [[ "${Modelfile}" == "Lede_source" ]]; then
 	sed -i '/IMAGES_GZIP/d' "${PATH1}/${CONFIG_FILE}" > /dev/null 2>&1
@@ -62,9 +62,7 @@ fi
 # Offical源码通用diy.sh文件
 ################################################################################################################
 Diy_Offical() {
-rm -rf ./feeds
-make distclean
-git clone -b openwrt-19.07 --single-branch https://github.com/waynesg/OpenWrt-Software package/waynesg
+sed -i "/exit 0/i\chmod +x /etc/webweb.sh && source /etc/webweb.sh" $ZZZ
 
 }
 
@@ -83,6 +81,8 @@ find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-openwrt'
 # 全部作者源码公共diy.sh文件
 ################################################################################################################
 Diy_all() {
+git clone --depth 1 -b "${REPO_BRANCH}" https://github.com/waynesg/Openwrt-Software "${Home}"/package/waynesg
+cp -Rf "${Home}"/package/waynesg/* "${Home}" && rm -rf "${Home}"/package/waynesg
 
 if [[ ${REGULAR_UPDATE} == "true" ]]; then
 	git clone https://github.com/waynesg/luci-app-autoupdate feeds/luci/applications/luci-app-autoupdate
