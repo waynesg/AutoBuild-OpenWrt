@@ -1,4 +1,4 @@
-name: 编译 OpenWrt 固件
+name: 编译 lienol 固件
 on:
   workflow_dispatch:
   push:
