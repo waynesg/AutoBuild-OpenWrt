@@ -63,8 +63,8 @@ fi
 ################################################################################################################
 Diy_lienol() {
 git clone -b openwrt-19.07 --single-branch https://github.com/waynesg/OpenWrt-Software package/waynesg
-#sed -i "/exit 0/i\chmod +x /etc/webweb.sh && source /etc/webweb.sh" $ZZZ
-rm -rf feeds/packages/libs/libcap
+sed -i "/exit 0/i\chmod +x /etc/webweb.sh && source /etc/webweb.sh" $ZZZ
+#rm -rf feeds/packages/libs/libcap
 }
 
 
