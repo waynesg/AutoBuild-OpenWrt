@@ -77,11 +77,11 @@ find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-openwrt'
 find . -name 'luci-app-wrtbwmon' -o -name 'wrtbwmon' | xargs -i rm -rf {}
 #git clone -b openwrt-19.07 --single-branch https://github.com/waynesg/OpenWrt-Software package/waynesg
 
-git clone https://github.com/gSpotx2f/luci-app-disks-info package/waynesg
-git clone https://github.com/gSpotx2f/luci-app-cpu-status package/waynesg
-git clone https://github.com/gSpotx2f/luci-app-interfaces-statistics package/waynesg
-git clone https://github.com/gSpotx2f/luci-app-internet-detector package/waynesg
-git clone https://github.com/gSpotx2f/luci-app-temp-status package/waynesg
+git clone https://github.com/gSpotx2f/luci-app-disks-info package/waynesg/luci-app-disks-info
+git clone https://github.com/gSpotx2f/luci-app-cpu-status package/waynesg/luci-app-cpu-status
+git clone https://github.com/gSpotx2f/luci-app-interfaces-statistics package/waynesg/luci-app-interfaces-statistics
+git clone https://github.com/gSpotx2f/luci-app-internet-detector package/waynesg/luci-app-internet-detector
+git clone https://github.com/gSpotx2f/luci-app-temp-status package/waynesg/luci-app-temp-status
 
 }
 
