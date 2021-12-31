@@ -82,7 +82,8 @@ git clone https://github.com/gSpotx2f/luci-app-cpu-status package/waynesg/luci-a
 git clone https://github.com/gSpotx2f/luci-app-interfaces-statistics package/waynesg/luci-app-interfaces-statistics
 git clone https://github.com/gSpotx2f/luci-app-internet-detector package/waynesg/luci-app-internet-detector
 git clone https://github.com/gSpotx2f/luci-app-temp-status package/waynesg/luci-app-temp-status
-svn co https://github.com/281677160/openwrt-package/trunk/openwrt-21.02/feeds/packages/net "${Home}"/packages/net
+git clone --depth 1 -b openwrt-21.02 https://github.com/281677160/openwrt-package "${Home}"/openwrt-package
+cp -Rf "${Home}"/openwrt-package/* "${Home}" && rm -rf "${Home}"/openwrt-package
 
 }
 
