@@ -7,8 +7,8 @@ on:
     paths:
       - 'build/Tianling_source/start-up/start'
 
-  schedule:
-   - cron: 0 17 * * 5
+#  schedule:
+#   - cron: 0 17 * * 5
 
 env:
   Github: https://github.com/${{github.repository}}
