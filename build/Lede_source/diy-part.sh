@@ -39,7 +39,6 @@ sed -i 's/"启动项"/"启动管理"/g' feeds/luci/modules/luci-base/po/zh-cn/ba
 sed -i 's/"软件包"/"软件管理"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
 sed -i 's/"TTYD 终端"/"命令终端"/g' package/lean/luci-app-ttyd/po/zh-cn/terminal.po
 sed -i 's/"Argon 主题设置"/"主题设置"/g' `grep "Argon 主题设置" -rl ./`
-sed -i 's/"NetMonitor"/"网络监控"/g'  package/waynesg/luci-app-netmonitor/luasrc/controller/netmon.lua
 
 #others
 sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
