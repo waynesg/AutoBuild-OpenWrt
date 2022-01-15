@@ -18,7 +18,7 @@ sed -i 's/PATCHVER:=5.10/PATCHVER:=5.15/g' target/linux/x86/Makefile
 #sed -i 's|^TARGET_|# TARGET_|g; s|# TARGET_DEVICES += phicomm-k3|TARGET_DEVICES += phicomm-k3|' target/linux/bcm53xx/image/Makefile
 
 # ttyd设置空密码
-sed -i 's/\/bin\/login/\/bin\/login -f root/' /etc/config/ttyd
+#sed -i 's/\/bin\/login/\/bin\/login -f root/' /etc/config/ttyd
 
 # 修改连接数
 sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' package/base-files/files/etc/sysctl.conf
