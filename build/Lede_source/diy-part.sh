@@ -80,7 +80,7 @@ sed -i 's/CPU占用率限制/CPU调节/g' package/waynesg/luci-app-cpulimit/po/z
 #sed -i 's/"Nezha Agent"/"哪吒面板"/g'  package/waynesg/luci-app-nezha/luasrc/controller/nezha-agent.lua
 #sed -i 's/"WebGuide"/"网页导航"/g'  package/waynesg/luci-app-webguide/luasrc/controller/webguide.lua
 #sed -i 's/"Webd 网盘"/"WebDisk"/g'  package/waynesg/luci-app-webd/po/zh-cn/webd.po
-sed -i 's/"Hello World"/"H.World"/g'  package/waynesg/luci-app-vssr/po/zh-cn/vssr.po
+sed -i 's/msgstr "Hello World"/msgstr "H.World"/g'  package/waynesg/luci-app-vssr/po/zh-cn/vssr.po
 
 #network
 sed -i 's/内网测速网页版/内网测速/g' package/waynesg/luci-app-speedtest-web/po/zh-cn/speedtest-web.po
