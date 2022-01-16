@@ -84,4 +84,4 @@ sed -i 's/Adblock Plus+/Adb Plus+/g'  package/waynesg/luci-app-adblock-plus/luas
 echo 'Modify default name in network menu'
 #network
 sed -i 's/内网测速网页版/内网测速/g' package/waynesg/luci-app-speedtest-web/po/zh-cn/speedtest-web.po
-sed -i 's/"IP/MAC绑定"/"地址绑定"/g' package/lean/luci-app-arpbind/po/zh-cn/arpbind.po
+sed -i 's/"IP\/MAC绑定"/"地址绑定"/g' package/lean/luci-app-arpbind/po/zh-cn/arpbind.po
