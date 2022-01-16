@@ -36,7 +36,7 @@ EOF
 sed -i 's/\"services\"/\"control\"/g' feeds/luci/applications/luci-app-wol/luasrc/controller/wol.lua
 
 # 修改插件名字
-echo 'Modify default name in menu'
+echo 'Modify default name in system menu'
 #system menu
 sed -i 's/"Web 管理"/"Web管理"/g' `grep "Web 管理" -rl ./`
 sed -i 's/"管理权"/"权限管理"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
@@ -47,7 +47,7 @@ sed -i 's/"启动项"/"启动管理"/g' feeds/luci/modules/luci-base/po/zh-cn/ba
 sed -i 's/"软件包"/"软件管理"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
 sed -i 's/"TTYD 终端"/"命令终端"/g' package/lean/luci-app-ttyd/po/zh-cn/terminal.po
 sed -i 's/"Argon 主题设置"/"主题设置"/g' `grep "Argon 主题设置" -rl ./`
-
+echo 'Modify default name in control menu'
 #others
 sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
 sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' package/lean/luci-app-turboacc/po/zh-cn/turboacc.po
@@ -56,7 +56,7 @@ sed -i 's/"USB 打印服务器"/"打印服务"/g' `grep "USB 打印服务器" -r
 sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
 sed -i 's/"在线用户"/"在线设备"/g' package/waynesg/luci-app-onliner/luasrc/controller/onliner.lua
 #sed -i 's/"autoipsetadder"/"自动设置IP"/g' `grep "autoipsetadder" -rl ./`
-
+echo 'Modify default name in services menu'
 #services menu
 sed -i 's/"阿里云盘 WebDAV"/"阿里云盘"/g' `grep "阿里云盘 WebDAV" -rl ./`
 sed -i 's/京东签到服务/京东签到/g' package/lean/luci-app-jd-dailybonus/luasrc/controller/jd-dailybonus.lua
@@ -81,9 +81,7 @@ sed -i 's/Adblock Plus+/Adb Plus+/g'  package/waynesg/luci-app-adblock-plus/luas
 #sed -i 's/"Nezha Agent"/"哪吒面板"/g'  package/waynesg/luci-app-nezha/luasrc/controller/nezha-agent.lua
 #sed -i 's/"WebGuide"/"网页导航"/g'  package/waynesg/luci-app-webguide/luasrc/controller/webguide.lua
 #sed -i 's/"Webd 网盘"/"WebDisk"/g'  package/waynesg/luci-app-webd/po/zh-cn/webd.po
-
-
-
+echo 'Modify default name in network menu'
 #network
 sed -i 's/内网测速网页版/内网测速/g' package/waynesg/luci-app-speedtest-web/po/zh-cn/speedtest-web.po
 sed -i 's/"IP/MAC绑定"/"地址绑定"/g' package/lean/luci-app-arpbind/po/zh-cn/arpbind.po
