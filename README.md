@@ -1,3 +1,8 @@
+|   序号    |     X86设备  |   X86设备编译状态及下载链接 |   插件配置   | 备注说明   |
+| :-----------------: | :-------------: |:-----------------: | :-----------------: |  :-----------------: | 
+| 1 |   [![](https://img.shields.io/badge/WayneSG%40OpenWrt-X86__64(Lean)-lightgrey)](https://github.com/waynesg/AutoBuild-OpenWrt/blob/main/.github/workflows/build-openwrt.yml)    | [![](https://github.com/waynesg/AutoBuild-OpenWrt/workflows/编译OpenWrt固件/badge.svg)](https://github.com/waynesg/AutoBuild-OpenWrt/actions/workflows/build-openwrt.yml) |[![](https://img.shields.io/badge/编译-配置-orange.svg)](https://github.com/waynesg/AutoBuild-OpenWrt/blob/main/build/Lede_source/.config) |  |  
+| 2 |    [![](https://img.shields.io/badge/WayneSG%40OpenWrt-X86__64(Mortal)-lightgrey)](https://github.com/waynesg/AutoBuild-OpenWrt/blob/main/.github/workflows/mortal.yml)     |[![](https://github.com/waynesg/AutoBuild-OpenWrt/workflows/Mortal/badge.svg)](https://github.com/waynesg/AutoBuild-OpenWrt/blob/main/.github/workflows/mortal.yml) |[![](https://img.shields.io/badge/编译-配置-orange.svg)](https://github.com/waynesg/AutoBuild-OpenWrt/blob/main/build/Mortal_source/.config) | | 
+
 ## 使用一键更新固件脚本
 
 bash /bin/AutoUpdate.sh				[保留配置更新]
