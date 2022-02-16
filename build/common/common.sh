@@ -26,8 +26,7 @@ Compte=$(date +%Y年%m月%d号%H时%M分)
 # LEDE源码通用diy.sh文件
 ################################################################################################################
 Diy_lede() {
-find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-argon' | xargs -i rm -rf {}
-rm -rf package/lean/luci-app-pushbot
+find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-argon' -o -name 'luci-app-pushbot' | xargs -i rm -rf {}
 git clone https://github.com/waynesg/OpenWrt-Software package/waynesg
 
 if [[ "${Modelfile}" == "Lede_source" ]]; then
@@ -51,7 +50,7 @@ if [[ "${Modelfile}" == "openwrt_amlogic" ]]; then
 	done
 
 	# luci-app-cpufreq修改一些代码适配amlogic
-	sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci-app-cpufreq/Makefile
+	sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' feeds/luci/applications/luci-app-cpufreq/Makefile
 	# 为 armvirt 添加 autocore 支持
 	sed -i 's/TARGET_rockchip/TARGET_rockchip\|\|TARGET_armvirt/g' package/lean/autocore/Makefile
 fi
