@@ -93,4 +93,4 @@ echo 'Modify default name in nas menu'
 sed -i 's/"文件浏览器"/"文件管理"/g' package/waynesg/luci-app-filebrowser/po/zh-cn/filebrowser.po
 sed -i 's/"FTP 服务器"/"FTP 服务"/g' feeds/luci/applications/luci-app-vsftpd/po/zh-cn/vsftpd.po
 curl -fsSL https://raw.githubusercontent.com/waynesg/scripts/main/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
-curl -fsSL https://raw.githubusercontent.com/waynesg/scripts/main/x86_index.htm > ./package/lean/autocore/files/x86/index.htm
+#curl -fsSL https://raw.githubusercontent.com/waynesg/scripts/main/x86_index.htm > ./package/lean/autocore/files/x86/index.htm
