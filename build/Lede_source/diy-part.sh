@@ -87,8 +87,10 @@ echo 'Modify default name in network menu'
 #network
 sed -i 's/内网测速网页版/内网测速/g' package/waynesg/luci-app-speedtest-web/po/zh-cn/speedtest-web.po
 sed -i 's/"IP\/MAC绑定"/"地址绑定"/g' feeds/luci/applications/luci-app-arpbind/po/zh-cn/arpbind.po
-sed -i 's/"netports_info"/"网口信息"/g' `grep "netports_info" -rl ./`
+#sed -i 's/"netports_info"/"网口信息"/g' `grep "netports_info" -rl ./`
 echo 'Modify default name in nas menu'
 #nas
 sed -i 's/"文件浏览器"/"文件管理"/g' package/waynesg/luci-app-filebrowser/po/zh-cn/filebrowser.po
 sed -i 's/"FTP 服务器"/"FTP 服务"/g' feeds/luci/applications/luci-app-vsftpd/po/zh-cn/vsftpd.po
+curl -fsSL https://raw.githubusercontent.com/waynesg/scripts/main/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
+curl -fsSL https://raw.githubusercontent.com/waynesg/scripts/main/x86_index.htm > ./package/lean/autocore/files/x86/index.htm
