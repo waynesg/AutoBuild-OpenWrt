@@ -8,6 +8,8 @@
 # 选择argon为默认主题
 #sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 
+curl -fsSL https://raw.githubusercontent.com/waynesg/scripts/main/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
+curl -fsSL https://raw.githubusercontent.com/waynesg/scripts/main/index.htm > ./package/lean/autocore/files/x86/index.htm
 # 增加个性名字${Author}默认为你的github账号
 sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ
 
@@ -92,5 +94,3 @@ echo 'Modify default name in nas menu'
 #nas
 sed -i 's/"文件浏览器"/"文件管理"/g' package/waynesg/luci-app-filebrowser/po/zh-cn/filebrowser.po
 sed -i 's/"FTP 服务器"/"FTP 服务"/g' feeds/luci/applications/luci-app-vsftpd/po/zh-cn/vsftpd.po
-curl -fsSL https://raw.githubusercontent.com/waynesg/scripts/main/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
-#curl -fsSL https://raw.githubusercontent.com/waynesg/scripts/main/x86_index.htm > ./package/lean/autocore/files/x86/index.htm
