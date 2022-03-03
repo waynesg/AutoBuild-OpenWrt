@@ -28,6 +28,7 @@ Compte=$(date +%Y年%m月%d号%H时%M分)
 Diy_lede() {
 find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-argon' -o -name 'luci-app-pushbot' | xargs -i rm -rf {}
 git clone https://github.com/waynesg/OpenWrt-Software package/waynesg
+rm -rf package/waynesg/luci-app-ddnsto/luasrc/view/admin_status/index/ddnsto.htm
 
 if [[ "${Modelfile}" == "Lede_source" ]]; then
 	sed -i '/IMAGES_GZIP/d' "${PATH1}/${CONFIG_FILE}" > /dev/null 2>&1
