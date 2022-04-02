@@ -95,3 +95,5 @@ echo 'Modify default name in nas menu'
 sed -i 's/"文件浏览器"/"文件管理"/g' package/waynesg/luci-app-filebrowser/po/zh-cn/filebrowser.po
 sed -i 's/"FTP 服务器"/"FTP 服务"/g' feeds/luci/applications/luci-app-vsftpd/po/zh-cn/vsftpd.po
 sed -i 's/"Alist 文件列表"/"Alist列表"/g' package/waynesg/luci-app-alist/luci-app-alist/po/zh-cn/alist.po
+#vpn
+sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
