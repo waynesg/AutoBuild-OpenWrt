@@ -26,7 +26,7 @@ Compte=$(date +%Y年%m月%d号%H时%M分)
 # LEDE源码通用diy.sh文件
 ################################################################################################################
 Diy_lede() {
-find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-argon' -o -name 'luci-app-pushbot' | xargs -i rm -rf {}
+find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-argon' -name 'luci-app-unblockmusic' -o -name 'luci-app-pushbot' | xargs -i rm -rf {}
 git clone https://github.com/waynesg/OpenWrt-Software package/waynesg
 rm -rf package/waynesg/luci-app-ddnsto/luasrc/view/admin_status/index/ddnsto.htm
 
