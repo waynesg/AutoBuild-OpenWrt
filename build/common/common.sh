@@ -236,25 +236,36 @@ fi
 ################################################################################################################
 Diy_chuli() {
 
-grep -i CONFIG_PACKAGE_luci-app .config | grep  -v \# > Plug-in
-grep -i CONFIG_PACKAGE_luci-theme .config | grep  -v \# >> Plug-in
-if [[ `grep -c "CONFIG_PACKAGE_luci-i18n-qbittorrent-zh-cn=y" ${Home}/.config` -eq '0' ]]; then
-	sed -i '/qbittorrent/d' Plug-in
+sed -i '$ s/exit 0$//' ${Home}/package/base-files/files/etc/rc.local
+echo '
+if [[ `grep -c "coremark" /etc/crontabs/root` -eq '1' ]]; then
+  sed -i '/coremark/d' /etc/crontabs/root
 fi
-sed -i '/INCLUDE/d' Plug-in > /dev/null 2>&1
-sed -i 's/CONFIG_PACKAGE_/、/g' Plug-in
-sed -i 's/=y/\"/g' Plug-in
-awk '$0=NR$0' Plug-in > Plug-2
-awk '{print "	" $0}' Plug-2 > Plug-in
-sed -i "s/^/TIME g \"/g" Plug-in
-cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c > CPU
-cat /proc/cpuinfo | grep "cpu cores" | uniq >> CPU
-sed -i 's|[[:space:]]||g; s|^.||' CPU && sed -i 's|CPU||g; s|pucores:||' CPU
-CPUNAME="$(awk 'NR==1' CPU)" && CPUCORES="$(awk 'NR==2' CPU)"
-rm -rf CPU
-find . -name 'LICENSE' -o -name 'README' -o -name 'README.md' | xargs -i rm -rf {}
-find . -name 'CONTRIBUTED.md' -o -name 'README_EN.md' -o -name 'DEVICE_NAME' | xargs -i rm -rf {}
-}
+/etc/init.d/network restart
+/etc/init.d/uhttpd restart
+exit 0
+' >> ${Home}/package/base-files/files/etc/rc.local
+
+if [[ "${BY_INFORMATION}" == "true" ]]; then
+	grep -i CONFIG_PACKAGE_luci-app .config | grep  -v \# > Plug-in
+	grep -i CONFIG_PACKAGE_luci-theme .config | grep  -v \# >> Plug-in
+	if [[ `grep -c "CONFIG_PACKAGE_luci-i18n-qbittorrent-zh-cn=y" ${Home}/.config` -eq '0' ]]; then
+		if [[ `grep -c "luci-app-qbittorrent_static" ${Home}/Plug-in` -eq '1' ]]; then
+			sed -i '/qbittorrent/d' Plug-in
+		fi
+	fi
+	sed -i '/INCLUDE/d' Plug-in > /dev/null 2>&1
+	sed -i '/=m/d' Plug-in > /dev/null 2>&1
+	sed -i 's/CONFIG_PACKAGE_/、/g' Plug-in
+	sed -i 's/=y/\"/g' Plug-in
+	awk '$0=NR$0' Plug-in > Plug-2
+	awk '{print "	" $0}' Plug-2 > Plug-in
+	sed -i "s/^/TIME g \"/g" Plug-in
+	cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c > CPU
+        cat /proc/cpuinfo | grep "cpu cores" | uniq >> CPU
+        sed -i 's|[[:space:]]||g; s|^.||' CPU && sed -i 's|CPU||g; s|pucores:||' CPU
+        CPUNAME="$(awk 'NR==1' CPU)" && CPUCORES="$(awk 'NR==2' CPU)"
+        rm -rf CPU
 
 
 ################################################################################################################
