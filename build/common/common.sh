@@ -1,8 +1,3 @@
-#!/bin/bash
-# https://github.com/gd0772/AutoBuild-OpenWrt
-# common Module by gd0772
-# matrix.target=${Modelfile}
-
 TIME() {
 Compte=$(date +%Y年%m月%d号%H时%M分)
 [[ -z "$1" ]] && {
@@ -266,6 +261,9 @@ if [[ "${BY_INFORMATION}" == "true" ]]; then
         sed -i 's|[[:space:]]||g; s|^.||' CPU && sed -i 's|CPU||g; s|pucores:||' CPU
         CPUNAME="$(awk 'NR==1' CPU)" && CPUCORES="$(awk 'NR==2' CPU)"
         rm -rf CPU
+
+rm -rf ${Home}/files/{README,README.md}
+}
 
 
 ################################################################################################################
