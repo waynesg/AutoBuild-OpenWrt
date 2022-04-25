@@ -27,9 +27,10 @@ Compte=$(date +%Y年%m月%d号%H时%M分)
 ################################################################################################################
 Diy_lede() {
 
-git clone https://github.com/waynesg/OpenWrt-Software package/waynesg
-rm -rf package/waynesg/luci-app-ddnsto/luasrc/view/admin_status/index/ddnsto.htm
-
+if [[ ! "${Modelfile}" == "openwrt_amlogic" ]]; then
+	sed -i '/IMAGES_GZIP/d' "${PATH1}/${CONFIG_FILE}" > /dev/null 2>&1
+	echo -e "\nCONFIG_TARGET_IMAGES_GZIP=y" >> "${PATH1}/${CONFIG_FILE}"
+fi
 }
 
 
