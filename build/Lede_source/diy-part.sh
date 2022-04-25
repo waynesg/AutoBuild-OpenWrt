@@ -30,8 +30,6 @@ rm -rf ./feeds/luci/themes/luci-theme-material
 TIME r "删除重复插件"
 rm -rf ./feeds/packages/admin/netdata
 rm -rf ./feeds/luci/applications/luci-app-netdata
-rm -rf ./feeds/luci/applications/go-aliyundrive-webdav
-rm -rf ./feeds/luci/applications/luci-app-usb-printer
 rm -rf ./feeds/luci/applications/luci-app-serverchan
 rm -rf ./feeds/luci/applications/luci-app-unblockmusic
 TIME b "修改 系统文件..."
