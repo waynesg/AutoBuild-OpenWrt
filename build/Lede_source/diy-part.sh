@@ -5,27 +5,57 @@
 # 不要一下就拉取别人一个插件包N多插件的，多了没用，增加编译错误，自己需要的才好
 # 修改IP项的EOF于EOF之间请不要插入其他扩展代码，可以删除或注释里面原本的代码
 
-# 选择argon为默认主题
-#sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
-
+TIME() {
+[[ -z "$1" ]] && {
+	echo -ne " "
+} || {
+     case $1 in
+	r) export Color="\e[31;1m";;
+	g) export Color="\e[32;1m";;
+	b) export Color="\e[34;1m";;
+	y) export Color="\e[33;1m";;
+	z) export Color="\e[35;1m";;
+	l) export Color="\e[36;1m";;
+      esac
+	[[ $# -lt 2 ]] && echo -e "\e[36m\e[0m ${1}" || {
+		echo -e "\e[36m\e[0m ${Color}${2}\e[0m"
+	 }
+      }
+}
+echo
+TIME r "删除无用主题"
+rm -rf ./feeds/freifunk/themes
+rm -rf ./feeds/luci/themes/luci-theme-argon
+rm -rf ./feeds/luci/themes/luci-theme-material
+TIME r "删除重复插件"
+rm -rf ./feeds/packages/admin/netdata
+rm -rf ./feeds/luci/applications/luci-app-netdata
+rm -rf ./feeds/luci/applications/go-aliyundrive-webdav
+rm -rf ./feeds/luci/applications/luci-app-usb-printer
+rm -rf ./feeds/luci/applications/luci-app-serverchan
+rm -rf ./feeds/luci/applications/luci-app-unblockmusic
+TIME b "修改 系统文件..."
 curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
 curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/index.htm > ./package/lean/autocore/files/x86/index.htm
-# 增加个性名字${Author}默认为你的github账号
-sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ
-
-# 默认内核
-# sed -i 's/KERNEL_PATCHVER:=5.10/KERNEL_PATCHVER:=5.15/g' ./target/linux/x86/Makefile
-
-# K3专用，编译K3的时候只会出K3固件
-#sed -i 's|^TARGET_|# TARGET_|g; s|# TARGET_DEVICES += phicomm-k3|TARGET_DEVICES += phicomm-k3|' target/linux/bcm53xx/image/Makefile
-
-# ttyd设置空密码
-#sed -i 's/\/bin\/login/\/bin\/login -f root/' /etc/config/ttyd
-
-# 修改连接数
-sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' package/base-files/files/etc/sysctl.conf
-
-echo 'Replace openwrt.org in diagnostics.htm with www.baidu.com...'
+TIME b "系统文件 修改完成"
+echo
+TIME y "添加@waynesg's package"
+rm -rf package/waynesg && git clone https://github.com/waynesg/OpenWrt-Software package/waynesg
+#rm -rf package/waynesg/luci-app-ddnsto/luasrc/view/admin_status/index/ddnsto.htm
+echo
+TIME y "更新固件 编译日期"
+sed -i "s/2022.02.01/$(TZ=UTC-8 date "+%Y.%m.%d")/g" package/lean/autocore/files/x86/index.htm
+echo
+TIME y "更新固件 编译日期"
+sed -i "s/2022.02.01/$(TZ=UTC-8 date "+%Y.%m.%d")/g" package/lean/autocore/files/x86/index.htm
+#echo 
+#TIME y "更换内核"
+#sed -i 's/KERNEL_PATCHVER:=5.10/KERNEL_PATCHVER:=5.15/g' ./target/linux/x86/Makefile
+echo
+TIME g "自定义文件修复权限"
+chmod -R 755 package/waynesg
+echo 
+TIME r "调整网络诊断地址到baidu.com"
 sed -i "/exit 0/d" package/lean/default-settings/files/zzz-default-settings
 cat <<EOF >>package/lean/default-settings/files/zzz-default-settings
 uci set luci.diag.ping=www.baidu.com
@@ -34,11 +64,25 @@ uci set luci.diag.dns=www.baidu.com
 uci commit luci
 exit 0
 EOF
+TIME r "调整完成"
+# 增加个性名字${Author}默认为你的github账号
+sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ
 
+
+
+# ttyd设置空密码
+#sed -i 's/\/bin\/login/\/bin\/login -f root/' /etc/config/ttyd
+
+# 修改连接数
+sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' package/base-files/files/etc/sysctl.conf
+
+
+echo
+TIME b "菜单调整..."
 sed -i 's/\"services\"/\"control\"/g' feeds/luci/applications/luci-app-wol/luasrc/controller/wol.lua
-
-# 修改插件名字
-echo 'Modify default name in system menu'
+TIME b "调整完成"
+echo             
+TIME b "插件 重命名..."
 #system menu
 sed -i 's/"Web 管理"/"Web管理"/g' `grep "Web 管理" -rl ./`
 sed -i 's/"管理权"/"权限管理"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
@@ -60,7 +104,7 @@ sed -i 's/"在线用户"/"在线设备"/g' package/waynesg/luci-app-onliner/luas
 #sed -i 's/"autoipsetadder"/"自动设置IP"/g' `grep "autoipsetadder" -rl ./`
 echo 'Modify default name in services menu'
 #services menu
-sed -i 's/"解锁网易云灰色歌曲"/"网易音乐"/g' feeds/luci/applications/luci-app-unblockmusic/po/zh-cn/unblockmusic.po
+sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' package/waynesg/luci-app-unblockneteasemusic/luasrc/controller/unblockneteasemusic.lua
 sed -i 's/天翼家庭云\/云盘提速/天翼云盘/g' feeds/luci/applications/luci-app-familycloud/luasrc/controller/familycloud.lua
 sed -i 's/"AdGuard Home"/"AdHome"/g' `grep "AdGuard Home" -rl ./`
 sed -i 's/"Frp 内网穿透"/"Frp客户端"/g' `grep "Frp 内网穿透" -rl ./`
@@ -97,3 +141,8 @@ sed -i 's/"FTP 服务器"/"FTP 服务"/g' feeds/luci/applications/luci-app-vsftp
 sed -i 's/"Alist 文件列表"/"Alist列表"/g' package/waynesg/luci-app-alist/luci-app-alist/po/zh-cn/alist.po
 #vpn
 sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
+TIME b "重命名 完成"
+echo
+TIME g "更新配置..."
+./scripts/feeds install -a
+TIME g "配置更新完成"
