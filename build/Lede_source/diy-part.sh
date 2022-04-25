@@ -38,18 +38,25 @@ curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openw
 curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/index.htm > ./package/lean/autocore/files/x86/index.htm
 TIME b "系统文件 修改完成"
 
-echo TIME y "添加软件包"
+echo 
+TIME y "添加软件包"
 rm -rf package/waynesg && git clone https://github.com/waynesg/OpenWrt-Software package/waynesg
 #rm -rf package/waynesg/luci-app-ddnsto/luasrc/view/admin_status/index/ddnsto.htm
-echo TIME y "更新固件 编译日期"
+
+echo 
+TIME y "更新固件 编译日期"
 sed -i "s/2022.02.01/$(TZ=UTC-8 date "+%Y.%m.%d")/g" package/lean/autocore/files/x86/index.htm
-echo TIME y "增加个性名字${Author}默认为你的github账号"
+
+echo 
+TIME y "增加个性名字${Author}默认为你的github账号"
 sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ
+
 #echo 
 #TIME y "更换内核"
 #sed -i 's/KERNEL_PATCHVER:=5.10/KERNEL_PATCHVER:=5.15/g' ./target/linux/x86/Makefile
+
 echo 
-TIME r "调整网络诊断地址到baidu.com"
+TIME r "调整网络诊断地址到www.baidu.com"
 sed -i "/exit 0/d" package/lean/default-settings/files/zzz-default-settings
 cat <<EOF >>package/lean/default-settings/files/zzz-default-settings
 uci set luci.diag.ping=www.baidu.com
@@ -59,22 +66,18 @@ uci commit luci
 exit 0
 EOF
 
-
-
-
 # ttyd设置空密码
 #sed -i 's/\/bin\/login/\/bin\/login -f root/' /etc/config/ttyd
 
 # 修改连接数
 sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' package/base-files/files/etc/sysctl.conf
 
-
 echo
 TIME b "菜单 调整..."
 sed -i 's/\"services\"/\"control\"/g' feeds/luci/applications/luci-app-wol/luasrc/controller/wol.lua
 echo             
 TIME b "插件 重命名..."
-echo “重命名系统菜单”
+echo "重命名系统菜单"
 #system menu
 sed -i 's/"Web 管理"/"Web管理"/g' `grep "Web 管理" -rl ./`
 sed -i 's/"管理权"/"权限管理"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
@@ -85,7 +88,7 @@ sed -i 's/"启动项"/"启动管理"/g' feeds/luci/modules/luci-base/po/zh-cn/ba
 sed -i 's/"软件包"/"软件管理"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
 sed -i 's/"TTYD 终端"/"命令终端"/g' feeds/luci/applications/luci-app-ttyd/po/zh-cn/terminal.po
 sed -i 's/"Argon 主题设置"/"主题设置"/g' `grep "Argon 主题设置" -rl ./`
-echo “重命名控制菜单”
+echo "重命名控制菜单"
 #others
 sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
 sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' feeds/luci/applications/luci-app-turboacc/po/zh-cn/turboacc.po
@@ -94,7 +97,7 @@ sed -i 's/"USB 打印服务器"/"打印服务"/g' `grep "USB 打印服务器" -r
 sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
 sed -i 's/"在线用户"/"在线设备"/g' package/waynesg/luci-app-onliner/luasrc/controller/onliner.lua
 #sed -i 's/"autoipsetadder"/"自动设置IP"/g' `grep "autoipsetadder" -rl ./`
-echo ”重命名服务菜单“
+echo "重命名服务菜单"
 #services menu
 sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' package/waynesg/luci-app-unblockneteasemusic/luasrc/controller/unblockneteasemusic.lua
 sed -i 's/天翼家庭云\/云盘提速/天翼云盘/g' feeds/luci/applications/luci-app-familycloud/luasrc/controller/familycloud.lua
@@ -121,7 +124,7 @@ sed -i 's/"TelegramBot"/"Telegram"/g'  package/waynesg/luci-app-telegrambot/luas
 #sed -i 's/"UU游戏加速器"/"UU加速器"/g' `grep "UU游戏加速器" -rl ./`
 #sed -i 's/UU游戏加速器/UU加速器/g' feeds/luci/applications/luci-app-uugamebooster/po/zh-cn/uuplugin.po
 #sed -i 's/"Rclone"/"Rclone挂载"/g' feeds/luci/applications/luci-app-rclone/luasrc/controller/rclone.lua
-echo “重命名网络菜单”
+echo "重命名网络菜单"
 #network
 sed -i 's/内网测速网页版/内网测速/g' package/waynesg/luci-app-speedtest-web/po/zh-cn/speedtest-web.po
 sed -i 's/"IP\/MAC绑定"/"地址绑定"/g' feeds/luci/applications/luci-app-arpbind/po/zh-cn/arpbind.po
