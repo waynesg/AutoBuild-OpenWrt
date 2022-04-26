@@ -1,4 +1,4 @@
-name: Build_x64(lean)
+name: x64_18.06
 on:
   workflow_dispatch:
     inputs:
