@@ -1,4 +1,4 @@
-name: lienol
+name: build_x64_19.07
 on:
   workflow_dispatch:
   push:
