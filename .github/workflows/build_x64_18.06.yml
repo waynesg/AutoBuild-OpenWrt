@@ -1,4 +1,4 @@
-name: x64_18.06
+name: build_x64_18.06
 on:
   workflow_dispatch:
     inputs:
