@@ -48,7 +48,7 @@ TIME y "更新固件 编译日期"
 sed -i "s/2022.02.01/$(TZ=UTC-8 date "+%Y.%m.%d")/g" package/lean/autocore/files/x86/index.htm
 
 echo 
-TIME y "增加个性名字${Author}默认为你的github账号"
+TIME y "自定义固件版本名字"
 sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ
 
 #echo 
