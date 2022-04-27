@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       ssh:
-        description: '[ssh-actions]改成[ssh],再按[Run workflow]按钮启动,则开启SSH连接配置固件'
+        description: '更改SSH连接'
         required: false
         default: 'ssh-actions'
       days:
@@ -51,16 +51,15 @@ jobs:
     - name: 准备结束
       uses: actions/checkout@v2
 
-    - name: 读取脚本设置
+    - name: 读取脚本
       run: |
         export matrixtarget="${{ matrix.target }}"
-        git clone --depth 1 -b main https://github.com/281677160/common ${GITHUB_WORKSPACE}/build/common
         mv -f ${GITHUB_WORKSPACE}/build/common/*.sh ${GITHUB_WORKSPACE}/build/${{matrix.target}}/
         chmod -R +x ${GITHUB_WORKSPACE}/build
         source $GITHUB_WORKSPACE/build/${{matrix.target}}/common.sh && Diy_repo_url
         source $GITHUB_WORKSPACE/build/${{matrix.target}}/common.sh && Diy_settings
         
-    - name: 定时启动编译时清理Actions空间和删除releases数值设置
+    - name: 清理空间
       run: |
          if [[ -z "${{ github.event.inputs.days }}" ]] && [[ -z "${{ github.event.inputs.rele }}" ]]; then
            echo "retain_days=7" >> $GITHUB_ENV
@@ -70,7 +69,7 @@ jobs:
            echo "keep_latest=${{ github.event.inputs.rele }}" >> $GITHUB_ENV
          fi
         
-    - name: 部署编译环境
+    - name: 部署环境
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
@@ -83,7 +82,7 @@ jobs:
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --global user.name "github-actions[bot]"
     
-    - name: 下载"${{matrix.target}}"源码
+    - name: 下载源码
       id: clone
       continue-on-error: true
       working-directory: /${{matrix.target}}
@@ -91,14 +90,14 @@ jobs:
         git clone -b "$REPO_BRANCH" --single-branch "$REPO_URL" openwrt
         ln -sf /${{matrix.target}}/openwrt $GITHUB_WORKSPACE/openwrt
  
-    - name: 公 告
+    - name: 读取设置
       continue-on-error: true
       run: |
         echo
         source $GITHUB_WORKSPACE/build/${{matrix.target}}/common.sh && Diy_variable
         source $GITHUB_WORKSPACE/build/${{matrix.target}}/common.sh && Diy_Notice
  
-    - name: 加载源,补丁和自定义设置
+    - name: 加载设置
       id: compile
       continue-on-error: true
       run: |
