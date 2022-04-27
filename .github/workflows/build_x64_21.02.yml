@@ -100,7 +100,7 @@ jobs:
           echo "CODE=Lienol" >> $GITHUB_ENV
           echo "OpenWrt_name=19.07" >> $GITHUB_ENV
         elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
-          echo "ZZZ=package/emortal/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
+          echo "ZZZ=openwrt/package/emortal/default-settings/files/99-default-settings" >> $GITHUB_ENV
           echo "CODE=Mortal" >> $GITHUB_ENV
           echo "OpenWrt_name=21.02" >> $GITHUB_ENV
         fi
@@ -249,7 +249,6 @@ jobs:
         find -name "*vmlinuz*" | xargs -i rm -rf {}
         find -name "*Image*" | xargs -i rm -rf {}
         find -name "*rootfs*" | xargs -i rm -rf {}
-        find -name "*efi.img*" | xargs -i rm -rf {}
         find -name "*kernel*" | xargs -i rm -rf {}
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
