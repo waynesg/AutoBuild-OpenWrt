@@ -43,9 +43,9 @@ TIME y "添加软件包"
 rm -rf package/waynesg && git clone https://github.com/waynesg/OpenWrt-Software package/waynesg
 #rm -rf package/waynesg/luci-app-ddnsto/luasrc/view/admin_status/index/ddnsto.htm
 
-#echo 
-#TIME y "更换内核为5.10"
-#sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.10/g' ./target/linux/x86/Makefile
+echo 
+TIME y "更换内核为5.10"
+sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.10/g' ./target/linux/x86/Makefile
 
 echo 
 TIME y "更新固件 编译日期"
@@ -69,7 +69,8 @@ EOF
 # ttyd设置空密码
 #sed -i 's/\/bin\/login/\/bin\/login -f root/' /etc/config/ttyd
 
-# 修改连接数
+echo 
+TIME r "修改连接数"
 sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' package/base-files/files/etc/sysctl.conf
 
 echo
