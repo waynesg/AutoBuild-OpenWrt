@@ -28,20 +28,19 @@ rm -rf ./feeds/freifunk/themes
 rm -rf ./feeds/luci/themes/luci-theme-argon
 rm -rf ./feeds/luci/themes/luci-theme-material
 TIME r "删除重复插件"
+rm -rf ./feeds/package/lean/autocore
 rm -rf ./feeds/packages/admin/netdata
 rm -rf ./feeds/luci/applications/luci-app-netdata
 rm -rf ./feeds/luci/applications/luci-app-serverchan
 rm -rf ./feeds/luci/applications/luci-app-unblockmusic
-echo
-TIME b "修改 系统文件..."
-curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
-curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/index.htm > ./package/lean/autocore/files/x86/index.htm
-TIME b "系统文件 修改完成"
-
 echo 
 TIME y "添加软件包"
 rm -rf package/waynesg && git clone https://github.com/waynesg/OpenWrt-Software package/waynesg
-#rm -rf package/waynesg/luci-app-ddnsto/luasrc/view/admin_status/index/ddnsto.htm
+echo
+TIME b "修改 系统文件..."
+curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
+# curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/index.htm > ./package/lean/autocore/files/x86/index.htm
+TIME b "系统文件 修改完成"
 
 echo 
 TIME y "更换内核为5.10"
@@ -56,7 +55,7 @@ TIME y "自定义固件版本名字"
 sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ
 
 echo 
-TIME r "调整网络诊断地址到www.baidu.com"
+TIME y "调整网络诊断地址到www.baidu.com"
 sed -i "/exit 0/d" package/lean/default-settings/files/zzz-default-settings
 cat <<EOF >>package/lean/default-settings/files/zzz-default-settings
 uci set luci.diag.ping=www.baidu.com
@@ -70,7 +69,7 @@ EOF
 #sed -i 's/\/bin\/login/\/bin\/login -f root/' /etc/config/ttyd
 
 echo 
-TIME r "修改连接数"
+TIME y "修改连接数"
 sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' package/base-files/files/etc/sysctl.conf
 
 echo
@@ -139,7 +138,7 @@ sed -i 's/"Alist 文件列表"/"Alist列表"/g' package/waynesg/luci-app-alist/l
 sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
 TIME b "重命名 完成"
 echo
-TIME g "自定义文件修复权限"
+TIME b "自定义文件修复权限"
 chmod -R 755 package/waynesg
 echo
 TIME g "配置更新完成"
