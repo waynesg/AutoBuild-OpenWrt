@@ -104,14 +104,14 @@ jobs:
         cd openwrt
         source $BUILD_PATH/common.sh && Diy_menu
         
-    - name: SSH远程连接（制作.config配置文件）
+    - name: SSH连接
       if: env.SSH_ACTIONS == 'true' || (github.event.inputs.ssh == 'ssh')
       uses: danshui-git/debugger-action@master
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
-    - name: 生成"${{matrix.target}}"配置文件
+    - name: 生成配置
       continue-on-error: true
       run: |
         cd openwrt
@@ -119,7 +119,7 @@ jobs:
         ./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/${CONFIG_FILE}
         cp -Rf ${GITHUB_WORKSPACE}/${CONFIG_FILE} ${GITHUB_WORKSPACE}/config.txt
         
-    - name: 上传.config配置文件在 github actions
+    - name: 上传配置
       continue-on-error: true
       if: env.UPLOAD_CONFIG == 'true'
       uses: actions/upload-artifact@v2
@@ -127,7 +127,7 @@ jobs:
         name: .config_${{ env.SOURCE }}_${{ env.TARGET_PROFILE }}_${{ env.Firmware_Date }}
         path: config.txt
     
-    - name: 触发compile.yml启动"${{matrix.target}}"编译
+    - name: 触发编译
       id: gitpush
       continue-on-error: true
       if: steps.clone.outcome == 'success' && steps.compile.outcome == 'success' && env.REPO_TOKEN
@@ -150,7 +150,7 @@ jobs:
         git commit -m "启动${{matrix.target}}编译${{env.TARGET_PROFILE}}固件"
         git push --force "https://${{ secrets.REPO_TOKEN }}@github.com/${{github.repository}}" HEAD:main
         
-    - name: 电报机器人或pushplus信息通知
+    - name: 信息通知
       if: env.PUSH_PLUS_TOKEN && env.SERVERCHAN_SCKEY == 'PUSH' || env.TELEGRAM_BOT_TOKEN && env.SERVERCHAN_SCKEY == 'TG'
       run: |
         if [[ "${SERVERCHAN_SCKEY}" == "TG" ]]; then
