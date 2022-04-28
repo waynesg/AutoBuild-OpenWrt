@@ -178,7 +178,7 @@ jobs:
         source $BUILD_PATH/upgrade.sh && GET_TARGET_INFO
         source $BUILD_PATH/common.sh && Diy_xinxi
     
-    - name: 清理Actions空间
+    - name: 清理空间
       if: env.REPO_TOKEN
       uses: Mattraks/delete-workflow-runs@main
       with:
@@ -187,7 +187,7 @@ jobs:
           keep_minimum_runs: 0
           retain_days: ${{ env.retain_days }}
     
-    - name: 删除releases
+    - name: 删除触发
       if: env.REPO_TOKEN
       uses: dev-drprasad/delete-older-releases@master
       with:
