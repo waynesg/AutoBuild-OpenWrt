@@ -28,7 +28,6 @@ rm -rf ./feeds/freifunk/themes
 rm -rf ./feeds/luci/themes/luci-theme-argon
 rm -rf ./feeds/luci/themes/luci-theme-material
 TIME r "删除重复插件"
-rm -rf ./feeds/package/lean/autocore
 rm -rf ./feeds/packages/admin/netdata
 rm -rf ./feeds/luci/applications/luci-app-netdata
 rm -rf ./feeds/luci/applications/luci-app-serverchan
@@ -39,7 +38,13 @@ rm -rf package/waynesg && git clone https://github.com/waynesg/OpenWrt-Software 
 echo
 TIME b "修改 系统文件..."
 curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
-# curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/index.htm > ./package/lean/autocore/files/x86/index.htm
+curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/index.htm > ./package/lean/autocore/files/x86/index.htm
+curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/autocore > ./package/lean/autocore/files/x86/autocore
+curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/tempinfo > ./package/lean/autocore/files/x86/tempinfo
+curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/cntime > ./package/lean/autocore/files/x86/sbin/cntime
+curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/cpuinfo > ./package/lean/autocore/files/x86/sbin/cpuinfo
+curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/ethinfo > ./package/lean/autocore/files/x86/sbin/ethinfo
+rm -rf ./package/lean/autocore/files/x86/sbin/getcpu
 TIME b "系统文件 修改完成"
 
 #echo 
