@@ -47,9 +47,9 @@ curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openw
 rm -rf ./package/lean/autocore/files/x86/sbin/getcpu
 TIME b "系统文件 修改完成"
 
-#echo 
-#TIME y "更换内核为5.10"
-#sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.10/g' ./target/linux/x86/Makefile
+echo 
+TIME y "更换内核为5.10"
+sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.10/g' ./target/linux/x86/Makefile
 
 echo 
 TIME y "更新固件 编译日期"
@@ -106,7 +106,7 @@ echo "重命名服务菜单"
 #services menu
 sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' package/waynesg/luci-app-unblockneteasemusic/luasrc/controller/unblockneteasemusic.lua
 sed -i 's/天翼家庭云\/云盘提速/天翼云盘/g' feeds/luci/applications/luci-app-familycloud/luasrc/controller/familycloud.lua
-#sed -i 's/"AdGuard Home"/"AdHome"/g' `grep "AdGuard Home" -rl ./`
+sed -i 's/"AdGuard Home"/"AdHome"/g' `grep "AdGuard Home" -rl ./`
 sed -i 's/"Frp 内网穿透"/"Frp客户端"/g' `grep "Frp 内网穿透" -rl ./`
 sed -i 's/ShadowSocksR Plus+/SSR Plus+/g' package/waynesg/luci-app-ssr-plus/luci-app-ssr-plus/luasrc/controller/shadowsocksr.lua
 sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh-cn/upnp.po
