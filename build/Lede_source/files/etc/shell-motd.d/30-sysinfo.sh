@@ -158,6 +158,10 @@ echo ""
 printf "CPU 信息:  \x1B[92m%s\x1B[0m" "$cpu_temp"
 echo ""
 
+display "平台类型"  $(uname -rs | cut -d ' ' -f2)\n"
+printf "内核版本"  $(uname -rs | cut -d ' ' -f2)\n"
+echo ""
+
 display "系统负载" "${load%% *}" "${critical_load}" "0" "" "${load#* }"
 printf "运行时间:  \x1B[92m%s\x1B[0m\t\t" "$time"
 echo "" # fixed newline
