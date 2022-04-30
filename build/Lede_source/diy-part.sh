@@ -70,6 +70,10 @@ uci commit luci
 exit 0
 EOF
 
+echo 
+TIME y ”关闭串口跑码“
+sed -i 's/console=tty0//g'  target/linux/x86/image/Makefile
+
 # ttyd设置空密码
 #sed -i 's/\/bin\/login/\/bin\/login -f root/' /etc/config/ttyd
 
