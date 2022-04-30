@@ -65,3 +65,16 @@ service() {
 	/etc/init.d/$@
 }
 fi
+alias reload='/etc/profile'
+alias autoupdate='bash /bin/AutoUpdate.sh'
+alias tools='bash /bin/AutoBuild_Tools.sh'
+alias coremarkd='/etc/coremark.sh'
+alias shutdown='sync && block umount && poweroff'
+alias ls='ls --color=auto'
+alias l='ls -CF'
+alias ll='ls -alF'
+alias la='ls -A'
+alias cls='clear'
+alias dh='df -h'
+alias syslog='cat $(uci get system.@system[0].log_file) 2> /dev/null'
+alias ramfree='sync && echo 3 > /proc/sys/vm/drop_caches'
