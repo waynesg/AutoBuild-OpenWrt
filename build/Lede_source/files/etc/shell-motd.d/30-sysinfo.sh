@@ -158,7 +158,8 @@ echo ""
 printf "处 理 器:  \x1B[91m%s\x1B[0m" "$cpu_temp"
 echo ""
 
-printf "CPU 温度:  \x1B[92m%s\x1B[0m" "$(sensors 2>/dev/null | grep 'Core 0' | cut -c12- | awk -F '°' '{print $1}')"
+display "CPU 温度:  \x1B[92m%s\x1B[0m" "$(sensors 2>/dev/null | grep 'Core 0' | cut -c15- | awk -F '°' '{print $1}')"
+printf "平台类型:  $(uname -m)"
 echo ""
 
 display "系统负载" "${load%% *}" "${critical_load}" "0" "" "${load#* }"
