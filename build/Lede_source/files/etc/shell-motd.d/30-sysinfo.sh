@@ -158,8 +158,8 @@ echo ""
 printf "CPU 信息:  \x1B[92m%s\x1B[0m" "$cpu_temp"
 echo ""
 
-display "平台类型  "$uname -m"
-printf "内核版本  "$uname -rs"
+display "平台类型:  ($uname -m\n)"
+printf "内核版本:  ($uname -rs\n)"
 echo ""
 
 display "系统负载" "${load%% *}" "${critical_load}" "0" "" "${load#* }"
