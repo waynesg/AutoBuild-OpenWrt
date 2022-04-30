@@ -152,14 +152,14 @@ echo ""
 printf "制 造 商:  \x1B[94m%s\x1B[0m" "$bios_vendor $product_version"
 echo ""
 
-printf "处 理 器:  \x1B[91m%s\x1B[0m" "$cpuinfo"
+printf "处 理 器:  \x1B[91m%s\x1B[0m" "$cpu_temp"
 echo ""
 
-printf "CPU 信息:  \x1B[92m%s\x1B[0m" "$cpu_temp"
+printf "CPU 温度:  \x1B[92m%s\x1B[0m" "$TEMP"
 echo ""
 
-display "平台类型:  ($uname -m\n)"
-printf "内核版本:  ($uname -rs\n)"
+printf "平台类型:  $(uname -m)\n"
+printf "内核版本:  $(uname -rs)"
 echo ""
 
 display "系统负载" "${load%% *}" "${critical_load}" "0" "" "${load#* }"
