@@ -49,8 +49,8 @@ curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openw
 TIME b "系统文件 修改完成"
 
 echo 
-TIME y "更换内核为5.10"
-sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.10/g' ./target/linux/x86/Makefile
+TIME y "更换内核为5.4"
+sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.4/g' ./target/linux/x86/Makefile
 
 echo 
 TIME y "更新固件 编译日期"
