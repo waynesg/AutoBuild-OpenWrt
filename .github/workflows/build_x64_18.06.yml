@@ -334,7 +334,16 @@ jobs:
     - name: 完成通知
       if: steps.organizer.outputs.status == 'success' && env.SERVERCHAN_SCKEY == 'true'
       run: |
-        curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的✨主人✨：您使用【${{matrix.target}}】文件夹编译的[${{ env.CODE }}-${{ env.TARGET_PROFILE }}]固件(${{env.CangKu}}仓库的#${{env.Run_number}}号)顺利编译完成了！💐" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+        starttime=$(cat runtime.log)
+        endtime=$(echo `date +'%Y-%m-%d %H:%M:%S'`)
+        start_seconds=$(date --date="$starttime" +%s)
+        end_seconds=$(date --date="$endtime" +%s)
+        SEC=$((end_seconds-start_seconds))
+        s=$(echo $(( (SEC % 3600) % 60 ))秒)
+        m=$(echo $(( (SEC % 3600) / 60 ))分)
+        h=$(echo $(( SEC / 3600 ))小时)
+        curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "
+        text="🎉 固件编译完成：[${{ env.CODE }}-${{ env.TARGET_PROFILE }}]\n🎉 结束时间：'"${endtime}"'\n🎉 编译用时：'"${h}"''"${m}"''"${s}"'\n🎉 编译状态：Success✅ 😋💐" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
 
     - name: 清理脚本
       uses: GitRML/delete-workflow-runs@main
