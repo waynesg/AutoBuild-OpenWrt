@@ -21,6 +21,8 @@ env:
   PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  DOCKER_ID: ${{ secrets.DOCKER_ID }}
+  DOCKER_PASSWD: ${{ secrets.DOCKER_PASSWD }}
   TZ: Asia/Shanghai
 
 jobs:
@@ -227,6 +229,10 @@ jobs:
         if [ "${AUTOMATIC_AMLOGIC}" == "true" ]; then
           source "${PATH1}/common.sh" && Diy_amlogic
         fi
+        if [ ${{matrix.target}} == "Lede_source" ]; then
+        echo "DOCKERTAG=${{ secrets.DOCKER_ID }}/openwrt-nginx:latest" >> $GITHUB_ENV
+        echo "NOTICE=请分配不少于1G的存储容量" >> $GITHUB_ENV
+        fi
         cd openwrt
         cp -Rf bin/targets/*/* "${Home}"/upgrade
         cd bin/targets/*/*
@@ -299,6 +305,35 @@ jobs:
         overwrite: true
         file_glob: true
         
+    - name: 构建docker
+      uses: docker/setup-buildx-action@master
+      if: env.DOCKER_ID && env.DOCKER_PASSWD
+
+    - name: 登录docker
+      uses: docker/login-action@master
+      if: env.DOCKER_ID && env.DOCKER_PASSWD
+      with:
+        username: ${{ secrets.DOCKER_ID }}
+        password: ${{ secrets.DOCKER_PASSWD }}
+
+    - name: 构建image
+      uses: docker/build-push-action@master
+      continue-on-error: true
+      if: env.DOCKER_ID && env.DOCKER_PASSWD && ! contains(github.event.action, 'noser')
+      with:
+        platforms: ${{ env.ARCH }}
+        file: Dockerfile
+        context: .
+        push: true
+        tags: |
+          ${{ secrets.DOCKER_ID }}/openwrt-nginx:${{ matrix.target }}
+          ${{ env.DOCKERTAG }}
+
+    - name: 完成通知
+      if: steps.organizer.outputs.status == 'success' && env.SERVERCHAN_SCKEY == 'true'
+      run: |
+        curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的✨主人✨：您使用【${{matrix.target}}】文件夹编译的[${{ env.CODE }}-${{ env.TARGET_PROFILE }}]固件(${{env.CangKu}}仓库的#${{env.Run_number}}号)顺利编译完成了！💐" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+
     - name: 清理脚本
       uses: GitRML/delete-workflow-runs@main
       continue-on-error: true
@@ -315,8 +350,3 @@ jobs:
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
-
-    - name: 完成通知
-      if: steps.organizer.outputs.status == 'success' && env.SERVERCHAN_SCKEY == 'true'
-      run: |
-        curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的✨主人✨：您使用【${{matrix.target}}】文件夹编译的[${{ env.CODE }}-${{ env.TARGET_PROFILE }}]固件(${{env.CangKu}}仓库的#${{env.Run_number}}号)顺利编译完成了！💐" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
