@@ -193,10 +193,12 @@ jobs:
     - name: 开始通知
       if: env.PUSH_PLUS_TOKEN && env.SERVERCHAN_SCKEY == 'PUSH' || env.TELEGRAM_BOT_TOKEN && env.SERVERCHAN_SCKEY == 'TELE'
       run: |
+        echo `date +'%Y-%m-%d %H:%M:%S'` > runtime.log
+        starttime=$(echo `date +'%Y-%m-%d %H:%M:%S'`)
         if [[ "${SERVERCHAN_SCKEY}" == "TELE" ]]; then
           curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=🎉 主人：您正在使用【${{matrix.target}}】文件夹编译固件中(${{env.CangKu}}仓库的#${{env.Run_number}}号),请耐心等待...... 😋" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
         elif [[ "${SERVERCHAN_SCKEY}" == "PUSH" ]]; then
-          curl -k --data token="${{ secrets.PUSH_PLUS_TOKEN }}" --data title="🎉 固件名称：OpenWrt-'"${RELEASE_TAG}"'\n🎉 开始时间：'"${starttime}"'\n🎉 编译状态：进行中。。。 😋💐" "http://www.pushplus.plus/send"
+          curl -k --data token="${{ secrets.PUSH_PLUS_TOKEN }}" --data title="开始编译" --data "content= 🎉 固件名称：【${{matrix.target}}】\n🎉 开始时间：'"${starttime}"'\n🎉 编译状态：进行中。。。 😋💐" "http://www.pushplus.plus/send"
         fi
         
     - name: 编译固件
