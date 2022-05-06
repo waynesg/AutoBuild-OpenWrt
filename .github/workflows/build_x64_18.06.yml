@@ -274,39 +274,6 @@ jobs:
         bodyFile: "update_log.txt"
         artifacts: "${{ env.FIRMWARE }}/*"
         
-    - name: 在线更新Step 1
-      if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true'
-      run: |
-       cd openwrt
-       source "${PATH1}/upgrade.sh" && Diy_Part3
-        
-    - name: 在线更新Step 2
-      if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.REPO_TOKEN }}
-        file: openwrt/bin/Firmware/*
-        tag: AutoUpdate
-        overwrite: true
-        file_glob: true
-        
-    - name: 在线更新Step 3
-      if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true'
-      run: |
-        mkdir -p Github_Tags
-        cd Github_Tags
-        wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/AutoUpdate -O Github_Tags
-        
-    - name: 在线更新Step 4
-      if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.REPO_TOKEN }}
-        file: Github_Tags/*
-        tag: AutoUpdate
-        overwrite: true
-        file_glob: true
-        
     - name: 构建容器
       uses: docker/setup-buildx-action@master
       if: env.DOCKER_ID && env.DOCKER_PASSWD
@@ -331,6 +298,40 @@ jobs:
           ${{ secrets.DOCKER_ID }}/openwrt:${{ matrix.target }}
           ${{ env.DOCKERTAG }}
 
+        
+    - name: 更新Step 1
+      if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true'
+      run: |
+       cd openwrt
+       source "${PATH1}/upgrade.sh" && Diy_Part3
+        
+    - name: 更新Step 2
+      if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.REPO_TOKEN }}
+        file: openwrt/bin/Firmware/*
+        tag: AutoUpdate
+        overwrite: true
+        file_glob: true
+        
+    - name: 更新Step 3
+      if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true'
+      run: |
+        mkdir -p Github_Tags
+        cd Github_Tags
+        wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/AutoUpdate -O Github_Tags
+        
+    - name: 更新Step 4
+      if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.REPO_TOKEN }}
+        file: Github_Tags/*
+        tag: AutoUpdate
+        overwrite: true
+        file_glob: true
+        
     - name: 完成通知
       if: steps.organizer.outputs.status == 'success' && env.SERVERCHAN_SCKEY == 'true'
       run: |
