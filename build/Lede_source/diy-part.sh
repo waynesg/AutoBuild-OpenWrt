@@ -88,6 +88,7 @@ sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' packag
 echo
 TIME b "菜单 调整..."
 sed -i 's/\"services\"/\"control\"/g' feeds/luci/applications/luci-app-wol/luasrc/controller/wol.lua
+sed -i 's/\"services\"/\"control\"/g' package/waynesg/luci-app-accesscontrol-plus/luasrc/controller/miaplus.lua
 echo             
 TIME b "插件 重命名..."
 echo "重命名系统菜单"
@@ -109,6 +110,7 @@ sed -i 's/"实时流量监测"/"流量"/g' `grep "实时流量监测" -rl ./`
 sed -i 's/"USB 打印服务器"/"打印服务"/g' `grep "USB 打印服务器" -rl ./`
 sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
 sed -i 's/"在线用户"/"在线设备"/g' package/waynesg/luci-app-onliner/luasrc/controller/onliner.lua
+sed -i 's/"上网时间控制Plus"/"上网时间"/g' package/waynesg/luci-app-accesscontrol-plus/po/zh-cn/miaplus.po
 #sed -i 's/"autoipsetadder"/"自动设置IP"/g' `grep "autoipsetadder" -rl ./`
 echo "重命名服务菜单"
 #services menu
