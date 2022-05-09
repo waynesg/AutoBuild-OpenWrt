@@ -31,7 +31,7 @@ TIME r "删除重复插件"
 rm -rf ./feeds/packages/admin/netdata
 rm -rf ./feeds/luci/applications/luci-app-netdata
 rm -rf ./feeds/luci/applications/luci-app-serverchan
-rm -rf ./feeds/luci/applications/luci-app-unblockmusic
+# rm -rf ./feeds/luci/applications/luci-app-unblockmusic
 echo 
 TIME y "添加软件包"
 rm -rf package/waynesg && git clone https://github.com/waynesg/OpenWrt-Software package/waynesg
@@ -89,6 +89,7 @@ echo
 TIME b "菜单 调整..."
 sed -i 's/\"services\"/\"control\"/g' feeds/luci/applications/luci-app-wol/luasrc/controller/wol.lua
 #sed -i 's/\"services\"/\"control\"/g' package/waynesg/luci-app-accesscontrol-plus/luasrc/controller/miaplus.lua
+sed -i 's/\"network\"/\"control\"/g'  package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/appfilter.lua
 echo             
 TIME b "插件 重命名..."
 echo "重命名系统菜单"
@@ -144,9 +145,11 @@ echo "重命名网络菜单"
 sed -i 's/内网测速网页版/内网测速/g' package/waynesg/luci-app-speedtest-web/po/zh-cn/speedtest-web.po
 sed -i 's/"IP\/MAC绑定"/"地址绑定"/g' feeds/luci/applications/luci-app-arpbind/po/zh-cn/arpbind.po
 #sed -i 's/"netports_info"/"网口信息"/g' `grep "netports_info" -rl ./`
+sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
+sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
 echo "重命名存储菜单"
 #nas
-sed -i 's/"文件浏览器"/"文件管理"/g' package/waynesg/luci-app-filebrowser/po/zh-cn/filebrowser.po
+# sed -i 's/"文件浏览器"/"文件管理"/g' package/waynesg/luci-app-filebrowser/po/zh-cn/filebrowser.po
 sed -i 's/"FTP 服务器"/"FTP 服务"/g' feeds/luci/applications/luci-app-vsftpd/po/zh-cn/vsftpd.po
 sed -i 's/"Alist 文件列表"/"Alist列表"/g' package/waynesg/luci-app-alist/luci-app-alist/po/zh-cn/alist.po
 #vpn
