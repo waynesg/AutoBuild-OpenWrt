@@ -265,7 +265,7 @@ jobs:
       with:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         ARGS: "-avzr --exclude="
-        SOURCE: /home/runner/work/AutoBuild-OpenWrt/AutoBuild-OpenWrt/openwrt/upgrade
+        SOURCE: ${Home}/upgrade
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
         REMOTE_USER: root
