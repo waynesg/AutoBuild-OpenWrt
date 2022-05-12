@@ -111,11 +111,7 @@ jobs:
         git clone -b "$REPO_BRANCH" --single-branch "$REPO_URL" openwrt
         if [[ "${{ contains(github.event.action, 'sdk') }}" == "true" ]]; then
         cd openwrt
-        if [[ "${REPO_BRANCH}" == "master" ]]; then
-            curl -fL -m 60 -o sdk.tar.xz https://${{ secrets.REMOTE_HOST }}/releases/$REPO_BRANCH/targets/x86/64/openwrt-sdk-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz || true
-        elif
-            curl -fL -m 60 -o sdk.tar.xz https://${{ secrets.REMOTE_HOST }}/releases/$REPO_BRANCH/targets/ipq807x/generic/openwrt-sdk-ipq807x-generic_gcc-8.4.0_musl.Linux-x86_64.tar.xz || true
-        fi
+        curl -fL -m 60 -o sdk.tar.xz https://${{ secrets.REMOTE_HOST }}/releases/$REPO_BRANCH/targets/x86/64/openwrt-sdk-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz || true
         fi
         ./scripts/feeds update -a > /dev/null 2>&1
         ln -sf /${{matrix.target}}/openwrt $GITHUB_WORKSPACE/openwrt
