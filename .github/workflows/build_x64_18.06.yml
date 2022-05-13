@@ -21,11 +21,6 @@ env:
   PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-  REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-  REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
-  DOCKER_ID: ${{ secrets.DOCKER_ID }}
-  DOCKER_PASSWD: ${{ secrets.DOCKER_PASSWD }}
   TZ: Asia/Shanghai
 
 jobs:
@@ -64,7 +59,6 @@ jobs:
         echo "BY_INFORMATION=${BY_INFORMATION}" >> $GITHUB_ENV
         echo "AUTOMATIC_AMLOGIC=${AUTOMATIC_AMLOGIC}" >> $GITHUB_ENV
         echo "CangKu=${Apidz##*/}" >> $GITHUB_ENV
-        echo "DOCKERTAG=${{ secrets.DOCKER_ID }}/openwrt:latest" >> $GITHUB_ENV
         echo "Modelfile=${{matrix.target}}" >> $GITHUB_ENV 
         
     - name: 源码版本
@@ -267,30 +261,6 @@ jobs:
       with:
         name: ${{ env.OpenWrt_name }}-${{ env.CODE }}-${{ env.TARGET_PROFILE }}-firmware-${{ env.Compile_Date }}
         path: ${{ env.FIRMWARE }}
-    
-    - name: 设置容器
-      uses: docker/setup-buildx-action@master
-      if: env.DOCKER_ID && env.DOCKER_PASSWD
-
-    - name: 登录容器
-      uses: docker/login-action@master
-      if: env.DOCKER_ID && env.DOCKER_PASSWD
-      with:
-        username: ${{ secrets.DOCKER_ID }}
-        password: ${{ secrets.DOCKER_PASSWD }}
-        
-    - name: 推送容器
-      uses: docker/build-push-action@master
-      continue-on-error: true
-      if: env.DOCKER_ID && env.DOCKER_PASSWD && ! contains(github.event.action, 'noser')
-      with:
-        platforms: ${{ env.ARCH }}
-        file: Dockerfile
-        context: .
-        push: true
-        tags: |
-          ${{ secrets.DOCKER_ID }}/openwrt:${{matrix.target}}
-          ${{ env.DOCKERTAG }}
           
     - name: 发布信息
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true'
