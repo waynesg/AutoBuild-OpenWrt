@@ -77,8 +77,8 @@ jobs:
           fi
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-          . $GITHUB_WORKSPACE/scripts/merge_packages.sh
-          . $GITHUB_WORKSPACE/scripts/patches_5.15.sh
+          . https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/merge_packages.sh
+          . https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/patches_5.15.sh
           cd
           svn export https://github.com/openwrt/luci/trunk luci
           pushd luci
@@ -194,7 +194,7 @@ jobs:
           sudo sysctl vm.swappiness=0
           curl -L https://github.com/waynesg/cache-build/releases/download/cache/ib-$DEVICE.tar.xz | tar -Jxvf -
           mv *imagebuilder* ib && cd ib
-          . $GITHUB_WORKSPACE/scripts/merge_files.sh
+          . https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/merge_files.sh
           mkdir -p files/local_feed && sudo mount --bind packages files/local_feed
           sed -i 's/luci-app-[^ ]*//g' include/target.mk $(find target/ -name Makefile)
           sed -i 's/$(OPKG) install $(BUILD_PACKAGES)/$(OPKG) install --force-overwrite $(BUILD_PACKAGES)/' Makefile
@@ -244,7 +244,7 @@ jobs:
           curl -L https://github.com/waynesg/cache-build/releases/download/cache/ib-$DEVICE.tar.xz | tar -Jxvf -
           set -x
           mv *imagebuilder* ib && cd ib
-          . $GITHUB_WORKSPACE/scripts/merge_files.sh
+          . https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/merge_files.sh
           sed -i '/local/d;s/#//' files/etc/opkg/distfeeds.conf
           sed -i 's/luci-app-[^ ]*//g' include/target.mk $(find target/ -name Makefile)
           sed -i 's/$(OPKG) install $(BUILD_PACKAGES)/$(OPKG) install --force-overwrite $(BUILD_PACKAGES)/' Makefile
