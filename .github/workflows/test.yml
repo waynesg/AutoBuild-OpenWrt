@@ -10,7 +10,7 @@ on:
         required: false
       branch:
         description: 'seleclt openwrt branch'
-        default: 'main'
+        default: 'master'
         required: false
 
 jobs:
