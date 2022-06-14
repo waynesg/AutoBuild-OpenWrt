@@ -36,7 +36,7 @@ sed -i $line_number_INCLUDE_V2ray'd' package/custom/openwrt-passwall/luci-app-pa
 sed -i $line_number_INCLUDE_V2ray'd' package/custom/openwrt-passwall/luci-app-passwall/Makefile
 
 
-if [ $BRANCH == 'main' ]; then
+if [ $BRANCH == 'master' ]; then
 
   # fix po path for snapshot
   #find package/ -follow -type d -path '*/po/zh-cn' | xargs dirname | xargs -n1 -i sh -c "rm -f {}/zh_Hans; ln -sf zh-cn {}/zh_Hans"
