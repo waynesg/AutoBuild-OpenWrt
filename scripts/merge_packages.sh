@@ -26,20 +26,20 @@ function merge_feed(){
 }
 
 rm -rf package/custom; mkdir package/custom
-merge_feed nas "https://github.com/linkease/nas-packages;master"
+#merge_feed nas "https://github.com/linkease/nas-packages;master"
 merge_feed nas_luci "https://github.com/linkease/nas-packages-luci;main"
 merge_feed helloworld "https://github.com/klever1988/helloworld;tmp"
 #merge_package https://github.com/klever1988/openwrt-mos/trunk/luci-app-mosdns
-merge_package https://github.com/project-lede/luci-app-godproxy
+#merge_package https://github.com/project-lede/luci-app-godproxy
 merge_package https://github.com/sundaqiang/openwrt-packages/trunk/luci-app-wolplus
 merge_package https://github.com/kuoruan/openwrt-frp frp
 merge_package https://github.com/kuoruan/luci-app-frpc
-merge_package https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav
-merge_package https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
-merge_package https://github.com/jerrykuku/luci-app-jd-dailybonus
+#merge_package https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav
+#merge_package https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
+#merge_package https://github.com/jerrykuku/luci-app-jd-dailybonus
 merge_package "-b 18.06 https://github.com/jerrykuku/luci-theme-argon"
-merge_package https://github.com/vernesong/OpenClash/trunk/luci-app-openclash
-merge_package https://github.com/NateLol/luci-app-oled
+#merge_package https://github.com/vernesong/OpenClash/trunk/luci-app-openclash
+#merge_package https://github.com/NateLol/luci-app-oled
 merge_package "-b lede https://github.com/pymumu/luci-app-smartdns"
 merge_package "-b luci https://github.com/xiaorouji/openwrt-passwall"
 merge_package https://github.com/xiaorouji/openwrt-passwall/trunk/brook
@@ -51,7 +51,7 @@ merge_package https://github.com/xiaorouji/openwrt-passwall/trunk/dns2tcp
 merge_package https://github.com/jerrykuku/lua-maxminddb
 merge_package https://github.com/jerrykuku/luci-app-vssr
 merge_package https://github.com/kongfl888/luci-app-adguardhome
-merge_package https://github.com/nickilchen/luci-app-socat
+#merge_package https://github.com/nickilchen/luci-app-socat
 drop_package luci-app-cd8021x
 drop_package luci-app-cifs
 drop_package verysync
