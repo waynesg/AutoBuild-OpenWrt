@@ -75,11 +75,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        device: [x86]
+        device: [r1p, r1s, r1s-h3, r2c, r2s, r4s, x86]
     steps:
       - name: Trigger Compile
         run: |
-          branch='master';
+          branch='main';
           curl \
           -X POST https://api.github.com/repos/${{ github.repository }}/dispatches \
           -H "Accept: application/vnd.github.everest-preview+json" \
