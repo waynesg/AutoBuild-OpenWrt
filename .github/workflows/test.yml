@@ -160,7 +160,7 @@ jobs:
           sudo losetup -d $LOOP_DEVICE
           export AUTH="Authorization: token ${{ secrets.workflow_token }}"
           export cache_path='github.com/repos/waynesg/cache-build/releases'
-          export cache_repo_id='82129072'
+          export cache_repo_id='502961124'
           zstdmt -c --long lede.img | split --numeric=1 -b 2000m - lede.$DEVICE.img.zst.
           while true; do
           ret=$(curl -sH "$AUTH" "https://api.$cache_path/tags/cache")
