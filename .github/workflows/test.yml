@@ -51,7 +51,7 @@ jobs:
       - name: Checkout
         run: |
           cd
-          curl -sL https://raw.githubusercontent.com/00575/Nanopi/zstd-bin/zstd | sudo tee /usr/bin/zstd > /dev/null
+          curl -sL https://raw.githubusercontent.com/waynesg/AutoBuild-OpenWrt/zstd-bin/zstd | sudo tee /usr/bin/zstd > /dev/null
           for i in {1..20}
           do
             curl -sL --fail https://github.com/00575/cache-build/releases/download/cache/lede.$DEVICE.img.zst.0$i || break
@@ -159,8 +159,8 @@ jobs:
           sudo umount lede
           sudo losetup -d $LOOP_DEVICE
           export AUTH="Authorization: token ${{ secrets.workflow_token }}"
-          export cache_path='github.com/repos/waynesg/cache-build/releases'
-          export cache_repo_id='502961124'
+          export cache_path='github.com/repos/00575/cache-build/releases'
+          export cache_repo_id='54839364'
           zstdmt -c --long lede.img | split --numeric=1 -b 2000m - lede.$DEVICE.img.zst.
           while true; do
           ret=$(curl -sH "$AUTH" "https://api.$cache_path/tags/cache")
