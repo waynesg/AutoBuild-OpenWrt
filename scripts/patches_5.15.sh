@@ -49,7 +49,7 @@ if [ $BRANCH == 'master' ]; then
   sed -i 's/256/1024/' target/linux/x86/image/Makefile
 
   # enable r2s oled plugin by default
-  sed -i "s/enable '0'/enable '1'/" `find package/ -follow -type f -path '*/luci-app-oled/root/etc/config/oled'`
+  # sed -i "s/enable '0'/enable '1'/" `find package/ -follow -type f -path '*/luci-app-oled/root/etc/config/oled'`
 
   # swap the network adapter driver to r8168 to gain better performance for r4s
   #sed -i 's/r8169/r8168/' target/linux/rockchip/image/armv8.mk
@@ -62,10 +62,10 @@ if [ $BRANCH == 'master' ]; then
   echo -e "\toption maxfreq0 '1512000'\n" >> $config_file_cpufreq
 
   # enable fan control
-  wget https://github.com/friendlyarm/friendlywrt/commit/cebdc1f94dcd6363da3a5d7e1e69fd741b8b718e.patch
-  git apply cebdc1f94dcd6363da3a5d7e1e69fd741b8b718e.patch
-  rm cebdc1f94dcd6363da3a5d7e1e69fd741b8b718e.patch
-  sed -i 's/pwmchip1/pwmchip0/' target/linux/rockchip/armv8/base-files/usr/bin/fa-fancontrol.sh target/linux/rockchip/armv8/base-files/usr/bin/fa-fancontrol-direct.sh
+  # wget https://github.com/friendlyarm/friendlywrt/commit/cebdc1f94dcd6363da3a5d7e1e69fd741b8b718e.patch
+  # git apply cebdc1f94dcd6363da3a5d7e1e69fd741b8b718e.patch
+  # rm cebdc1f94dcd6363da3a5d7e1e69fd741b8b718e.patch
+  # sed -i 's/pwmchip1/pwmchip0/' target/linux/rockchip/armv8/base-files/usr/bin/fa-fancontrol.sh target/linux/rockchip/armv8/base-files/usr/bin/fa-fancontrol-direct.sh
 
 fi
 
