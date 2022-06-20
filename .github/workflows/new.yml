@@ -33,15 +33,13 @@ env:
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
   TZ: Asia/Shanghai
   NOT_PUSH: ${{ secrets.NOT_PUSH }}
-  envOverride: ${{ github.event.inputs.envOverride }}
+  DEVICE: ${{ github.event.client_payload.device || github.event.inputs.device }}
+  BRANCH: ${{ github.event.client_payload.branch || github.event.inputs.branch }}
 
 jobs:
   build:
     runs-on: ubuntu-20.04
     if: github.event.repository.owner.id == github.event.sender.id
-    env:
-      DEVICE: ${{ github.event.client_payload.device || github.event.inputs.device }}
-      BRANCH: ${{ github.event.client_payload.branch || github.event.inputs.branch }}
 
     name: 编译 "${{matrix.target}}"
     strategy:
