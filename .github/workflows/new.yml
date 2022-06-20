@@ -6,18 +6,15 @@ on:
         description: 'SSH connection to Actions'
         required: false
         default: 'false'
-      envOverride:
-        description: 'key=value,key2=value2'
+      device:
+        description: 'select device to build'
+        default: 'x86'
         required: false
-        default: ''
-      repo_json:
-        description: 'json raw string about repo to use'
+      branch:
+        description: 'seleclt openwrt branch'
+        default: 'master'
         required: false
-        default: ''
-      config:
-        description: 'config file to build'
-        required: false
-        default: 'config.buildinfo'
+
 
   schedule:
    - cron: 0 0 1 * *
