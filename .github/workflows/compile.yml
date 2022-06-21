@@ -91,8 +91,8 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /usr/lib/jvm /opt/ghc
-        sudo -E apt-get -qq update
+        nohup sh -c '
+        sudo apt update;
         sudo apt -y --no-upgrade --no-install-recommends install pv jq \
         ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \
         bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \
@@ -104,8 +104,7 @@ jobs:
         sudo sysctl vm.swappiness=0
         ' &
         sudo -E git config --global user.name 'GitHub Actions' && git config --global user.email 'noreply@github.com'
-        sudo -E apt-get -qq autoremove --purge
-        sudo -E apt-get -qq clean
+      
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /${{matrix.target}}
         sudo chown $USER:$GROUPS /${{matrix.target}}
