@@ -43,6 +43,8 @@ jobs:
     steps:
     - name: 准备完成
       uses: actions/checkout@v2
+      with:
+          fetch-depth: 1
 
     - name: 读取设置
       run: |
