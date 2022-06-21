@@ -129,12 +129,6 @@ jobs:
         LOOP_DEVICE=$(losetup -f) && echo "LOOP_DEVICE=$LOOP_DEVICE" >> $GITHUB_ENV
         sudo losetup -P --direct-io $LOOP_DEVICE lede.img
         mkdir openwrt && sudo mount -o nossd,compress=zstd $LOOP_DEVICE openwrt
-        if [ -d 'openwrt/.git' ]; then
-        cd openwrt && rm -f zerospace && git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
-        git fetch && git reset --hard origin/$BRANCH && git clean -df
-        else
-        sudo chown $USER:$(id -gn) openwrt && git clone -b $BRANCH --single-branch https://github.com/coolsnowwolf/lede lede
-        fi
  
     - name: 加载设置
       run: |
