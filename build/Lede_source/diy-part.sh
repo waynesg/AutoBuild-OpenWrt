@@ -33,11 +33,10 @@ rm -rf ./feeds/luci/applications/luci-app-netdata
 rm -rf ./feeds/luci/applications/luci-app-serverchan
 rm -rf ./feeds/luci/applications/luci-app-pushbot
 # rm -rf ./feeds/luci/applications/luci-app-unblockmusic
-# rm -rf ./feeds/packages/net/mosdns
+rm -rf ./feeds/packages/net/mosdns
 echo 
 TIME y "添加软件包"
 rm -rf package/waynesg && git clone https://github.com/waynesg/OpenWrt-Software package/waynesg
-rm -rf package/waynesg/luci-app-mosdns/mosdns
 echo
 TIME b "修改 系统文件..."
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
