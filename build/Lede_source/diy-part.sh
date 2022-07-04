@@ -33,7 +33,7 @@ rm -rf ./feeds/luci/applications/luci-app-netdata
 rm -rf ./feeds/luci/applications/luci-app-serverchan
 rm -rf ./feeds/luci/applications/luci-app-pushbot
 # rm -rf ./feeds/luci/applications/luci-app-unblockmusic
-rm -rf .feeds/packages/net/mosdns
+rm -rf ./feeds/packages/net/mosdns
 echo 
 TIME y "添加软件包"
 rm -rf package/waynesg && git clone https://github.com/waynesg/OpenWrt-Software package/waynesg
