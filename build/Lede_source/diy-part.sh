@@ -62,6 +62,11 @@ echo
 TIME y "自定义固件版本名字"
 sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ
 
+echo
+TIME y "更换golang版本"
+rm -rf feeds/packages/lang/golang
+svn export https://github.com/openwrt/packages/branches/openwrt-22.03/lang/golang feeds/packages/lang/golang
+
 echo 
 TIME y "调整网络诊断地址到www.baidu.com"
 sed -i "/exit 0/d" package/lean/default-settings/files/zzz-default-settings
