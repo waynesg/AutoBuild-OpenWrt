@@ -193,14 +193,6 @@ jobs:
           curl -k --data token="${{ secrets.PUSH_PLUS_TOKEN }}" --data title="🎉开始编译" --data "content=🎉正在使用【${{matrix.target}}】文件夹编译固件中(${{env.CangKu}}仓库的#${{env.Run_number}}号),请您耐心等待...... 😋💐" "http://www.pushplus.plus/send"
         fi
         
-    - name: 加载缓存
-      if: env.USE_CACHEWRTBUILD == 'true'
-      uses: klever1988/cachewrtbuild@main
-      with:
-        ccache: 'true'
-        clean: ${{ contains(github.event.action, 'nocache') }}
-        prefix: ${{ github.workspace }}/openwrt
-        
     - name: 编译固件
       id: compile
       run: |
