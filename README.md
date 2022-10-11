@@ -36,7 +36,7 @@ bash /bin/AutoUpdate.sh	-h			[列出帮助信息]
    - AutoBuild 固件环境修复
    - 系统信息监控
    - 打印在线设备列表
-   - 
+
 # 感谢
 - [大雕 源码仓库](https://github.com/coolsnowwolf/lede.git)
 - [Lienol 源码仓库](https://github.com/Lienol/openwrt.git)
