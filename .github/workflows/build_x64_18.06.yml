@@ -59,7 +59,8 @@ jobs:
         echo "BY_INFORMATION=${BY_INFORMATION}" >> $GITHUB_ENV
         echo "AUTOMATIC_AMLOGIC=${AUTOMATIC_AMLOGIC}" >> $GITHUB_ENV
         echo "CangKu=${Apidz##*/}" >> $GITHUB_ENV
-        echo "Modelfile=${{matrix.target}}" >> $GITHUB_ENV 
+        echo "Modelfile=${{matrix.target}}" >> $GITHUB_ENV
+        echo "{name}={value}" >> $GITHUB_OUTPUT
         
     - name: 源码版本
       run: |
