@@ -26,7 +26,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-20.04
-    if: github.event.repository.owner.id == github.event.sender.id
+    if: ${{ github.event.repository.owner.id }} == ${{ github.event.sender.id }}
 
     name: 编译 "${{matrix.target}}"
     strategy:
@@ -38,7 +38,7 @@ jobs:
 
     steps:
     - name: 准备完成
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: 读取设置
       run: |
