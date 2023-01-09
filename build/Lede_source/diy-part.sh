@@ -67,6 +67,10 @@ TIME y "更换golang版本"
 rm -rf feeds/packages/lang/golang
 svn export https://github.com/sbwml/packages_lang_golang/branches/19.x feeds/packages/lang/golang
 
+echo
+TIME y "speedtest"
+git clone https://github.com/sirpdboy/netspeedtest.git package/netspeedtest
+
 echo 
 TIME y "调整网络诊断地址到www.baidu.com"
 sed -i "/exit 0/d" package/lean/default-settings/files/zzz-default-settings
