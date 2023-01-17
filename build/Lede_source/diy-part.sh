@@ -95,6 +95,7 @@ sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' packag
 echo
 TIME y "添加upx"
 sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host"/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host upx\/host"/g' package/waynesg/luci-app-netspeedtest/homebox/Makefile
+sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx\/host"/g' feeds/packages/net/mosdns/Makefile
 
 echo
 TIME b "菜单 调整..."
