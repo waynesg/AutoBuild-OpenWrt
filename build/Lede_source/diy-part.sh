@@ -42,8 +42,9 @@ rm -rf ./feeds/packages/net/gowebdav
 rm -rf ./feeds/packages/net/msd_lite
 rm -rf ./feeds/packages/net/pdnsd-alt
 rm -rf ./feeds/packages/net/v2ray-geodata
+rm -rf ./feeds/packages/libs/libyaml-cpp
 rm -rf ./feeds/luci/libs/luci-lib-ipkg
-rm -rf ./feeds/luci/themes/luci-app-argon-config
+rm -rf ./feeds/applications/luci-app-argon-config
 
 echo 
 TIME y "添加软件包"
@@ -57,7 +58,7 @@ curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openw
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/tempinfo > ./package/lean/autocore/files/x86/sbin/tempinfo
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/cntime > ./package/lean/autocore/files/x86/sbin/cntime
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/cpuinfo > ./package/lean/autocore/files/x86/sbin/cpuinfo
-
+curl -fsSL https://raw.githubusercontent.com/immortalwrt/packages/master/net/dnsproxy/Makefile > feeds/packages/net/dnsproxy/Makefile
 # rm -rf ./package/lean/autocore/files/x86/sbin/getcpu
 TIME b "系统文件 修改完成"
 
