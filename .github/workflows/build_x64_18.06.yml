@@ -225,14 +225,14 @@ jobs:
         
     - name: 上传配置
       if: env.UPLOAD_CONFIG == 'true'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@main
       with:
         name: .config_${{ env.CODE }}_${{ env.TARGET_PROFILE }}_${{ env.Compile_Date }}
         path: config.txt
         
     - name: 上传文件
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@main
       with:
         name: filename+ipk_${{ env.CODE }}_${{ env.TARGET_PROFILE }}_${{ env.Compile_Date }}
         path: openwrt/bin
@@ -274,7 +274,7 @@ jobs:
  
     - name: 发布固件
       if: steps.organizer.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true' && env.REPO_TOKEN
-      uses: softprops/action-gh-release@v1
+      uses: ncipollo/release-action@main
       with:
         name: ${{ env.CODE }}-${{ env.TARGET_PROFILE }}
         tag: ${{ env.date }}
@@ -290,7 +290,7 @@ jobs:
         
     - name: 更新Step 2
       if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
-      uses: softprops/action-gh-release@v1
+      uses: ncipollo/release-action@main
       with:
         repo_token: ${{ secrets.REPO_TOKEN }}
         file: openwrt/bin/Firmware/*
@@ -307,7 +307,7 @@ jobs:
         
     - name: 更新Step 4
       if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
-      uses: softprops/action-gh-release@v1
+      uses: ncipollo/release-action@main
       with:
         repo_token: ${{ secrets.REPO_TOKEN }}
         file: Github_Tags/*
