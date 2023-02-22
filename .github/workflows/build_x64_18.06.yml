@@ -325,7 +325,7 @@ jobs:
         fi
 
     - name: 清理脚本
-      uses: GitRML/delete-workflow-runs@main
+      uses: Mattraks/delete-workflow-runs@v2
       continue-on-error: true
       with:
         retain_days: 40
