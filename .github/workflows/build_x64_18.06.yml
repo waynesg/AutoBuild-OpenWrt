@@ -213,7 +213,7 @@ jobs:
         cd openwrt
         echo -e "$(nproc) thread compile"
         make -j$(nproc) || make -j1 V=s
-        echo "COMPILESTATUS=success" >> $GITHUB_ENV
+        echo "::set-output name=status::success"
         echo "date=$(date "+%Y%m%d%H%M%S")" >> $GITHUB_ENV
         echo "date1=$(date +'%m-%d')" >> $GITHUB_ENV
         
@@ -225,7 +225,7 @@ jobs:
         path: config.txt
         
     - name: 上传文件
-      if: env.COMPILESTATUS == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       uses: actions/upload-artifact@v3
       with:
         name: filename+ipk_${{ env.CODE }}_${{ env.TARGET_PROFILE }}_${{ env.Compile_Date }}
@@ -252,22 +252,22 @@ jobs:
         rename -v "s/^openwrt/${{ env.date1 }}-${{ env.CODE }}/" *
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "BOT=TRUE" >> $GITHUB_ENV
-        echo "ORGANIZERSTATUS=success" >> $GITHUB_ENV
+        echo "::set-output name=status::success"    
         
     - name: 上传固件
-      if: env.ORGANIZERSTATUS == 'success' && env.UPLOAD_FIRMWARE == 'true'
+      if: steps.organizer.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true'
       uses: actions/upload-artifact@v3
       with:
         name: ${{ env.OpenWrt_name }}-${{ env.CODE }}-${{ env.TARGET_PROFILE }}-firmware-${{ env.Compile_Date }}
         path: ${{ env.FIRMWARE }}
           
     - name: 发布信息
-      if: env.ORGANIZERSTATUS == 'success' && env.UPLOAD_RELEASE == 'true'
+      if: steps.organizer.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true'
       run: |
         echo "### $(date +"%Y年%m月%d号-%H点%M分")" > update_log.txt
  
     - name: 发布固件
-      if: env.ORGANIZERSTATUS == 'success' && env.UPLOAD_RELEASE == 'true' && env.REPO_TOKEN
+      if: steps.organizer.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true' && env.REPO_TOKEN
       uses: ncipollo/release-action@v1
       with:
         name: ${{ env.CODE }}-${{ env.TARGET_PROFILE }}
@@ -277,13 +277,13 @@ jobs:
         artifacts: "${{ env.FIRMWARE }}/*"
         
     - name: 更新Step 1
-      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
+      if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true'
       run: |
        cd openwrt
        source "${PATH1}/upgrade.sh" && Diy_Part3
         
     - name: 更新Step 2
-      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE
+      if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
       uses: softprops/action-gh-release@v1
       with:
         repo_token: ${{ secrets.REPO_TOKEN }}
@@ -293,15 +293,15 @@ jobs:
         file_glob: true
         
     - name: 更新Step 3
-      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
+      if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true'
       run: |
         mkdir -p Github_Tags
         cd Github_Tags
         wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/AutoUpdate -O Github_Tags
         
     - name: 更新Step 4
-      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
-      uses: roacn/upload-release-action@master
+      if: steps.compile.outputs.status == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
+      uses: softprops/action-gh-release@v1
       with:
         repo_token: ${{ secrets.REPO_TOKEN }}
         file: Github_Tags/*
@@ -310,7 +310,7 @@ jobs:
         file_glob: true
         
     - name: 完成通知
-      if: env.COMPILESTATUS == 'success' && env.PUSH_PLUS_TOKEN && env.SERVERCHAN_SCKEY == 'PUSH' || env.COMPILESTATUS == 'success' && env.TELEGRAM_BOT_TOKEN && env.SERVERCHAN_SCKEY == 'TELE'
+      if: steps.compile.outputs.status == 'success' && env.PUSH_PLUS_TOKEN && env.SERVERCHAN_SCKEY == 'PUSH' || steps.compile.outputs.status == 'success' && env.TELEGRAM_BOT_TOKEN && env.SERVERCHAN_SCKEY == 'TELE'
       run: |
         if [[ "${SERVERCHAN_SCKEY}" == "TELE" ]]; then
           curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=✨Congratulations✨：您使用【${{matrix.target}}】文件夹编译的[${{ env.CODE }}-${{ env.TARGET_PROFILE }}]固件(${{env.CangKu}}仓库的#${{env.Run_number}}号)顺利编译完成了！💐" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
