@@ -284,7 +284,7 @@ jobs:
         
     - name: 更新Step 2
       if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE
-      uses: ncipollo/release-action@v1
+      uses: softprops/action-gh-release@v1
       with:
         repo_token: ${{ secrets.REPO_TOKEN }}
         file: openwrt/bin/Firmware/*
