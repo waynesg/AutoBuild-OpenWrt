@@ -283,13 +283,14 @@ jobs:
        source "${PATH1}/upgrade.sh" && Diy_Part3
         
     - name: 更新Step 2
+      continue-on-error: true
       if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
       uses: ncipollo/release-action@v1
       with:
         allowUpdates: true
         token: ${{ secrets.REPO_TOKEN }}        
-        tag: ${{ env.RELEASE_TAG }}
-        bodyFile: ${{ env.PATH1 }}/releaseinfo.md
+        tag: AutoUpdate
+        bodyFile: "releaseinfo.md"
         artifacts: "openwrt/bin/Firmware/*"
         
     - name: 更新Step 3
