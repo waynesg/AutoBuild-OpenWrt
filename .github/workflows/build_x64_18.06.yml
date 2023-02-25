@@ -273,7 +273,7 @@ jobs:
         name: ${{ env.CODE }}-${{ env.TARGET_PROFILE }}
         tag: ${{ env.date }}
         token: ${{ secrets.REPO_TOKEN }}
-        bodyFile: "update_log.txt"
+        bodyFile: ${{ env.PATH1 }}/releaseinfo.md
         artifacts: "${{ env.FIRMWARE }}/*"
         
     - name: 更新Step 1
@@ -290,7 +290,7 @@ jobs:
         allowUpdates: true
         token: ${{ secrets.REPO_TOKEN }}        
         tag: AutoUpdate
-        bodyFile: "releaseinfo.md"
+        bodyFile: ${{ env.PATH1 }}/releaseinfo.md
         artifacts: "openwrt/bin/Firmware/*"
         
     - name: 更新Step 3
