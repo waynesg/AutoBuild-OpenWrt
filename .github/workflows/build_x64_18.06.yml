@@ -256,7 +256,7 @@ jobs:
         
     - name: 上传固件
       if: env.ORGANIZERSTATUS == 'success' && env.UPLOAD_FIRMWARE == 'true'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@main
       with:
         name: ${{ env.OpenWrt_name }}-${{ env.CODE }}-${{ env.TARGET_PROFILE }}-firmware-${{ env.Compile_Date }}
         path: ${{ env.FIRMWARE }}
@@ -273,7 +273,7 @@ jobs:
         name: ${{ env.CODE }}-${{ env.TARGET_PROFILE }}
         tag: ${{ env.date }}
         token: ${{ secrets.REPO_TOKEN }}
-        bodyFile: ${{ env.PATH1 }}/releaseinfo.md
+        bodyFile: "update_log.txt"
         artifacts: "${{ env.FIRMWARE }}/*"
         
     - name: 更新Step 1
@@ -285,7 +285,7 @@ jobs:
     - name: 更新Step 2
       continue-on-error: true
       if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
-      uses: softprops/action-gh-release@v1
+      uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.REPO_TOKEN }}
         file: openwrt/bin/Firmware/*
@@ -295,7 +295,7 @@ jobs:
 
         
     - name: 更新Step 3
-      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
+      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true'
       run: |
         mkdir -p Github_Tags
         cd Github_Tags
@@ -303,7 +303,7 @@ jobs:
         
     - name: 更新Step 4
       if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
-      uses: softprops/action-gh-release@v1
+      uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.REPO_TOKEN }}
         file: Github_Tags/*
