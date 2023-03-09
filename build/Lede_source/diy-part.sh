@@ -42,14 +42,13 @@ rm -rf ./feeds/packages/net/gowebdav
 rm -rf ./feeds/packages/net/msd_lite
 rm -rf ./feeds/packages/net/pdnsd-alt
 rm -rf ./feeds/packages/net/v2ray-geodata
-rm -rf ./feeds/packages/libs/libyaml-cpp
 rm -rf ./feeds/luci/libs/luci-lib-ipkg
 rm -rf ./feeds/luci/applications/luci-app-argon-config
 
 echo 
 TIME y "添加软件包"
 rm -rf package/waynesg && git clone https://github.com/waynesg/OpenWrt-Software package/waynesg
-
+git clone https://github.com/waynesg/luci-app-netports package/waynesg/luci-app-netports
 echo
 TIME b "修改 系统文件..."
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
