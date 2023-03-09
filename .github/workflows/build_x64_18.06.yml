@@ -38,7 +38,7 @@ jobs:
 
     steps:
     - name: 准备完成
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
 
     - name: 读取设置
       run: |
@@ -89,7 +89,7 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         docker rmi `docker images -q`
-        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
         sudo -E apt-get -qq update
         sudo -E apt -y purge azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* moby* snap*
         sudo -E apt -y full-upgrade
@@ -147,12 +147,12 @@ jobs:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
         
-#   - name: SSH连接
-#     if: env.SSH_ACTIONS == 'true' || (github.event.inputs.ssh == 'ssh')
-#     uses: danshui-git/debugger-action@main
-#     env:
-#        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-#        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+    - name: SSH连接
+      if: env.SSH_ACTIONS == 'true' || (github.event.inputs.ssh == 'ssh')
+      uses: danshui-git/debugger-action@main
+      env:
+         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
     - name: 生成配置
       run: |
