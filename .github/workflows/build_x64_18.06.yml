@@ -38,7 +38,7 @@ jobs:
 
     steps:
     - name: 准备完成
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: 读取设置
       run: |
@@ -191,9 +191,7 @@ jobs:
       id: package
       run: |
         cd openwrt
-        make defconfig
         make download -j8
-        find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
     
     - name: 开始通知
