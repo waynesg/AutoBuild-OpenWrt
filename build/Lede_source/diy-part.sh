@@ -48,7 +48,7 @@ rm -rf ./feeds/luci/applications/luci-app-argon-config
 echo 
 TIME y "添加软件包"
 rm -rf package/waynesg && git clone https://github.com/waynesg/OpenWrt-Software package/waynesg
-git clone https://github.com/waynesg/luci-app-netports package/waynesg/luci-app-netports
+
 echo
 TIME b "修改 系统文件..."
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
@@ -127,7 +127,8 @@ sed -i 's/"挂载点"/"挂载路径"/g' feeds/luci/modules/luci-base/po/zh-cn/ba
 sed -i 's/"启动项"/"启动管理"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
 sed -i 's/"软件包"/"软件管理"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
 sed -i 's/"TTYD 终端"/"命令终端"/g' feeds/luci/applications/luci-app-ttyd/po/zh-cn/terminal.po
-sed -i 's/"Argon 主题设置"/"主题设置"/g' `grep "Argon 主题设置" -rl ./`
+sed -i 's/"Argon 主题设置"/"AG设置"/g' `grep "Argon 主题设置" -rl ./`
+sed -i 's/"Argon 主题设置"/"DG设置"/g' package/waynesg/luci-app-design-config/po/zh-cn/design-config.po
 echo "重命名控制菜单"
 #others
 sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
