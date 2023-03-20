@@ -176,7 +176,7 @@ sed -i 's/"IP\/MAC 绑定"/"地址绑定"/g' feeds/luci/applications/luci-app-ar
 #sed -i 's/"netports_info"/"网口信息"/g' `grep "netports_info" -rl ./`
 sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
 sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
-sed -i 's/"Socat"/"IPv6转发"/g'  feeds/luci/applications/luci-app-socat/po/zh-cn/socat.po
+sed -i 's/"Socat"/"IPv6转发"/g'  feeds/luci/applications/luci-app-socat/luasrc/controller/socat.lua
 echo "重命名存储菜单"
 #nas
 # sed -i 's/"文件浏览器"/"文件管理"/g' package/waynesg/luci-app-filebrowser/po/zh-cn/filebrowser.po
