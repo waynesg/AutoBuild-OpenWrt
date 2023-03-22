@@ -43,9 +43,9 @@ TIME b "系统文件 修改完成"
 #TIME y "更换内核为5.4"
 #sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.4/g' ./target/linux/x86/Makefile
 
-echo 
-TIME y "更新固件 编译日期"
-sed -i "s/2022.02.01/$(TZ=UTC-8 date "+%Y.%m.%d")/g" feeds/other/lean/autocore/files/x86/index.htm
+#echo 
+#TIME y "更新固件 编译日期"
+#sed -i "s/2022.02.01/$(TZ=UTC-8 date "+%Y.%m.%d")/g" feeds/other/lean/autocore/files/x86/index.htm
 
 echo 
 TIME y "自定义固件版本名字"
