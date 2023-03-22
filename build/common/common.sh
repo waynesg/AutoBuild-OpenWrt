@@ -39,13 +39,6 @@ fi
 ################################################################################################################
 Diy_lienol() {
 
-find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-argon' | xargs -i rm -rf {}
-find . -name 'ddns-scripts_aliyun' -o -name 'ddns-scripts_dnspod' -o -name 'luci-app-wol' | xargs -i rm -rf {}
-find . -name 'luci-app-wrtbwmon' -o -name 'wrtbwmon' -o -name 'pdnsd-alt' | xargs -i rm -rf {}
-rm -rf feeds/packages/libs/libcap
-git clone https://github.com/gd0772/package package/gd772
-wget https://raw.githubusercontent.com/gd0772/patch/main/gd772.sh
-bash gd772.sh
 
 }
 
