@@ -22,28 +22,6 @@ TIME() {
 	 }
       }
 }
-echo
-TIME r "删除无用主题"
-rm -rf ./feeds/freifunk/themes
-rm -rf ./feeds/luci/themes/luci-theme-argon
-rm -rf ./feeds/luci/themes/luci-theme-material
-TIME r "删除重复插件"
-rm -rf ./feeds/packages/admin/netdata
-rm -rf ./feeds/luci/applications/luci-app-netdata
-rm -rf ./feeds/luci/applications/luci-app-serverchan
-rm -rf ./feeds/luci/applications/luci-app-pushbot
-rm -rf ./feeds/luci/applications/luci-app-unblockmusic
-rm -rf ./feeds/luci/applications/luci-app-mosdns
-rm -rf ./feeds/luci/applications/luci-app-omcproxy
-rm -rf ./feeds/packages/net/mosdns
-rm -rf ./feeds/packages/net/adguardhome
-rm -rf ./feeds/packages/net/go-aliyundrive-webdav
-rm -rf ./feeds/packages/net/gowebdav
-rm -rf ./feeds/packages/net/msd_lite
-rm -rf ./feeds/packages/net/pdnsd-alt
-rm -rf ./feeds/packages/net/v2ray-geodata
-rm -rf ./feeds/luci/libs/luci-lib-ipkg
-rm -rf ./feeds/luci/applications/luci-app-argon-config
 
 echo 
 TIME y "添加软件包"
@@ -53,8 +31,8 @@ rm -rf package/waynesg && git clone https://github.com/waynesg/OpenWrt-Software 
 echo
 TIME b "修改 系统文件..."
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
-curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/index.htm > ./package/lean/autocore/files/x86/index.htm
-curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/ethinfo > ./package/lean/autocore/files/x86/sbin/ethinfo
+# curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/index.htm > ./package/lean/autocore/files/x86/index.htm
+# curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/ethinfo > ./package/lean/autocore/files/x86/sbin/ethinfo
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/autocore > ./package/lean/autocore/files/x86/autocore
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/tempinfo > ./package/lean/autocore/files/x86/sbin/tempinfo
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/cntime > ./package/lean/autocore/files/x86/sbin/cntime
@@ -67,29 +45,29 @@ TIME b "系统文件 修改完成"
 #TIME y "更换内核为5.4"
 #sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.4/g' ./target/linux/x86/Makefile
 
-echo 
-TIME y "更新固件 编译日期"
-sed -i "s/2022.02.01/$(TZ=UTC-8 date "+%Y.%m.%d")/g" package/lean/autocore/files/x86/index.htm
+#echo 
+#TIME y "更新固件 编译日期"
+#sed -i "s/2022.02.01/$(TZ=UTC-8 date "+%Y.%m.%d")/g" package/lean/autocore/files/x86/index.htm
 
 echo 
 TIME y "自定义固件版本名字"
 sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ
 
-echo
-TIME y "更换golang版本"
-rm -rf feeds/packages/lang/golang
-svn export https://github.com/sbwml/packages_lang_golang/branches/19.x feeds/packages/lang/golang
+#echo
+#TIME y "更换golang版本"
+#rm -rf feeds/packages/lang/golang
+#svn export https://github.com/sbwml/packages_lang_golang/branches/19.x feeds/packages/lang/golang
 
-echo 
-TIME y "调整网络诊断地址到www.baidu.com"
-sed -i "/exit 0/d" package/lean/default-settings/files/zzz-default-settings
-cat <<EOF >>package/lean/default-settings/files/zzz-default-settings
-uci set luci.diag.ping=www.baidu.com
-uci set luci.diag.route=www.baidu.com
-uci set luci.diag.dns=www.baidu.com
-uci commit luci
-exit 0
-EOF
+#echo 
+#TIME y "调整网络诊断地址到www.baidu.com"
+#sed -i "/exit 0/d" package/lean/default-settings/files/zzz-default-settings
+#cat <<EOF >>package/lean/default-settings/files/zzz-default-settings
+#uci set luci.diag.ping=www.baidu.com
+#uci set luci.diag.route=www.baidu.com
+#uci set luci.diag.dns=www.baidu.com
+#uci commit luci
+#exit 0
+#EOF
 
 echo 
 TIME y ”关闭开机串口跑码“
@@ -112,7 +90,7 @@ sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx
 
 echo
 TIME b "菜单 调整..."
-sed -i 's/\"services\"/\"control\"/g' feeds/luci/applications/luci-app-wol/luasrc/controller/wol.lua
+sed -i 's/\"services\"/\"control\"/g' feeds/luci/applications/luci-app-wol/root/usr/share/luci/menu.d/luci-app-wol.json
 #sed -i 's/\"services\"/\"control\"/g' package/waynesg/luci-app-accesscontrol-plus/luasrc/controller/miaplus.lua
 sed -i 's/\"network\"/\"control\"/g'  package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/appfilter.lua
 echo             
@@ -121,19 +99,19 @@ echo "重命名系统菜单"
 #system menu
 sed -i 's/"Web 管理"/"Web管理"/g' `grep "Web 管理" -rl ./`
 sed -i 's/"备份\/升级"/"备份升级"/g' `grep "备份\/升级" -rl ./`
-sed -i 's/"管理权"/"权限管理"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
-sed -i 's/"重启"/"立即重启"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
-#sed -i 's/"系统"/"系统设置"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
-sed -i 's/"挂载点"/"挂载路径"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
-sed -i 's/"启动项"/"启动管理"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
-sed -i 's/"软件包"/"软件管理"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
-sed -i 's/"TTYD 终端"/"命令终端"/g' feeds/luci/applications/luci-app-ttyd/po/zh-cn/terminal.po
+sed -i 's/"管理权"/"权限管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"重启"/"立即重启"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+#sed -i 's/"系统"/"系统设置"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"挂载点"/"挂载路径"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"启动项"/"启动管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"软件包"/"软件管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"TTYD 终端"/"命令终端"/g' feeds/luci/applications/luci-app-ttyd/po/zh_Hans/terminal.po
 sed -i 's/"Argon 主题设置"/"主题设置"/g' `grep "Argon 主题设置" -rl ./`
 #sed -i 's/"Design 主题设置"/"Design设置"/g' package/waynesg/luci-app-design-config/po/zh-cn/design-config.po
 echo "重命名控制菜单"
 #others
 sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
-sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' feeds/luci/applications/luci-app-turboacc/po/zh-cn/turboacc.po
+sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' package/waynesg/luci-app-turboacc/po/zh-cn/turboacc.po
 sed -i 's/"实时流量监测"/"流量"/g' `grep "实时流量监测" -rl ./`
 sed -i 's/"USB 打印服务器"/"打印服务"/g' `grep "USB 打印服务器" -rl ./`
 sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
@@ -142,7 +120,7 @@ sed -i 's/"在线用户"/"在线设备"/g' package/waynesg/luci-app-onliner/luas
 #sed -i 's/"autoipsetadder"/"自动设置IP"/g' `grep "autoipsetadder" -rl ./`
 echo "重命名服务菜单"
 #services menu
-#sed -i 's/WireGuard 状态/WG状态/g' feeds/luci/applications/luci-app-wireguard/po/zh-cn/wireguard.po
+#sed -i 's/WireGuard 状态/WG状态/g' feeds/luci/applications/luci-app-wireguard/po/zh_Hans/wireguard.po
 sed -i 's/"PassWall 2"/"PassWall+"/g' package/waynesg/luci-app-passwall2/luasrc/controller/passwall2.lua
 sed -i 's/"MultiSD_Lite"/"组播路由"/g'  package/waynesg/luci-app-msd_lite/luasrc/controller/msd_lite.lua
 #sed -i 's/"解锁网易云灰色歌曲"/"网易音乐"/g' feeds/luci/applications/luci-app-unblockmusic/po/zh-cn/unblockmusic.po
@@ -151,7 +129,7 @@ sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' package/waynesg/
 #sed -i 's/"AdGuard Home"/"AdHome"/g' `grep "AdGuard Home" -rl ./`
 #sed -i 's/"Frp 内网穿透"/"Frp客户端"/g' `grep "Frp 内网穿透" -rl ./`
 sed -i 's/ShadowSocksR Plus+/SSRPlus+/g' package/waynesg/luci-app-ssr-plus/luasrc/controller/shadowsocksr.lua
-sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh-cn/upnp.po
+sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh_Hans/upnp.po
 sed -i 's/Hello World/VssrVPN/g'  package/waynesg/luci-app-vssr/luasrc/controller/vssr.lua
 sed -i 's/"Cloudflare速度测试"/"Cloudflare"/g' package/waynesg/luci-app-cloudflarespeedtest/po/zh-cn/cloudflarespeedtest.po
 #sed -i 's/"TelegramBot"/"Telegram"/g'  package/waynesg/luci-app-telegrambot/luasrc/controller/telegrambot.lua
@@ -173,18 +151,18 @@ sed -i 's/"Cloudflare速度测试"/"Cloudflare"/g' package/waynesg/luci-app-clou
 #sed -i 's/"Rclone"/"Rclone挂载"/g' feeds/luci/applications/luci-app-rclone/luasrc/controller/rclone.lua
 echo "重命名网络菜单"
 #network
-sed -i 's/"IP\/MAC 绑定"/"地址绑定"/g' feeds/luci/applications/luci-app-arpbind/po/zh-cn/arpbind.po
+sed -i 's/"IP\/MAC 绑定"/"地址绑定"/g' package/waynesg/luci-app-arpbind/po/zh-cn/arpbind.po
 #sed -i 's/"netports_info"/"网口信息"/g' `grep "netports_info" -rl ./`
 sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
 sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
-sed -i 's/"Socat"/"IPv6转发"/g'  feeds/luci/applications/luci-app-socat/luasrc/controller/socat.lua
+sed -i 's/"Socat"/"IPv6转发"/g'  package/waynesg/luci-app-socat/luasrc/controller/socat.lua
 echo "重命名存储菜单"
 #nas
 # sed -i 's/"文件浏览器"/"文件管理"/g' package/waynesg/luci-app-filebrowser/po/zh-cn/filebrowser.po
-sed -i 's/"FTP 服务器"/"FTP 服务"/g' feeds/luci/applications/luci-app-vsftpd/po/zh-cn/vsftpd.po
+sed -i 's/"FTP 服务器"/"FTP 服务"/g' package/waynesg/luci-app-vsftpd/po/zh-cn/vsftpd.po
 sed -i 's/"Alist 文件列表"/"Alist列表"/g' package/waynesg/luci-app-alist/luci-app-alist/po/zh-cn/alist.po
 #vpn
-sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
+sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' package/waynesg/luci-app-zerotier/luasrc/controller/zerotier.lua
 TIME b "重命名 完成"
 echo
 TIME b "自定义文件修复权限"
