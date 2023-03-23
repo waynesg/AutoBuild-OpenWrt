@@ -73,8 +73,30 @@ function storage_info()
 	BootInfo=$(df -h /boot)
 	boot_usage=$(awk '/\// {print $(NF-1)}' <<<${BootInfo} | sed 's/%//g')
 	boot_total=$(awk '/\// {print $(NF-4)}' <<<${BootInfo})
+	
+	StorageInfo=$(df -h $MEDIA_STORAGE 2>/dev/null | grep $MEDIA_STORAGE)
+	if [[ -n "${StorageInfo}" && ${RootInfo} != *$MEDIA_STORAGE* ]]; then
+		media_usage=$(awk '/\// {print $(NF-1)}' <<<${StorageInfo} | sed 's/%//g')
+		media_total=$(awk '/\// {print $(NF-4)}' <<<${StorageInfo})
+	fi
 
+	StorageInfo=$(df -h $DATA_STORAGE 2>/dev/null | grep $DATA_STORAGE)
+	if [[ -n "${StorageInfo}" && ${RootInfo} != *$DATA_STORAGE* ]]; then
+		data_usage=$(awk '/\// {print $(NF-1)}' <<<${StorageInfo} | sed 's/%//g')
+		data_total=$(awk '/\// {print $(NF-4)}' <<<${StorageInfo})
+	fi
 } # storage_info
+
+function get_data_storage()
+{
+    if which lsblk >/dev/null;then
+	root_name=$(lsblk -l -o NAME,MOUNTPOINT | awk '$2~/^\/$/ {print $1'})
+	mmc_name=$(echo $root_name | awk '{print substr($1,1,length($1)-2);}')
+	if echo $mmc_name | grep mmcblk >/dev/null;then
+	    DATA_STORAGE="/mnt/${mmc_name}p4"
+	fi
+    fi
+}
 
 
 # query various systems and send some stuff to the background for overall faster execution.
@@ -110,21 +132,33 @@ swap_info=$(LC_ALL=C free -m | grep "^Swap")
 swap_usage=$( (awk '/Swap/ { printf("%3.0f", $3/$2*100) }' <<<${swap_info} 2>/dev/null || echo 0) | tr -c -d '[:digit:]')
 swap_total=$(awk '{print $(2)}' <<<${swap_info})
 
+
 # cpu info
+#cpu_temp=$(cpuinfo | grep -v '.sh')
+#sys_temp=$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c)
+#sys_tempx=`echo $sys_temp | sed 's/ / /g'`
 cpu_temp=$(cpuinfo | grep -v '.sh')
-sys_temp=$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c)
-sys_tempx=`echo $sys_temp | sed 's/ / /g'`
+cpuinfox=$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c)
+cpuinfo=`echo $cpuinfox | sed 's/.*G*./& 核心x/g' | sed -r 's/^(..)(.*)/\2\1/'`
 
-
+# chassis vendor
+bios_vendor=`cat /sys/class/dmi/id/bios_vendor`
+product_version=`cat /sys/class/dmi/id/product_version`
 
 # display info
 printf "设备信息： 软路由迷你电脑工控机"
 echo ""
 
-printf "CPU 型号:  \x1B[92m%s\x1B[0m" "$sys_tempx"
+printf "制 造 商:  \x1B[94m%s\x1B[0m" "$bios_vendor $product_version"
 echo ""
 
-printf "CPU 信息: \x1B[92m%s\x1B[0m" "$cpu_temp"
+printf "内核版本:  \x1B[33m%s\x1B[39m" "$(uname -rs)" 
+echo ""
+
+printf "处 理 器:  \x1B[91m%s\x1B[0m" "$cpuinfo"
+echo ""
+
+printf "CPU 信息:  \x1B[92m%s\x1B[0m" "$cpu_temp"
 echo ""
 
 display "系统负载" "${load%% *}" "${critical_load}" "0" "" "${load#* }"
