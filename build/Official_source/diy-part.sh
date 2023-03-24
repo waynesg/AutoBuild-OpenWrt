@@ -136,7 +136,7 @@ echo "重命名服务菜单"
 #sed -i 's/WireGuard 状态/WG状态/g' feeds/luci/applications/luci-app-wireguard/po/zh_Hans/wireguard.po
 sed -i 's/"PassWall 2"/"PassWall+"/g' package/waynesg/luci-app-passwall2/luasrc/controller/passwall2.lua
 sed -i 's/"MultiSD_Lite"/"组播路由"/g'  package/waynesg/luci-app-msd_lite/luasrc/controller/msd_lite.lua
-sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' package/waynesg/luci-app-unblockmusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
+sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' package/waynesg/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 #sed -i 's/天翼家庭云\/云盘提速/天翼云盘/g' feeds/luci/applications/luci-app-familycloud/luasrc/controller/familycloud.lua
 #sed -i 's/"AdGuard Home"/"AdHome"/g' `grep "AdGuard Home" -rl ./`
 #sed -i 's/"Frp 内网穿透"/"Frp客户端"/g' `grep "Frp 内网穿透" -rl ./`
