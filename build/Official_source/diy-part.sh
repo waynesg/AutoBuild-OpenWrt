@@ -30,8 +30,6 @@ rm -rf package/waynesg && git clone -b js https://github.com/waynesg/OpenWrt-Sof
 echo
 TIME r "删除重复插件"
 rm -rf feeds/packages/net/v2ray-geodata
-rm -rf feeds/packages/net/v2ray-core
-rm -rf feeds/packages/net/xray-core
 rm -rf package/waynesg/luci-app-omcproxy
 rm -rf package/waynesg/luci-app-adguardhome/adguardhome
 rm -rf package/waynesg/luci-app-dependence/kcptun
@@ -40,7 +38,7 @@ rm -rf package/waynesg/luci-app-dependence/v2ray-core
 rm -rf package/waynesg/luci-app-dependence/trojan-go
 rm -rf package/waynesg/luci-app-dependence/v2ray-geodata
 rm -rf package/waynesg/luci-app-bypass/luci-lib-ipkg
-
+git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 
 echo
 TIME b "修改 系统文件..."
