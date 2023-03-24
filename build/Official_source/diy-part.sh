@@ -29,6 +29,9 @@ sed -i 's/DEFAULT_PACKAGES +=/DEFAULT_PACKAGES += autocore-x86 kmod-usb-hid kmod
 rm -rf package/waynesg && git clone -b js https://github.com/waynesg/OpenWrt-Software package/waynesg
 echo
 TIME r "删除重复插件"
+rm -rf feeds/packages/net/v2ray-geodata
+rm -rf feeds/packages/net/v2ray-core
+rm -rf feeds/packages/net/xray-core
 rm -rf package/waynesg/luci-app-omcproxy
 rm -rf package/waynesg/luci-app-adguardhome/adguardhome
 rm -rf package/waynesg/luci-app-dependence/kcptun
@@ -94,7 +97,7 @@ sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' packag
 ## containerd临时关闭hash验证
 #sed -i 's/PKG_HASH.*/PKG_HASH:=skip/' feeds/packages/utils/containerd/Makefile
 
-sed -i 's/"include ..\/..\/luci.mk"/"include $(TOPDIR)\/feeds\/luci\/luci.mk"/g' feeds/luci/themes/luci-theme-openwrt/Makefile
+sed -i 's/"..\/..\/luci.mk"/"$(TOPDIR)\/feeds\/luci\/luci.mk"/g' feeds/luci/themes/luci-theme-openwrt/Makefile
 echo
 TIME y "添加upx"
 sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host"/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host upx\/host"/g' package/waynesg/luci-app-netspeedtest/homebox/Makefile
@@ -124,7 +127,7 @@ sed -i 's/"Argon 主题设置"/"主题设置"/g' `grep "Argon 主题设置" -rl 
 echo "重命名控制菜单"
 #others
 sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
-#sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' package/waynesg/luci-app-turboacc/po/zh-cn/turboacc.po
+sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' package/waynesg/luci-app-turboacc/po/zh-cn/turboacc.po
 sed -i 's/"实时流量监测"/"流量"/g' `grep "实时流量监测" -rl ./`
 sed -i 's/"USB 打印服务器"/"打印服务"/g' `grep "USB 打印服务器" -rl ./`
 sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
