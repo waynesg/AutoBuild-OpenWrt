@@ -74,8 +74,6 @@ jobs:
           echo "CODE=Lienol" >> $GITHUB_ENV
           echo "OpenWrt_name=19.07" >> $GITHUB_ENV
         elif [[ "${REPO_BRANCH}" == "openwrt-22.03" ]]; then
-          echo "NETIP=package/base-files/files/etc/networkip" >> $GITHUB_ENV
-          echo "DELETE=package/base-files/files/etc/deletefile" >> $GITHUB_ENV
           echo "CODE=Official" >> $GITHUB_ENV
           echo "OpenWrt_name=22.03" >> $GITHUB_ENV
         fi
