@@ -105,7 +105,7 @@ sed -i 's/"重启"/"立即重启"/g' feeds/luci/modules/luci-base/po/zh_Hans/bas
 sed -i 's/"挂载点"/"挂载路径"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"启动项"/"启动管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"软件包"/"软件管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
-sed -i 's/"TTYD 终端"/"命令终端"/g' feeds/luci/applications/luci-app-ttyd/po/zh_Hans/terminal.po
+sed -i 's/"Terminal"/"命令终端"/g' feeds/luci/applications/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
 sed -i 's/"Argon 主题设置"/"主题设置"/g' `grep "Argon 主题设置" -rl ./`
 #sed -i 's/"Design 主题设置"/"Design设置"/g' package/waynesg/luci-app-design-config/po/zh-cn/design-config.po
 echo "重命名控制菜单"
