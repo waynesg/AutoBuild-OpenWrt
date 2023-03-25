@@ -40,7 +40,8 @@ git clone -b main --depth 1 https://github.com/Lienol/openwrt-package Lienol_pkg
 git clone -b master --depth 1 https://github.com/QiuSimons/OpenWrt-Add.git OpenWrt-Add
 git clone -b master --depth 1 https://github.com/nxhack/openwrt-node-packages.git openwrt-node
 git clone -b packages --depth 1 https://github.com/xiaorouji/openwrt-passwall passwall_pkg
-git clone -b luci --depth 1 https://github.com/xiaorouji/openwrt-passwall passwall_luci
+git clone -b luci-smartdns-new-version --depth 1 https://github.com/xiaorouji/openwrt-passwall passwall_luci
+git clone -b main --depth 1 https://github.com/xiaorouji/openwrt-passwall2 passwall2_luci
 git clone -b main --depth 1 https://github.com/jjm2473/openwrt-third openwrt-third
 git clone -b master --depth 1 https://github.com/lisaac/luci-app-dockerman dockerman
 git clone -b master --depth 1 https://github.com/lisaac/luci-app-diskman diskman
