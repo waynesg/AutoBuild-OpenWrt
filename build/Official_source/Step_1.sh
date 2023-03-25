@@ -37,7 +37,7 @@ git clone -b master --depth 1 https://github.com/openwrt/packages.git openwrt_pk
 git clone -b master --depth 1 https://github.com/openwrt/luci.git openwrt_luci_ma
 git clone -b master --depth 1 https://github.com/Lienol/openwrt.git Lienol
 git clone -b main --depth 1 https://github.com/Lienol/openwrt-package Lienol_pkg
-git clone -b master --depth 1 https://github.com/QiuSimons/OpenWrt-Add.git OpenWrt-Add
+git clone -b js --depth 1 https://github.com/waynesg/OpenWrt-Software.git waynesg_pkg
 git clone -b master --depth 1 https://github.com/nxhack/openwrt-node-packages.git openwrt-node
 git clone -b packages --depth 1 https://github.com/xiaorouji/openwrt-passwall passwall_pkg
 git clone -b luci-smartdns-new-version --depth 1 https://github.com/xiaorouji/openwrt-passwall passwall_luci
@@ -46,7 +46,7 @@ git clone -b main --depth 1 https://github.com/jjm2473/openwrt-third openwrt-thi
 git clone -b master --depth 1 https://github.com/lisaac/luci-app-dockerman dockerman
 git clone -b master --depth 1 https://github.com/lisaac/luci-app-diskman diskman
 git clone -b master --depth 1 https://github.com/lisaac/luci-lib-docker docker_lib
-git clone -b master --depth 1 https://github.com/QiuSimons/openwrt-mos mosdns
+git clone -b v5 --depth 1 https://github.com/sbwml/luci-app-mosdns mosdns
 git clone -b master --depth 1 https://github.com/fw876/helloworld ssrp
 git clone -b master --depth 1 https://github.com/zxlhhyccc/bf-package-master zxlhhyccc
 git clone -b main --depth 1 https://github.com/linkease/openwrt-app-actions linkease
