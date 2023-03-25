@@ -105,7 +105,7 @@ jobs:
     - name: 准备源码
       working-directory: /${{matrix.target}}
       run: |
-        cp -r ./build/${matrix.target}/. ./build/
+        cp -r ./${GITHUB_WORKSPACE}/build/${matrix.target}/. ./build/
         cp -r ./build/. ./
         /bin/bash Step_1.sh
         cd openwrt
