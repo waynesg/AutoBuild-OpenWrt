@@ -1,8 +1,8 @@
 #!/bin/bash
 # 滚回fw3
-sed -i 's,iptables-nft,iptables-legacy,g' ./package/new/luci-app-passwall2/Makefile
-sed -i 's,iptables-nft,iptables-legacy,g' ./package/new/luci-app-passwall/Makefile
-sed -i 's,iptables-nft +kmod-nft-fullcone,iptables-mod-fullconenat,g' ./package/new/addition-trans-zh/Makefile
+sed -i 's,iptables-nft,iptables-legacy,g' ./package/waynesg/luci-app-passwall2/Makefile
+sed -i 's,iptables-nft,iptables-legacy,g' ./package/waynesg/luci-app-passwall/Makefile
+sed -i 's,iptables-nft +kmod-nft-fullcone,iptables-mod-fullconenat,g' ./package/waynesg/addition-trans-zh/Makefile
 rm -rf ./feeds/packages/net/miniupnpd
 cp -rf ../lede_pkg/net/miniupnpd ./feeds/packages/net/miniupnpd
 rm -rf ./feeds/luci/applications/luci-app-upnp
