@@ -415,6 +415,7 @@ cp -rf ../waynesg_pkg/luci-app-cloudflarespeedtest ./package/waynesg/luci-app-cl
 cp -rf ../waynesg_pkg/luci-app-fileassistant ./package/waynesg/luci-app-fileassistant
 # 宽带测速
 cp -rf ../waynesg_pkg/luci-app-homebox ./package/waynesg/luci-app-homebox
+sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host"/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host upx\/host"/g' ./package/waynesg/luci-app-homebox/homebox/Makefile
 # 组播路由
 cp -rf ../waynesg_pkg/luci-app-msd_lite ./package/waynesg/luci-app-msd_lite
 cp -rf ../waynesg_pkg/luci-app-dependence/msd_lite ./package/waynesg/msd_lite
