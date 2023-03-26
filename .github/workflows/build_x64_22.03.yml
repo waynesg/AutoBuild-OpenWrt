@@ -113,7 +113,6 @@ jobs:
         
     - name: 准备插件
       run: |
-        mv -f "${Home}"/build/common/*.sh "${PATH1}"
         cd openwrt
         cp -r ../build/. ./
         /bin/bash Step_2.sh
@@ -124,6 +123,7 @@ jobs:
       run: |
         echo "Compile_Date=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
         cp -Rf `find ./ -maxdepth 1 -type d ! -path './openwrt' ! -path './'` openwrt
+        mv -f "${Home}"/build/common/*.sh "${PATH1}"
         source "${PATH1}/common.sh" && Diy_settings
         [[ "${{ github.event.inputs.ssh }}" == 'ssh' ]] && echo "SSHYC=true" >> $GITHUB_ENV
         cd openwrt
