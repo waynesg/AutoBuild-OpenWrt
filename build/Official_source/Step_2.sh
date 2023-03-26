@@ -160,8 +160,10 @@ cp -rf ../immortalwrt_pkg/utils/coremark ./feeds/packages/utils/coremark
 # Airconnect
 cp -rf ../waynesg_pkg/luci-app-airconnect/airconnect ./package/waynesg/airconnect
 cp -rf ../waynesg_pkg/luci-app-airconnect ./package/waynesg/luci-app-airconnect
+sed -i 's/"AirConnect"/"音频串流"/g' ./package/waynesg/luci-app-airconnect/luasrc/controller/airconnect.lua
 # luci-app-irqbalance
 cp -rf ../waynesg_pkg/luci-app-irqbalance ./package/waynesg/luci-app-irqbalance
+sed -i 's/"中断均衡器"/"中断均衡"/g' ./package/waynesg/luci-app-irqbalance/po/zh-cn/luci-app-irqbalance.po
 # AutoUpdate
 git clone https://github.com/waynesg/luci-app-autoupdate package/waynesg/luci-app-autoupdate
 # 更换 Nodejs 版本
@@ -203,6 +205,7 @@ rm -rf ./feeds/packages/lang/golang
 cp -rf ../openwrt_pkg_ma/lang/golang ./feeds/packages/lang/golang
 # 访问控制
 cp -rf ../lede_luci/applications/luci-app-accesscontrol ./package/waynesg/luci-app-accesscontrol
+sed -i 's/"上网时间控制"/"时间控制"/g' ./package/waynesg/luci-app-accesscontrol/po/zh-cn/mia.po
 cp -rf ../waynesg_pkg/luci-app-control-weburl ./package/waynesg/luci-app-control-weburl
 cp -rf ../waynesg_pkg/luci-app-control-speedlimit ./package/waynesg/luci-app-control-speedlimit
 cp -rf ../waynesg_pkg/luci-app-control-timewol ./package/waynesg/luci-app-control-timewol
@@ -212,8 +215,10 @@ cp -rf ../waynesg_pkg/luci-app-parentcontrol ./package/waynesg/luci-app-parentco
 git clone -b master --depth 1 https://github.com/jerrykuku/luci-theme-argon.git package/waynesg/luci-theme-argon
 rm -rf ./package/waynesg/luci-theme-argon/htdocs/luci-static/argon/background/README.md
 git clone -b master --depth 1 https://github.com/jerrykuku/luci-app-argon-config.git package/waynesg/luci-app-argon-config
+sed -i 's/"Argon 主题设置"/"主题设置"/g' ./package/waynesg/luci-app-argon-config/luasrc/controller/argon-config.lua
 # MAC 地址与 IP 绑定
 cp -rf ../immortalwrt_luci/applications/luci-app-arpbind ./feeds/luci/applications/luci-app-arpbind
+sed -i 's/"IP\/MAC 绑定"/"地址绑定"/g' ./feeds/luci/applications/luci-app-arpbind/po/zh-cn/arpbind.po
 ln -sf ../../../feeds/luci/applications/luci-app-arpbind ./package/feeds/luci/luci-app-arpbind
 # Boost 通用即插即用
 rm -rf ./feeds/packages/net/miniupnpd
@@ -230,16 +235,19 @@ wget -P feeds/packages/net/miniupnpd/patches/ https://github.com/ptpt52/openwrt-
 wget -P feeds/packages/net/miniupnpd/patches/ https://github.com/ptpt52/openwrt-packages/raw/master/net/miniupnpd/patches/500-0006-miniupnpd-fix-stun-POSTROUTING-filter-for-openwrt.patch
 rm -rf ./feeds/luci/applications/luci-app-upnp
 cp -rf ../openwrt_luci_ma/applications/luci-app-upnp ./feeds/luci/applications/luci-app-upnp
+sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' ./feeds/luci/applications/luci-app-upnp/po/zh_Hans/upnp.po
 pushd feeds/luci
 wget -qO- https://github.com/openwrt/luci/commit/0b5fb915.patch | patch -p1
 popd
 # CPU 控制相关
 cp -rf ../waynesg_pkg/luci-app-cpufreq ./feeds/luci/applications/luci-app-cpufreq
+sed -i 's/"CPU 性能优化调节"/"CPU优化"/g' ./feeds/luci/applications/luci-app-cpufreq/po/zh_Hans/cpufreq.po
 ln -sf ../../../feeds/luci/applications/luci-app-cpufreq ./package/feeds/luci/luci-app-cpufreq
 sed -i 's,1608,1800,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
 sed -i 's,2016,2208,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
 sed -i 's,1512,1608,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
 cp -rf ../waynesg_pkg/luci-app-cpulimit ./package/waynesg/luci-app-cpulimit
+sed -i 's/"CPU占用率限制"/"CPU限制"/g' ./package/waynesg/luci-app-cpulimit/po/zh_Hans/cpulimit.po
 cp -rf ../immortalwrt_pkg/utils/cpulimit ./feeds/packages/utils/cpulimit
 ln -sf ../../../feeds/packages/utils/cpulimit ./package/feeds/packages/cpulimit
 # 动态DNS
@@ -251,6 +259,7 @@ ln -sf ../../../feeds/packages/net/ddns-scripts_dnspod ./package/feeds/packages/
 # Docker 容器
 rm -rf ./feeds/luci/applications/luci-app-dockerman
 cp -rf ../dockerman/applications/luci-app-dockerman ./feeds/luci/applications/luci-app-dockerman
+#sed -i 's/"Docker"/"Docker容器"/g' ./feeds/luci/applications/luci-app-dockerman/po/zh-cn/dockerman.po
 sed -i '/auto_start/d' feeds/luci/applications/luci-app-dockerman/root/etc/uci-defaults/luci-app-dockerman
 pushd feeds/luci
 wget -qO- https://github.com/openwrt/luci/commit/0c1fc7f.patch | patch -p1
@@ -317,6 +326,7 @@ ntp.ntsc.ac.cn
 ' >>./package/waynesg/luci-app-passwall/root/usr/share/passwall/rules/direct_host
 # Passwall2
 cp -rf ../passwall2_luci/luci-app-passwall2 ./package/waynesg/luci-app-passwall2
+sed -i 's/"PassWall 2"/"PassWall+"/g' ./package/waynesg/luci-app-passwall2/luasrc/controller/passwall2.lua
 # 清理内存
 cp -rf ../lede_luci/applications/luci-app-ramfree ./package/waynesg/luci-app-ramfree
 # ServerChan 微信推送
@@ -335,7 +345,7 @@ cp -rf ../ssrp/simple-obfs ./package/waynesg/simple-obfs
 cp -rf ../ssrp/naiveproxy ./package/waynesg/naiveproxy
 cp -rf ../ssrp/v2ray-core ./package/waynesg/v2ray-core
 cp -rf ../ssrp/hysteria ./package/waynesg/hysteria
-cp -rf ../ssrp/sagernet-core ./package/waynesg/sagernet-core
+#cp -rf ../ssrp/sagernet-core ./package/waynesg/sagernet-core
 rm -rf ./feeds/packages/net/xray-core
 cp -rf ../ssrp/xray-core ./package/waynesg/xray-core
 cp -rf ../ssrp/v2ray-plugin ./package/waynesg/v2ray-plugin
@@ -346,6 +356,7 @@ cp -rf ../immortalwrt_pkg/net/kcptun ./feeds/packages/net/kcptun
 ln -sf ../../../feeds/packages/net/kcptun ./package/feeds/packages/kcptun
 # ShadowsocksR Plus+
 cp -rf ../ssrp/luci-app-ssr-plus ./package/waynesg/luci-app-ssr-plus
+sed -i 's/ShadowSocksR Plus+/SSRPlus+/g' package/waynesg/luci-app-ssr-plus/luasrc/controller/shadowsocksr.lua
 rm -rf ./package/waynesg/luci-app-ssr-plus/po/zh_Hans
 pushd package/waynesg
 wget -qO - https://github.com/fw876/helloworld/commit/5bbf6e7.patch | patch -p1
@@ -355,6 +366,7 @@ sed -i '/Clang.CN.CIDR/a\o:value("https://gh.404delivr.workers.dev/https://githu
 popd
 # socat
 cp -rf ../Lienol_pkg/luci-app-socat ./package/waynesg/luci-app-socat
+sed -i 's/"Socat"/"IPv6转发"/g'  ./package/waynesg/luci-app-socat/luasrc/controller/socat.lua
 sed -i '/socat\.config/d' feeds/packages/net/socat/Makefile
 # 订阅转换
 cp -rf ../immortalwrt_pkg/net/subconverter ./feeds/packages/net/subconverter
@@ -371,16 +383,19 @@ cp -rf ../immortalwrt_pkg/libs/toml11 ./feeds/packages/libs/toml11
 ln -sf ../../../feeds/packages/libs/toml11 ./package/feeds/packages/toml11
 # 网易云音乐解锁
 git clone -b js --depth 1 https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git package/waynesg/UnblockNeteaseMusic
+sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' ./package/waynesg/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 # rpcd
 sed -i 's/option timeout 30/option timeout 60/g' package/system/rpcd/files/rpcd.config
 sed -i 's#20) \* 1000#60) \* 1000#g' feeds/luci/modules/luci-base/htdocs/luci-static/resources/rpc.js
 # USB 打印机
 cp -rf ../lede_luci/applications/luci-app-usb-printer ./package/waynesg/luci-app-usb-printer
+sed -i 's/"USB 打印服务器"/"打印服务"/g' ./package/waynesg/luci-app-usb-printer/po/zh-cn/usb-printer.po
 # UU加速器
 # cp -rf ../lede_luci/applications/luci-app-uugamebooster ./package/waynesg/luci-app-uugamebooster
 # cp -rf ../lede_pkg/net/uugamebooster ./package/waynesg/uugamebooster
 # VSSR
 git clone -b master --depth 1 https://github.com/jerrykuku/luci-app-vssr.git package/waynesg/luci-app-vssr
+sed -i 's/Hello World/VssrVPN/g' ./package/waynesg/luci-app-vssr/luasrc/controller/vssr.lua
 git clone -b master --depth 1 https://github.com/jerrykuku/lua-maxminddb.git package/waynesg/lua-maxminddb
 # 网络唤醒
 cp -rf ../zxlhhyccc/zxlhhyccc/luci-app-wolplus ./package/waynesg/luci-app-wolplus
@@ -389,6 +404,7 @@ git clone -b master --depth 1 https://github.com/brvphoenix/wrtbwmon.git package
 git clone -b master --depth 1 https://github.com/brvphoenix/luci-app-wrtbwmon.git package/waynesg/luci-app-wrtbwmon
 # Zerotier
 cp -rf ../immortalwrt_luci/applications/luci-app-zerotier ./feeds/luci/applications/luci-app-zerotier
+sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
 #cp -rf ../waynesg_pkg/move_2_services.sh ./feeds/luci/applications/luci-app-zerotier/move_2_services.sh
 #chmod -R 755 ./feeds/luci/applications/luci-app-zerotier/move_2_services.sh
 pushd feeds/luci/applications/luci-app-zerotier
@@ -406,6 +422,7 @@ sed -i 's,iptables-mod-fullconenat,iptables-nft +kmod-nft-fullcone,g' package/wa
 cp -rf ../waynesg_pkg/luci-app-advanced ./package/waynesg/luci-app-advanced
 # Alist
 git clone -b master --depth 1 https://github.com/sbwml/luci-app-alist package/waynesg/luci-app-alist
+sed -i 's/"Alist 文件列表"/"Alist列表"/g' ./package/waynesg/luci-app-alist/luci-app-alist/po/zh-cn/alist.po
 sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx\/host"/g' package/waynesg/luci-app-alist/alist/Makefile
 # 定时设置
 cp -rf ../waynesg_pkg/luci-app-autotimeset ./package/waynesg/luci-app-autotimeset
@@ -413,13 +430,16 @@ cp -rf ../waynesg_pkg/luci-app-autotimeset ./package/waynesg/luci-app-autotimese
 cp -rf ../waynesg_pkg/luci-app-bypass ./package/waynesg/luci-app-bypass
 # CloudSpeedTest优选IP
 cp -rf ../waynesg_pkg/luci-app-cloudflarespeedtest ./package/waynesg/luci-app-cloudflarespeedtest
+sed -i 's/"Cloudflare速度测试"/"Cloudflare"/g' ./package/waynesg/luci-app-cloudflarespeedtest/po/zh-cn/cloudflarespeedtest.po
 # 文件管理器
 cp -rf ../waynesg_pkg/luci-app-fileassistant ./package/waynesg/luci-app-fileassistant
 # 宽带测速
 cp -rf ../waynesg_pkg/luci-app-homebox ./package/waynesg/luci-app-homebox
+sed -i 's/"Homebox"/"宽带测速"/g' ./package/waynesg/luci-app-homebox/po/zh-cn/homebox.po
 sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host"/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host upx\/host"/g' package/waynesg/luci-app-homebox/homebox/Makefile
 # 组播路由
 cp -rf ../waynesg_pkg/luci-app-msd_lite ./package/waynesg/luci-app-msd_lite
+sed -i 's/"MultiSD_Lite"/"组播路由"/g'  ./package/waynesg/luci-app-msd_lite/luasrc/controller/msd_lite.lua
 cp -rf ../waynesg_pkg/luci-app-dependence/msd_lite ./package/waynesg/msd_lite
 # 在线设备
 cp -rf ../waynesg_pkg/luci-app-onliner ./package/waynesg/luci-app-onliner
@@ -428,11 +448,30 @@ cp -rf ../lede_pkg/utils/smartmontools ./package/waynesg/smartmontools
 cp -rf ../waynesg_pkg/luci-app-smartinfo ./package/waynesg/luci-app-smartinfo
 # 网络接口图标
 cp -rf ../waynesg_pkg/luci-app-tn-netports ./package/waynesg/luci-app-tn-netports
+sed -i 's/"Homebox"/"宽带测速"/g' ./package/waynesg/luci-app-homebox/po/zh-cn/homebox.po
 # TurboACC
 cp -rf ../waynesg_pkg/luci-app-turboacc ./package/waynesg/luci-app-turboacc
+sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' ./package/waynesg/luci-app-turboacc/po/zh-cn/turboacc.po
 cp -rf ../waynesg_pkg/luci-app-dependence/shortcut-fe ./package/waynesg/shortcut-fe
 cp -rf ../waynesg_pkg/luci-app-dependence/dnsforwarder ./package/waynesg/dnsforwarder
 cp -rf ../lede_pkg/net/dnsproxy ./package/waynesg/dnsproxy
+#Others Menu Modify
+sed -i 's/"Web 管理"/"Web管理"/g' `grep "Web 管理" -rl ./`
+sed -i 's/"备份\/升级"/"备份升级"/g' `grep "备份\/升级" -rl ./`
+sed -i 's/"管理权"/"权限管理"/g' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"重启"/"立即重启"/g' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i '''s/'"系统"'/'"系统设置"'/g''' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"挂载点"/"挂载路径"/g' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"启动项"/"启动管理"/g' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"软件包"/"软件管理"/g' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"Terminal"/"命令终端"/g' ./feeds/luci/applications/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
+sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
+sed -i 's/"实时流量监测"/"流量"/g' `grep "实时流量监测" -rl ./`
+sed -i 's/"USB 打印服务器"/"打印服务"/g' `grep "USB 打印服务器" -rl ./`
+sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
+sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
+sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
+
 
 ### 最后的收尾工作 ###
 ## Lets Fuck
