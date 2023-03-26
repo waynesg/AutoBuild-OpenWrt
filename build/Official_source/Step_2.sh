@@ -276,6 +276,7 @@ cp -rf ../lede/package/lean/ipv6-helper ./package/waynesg/ipv6-helper
 cp -rf ../mosdns/mosdns ./package/waynesg/mosdns
 cp -rf ../mosdns/luci-app-mosdns ./package/waynesg/luci-app-mosdns
 cp -rf ../mosdns/v2dat ./package/waynesg/v2dat
+sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx\/host"/g' package/waynesg/mosdns/Makefile
 # 流量监管
 cp -rf ../lede_luci/applications/luci-app-netdata ./package/waynesg/luci-app-netdata
 # 上网 APP 过滤
@@ -405,6 +406,7 @@ sed -i 's,iptables-mod-fullconenat,iptables-nft +kmod-nft-fullcone,g' package/wa
 cp -rf ../waynesg_pkg/luci-app-advanced ./package/waynesg/luci-app-advanced
 # Alist
 git clone -b master --depth 1 https://github.com/sbwml/luci-app-alist package/waynesg/luci-app-alist
+sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx\/host"/g' package/waynesg/luci-app-alist/alist/Makefile
 # 定时设置
 cp -rf ../waynesg_pkg/luci-app-autotimeset ./package/waynesg/luci-app-autotimeset
 # Bypass
@@ -415,7 +417,7 @@ cp -rf ../waynesg_pkg/luci-app-cloudflarespeedtest ./package/waynesg/luci-app-cl
 cp -rf ../waynesg_pkg/luci-app-fileassistant ./package/waynesg/luci-app-fileassistant
 # 宽带测速
 cp -rf ../waynesg_pkg/luci-app-homebox ./package/waynesg/luci-app-homebox
-sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host"/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host upx\/host"/g' ./package/waynesg/luci-app-homebox/homebox/Makefile
+sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host"/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host upx\/host"/g' package/waynesg/luci-app-homebox/homebox/Makefile
 # 组播路由
 cp -rf ../waynesg_pkg/luci-app-msd_lite ./package/waynesg/luci-app-msd_lite
 cp -rf ../waynesg_pkg/luci-app-dependence/msd_lite ./package/waynesg/msd_lite
