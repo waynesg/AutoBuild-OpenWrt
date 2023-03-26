@@ -49,6 +49,12 @@ find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon' -o -name 'luci-
 Diy_Official() {
 
 #find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-openwrt' -o -name 'luci-app-cifs' | xargs -i rm -rf {}
+
+if [[ ! "${Modelfile}" == "openwrt_amlogic" ]]; then
+	sed -i '/IMAGES_GZIP/d' "${PATH1}/${CONFIG_FILE}" > /dev/null 2>&1
+	echo -e "\nCONFIG_TARGET_IMAGES_GZIP=y" >> "${PATH1}/${CONFIG_FILE}"
+fi
+
 }
 
 
