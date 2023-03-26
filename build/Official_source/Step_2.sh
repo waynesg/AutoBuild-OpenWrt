@@ -218,7 +218,7 @@ git clone -b master --depth 1 https://github.com/jerrykuku/luci-app-argon-config
 sed -i 's/"Argon 主题设置"/"主题设置"/g' ./package/waynesg/luci-app-argon-config/luasrc/controller/argon-config.lua
 # MAC 地址与 IP 绑定
 cp -rf ../immortalwrt_luci/applications/luci-app-arpbind ./feeds/luci/applications/luci-app-arpbind
-sed -i 's/"IP\/MAC 绑定"/"地址绑定"/g' ./feeds/luci/applications/luci-app-arpbind/po/zh-cn/arpbind.po
+sed -i 's/"IP\/MAC 绑定"/"地址绑定"/g' ./feeds/luci/applications/luci-app-arpbind/po/zh_Hans/arpbind.po
 ln -sf ../../../feeds/luci/applications/luci-app-arpbind ./package/feeds/luci/luci-app-arpbind
 # Boost 通用即插即用
 rm -rf ./feeds/packages/net/miniupnpd
@@ -383,7 +383,7 @@ cp -rf ../immortalwrt_pkg/libs/toml11 ./feeds/packages/libs/toml11
 ln -sf ../../../feeds/packages/libs/toml11 ./package/feeds/packages/toml11
 # 网易云音乐解锁
 git clone -b js --depth 1 https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git package/waynesg/UnblockNeteaseMusic
-sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' ./package/waynesg/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
+sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' ./package/waynesg/UnblockNeteaseMusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 # rpcd
 sed -i 's/option timeout 30/option timeout 60/g' package/system/rpcd/files/rpcd.config
 sed -i 's#20) \* 1000#60) \* 1000#g' feeds/luci/modules/luci-base/htdocs/luci-static/resources/rpc.js
@@ -404,7 +404,7 @@ git clone -b master --depth 1 https://github.com/brvphoenix/wrtbwmon.git package
 git clone -b master --depth 1 https://github.com/brvphoenix/luci-app-wrtbwmon.git package/waynesg/luci-app-wrtbwmon
 # Zerotier
 cp -rf ../immortalwrt_luci/applications/luci-app-zerotier ./feeds/luci/applications/luci-app-zerotier
-sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
+sed -i 's/msgstr ""/msgstr "ZeroTier虚拟网络"/g' ./feeds/luci/applications/luci-app-zerotier/po/zh_Hans/zerotier.po
 #cp -rf ../waynesg_pkg/move_2_services.sh ./feeds/luci/applications/luci-app-zerotier/move_2_services.sh
 #chmod -R 755 ./feeds/luci/applications/luci-app-zerotier/move_2_services.sh
 pushd feeds/luci/applications/luci-app-zerotier
@@ -447,7 +447,6 @@ cp -rf ../lede_pkg/utils/smartmontools ./package/waynesg/smartmontools
 cp -rf ../waynesg_pkg/luci-app-smartinfo ./package/waynesg/luci-app-smartinfo
 # 网络接口图标
 cp -rf ../waynesg_pkg/luci-app-tn-netports ./package/waynesg/luci-app-tn-netports
-sed -i 's/"Homebox"/"宽带测速"/g' ./package/waynesg/luci-app-homebox/po/zh-cn/homebox.po
 # TurboACC
 cp -rf ../waynesg_pkg/luci-app-turboacc ./package/waynesg/luci-app-turboacc
 sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' ./package/waynesg/luci-app-turboacc/po/zh-cn/turboacc.po
