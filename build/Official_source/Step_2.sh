@@ -434,9 +434,8 @@ sed -i 's/"Cloudflare速度测试"/"Cloudflare"/g' ./package/waynesg/luci-app-cl
 # 文件管理器
 cp -rf ../waynesg_pkg/luci-app-fileassistant ./package/waynesg/luci-app-fileassistant
 # 宽带测速
-cp -rf ../waynesg_pkg/luci-app-homebox ./package/waynesg/luci-app-homebox
-sed -i 's/"Homebox"/"宽带测速"/g' ./package/waynesg/luci-app-homebox/po/zh-cn/homebox.po
-sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host"/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host upx\/host"/g' package/waynesg/luci-app-homebox/homebox/Makefile
+cp -rf ../waynesg_pkg/luci-app-netspeedtest ./package/waynesg/luci-app-netspeedtest
+sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host"/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host upx\/host"/g' package/waynesg/luci-app-netspeedtest/homebox/Makefile
 # 组播路由
 cp -rf ../waynesg_pkg/luci-app-msd_lite ./package/waynesg/luci-app-msd_lite
 sed -i 's/"MultiSD_Lite"/"组播路由"/g'  ./package/waynesg/luci-app-msd_lite/luasrc/controller/msd_lite.lua
