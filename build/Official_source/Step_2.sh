@@ -167,25 +167,25 @@ sed -i 's/"中断均衡器"/"中断均衡"/g' ./package/waynesg/luci-app-irqbala
 # AutoUpdate
 git clone https://github.com/waynesg/luci-app-autoupdate package/waynesg/luci-app-autoupdate
 # 更换 Nodejs 版本
-rm -rf ./feeds/packages/lang/node
-cp -rf ../openwrt-node/node ./feeds/packages/lang/node
-rm -rf ./feeds/packages/lang/node-arduino-firmata
-cp -rf ../openwrt-node/node-arduino-firmata ./feeds/packages/lang/node-arduino-firmata
-rm -rf ./feeds/packages/lang/node-cylon
-cp -rf ../openwrt-node/node-cylon ./feeds/packages/lang/node-cylon
-rm -rf ./feeds/packages/lang/node-hid
-cp -rf ../openwrt-node/node-hid ./feeds/packages/lang/node-hid
-rm -rf ./feeds/packages/lang/node-homebridge
-cp -rf ../openwrt-node/node-homebridge ./feeds/packages/lang/node-homebridge
-rm -rf ./feeds/packages/lang/node-serialport
-cp -rf ../openwrt-node/node-serialport ./feeds/packages/lang/node-serialport
-rm -rf ./feeds/packages/lang/node-serialport-bindings
-cp -rf ../openwrt-node/node-serialport-bindings ./feeds/packages/lang/node-serialport-bindings
-rm -rf ./feeds/packages/lang/node-yarn
-cp -rf ../openwrt-node/node-yarn ./feeds/packages/lang/node-yarn
-ln -sf ../../../feeds/packages/lang/node-yarn ./package/feeds/packages/node-yarn
-cp -rf ../openwrt-node/node-serialport-bindings-cpp ./feeds/packages/lang/node-serialport-bindings-cpp
-ln -sf ../../../feeds/packages/lang/node-serialport-bindings-cpp ./package/feeds/packages/node-serialport-bindings-cpp
+#rm -rf ./feeds/packages/lang/node
+#cp -rf ../openwrt-node/node ./feeds/packages/lang/node
+#rm -rf ./feeds/packages/lang/node-arduino-firmata
+#cp -rf ../openwrt-node/node-arduino-firmata ./feeds/packages/lang/node-arduino-firmata
+#rm -rf ./feeds/packages/lang/node-cylon
+#cp -rf ../openwrt-node/node-cylon ./feeds/packages/lang/node-cylon
+#rm -rf ./feeds/packages/lang/node-hid
+#cp -rf ../openwrt-node/node-hid ./feeds/packages/lang/node-hid
+#rm -rf ./feeds/packages/lang/node-homebridge
+#cp -rf ../openwrt-node/node-homebridge ./feeds/packages/lang/node-homebridge
+#rm -rf ./feeds/packages/lang/node-serialport
+#cp -rf ../openwrt-node/node-serialport ./feeds/packages/lang/node-serialport
+#rm -rf ./feeds/packages/lang/node-serialport-bindings
+#cp -rf ../openwrt-node/node-serialport-bindings ./feeds/packages/lang/node-serialport-bindings
+#rm -rf ./feeds/packages/lang/node-yarn
+#cp -rf ../openwrt-node/node-yarn ./feeds/packages/lang/node-yarn
+#ln -sf ../../../feeds/packages/lang/node-yarn ./package/feeds/packages/node-yarn
+#cp -rf ../openwrt-node/node-serialport-bindings-cpp ./feeds/packages/lang/node-serialport-bindings-cpp
+#ln -sf ../../../feeds/packages/lang/node-serialport-bindings-cpp ./package/feeds/packages/node-serialport-bindings-cpp
 # R8168驱动
 git clone -b master --depth 1 https://github.com/BROBIRD/openwrt-r8168.git package/waynesg/r8168
 patch -p1 <../PATCH/r8168/r8168-fix_LAN_led-for_r4s-from_TL.patch
