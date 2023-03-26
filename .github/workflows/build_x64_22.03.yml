@@ -113,6 +113,7 @@ jobs:
         
     - name: 准备插件
       run: |
+        mv -f "${Home}"/build/common/*.sh "${PATH1}"
         cd openwrt
         cp -r ../build/. ./
         /bin/bash Step_2.sh
@@ -123,10 +124,6 @@ jobs:
       run: |
         echo "Compile_Date=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
         cp -Rf `find ./ -maxdepth 1 -type d ! -path './openwrt' ! -path './'` openwrt
-        mv -f "${Home}"/build/common/*.sh "${PATH1}"
-        cp -Rf "${PATH1}"/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} package/base-files/files/bin
-        sed -i 's/"定时更新"/"更新固件"/g' ./package/waynesg/luci-app-autoupdate/po/zh-cn/autoupdate.po
-        sed -i 's/定时更新 LUCI/固件更新 LUCI/g' ./package/waynesg/luci-app-autoupdate/po/zh-cn/autoupdate.po
         source "${PATH1}/common.sh" && Diy_settings
         [[ "${{ github.event.inputs.ssh }}" == 'ssh' ]] && echo "SSHYC=true" >> $GITHUB_ENV
         cd openwrt
