@@ -291,6 +291,7 @@ popd
 cp -rf ../passwall_luci/luci-app-passwall ./package/waynesg/luci-app-passwall
 pushd package/waynesg/luci-app-passwall
 sed -i 's,iptables-legacy,iptables-nft,g' Makefile
+popd
 cp -rf ../passwall_pkg/tcping ./package/waynesg/tcping
 cp -rf ../passwall_pkg/trojan-go ./package/waynesg/trojan-go
 cp -rf ../passwall_pkg/brook ./package/waynesg/brook
@@ -299,7 +300,7 @@ cp -rf ../passwall_pkg/microsocks ./package/waynesg/microsocks
 cp -rf ../passwall_pkg/dns2socks ./package/waynesg/dns2socks
 cp -rf ../passwall_pkg/ipt2socks ./package/waynesg/ipt2socks
 cp -rf ../passwall_pkg/pdnsd-alt ./package/waynesg/pdnsd-alt
-cp -rf ../waynesg_pkg/luci-app-dependence/trojan-plus ./package/waynesg/trojan-plus
+cp -rf ../passwall_pkg/trojan-plus ./package/waynesg/trojan-plus
 cp -rf ../passwall_pkg/xray-plugin ./package/waynesg/xray-plugin
 # Passwall 白名单
 echo '
