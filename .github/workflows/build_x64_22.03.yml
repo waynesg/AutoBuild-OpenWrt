@@ -79,9 +79,6 @@ jobs:
         fi
         echo "NETIP=package/base-files/files/etc/networkip" >> $GITHUB_ENV
         echo "DELETE=package/base-files/files/etc/deletefile" >> $GITHUB_ENV
-        if [ -n "$(ls -A build/common/1022gg 2>/dev/null)" ]; then
-          source build/common/common.sh && Diy_gonggao
-        fi
 
     - name: 部署环境
       env:
@@ -99,17 +96,18 @@ jobs:
         echo "文件系统        类型   容量  已用  可用 使用% 挂载点"
         df -hT $PWD
         sudo timedatectl set-timezone "$TZ"
-        sudo mkdir -p /${{matrix.target}}
-        sudo chown $USER:$GROUPS /${{matrix.target}}
+        #sudo mkdir -p /${{matrix.target}}
+        #sudo chown $USER:$GROUPS /${{matrix.target}}
     
     - name: 准备源码
-      working-directory: /${{matrix.target}}
+      #working-directory: /${{matrix.target}}
       run: |
-        cp -r ./${GITHUB_WORKSPACE}/build/${matrix.target}/. ./build/
+        sudo chown -R runner:runner /home/runner/work/AutoBuild-OpenWrt
+        cp -r ./build/Official_source/. ./build/
         cp -r ./build/. ./
         /bin/bash Step_1.sh
         cd openwrt
-        ln -sf /${{matrix.target}}/openwrt $GITHUB_WORKSPACE/openwrt
+        #ln -sf /${{matrix.target}}/openwrt $GITHUB_WORKSPACE/openwrt
         echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
         echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/${{matrix.target}}" >> $GITHUB_ENV
         
