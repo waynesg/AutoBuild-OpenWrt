@@ -151,7 +151,7 @@ jobs:
     - name: 访问控制
       run: |
         cd openwrt
-        /bin/bash Step_7.sh
+        /bin/bash Step_7.sh -a
         
     - name: 加载缓存
       if: env.USE_CACHEWRTBUILD == 'true'
