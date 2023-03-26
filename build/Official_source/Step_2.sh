@@ -164,9 +164,6 @@ cp -rf ../waynesg_pkg/luci-app-airconnect ./package/waynesg/luci-app-airconnect
 cp -rf ../waynesg_pkg/luci-app-irqbalance ./package/waynesg/luci-app-irqbalance
 # AutoUpdate
 git clone https://github.com/waynesg/luci-app-autoupdate package/waynesg/luci-app-autoupdate
-cp -Rf "${PATH1}"/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} package/base-files/files/bin
-sed -i 's/"定时更新"/"更新固件"/g' ./package/waynesg/luci-app-autoupdate/po/zh-cn/autoupdate.po
-sed -i 's/定时更新 LUCI/固件更新 LUCI/g' ./package/waynesg/luci-app-autoupdate/po/zh-cn/autoupdate.po
 # 更换 Nodejs 版本
 rm -rf ./feeds/packages/lang/node
 cp -rf ../openwrt-node/node ./feeds/packages/lang/node
@@ -293,6 +290,7 @@ pushd package/waynesg/luci-app-passwall
 sed -i 's,iptables-legacy,iptables-nft,g' Makefile
 popd
 cp -rf ../passwall_pkg/tcping ./package/waynesg/tcping
+cp -rf ../passwall_pkg/chinadns-ng ./package/waynesg/chinadns-ng
 cp -rf ../passwall_pkg/trojan-go ./package/waynesg/trojan-go
 cp -rf ../passwall_pkg/brook ./package/waynesg/brook
 cp -rf ../passwall_pkg/ssocks ./package/waynesg/ssocks
