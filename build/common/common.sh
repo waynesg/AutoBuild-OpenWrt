@@ -69,6 +69,10 @@ if [[ ${REGULAR_UPDATE} == "true" && "${REPO_BRANCH}" == "master" ]]; then
 	cp -Rf "${PATH1}"/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} package/base-files/files/bin
 	sed -i 's/"定时更新"/"更新固件"/g' feeds/luci/applications/luci-app-autoupdate/po/zh-cn/autoupdate.po
 	sed -i 's/定时更新 LUCI/固件更新 LUCI/g' feeds/luci/applications/luci-app-autoupdate/po/zh-cn/autoupdate.po
+elif [[ "${REPO_BRANCH}" == "openwrt-22.03" ]]; then
+        cp -Rf "${PATH1}"/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} ./package/base-files/files/bin
+	sed -i 's/"定时更新"/"更新固件"/g' ./package/waynesg/luci-app-autoupdate/po/zh-cn/autoupdate.po
+	sed -i 's/定时更新 LUCI/固件更新 LUCI/g' ./package/waynesgluci-app-autoupdate/po/zh-cn/autoupdate.po
 fi
 if [[ "${REPO_BRANCH}" == "master" ]]; then
 	cp -Rf "${Home}"/build/common/LEDE/files "${Home}"
