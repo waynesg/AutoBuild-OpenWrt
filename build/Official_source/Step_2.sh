@@ -288,20 +288,20 @@ wget -qO - https://github.com/QiuSimons/OpenAppFilter-destan19/commit/9088cc2.pa
 wget https://destan19.github.io/assets/oaf/open_feature/feature-cn-22-06-21.cfg -O ./open-app-filter/files/feature.cfg
 popd
 # Passwall
-cp -rf ../passwall_luci/luci-app-passwall ./package/waynesg/luci-app-passwall
+cp -rf ../waynesg_pkg/luci-app-passwall ./package/waynesg/luci-app-passwall
 pushd package/waynesg/luci-app-passwall
 sed -i 's,iptables-legacy,iptables-nft,g' Makefile
 popd
-cp -rf ../passwall_pkg/tcping ./package/waynesg/tcping
-cp -rf ../passwall_pkg/trojan-go ./package/waynesg/trojan-go
-cp -rf ../passwall_pkg/brook ./package/waynesg/brook
-cp -rf ../passwall_pkg/ssocks ./package/waynesg/ssocks
-cp -rf ../passwall_pkg/microsocks ./package/waynesg/microsocks
-cp -rf ../passwall_pkg/dns2socks ./package/waynesg/dns2socks
-cp -rf ../passwall_pkg/ipt2socks ./package/waynesg/ipt2socks
-cp -rf ../passwall_pkg/pdnsd-alt ./package/waynesg/pdnsd-alt
-cp -rf ../passwall_pkg/trojan-plus ./package/waynesg/trojan-plus
-cp -rf ../passwall_pkg/xray-plugin ./package/waynesg/xray-plugin
+cp -rf ../waynesg_pkg/luci-app-dependence/tcping ./package/waynesg/tcping
+cp -rf ../waynesg_pkg/luci-app-dependence/trojan-go ./package/waynesg/trojan-go
+cp -rf ../waynesg_pkg/luci-app-dependence/brook ./package/waynesg/brook
+cp -rf ../waynesg_pkg/luci-app-dependence/ssocks ./package/waynesg/ssocks
+cp -rf ../waynesg_pkg/luci-app-dependence/microsocks ./package/waynesg/microsocks
+cp -rf ../waynesg_pkg/luci-app-dependence/dns2socks ./package/waynesg/dns2socks
+cp -rf ../waynesg_pkg/luci-app-dependence/ipt2socks ./package/waynesg/ipt2socks
+cp -rf ../waynesg_pkg/luci-app-dependence/pdnsd-alt ./package/waynesg/pdnsd-alt
+cp -rf ../waynesg_pkg/luci-app-dependence/trojan-plus ./package/waynesg/trojan-plus
+cp -rf ../waynesg_pkg/luci-app-dependence/xray-plugin ./package/waynesg/xray-plugin
 # Passwall 白名单
 echo '
 teamviewer.com
@@ -317,7 +317,7 @@ cn.ntp.org.cn
 ntp.ntsc.ac.cn
 ' >>./package/waynesg/luci-app-passwall/root/usr/share/passwall/rules/direct_host
 # Passwall2
-cp -rf ../passwall2_luci/luci-app-passwall2 ./package/waynesg/luci-app-passwall2
+cp -rf ../waynesg_pkg/luci-app-passwall2 ./package/waynesg/luci-app-passwall2
 pushd package/waynesg/luci-app-passwall2
 # 清理内存
 cp -rf ../lede_luci/applications/luci-app-ramfree ./package/waynesg/luci-app-ramfree
@@ -327,28 +327,27 @@ cp -rf ../lede_luci/applications/luci-app-ramfree ./package/waynesg/luci-app-ram
 cp -rf ../lede_luci/applications/luci-app-pushbot ./package/waynesg/luci-app-pushbot
 # ShadowsocksR Plus+ 依赖
 rm -rf ./feeds/packages/net/shadowsocks-libev
-cp -rf ../lede_pkg/net/shadowsocks-libev ./package/waynesg/shadowsocks-libev
-cp -rf ../ssrp/redsocks2 ./package/waynesg/redsocks2
-cp -rf ../ssrp/trojan ./package/waynesg/trojan
-cp -rf ../ssrp/tcping ./package/waynesg/tcping
-cp -rf ../ssrp/dns2tcp ./package/waynesg/dns2tcp
-cp -rf ../ssrp/gn ./package/waynesg/gn
-cp -rf ../ssrp/shadowsocksr-libev ./package/waynesg/shadowsocksr-libev
-cp -rf ../ssrp/simple-obfs ./package/waynesg/simple-obfs
-cp -rf ../ssrp/naiveproxy ./package/waynesg/naiveproxy
-cp -rf ../ssrp/v2ray-core ./package/waynesg/v2ray-core
-cp -rf ../ssrp/hysteria ./package/waynesg/hysteria
-cp -rf ../ssrp/sagernet-core ./package/waynesg/sagernet-core
+cp -rf ../waynesg_pkg/luci-app-dependence/shadowsocks-libev ./package/waynesg/shadowsocks-libev
+cp -rf ../waynesg_pkg/luci-app-dependence/redsocks2 ./package/waynesg/redsocks2
+cp -rf ../waynesg_pkg/luci-app-dependence/trojan ./package/waynesg/trojan
+cp -rf ../waynesg_pkg/luci-app-dependence/dns2tcp ./package/waynesg/dns2tcp
+#cp -rf ../ssrp/gn ./package/waynesg/gn
+#cp -rf ../ssrp/shadowsocksr-libev ./package/waynesg/shadowsocksr-libev
+cp -rf ../waynesg_pkg/luci-app-dependence/simple-obfs ./package/waynesg/simple-obfs
+cp -rf ../waynesg_pkg/luci-app-dependence/naiveproxy ./package/waynesg/naiveproxy
+cp -rf ../waynesg_pkg/luci-app-dependence/v2ray-core ./package/waynesg/v2ray-core
+cp -rf ../waynesg_pkg/luci-app-dependence/hysteria ./package/waynesg/hysteria
+#cp -rf ../ssrp/sagernet-core ./package/waynesg/sagernet-core
 rm -rf ./feeds/packages/net/xray-core
-cp -rf ../ssrp/xray-core ./package/waynesg/xray-core
-cp -rf ../ssrp/v2ray-plugin ./package/waynesg/v2ray-plugin
-cp -rf ../ssrp/shadowsocks-rust ./package/waynesg/shadowsocks-rust
-cp -rf ../ssrp/lua-neturl ./package/waynesg/lua-neturl
+cp -rf ../waynesg_pkg/luci-app-dependence/xray-core ./package/waynesg/xray-core
+cp -rf ../waynesg_pkg/luci-app-dependence/v2ray-plugin ./package/waynesg/v2ray-plugin
+cp -rf ../waynesg_pkg/luci-app-dependence/shadowsocks-rust ./package/waynesg/shadowsocks-rust
+cp -rf ../waynesg_pkg/luci-app-dependence/lua-neturl ./package/waynesg/lua-neturl
 rm -rf ./feeds/packages/net/kcptun
-cp -rf ../immortalwrt_pkg/net/kcptun ./feeds/packages/net/kcptun
+cp -rf ../waynesg_pkg/luci-app-dependence/kcptun ./feeds/packages/net/kcptun
 ln -sf ../../../feeds/packages/net/kcptun ./package/feeds/packages/kcptun
 # ShadowsocksR Plus+
-cp -rf ../ssrp/luci-app-ssr-plus ./package/waynesg/luci-app-ssr-plus
+cp -rf ../waynesg_pkg/luci-app-ssr-plus ./package/waynesg/luci-app-ssr-plus
 rm -rf ./package/waynesg/luci-app-ssr-plus/po/zh_Hans
 pushd package/waynesg
 wget -qO - https://github.com/fw876/helloworld/commit/5bbf6e7.patch | patch -p1
