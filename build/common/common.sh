@@ -48,7 +48,7 @@ find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon' -o -name 'luci-
 ################################################################################################################
 Diy_Official() {
 
-find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-openwrt' -o -name 'luci-app-cifs' | xargs -i rm -rf {}
+#find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-openwrt' -o -name 'luci-app-cifs' | xargs -i rm -rf {}
 }
 
 
@@ -57,7 +57,8 @@ find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-openwrt'
 ################################################################################################################
 Diy_all() {
 
-if [[ ${REGULAR_UPDATE} == "true" ]]; then
+#if [[ ${REGULAR_UPDATE} == "true" ]]; then
+if [[ ${REGULAR_UPDATE} == "true" && "${REPO_BRANCH}" == "master" ]]; then
         git clone https://github.com/waynesg/luci-app-autoupdate feeds/luci/applications/luci-app-autoupdate
 	cp -Rf "${PATH1}"/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} package/base-files/files/bin
 	sed -i 's/"定时更新"/"更新固件"/g' feeds/luci/applications/luci-app-autoupdate/po/zh-cn/autoupdate.po
@@ -72,8 +73,6 @@ elif [[ "${REPO_BRANCH}" == "19.07" ]]; then
 	cp -Rf "${Home}"/build/common/LIENOL/diy/* "${Home}"
 	cp -Rf "${Home}"/build/common/LIENOL/patches/* "${PATH1}/patches"
 elif [[ "${REPO_BRANCH}" == "openwrt-22.03" ]]; then
-	cp -Rf "${Home}"/build/common/MORTAL/files "${Home}"
-	cp -Rf "${Home}"/build/common/MORTAL/diy/* "${Home}"
 	cp -Rf "${Home}"/build/common/MORTAL/patches/* "${PATH1}/patches"
 
 fi
