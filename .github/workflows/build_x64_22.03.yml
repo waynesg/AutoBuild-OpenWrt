@@ -37,23 +37,20 @@ jobs:
         # [Lede_source,Lienol_source,Mortal_source,Tianling_source]
 
     steps:
-    - name: 安装检测
-      run: sudo apt-get install -y lshw
-      
-    - name: 优选CPU
+    - name: 分配机器
       run: |
-        CPU=$(sudo lshw -class processor | grep product | head -n1 | awk '{print $4}')
+        echo -e "Total CPU cores\t: $(nproc)"
+        cat /proc/cpuinfo | grep 'model name'
         if [[ $CPU = *"E5"* ]]; then
           echo "CPU is E5, retrying..."
           exit 1
         fi
       continue-on-error: true
-
-    - name: 分配机器
+      
+    - name: 硬件参数
       run: |
-        echo -e "Total CPU cores\t: $(nproc)"
-        cat /proc/cpuinfo | grep 'model name'
         ulimit -a
+        
     - name: 分配空间
       uses: easimon/maximize-build-space@master
       with:
