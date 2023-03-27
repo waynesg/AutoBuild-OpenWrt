@@ -41,16 +41,12 @@ jobs:
       run: |
         echo -e "Total CPU cores\t: $(nproc)"
         cat /proc/cpuinfo | grep 'model name'
-        if [[ $CPU = *"E5"* ]]; then
+        if [[ $CPU *"E5"* ]]; then
           echo "CPU is E5, retrying..."
           exit 1
         fi
       continue-on-error: true
-      
-    - name: 硬件参数
-      run: |
-        ulimit -a
-        
+    
     - name: 分配空间
       uses: easimon/maximize-build-space@master
       with:
