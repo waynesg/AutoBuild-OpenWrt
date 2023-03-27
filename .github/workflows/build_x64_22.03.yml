@@ -37,12 +37,12 @@ jobs:
         # [Lede_source,Lienol_source,Mortal_source,Tianling_source]
 
     steps:
-    - name: 机器配置
+    - name: 分配机器
       run: |
         echo -e "Total CPU cores\t: $(nproc)"
         cat /proc/cpuinfo | grep 'model name'
         ulimit -a
-    - name: 构建空间
+    - name: 分配空间
       uses: easimon/maximize-build-space@master
       with:
         swap-size-mb: 2048
@@ -76,7 +76,7 @@ jobs:
         echo "Modelfile=${{matrix.target}}" >> $GITHUB_ENV
         echo "{name}={value}" >> $GITHUB_OUTPUT
         
-    - name: 源码版本
+    - name: 选择源码
       run: |
         chmod -R +x "${GITHUB_WORKSPACE}/build/common"
         if [[ "${REPO_BRANCH}" == "master" ]]; then
@@ -115,7 +115,7 @@ jobs:
         #sudo mkdir -p /${{matrix.target}}
         #sudo chown $USER:$GROUPS /${{matrix.target}}
     
-    - name: 准备源码
+    - name: 下载源码
       #working-directory: /${{matrix.target}}
       run: |
         sudo chown -R runner:runner /home/runner/work/AutoBuild-OpenWrt
@@ -127,7 +127,7 @@ jobs:
         echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
         echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/${{matrix.target}}" >> $GITHUB_ENV
         
-    - name: 准备插件
+    - name: 下载插件
       run: |
         cd openwrt
         cp -r ../build/. ./
@@ -159,7 +159,7 @@ jobs:
           source "${PATH1}/upgrade.sh" && Diy_Part1
         fi
         
-    - name: 版本转换
+    - name: 配置语言
       run: |
         cd openwrt
         /bin/bash Step_6.sh
