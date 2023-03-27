@@ -486,7 +486,7 @@ wget -qO - https://github.com/coolsnowwolf/lede/commit/e517080.patch | patch -p1
 
 ### 收尾 ###
 ## 生成默认配置及缓存
-rm -rf .config
+#rm -rf .config
 cat ../extra.cfg >> ./target/linux/generic/config-5.10
 
 
