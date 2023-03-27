@@ -319,9 +319,7 @@ jobs:
         file: openwrt/bin/Firmware/*
         tag: AutoUpdate
         overwrite: true
-        file_glob: true
 
-        
     - name: 更新Step 3
       if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true'
       run: |
