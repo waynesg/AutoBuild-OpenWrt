@@ -470,16 +470,6 @@ sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
 sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
 sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
 
-
-### 最后的收尾工作 ###
-## Lets Fuck
-#mkdir -p package/base-files/files/usr/bin
-#cp -rf ../OpenWrt-Add/fuck ./package/base-files/files/usr/bin/fuck
-##wget -P package/base-files/files/usr/bin/ https://github.com/QiuSimons/OpenWrt-Add/raw/master/ss2v2ray
-## 生成默认配置及缓存
-#rm -rf .config
-#cat ../SEED/extra.cfg >> ./target/linux/generic/config-5.10
-
 ### Shortcut-FE 部分 ###
 # Patch Kernel 以支持 Shortcut-FE
 cp -rf ../lede/target/linux/generic/hack-5.10/953-net-patch-linux-kernel-to-support-shortcut-fe.patch ./target/linux/generic/hack-5.10/953-net-patch-linux-kernel-to-support-shortcut-fe.patch
@@ -493,3 +483,10 @@ cp -rf ../lede/package/lean/shortcut-fe/shortcut-fe ./package/lean/shortcut-fe/s
 cp -rf ../lede/package/lean/shortcut-fe/simulated-driver ./package/lean/shortcut-fe/simulated-driver
 wget -qO - https://github.com/coolsnowwolf/lede/commit/e517080.patch | patch -p1
 #exit 0
+
+### 收尾 ###
+## 生成默认配置及缓存
+rm -rf .config
+cat ../extra.cfg >> ./target/linux/generic/config-5.10
+
+
