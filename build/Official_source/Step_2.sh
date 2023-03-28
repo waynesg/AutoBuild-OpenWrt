@@ -255,7 +255,10 @@ ln -sf ../../../feeds/packages/utils/cpulimit ./package/feeds/packages/cpulimit
 # 动态DNS
 rm -rf ./feeds/luci/applications/luci-app-ddns
 svn co https://github.com/kiddin9/openwrt-packages/trunk/luci-app-ddns package/waynesg/luci-app-ddns
-#sed -i '/boot()/,+2d' feeds/packages/net/ddns-scripts/files/etc/init.d/ddns
+sed -i 's/+ddns-scripts-aliyun/+ddns-scripts_aliyun/g' ./package/waynesg/luci-app-ddns/Makefile
+sed -i 's/+ddns-scripts-dnspod/+ddns-scripts_dnspod/g' ./package/waynesg/luci-app-ddns/Makefile
+sed -i 's/+ddns-scripts-cloudflare//g' ./package/waynesg/luci-app-ddns/Makefile
+sed -i '/boot()/,+2d' feeds/packages/net/ddns-scripts/files/etc/init.d/ddns
 cp -rf ../openwrt-third/ddns-scripts_aliyun ./feeds/packages/net/ddns-scripts_aliyun
 ln -sf ../../../feeds/packages/net/ddns-scripts_aliyun ./package/feeds/packages/ddns-scripts_aliyun
 cp -rf ../openwrt-third/ddns-scripts_dnspod ./feeds/packages/net/ddns-scripts_dnspod
