@@ -251,7 +251,9 @@ sed -i 's/"CPU占用率限制"/"CPU限制"/g' ./package/waynesg/luci-app-cpulimi
 cp -rf ../immortalwrt_pkg/utils/cpulimit ./feeds/packages/utils/cpulimit
 ln -sf ../../../feeds/packages/utils/cpulimit ./package/feeds/packages/cpulimit
 # 动态DNS
-sed -i '/boot()/,+2d' feeds/packages/net/ddns-scripts/files/etc/init.d/ddns
+rm -rf ./feeds/luci/applications/luci-app-ddns
+svn co https://github.com/kiddin9/openwrt-packages/trunk/luci-app-ddns package/waynesg/luci-app-ddns
+#sed -i '/boot()/,+2d' feeds/packages/net/ddns-scripts/files/etc/init.d/ddns
 cp -rf ../openwrt-third/ddns-scripts_aliyun ./feeds/packages/net/ddns-scripts_aliyun
 ln -sf ../../../feeds/packages/net/ddns-scripts_aliyun ./package/feeds/packages/ddns-scripts_aliyun
 cp -rf ../openwrt-third/ddns-scripts_dnspod ./feeds/packages/net/ddns-scripts_dnspod
