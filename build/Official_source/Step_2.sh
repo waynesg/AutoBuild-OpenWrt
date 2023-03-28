@@ -246,6 +246,8 @@ ln -sf ../../../feeds/luci/applications/luci-app-cpufreq ./package/feeds/luci/lu
 sed -i 's,1608,1800,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
 sed -i 's,2016,2208,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
 sed -i 's,1512,1608,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
+rm -rf ./feeds/luci/applications/luci-app-cpulimit
+rm -rf ./feeds/packages/utils/miniupnpd
 cp -rf ../waynesg_pkg/luci-app-cpulimit ./package/waynesg/luci-app-cpulimit
 sed -i 's/"CPU占用率限制"/"CPU限制"/g' ./package/waynesg/luci-app-cpulimit/po/zh_Hans/cpulimit.po
 cp -rf ../immortalwrt_pkg/utils/cpulimit ./feeds/packages/utils/cpulimit
@@ -454,6 +456,7 @@ cp -rf ../waynesg_pkg/luci-app-turboacc ./package/waynesg/luci-app-turboacc
 sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' ./package/waynesg/luci-app-turboacc/po/zh-cn/turboacc.po
 cp -rf ../waynesg_pkg/luci-app-dependence/shortcut-fe ./package/waynesg/shortcut-fe
 cp -rf ../waynesg_pkg/luci-app-dependence/dnsforwarder ./package/waynesg/dnsforwarder
+rm -rf ./feeds/packages/net/dnsproxy
 cp -rf ../lede_pkg/net/dnsproxy ./package/waynesg/dnsproxy
 #Others Menu Modify
 sed -i 's/"Web 管理"/"Web管理"/g' `grep "Web 管理" -rl ./`
