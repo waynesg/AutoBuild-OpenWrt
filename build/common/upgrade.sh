@@ -64,16 +64,16 @@ GET_TARGET_INFO() {
 			Firmware_sfx="bin"
 		fi
 	;;
-	"openwrt-21.02")
-		LUCI_Name="21.02"
-		REPO_Name="mortal"
-		ZUOZHE="ctcgfw"
+	"openwrt-22.03")
+		LUCI_Name="22.03"
+		REPO_Name="Official"
+		ZUOZHE="OpenWrt Official"
 		if [[ "${TARGET_PROFILE}" == "x86-64" ]]; then
-			Legacy_Firmware="immortalwrt-x86-64-generic-squashfs-combined.${Firmware_sfxo}"
-			UEFI_Firmware="immortalwrt-x86-64-generic-squashfs-combined-efi.${Firmware_sfxo}"
+			Legacy_Firmware="official-x86-64-generic-squashfs-combined.${Firmware_sfxo}"
+			UEFI_Firmware="official-x86-64-generic-squashfs-combined-efi.${Firmware_sfxo}"
 			Firmware_sfx="${Firmware_sfxo}"
 		elif [[ "${TARGET_PROFILE}" == "phicomm_k3" ]]; then
-			Up_Firmware="immortalwrt-bcm53xx-generic-${TARGET_PROFILE}-squashfs.trx"
+			Up_Firmware="official-bcm53xx-generic-${TARGET_PROFILE}-squashfs.trx"
 			Firmware_sfx="trx"
 		elif [[ "${TARGET_PROFILE}" == "xiaomi_mi-router-3g" ]]; then
 			TARGET_PROFILE="xiaomi_mir3g"
@@ -84,7 +84,7 @@ GET_TARGET_INFO() {
 			Up_Firmware="openwrt-ramips-mt7621-xiaomi_mir3gv2-squashfs-sysupgrade.bin"
 			Firmware_sfx="bin"
 		else
-			Up_Firmware="immortalwrt-${TARGET_BOARD}-${TARGET_SUBTARGET}-${TARGET_PROFILE}-squashfs-sysupgrade.bin"
+			Up_Firmware="official-${TARGET_BOARD}-${TARGET_SUBTARGET}-${TARGET_PROFILE}-squashfs-sysupgrade.bin"
 			Firmware_sfx="bin"
 		fi
 	;;
