@@ -237,13 +237,22 @@ jobs:
         
     - name: 编译固件
       id: compile
+      continue-on-error: true
       run: |
         cd openwrt
-        echo -e "$(nproc) thread compile"
+        #echo -e "$(nproc) thread compile"
         IGNORE_ERRORS=1 make -j$(nproc) || make -j1 V=s
         echo "COMPILESTATUS=success" >> $GITHUB_ENV
         echo "date=$(date "+%Y%m%d%H%M%S")" >> $GITHUB_ENV
         echo "date1=$(date +'%m-%d')" >> $GITHUB_ENV
+        echo $?
+        
+    - name: 错误收集
+      if: steps.compileopenwrt.outcome == 'failure'
+      run: |
+        cat openwrt/.config
+        echo '================================================================'
+        cd openwrt && make -j1 V=s
         
     - name: 上传配置
       if: env.UPLOAD_CONFIG == 'true'
