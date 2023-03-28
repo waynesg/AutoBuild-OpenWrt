@@ -459,7 +459,6 @@ cp -rf ../waynesg_pkg/luci-app-turboacc ./package/waynesg/luci-app-turboacc
 sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' ./package/waynesg/luci-app-turboacc/po/zh-cn/turboacc.po
 cp -rf ../waynesg_pkg/luci-app-dependence/shortcut-fe ./package/waynesg/shortcut-fe
 cp -rf ../waynesg_pkg/luci-app-dependence/dnsforwarder ./package/waynesg/dnsforwarder
-rm -rf ./feeds/packages/net/dnsproxy
 cp -rf ../lede_pkg/net/dnsproxy ./package/waynesg/dnsproxy
 #Others Menu Modify
 sed -i 's/"Web 管理"/"Web管理"/g' `grep "Web 管理" -rl ./`
