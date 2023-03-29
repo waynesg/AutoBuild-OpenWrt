@@ -74,15 +74,12 @@ jobs:
           echo "CODE=Lienol" >> $GITHUB_ENV
           echo "OpenWrt_name=19.07" >> $GITHUB_ENV
         elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
-          echo "ZZZ=package/immortalwrt//default-settings/files/zzz-default-settings" >> $GITHUB_ENV
-          echo "CODE=Mortal" >> $GITHUB_ENV
-          echo "OpenWrt_name=18.06" >> $GITHUB_ENV
+          echo "ZZZ=package/emortal//default-settings/files/zzz-default-settings" >> $GITHUB_ENV
+          echo "CODE=immortalwrt" >> $GITHUB_ENV
+          echo "OpenWrt_name=21.02" >> $GITHUB_ENV
         fi
         echo "NETIP=package/base-files/files/etc/networkip" >> $GITHUB_ENV
         echo "DELETE=package/base-files/files/etc/deletefile" >> $GITHUB_ENV
-        if [ -n "$(ls -A build/common/1022gg 2>/dev/null)" ]; then
-          source build/common/common.sh && Diy_gonggao
-        fi
 
     - name: 部署环境
       env:
@@ -123,12 +120,8 @@ jobs:
         cd openwrt
         if [[ "${REPO_BRANCH}" == "master" ]]; then
           source "${PATH1}/common.sh" && Diy_lede
-        elif [[ "${REPO_BRANCH}" == "19.07" ]]; then
-          source "${PATH1}/common.sh" && Diy_lienol
-        elif [[ "${REPO_BRANCH}" == "openwrt-18.06" ]]; then
-          source "${PATH1}/common.sh" && Diy_Tianling
         elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
-          source "${PATH1}/common.sh" && Diy_mortal
+          source "${PATH1}/common.sh" && Diy_Immortalwrt
         fi
         source "${PATH1}/common.sh" && Diy_all
         /bin/bash "${PATH1}/$DIY_PART_SH"
@@ -289,8 +282,6 @@ jobs:
         file: openwrt/bin/Firmware/*
         tag: AutoUpdate
         overwrite: true
-        file_glob: true
-
         
     - name: 更新Step 3
       if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true'
