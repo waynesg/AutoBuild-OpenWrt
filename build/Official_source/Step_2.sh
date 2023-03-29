@@ -119,20 +119,20 @@ cp -rf ../openwrt_luci_ma/modules/luci-mod-network/htdocs/luci-static/resources/
 
 ### 获取额外的 LuCI 应用、主题和依赖 ###
 # dae ready
-cp -rf ../immortalwrt/config/Config-kernel.in ./config/Config-kernel.in
-rm -rf ./tools/dwarves
-cp -rf ../openwrt_ma/tools/dwarves ./tools/dwarves
-wget -qO - https://github.com/openwrt/openwrt/commit/aa95787e.patch | patch -p1
-wget -qO - https://github.com/openwrt/openwrt/commit/29d7d6a8.patch | patch -p1
-rm -rf ./tools/elfutils
-cp -rf ../openwrt_ma/tools/elfutils ./tools/elfutils
-rm -rf ./package/libs/elfutils
-cp -rf ../openwrt_ma/package/libs/elfutils ./package/libs/elfutils
-wget -qO - https://github.com/openwrt/openwrt/commit/b839f3d5.patch | patch -p1
-rm -rf ./feeds/packages/net/frr
-cp -rf ../openwrt_pkg_ma/net/frr feeds/packages/net/frr
-cp -rf ../immortalwrt_pkg/net/dae ./feeds/packages/net/dae
-ln -sf ../../../feeds/packages/net/dae ./package/feeds/packages/dae
+#cp -rf ../immortalwrt/config/Config-kernel.in ./config/Config-kernel.in
+#rm -rf ./tools/dwarves
+#cp -rf ../openwrt_ma/tools/dwarves ./tools/dwarves
+#wget -qO - https://github.com/openwrt/openwrt/commit/aa95787e.patch | patch -p1
+#wget -qO - https://github.com/openwrt/openwrt/commit/29d7d6a8.patch | patch -p1
+#rm -rf ./tools/elfutils
+#cp -rf ../openwrt_ma/tools/elfutils ./tools/elfutils
+#rm -rf ./package/libs/elfutils
+#cp -rf ../openwrt_ma/package/libs/elfutils ./package/libs/elfutils
+#wget -qO - https://github.com/openwrt/openwrt/commit/b839f3d5.patch | patch -p1
+#rm -rf ./feeds/packages/net/frr
+#cp -rf ../openwrt_pkg_ma/net/frr feeds/packages/net/frr
+#cp -rf ../immortalwrt_pkg/net/dae ./feeds/packages/net/dae
+#ln -sf ../../../feeds/packages/net/dae ./package/feeds/packages/dae
 # i915
 wget -qO - https://github.com/openwrt/openwrt/commit/c21a3570.patch | patch -p1
 cp -rf ../lede/target/linux/x86/64/config-5.10 ./target/linux/x86/64/config-5.10
