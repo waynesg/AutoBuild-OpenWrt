@@ -112,7 +112,7 @@ jobs:
         df -hT $PWD
     
     - name: 下载源码
-      working-directory: /${{matrix.target}}
+      #working-directory: /${{matrix.target}}
       run: |
         sudo chown -R runner:runner /home/runner/work/AutoBuild-OpenWrt
         cp -r ./build/Official_source/. ./build/
