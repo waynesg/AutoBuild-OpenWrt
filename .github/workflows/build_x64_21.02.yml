@@ -37,6 +37,19 @@ jobs:
         # [Lede_source,Lienol_source,Mortal_source,Tianling_source]
 
     steps:
+    - name: 分配机器
+      run: |
+        echo -e "Total CPU cores\t: $(nproc)"
+        cat /proc/cpuinfo | grep 'model name'
+        ulimit -a
+        
+    - name: 分配空间
+      uses: easimon/maximize-build-space@master
+      with:
+        root-reserve-mb: 5120
+        remove-dotnet: 'true'
+        remove-android: 'true'
+        remove-haskell: 'true'
     - name: 准备完成
       uses: actions/checkout@v3
 
