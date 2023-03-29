@@ -22,13 +22,18 @@ TIME() {
 	 }
       }
 }
+
+echo 
+TIME y "添加软件包"
+rm -rf package/waynesg && git clone -b js https://github.com/waynesg/OpenWrt-Software package/waynesg
+
 echo
 TIME r "删除无用主题"
 rm -rf ./feeds/luci/themes/luci-theme-argon
 rm -rf ./feeds/luci/themes/luci-theme-material
 TIME r "删除重复插件"
 rm -rf ./feeds/luci/applications/luci-app-argon-config
-rm -rf ./feeds/luci/applications/luci-app-netdata
+rm -rf package/waynesg/luci-app-netdata
 rm -rf ./feeds/luci/applications/luci-app-serverchan
 rm -rf ./feeds/luci/applications/luci-app-pushbot
 rm -rf ./feeds/luci/applications/luci-app-mosdns
@@ -46,7 +51,7 @@ rm -rf ./feeds/packages/net/dnsforwarder
 rm -rf ./feeds/packages/net/hysteria
 rm -rf ./feeds/packages/net/iptvhelper
 rm -rf ./feeds/packages/net/microsocks
-rm -rf ./feeds/packages/net/navieproxy
+rm -rf ./feeds/packages/net/naiveproxy
 rm -rf ./feeds/packages/net/open-app-filter
 rm -rf ./feeds/packages/net/shadowsocks-rust
 rm -rf ./feeds/packages/net/shadowsocksr-libev
@@ -60,49 +65,46 @@ rm -rf ./feeds/packages/net/v2ray-plugin
 rm -rf ./feeds/packages/net/xray-core
 rm -rf ./feeds/packages/net/xray-plugin
 rm -rf ./feeds/packages/net/tcping
-rm -rf ./feeds/packages/net/ip2socks
+rm -rf ./feeds/packages/net/ipt2socks
 rm -rf ./feeds/packages/net/adguardhome
 rm -rf ./feeds/packages/net/go-aliyundrive-webdav
 rm -rf ./feeds/packages/net/gowebdav
 rm -rf ./feeds/packages/net/msd_lite
 rm -rf ./feeds/packages/net/pdnsd-alt
 rm -rf ./feeds/packages/net/v2ray-geodata
-rm -rf ./feeds/packages/net/cpulimit
+rm -rf ./feeds/packages/utils/cpulimit
 rm -rf ./feeds/packages/net/kcptun
 rm -rf ./feeds/packages/lang/lua-neturl
 rm -rf ./feeds/packages/lang/lua-maxminddb
 rm -rf ./feeds/packages/libs/quickjspp
 rm -rf ./feeds/packages/libs/libcron
 rm -rf ./feeds/packages/libs/rapidjson
+rm -rf ./feeds/packages/libs/toml11
 rm -rf ./feeds/luci/libs/luci-lib-ipkg
-rm -rf ./feeds/luci/applications/luci-app-diskman
-rm -rf ./feeds/luci/applications/luci-app-eqos
-rm -rf ./feeds/luci/applications/luci-app-fileassistant
-rm -rf ./feeds/luci/applications/luci-app-filebrowser
-rm -rf ./feeds/luci/applications/luci-app-gowebdav
-rm -rf ./feeds/luci/applications/luci-app-ipsec-vpnserver-manyusers
-rm -rf ./feeds/luci/applications/luci-app-iptvhelper
-rm -rf ./feeds/luci/applications/luci-app-msd_lite
-rm -rf ./feeds/luci/applications/luci-app-openvpn-server
+rm -rf package/waynesg/luci-app-diskman
+rm -rf package/waynesg/luci-app-eqos
+rm -rf package/waynesg/luci-app-fileassistant
+rm -rf package/waynesg/luci-app-filebrowser
+rm -rf package/waynesg/luci-app-gowebdav
+rm -rf package/waynesg/luci-app-ipsec-vpnserver-manyusers
+rm -rf package/waynesg/luci-app-iptvhelper
+rm -rf package/waynesg/luci-app-msd_lite
+rm -rf package/waynesg/luci-app-openvpn-server
 rm -rf ./feeds/luci/applications/luci-app-passwall
-rm -rf ./feeds/luci/applications/luci-app-socat
-rm -rf ./feeds/luci/applications/luci-app-ssr-plus
+rm -rf package/waynesg/luci-app-socat
+rm -rf package/waynesg/luci-app-ssr-plus
 rm -rf ./feeds/luci/applications/luci-app-turboacc
-rm -rf ./feeds/luci/applications/luci-app-unblockneteasemusic
-rm -rf ./feeds/luci/applications/luci-app-usb-printer
-rm -rf ./feeds/luci/applications/luci-app-vsftpd
+rm -rf package/waynesg/luci-app-unblockneteasemusic
+rm -rf package/waynesg/luci-app-usb-printer
+rm -rf package/waynesg/luci-app-vsftpd
 rm -rf ./feeds/luci/applications/luci-app-vssr
-rm -rf ./feeds/luci/applications/luci-app-zerotier
-
-echo 
-TIME y "添加软件包"
-rm -rf package/waynesg && git clone -b js https://github.com/waynesg/OpenWrt-Software package/waynesg
+rm -rf package/waynesg/luci-app-zerotier
 
 echo
 TIME b "修改 系统文件..."
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
-#curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/index.htm > ./package/emortal/autocore/files/x86/index.htm
-#curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/ethinfo > ./package/emortal/autocore/files/x86/sbin/ethinfo
+# curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/index.htm > ./package/emortal/autocore/files/x86/index.htm
+# curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/ethinfo > ./package/emortal/autocore/files/x86/sbin/ethinfo
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/autocore > ./package/lean/autocore/files/x86/autocore
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/tempinfo > ./package/lean/autocore/files/x86/sbin/tempinfo
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/cntime > ./package/lean/autocore/files/x86/sbin/cntime
@@ -115,9 +117,9 @@ TIME b "系统文件 修改完成"
 #TIME y "更换内核为5.4"
 #sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.4/g' ./target/linux/x86/Makefile
 
-echo 
-TIME y "更新固件 编译日期"
-sed -i "s/2022.02.01/$(TZ=UTC-8 date "+%Y.%m.%d")/g" package/emortal/autocore/files/x86/index.htm
+#echo 
+#TIME y "更新固件 编译日期"
+#sed -i "s/2022.02.01/$(TZ=UTC-8 date "+%Y.%m.%d")/g" package/emortal/autocore/files/x86/index.htm
 
 echo 
 TIME y "自定义固件版本名字"
@@ -160,7 +162,7 @@ sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx
 
 echo
 TIME b "菜单 调整..."
-sed -i 's/\"services\"/\"control\"/g' feeds/luci/applications/luci-app-wol/luasrc/controller/wol.lua
+#sed -i 's/\"services\"/\"control\"/g' feeds/luci/applications/luci-app-wol/luasrc/controller/wol.lua
 #sed -i 's/\"services\"/\"control\"/g' package/waynesg/luci-app-accesscontrol-plus/luasrc/controller/miaplus.lua
 sed -i 's/\"network\"/\"control\"/g'  package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/appfilter.lua
 
