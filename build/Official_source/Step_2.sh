@@ -1,6 +1,7 @@
 #!/bin/bash
 clear
 
+### 基础部分 ###
 # 使用 O2 级别的优化
 sed -i 's/Os/O2/g' include/target.mk
 # 更新 Feeds
@@ -11,7 +12,7 @@ sed -i "s/enabled '0'/enabled '1'/g" feeds/packages/utils/irqbalance/files/irqba
 # 移除 SNAPSHOT 标签
 sed -i 's,-SNAPSHOT,,g' include/version.mk
 sed -i 's,-SNAPSHOT,,g' package/base-files/image-config.in
-# Scripts
+# 维多利亚的秘密
 rm -rf ./scripts/download.pl
 rm -rf ./include/download.mk
 cp -rf ../immortalwrt/scripts/download.pl ./scripts/download.pl
@@ -20,13 +21,13 @@ sed -i '/unshift/d' scripts/download.pl
 sed -i '/mirror02/d' scripts/download.pl
 echo "net.netfilter.nf_conntrack_helper = 1" >>./package/kernel/linux/files/sysctl-nf-conntrack.conf
 # Nginx
-#sed -i "s/client_max_body_size 128M/client_max_body_size 2048M/g" feeds/packages/net/nginx-util/files/uci.conf.template
-#sed -i '/client_max_body_size/a\\tclient_body_buffer_size 8192M;' feeds/packages/net/nginx-util/files/uci.conf.template
-#sed -i '/ubus_parallel_req/a\        ubus_script_timeout 600;' feeds/packages/net/nginx/files-luci-support/60_nginx-luci-support
-#sed -ri "/luci-webui.socket/i\ \t\tuwsgi_send_timeout 600\;\n\t\tuwsgi_connect_timeout 600\;\n\t\tuwsgi_read_timeout 600\;" feeds/packages/net/nginx/files-luci-support/luci.locations
-#sed -ri "/luci-cgi_io.socket/i\ \t\tuwsgi_send_timeout 600\;\n\t\tuwsgi_connect_timeout 600\;\n\t\tuwsgi_read_timeout 600\;" feeds/packages/net/nginx/files-luci-support/luci.locations
+sed -i "s/client_max_body_size 128M/client_max_body_size 2048M/g" feeds/packages/net/nginx-util/files/uci.conf.template
+sed -i '/client_max_body_size/a\\tclient_body_buffer_size 8192M;' feeds/packages/net/nginx-util/files/uci.conf.template
+sed -i '/ubus_parallel_req/a\        ubus_script_timeout 600;' feeds/packages/net/nginx/files-luci-support/60_nginx-luci-support
+sed -ri "/luci-webui.socket/i\ \t\tuwsgi_send_timeout 600\;\n\t\tuwsgi_connect_timeout 600\;\n\t\tuwsgi_read_timeout 600\;" feeds/packages/net/nginx/files-luci-support/luci.locations
+sed -ri "/luci-cgi_io.socket/i\ \t\tuwsgi_send_timeout 600\;\n\t\tuwsgi_connect_timeout 600\;\n\t\tuwsgi_read_timeout 600\;" feeds/packages/net/nginx/files-luci-support/luci.locations
 
-### Patches ###
+### 必要的 Patches ###
 # introduce "MG-LRU" Linux kernel patches
 cp -rf ../PATCH/backport/MG-LRU/* ./target/linux/generic/pending-5.10/
 # TCP optimizations
@@ -44,7 +45,6 @@ rm -rf ./package/libs/mbedtls
 cp -rf ../immortalwrt/package/libs/mbedtls ./package/libs/mbedtls
 rm -rf ./package/libs/openssl
 cp -rf ../immortalwrt_21/package/libs/openssl ./package/libs/openssl
-#wget -P include/ https://github.com/immortalwrt/immortalwrt/raw/master/include/openssl-engine.mk
 # fstool
 wget -qO - https://github.com/coolsnowwolf/lede/commit/8a4db76.patch | patch -p1
 
@@ -65,13 +65,11 @@ cp -rf ../immortalwrt/package/network/utils/nftables ./package/network/utils/nft
 mkdir -p package/network/config/firewall/patches
 cp -rf ../immortalwrt_21/package/network/config/firewall/patches/100-fullconenat.patch ./package/network/config/firewall/patches/100-fullconenat.patch
 cp -rf ../lede/package/network/config/firewall/patches/101-bcm-fullconenat.patch ./package/network/config/firewall/patches/101-bcm-fullconenat.patch
-#cp -rf ../immortalwrt_21/package/network/config/firewall/patches/001-firewall3-fix-locking-issue.patch ./package/network/config/firewall/patches/001-firewall3-fix-locking-issue.patch
 # iptables
 cp -rf ../lede/package/network/utils/iptables/patches/900-bcm-fullconenat.patch ./package/network/utils/iptables/patches/900-bcm-fullconenat.patch
 # network
 wget -qO - https://github.com/openwrt/openwrt/commit/bbf39d07.patch | patch -p1
 # Patch LuCI 以增添 FullCone 开关
-#patch -p1 <../PATCH/firewall/luci-app-firewall_add_fullcone.patch
 pushd feeds/luci
 wget -qO- https://github.com/openwrt/luci/commit/471182b2.patch | patch -p1
 popd
@@ -119,29 +117,29 @@ cp -rf ../openwrt_luci_ma/modules/luci-mod-network/htdocs/luci-static/resources/
 
 ### 获取额外的 LuCI 应用、主题和依赖 ###
 # dae ready
-#cp -rf ../immortalwrt/config/Config-kernel.in ./config/Config-kernel.in
-#rm -rf ./tools/dwarves
-#cp -rf ../openwrt_ma/tools/dwarves ./tools/dwarves
-#wget -qO - https://github.com/openwrt/openwrt/commit/aa95787e.patch | patch -p1
-#wget -qO - https://github.com/openwrt/openwrt/commit/29d7d6a8.patch | patch -p1
-#rm -rf ./tools/elfutils
-#cp -rf ../openwrt_ma/tools/elfutils ./tools/elfutils
-#rm -rf ./package/libs/elfutils
-#cp -rf ../openwrt_ma/package/libs/elfutils ./package/libs/elfutils
-#wget -qO - https://github.com/openwrt/openwrt/commit/b839f3d5.patch | patch -p1
-#rm -rf ./feeds/packages/net/frr
-#cp -rf ../openwrt_pkg_ma/net/frr feeds/packages/net/frr
-#cp -rf ../immortalwrt_pkg/net/dae ./feeds/packages/net/dae
-#ln -sf ../../../feeds/packages/net/dae ./package/feeds/packages/dae
+cp -rf ../immortalwrt/config/Config-kernel.in ./config/Config-kernel.in
+rm -rf ./tools/dwarves
+cp -rf ../openwrt_ma/tools/dwarves ./tools/dwarves
+wget -qO - https://github.com/openwrt/openwrt/commit/aa95787e.patch | patch -p1
+wget -qO - https://github.com/openwrt/openwrt/commit/29d7d6a8.patch | patch -p1
+rm -rf ./tools/elfutils
+cp -rf ../openwrt_ma/tools/elfutils ./tools/elfutils
+rm -rf ./package/libs/elfutils
+cp -rf ../openwrt_ma/package/libs/elfutils ./package/libs/elfutils
+wget -qO - https://github.com/openwrt/openwrt/commit/b839f3d5.patch | patch -p1
+rm -rf ./feeds/packages/net/frr
+cp -rf ../openwrt_pkg_ma/net/frr feeds/packages/net/frr
+cp -rf ../immortalwrt_pkg/net/dae ./feeds/packages/net/dae
+ln -sf ../../../feeds/packages/net/dae ./package/feeds/packages/dae
 # i915
 wget -qO - https://github.com/openwrt/openwrt/commit/c21a3570.patch | patch -p1
 cp -rf ../lede/target/linux/x86/64/config-5.10 ./target/linux/x86/64/config-5.10
 # Haproxy
-#rm -rf ./feeds/packages/net/haproxy
-#cp -rf ../openwrt_pkg_ma/net/haproxy feeds/packages/net/haproxy
-#pushd feeds/packages
-#wget -qO - https://github.com/openwrt/packages/commit/a09cbcd.patch | patch -p1
-#popd
+rm -rf ./feeds/packages/net/haproxy
+cp -rf ../openwrt_pkg_ma/net/haproxy feeds/packages/net/haproxy
+pushd feeds/packages
+wget -qO - https://github.com/openwrt/packages/commit/a09cbcd.patch | patch -p1
+popd
 # AutoCore
 cp -rf ../waynesg_pkg/openwrt-diy/autocore ./package/waynesg/autocore
 sed -i 's/"getTempInfo" /"getTempInfo", "getCPUBench", "getCPUUsage" /g' package/waynesg/autocore/files/generic/luci-mod-status-autocore.json
