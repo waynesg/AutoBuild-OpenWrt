@@ -52,7 +52,7 @@ jobs:
       - name: Download External Packages
         working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64
         run: |
-          cat external-package-urls.txt | xargs wget -P packages
+          cat build/immortalwrt/external-package-urls.txt | xargs wget -P packages
       
       - name: Run Patch and DIY Scripts
         working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64
