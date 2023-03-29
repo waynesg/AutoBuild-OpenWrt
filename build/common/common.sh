@@ -83,7 +83,9 @@ elif [[ "${REPO_BRANCH}" == "19.07" ]]; then
 	cp -Rf "${Home}"/build/common/LIENOL/diy/* "${Home}"
 	cp -Rf "${Home}"/build/common/LIENOL/patches/* "${PATH1}/patches"
 elif [[ "${REPO_BRANCH}" == "openwrt-22.03" ]]; then
-	cp -Rf "${Home}"/build/common/MORTAL/patches/* "${PATH1}/patches"
+	cp -Rf "${Home}"/build/common/OFFICIAL/files "${Home}"
+	cp -Rf "${Home}"/build/common/OFFICIAL/diy/* "${Home}"
+	cp -Rf "${Home}"/build/common/OFFICIAL/patches/* "${PATH1}/patches"
 
 fi
 if [ -n "$(ls -A "${PATH1}/diy" 2>/dev/null)" ]; then
