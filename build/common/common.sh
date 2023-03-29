@@ -44,7 +44,7 @@ find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon' -o -name 'luci-
 
 
 ################################################################################################################
-# 官方22.03 diy.sh文件
+# Immortalwrt21.02 diy.sh文件
 ################################################################################################################
 Diy_Official() {
 
@@ -63,16 +63,11 @@ fi
 ################################################################################################################
 Diy_all() {
 
-#if [[ ${REGULAR_UPDATE} == "true" ]]; then
-if [[ ${REGULAR_UPDATE} == "true" && "${REPO_BRANCH}" == "master" ]]; then
+if [[ ${REGULAR_UPDATE} == "true" ]]; then
         git clone https://github.com/waynesg/luci-app-autoupdate feeds/luci/applications/luci-app-autoupdate
 	cp -Rf "${PATH1}"/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} package/base-files/files/bin
 	sed -i 's/"定时更新"/"更新固件"/g' feeds/luci/applications/luci-app-autoupdate/po/zh-cn/autoupdate.po
 	sed -i 's/定时更新 LUCI/固件更新 LUCI/g' feeds/luci/applications/luci-app-autoupdate/po/zh-cn/autoupdate.po
-elif [[ "${REPO_BRANCH}" == "openwrt-22.03" ]]; then
-        cp -Rf "${PATH1}"/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} ./package/base-files/files/bin
-	sed -i 's/"定时更新"/"更新固件"/g' ./package/waynesg/luci-app-autoupdate/po/zh-cn/autoupdate.po
-	sed -i 's/定时更新 LUCI/固件更新 LUCI/g' ./package/waynesg/luci-app-autoupdate/po/zh-cn/autoupdate.po
 fi
 if [[ "${REPO_BRANCH}" == "master" ]]; then
 	cp -Rf "${Home}"/build/common/LEDE/files "${Home}"
