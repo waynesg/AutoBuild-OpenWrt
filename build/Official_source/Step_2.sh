@@ -2,9 +2,7 @@
 clear
 
 # 使用 O2 级别的优化
-sed -i 's/Os/O2 -Wl,--gc-sections/g' include/target.mk
-wget -qO - https://github.com/openwrt/openwrt/commit/8249a8c.patch | patch -p1
-wget -qO - https://github.com/openwrt/openwrt/commit/66fa343.patch | patch -p1
+sed -i 's/Os/O2/g' include/target.mk
 # 更新 Feeds
 ./scripts/feeds update -a
 ./scripts/feeds install -a
@@ -22,11 +20,11 @@ sed -i '/unshift/d' scripts/download.pl
 sed -i '/mirror02/d' scripts/download.pl
 echo "net.netfilter.nf_conntrack_helper = 1" >>./package/kernel/linux/files/sysctl-nf-conntrack.conf
 # Nginx
-sed -i "s/client_max_body_size 128M/client_max_body_size 2048M/g" feeds/packages/net/nginx-util/files/uci.conf.template
-sed -i '/client_max_body_size/a\\tclient_body_buffer_size 8192M;' feeds/packages/net/nginx-util/files/uci.conf.template
-sed -i '/ubus_parallel_req/a\        ubus_script_timeout 600;' feeds/packages/net/nginx/files-luci-support/60_nginx-luci-support
-sed -ri "/luci-webui.socket/i\ \t\tuwsgi_send_timeout 600\;\n\t\tuwsgi_connect_timeout 600\;\n\t\tuwsgi_read_timeout 600\;" feeds/packages/net/nginx/files-luci-support/luci.locations
-sed -ri "/luci-cgi_io.socket/i\ \t\tuwsgi_send_timeout 600\;\n\t\tuwsgi_connect_timeout 600\;\n\t\tuwsgi_read_timeout 600\;" feeds/packages/net/nginx/files-luci-support/luci.locations
+#sed -i "s/client_max_body_size 128M/client_max_body_size 2048M/g" feeds/packages/net/nginx-util/files/uci.conf.template
+#sed -i '/client_max_body_size/a\\tclient_body_buffer_size 8192M;' feeds/packages/net/nginx-util/files/uci.conf.template
+#sed -i '/ubus_parallel_req/a\        ubus_script_timeout 600;' feeds/packages/net/nginx/files-luci-support/60_nginx-luci-support
+#sed -ri "/luci-webui.socket/i\ \t\tuwsgi_send_timeout 600\;\n\t\tuwsgi_connect_timeout 600\;\n\t\tuwsgi_read_timeout 600\;" feeds/packages/net/nginx/files-luci-support/luci.locations
+#sed -ri "/luci-cgi_io.socket/i\ \t\tuwsgi_send_timeout 600\;\n\t\tuwsgi_connect_timeout 600\;\n\t\tuwsgi_read_timeout 600\;" feeds/packages/net/nginx/files-luci-support/luci.locations
 
 ### Patches ###
 # introduce "MG-LRU" Linux kernel patches
@@ -100,14 +98,12 @@ mkdir -p target/linux/rockchip/files-5.10
 cp -rf ../PATCH/files-5.10 ./target/linux/rockchip/
 sed -i 's,+LINUX_6_1:kmod-drm-display-helper,,g' target/linux/rockchip/modules.mk
 sed -i '/drm_dp_aux_bus\.ko/d' target/linux/rockchip/modules.mk
-# enable tso for nanopi-r4s
-#sed -i '/set_interface_core 20 "eth1"/a \\tethtool -K eth1 tso on sg on tx on' target/linux/rockchip/armv8/base-files/etc/hotplug.d/net/40-net-smp-affinity
-#rm -rf ./package/boot/uboot-rockchip
-#cp -rf ../lede/package/boot/uboot-rockchip ./package/boot/uboot-rockchip
-#cp -rf ../lede/package/boot/arm-trusted-firmware-rockchip-vendor ./package/boot/arm-trusted-firmware-rockchip-vendor
-#rm -rf ./package/kernel/linux/modules/video.mk
-#cp -rf ../immortalwrt/package/kernel/linux/modules/video.mk ./package/kernel/linux/modules/video.mk
-#sed -i '/nouveau\.ko/d' package/kernel/linux/modules/video.mk
+rm -rf ./package/boot/uboot-rockchip
+cp -rf ../lede/package/boot/uboot-rockchip ./package/boot/uboot-rockchip
+cp -rf ../lede/package/boot/arm-trusted-firmware-rockchip-vendor ./package/boot/arm-trusted-firmware-rockchip-vendor
+rm -rf ./package/kernel/linux/modules/video.mk
+cp -rf ../immortalwrt/package/kernel/linux/modules/video.mk ./package/kernel/linux/modules/video.mk
+sed -i '/nouveau\.ko/d' package/kernel/linux/modules/video.mk
 # Disable Mitigations
 sed -i 's,rootwait,rootwait mitigations=off,g' target/linux/rockchip/image/mmc.bootscript
 sed -i 's,rootwait,rootwait mitigations=off,g' target/linux/rockchip/image/nanopi-r2s.bootscript
@@ -123,25 +119,20 @@ cp -rf ../openwrt_luci_ma/modules/luci-mod-network/htdocs/luci-static/resources/
 
 ### 获取额外的 LuCI 应用、主题和依赖 ###
 # dae ready
-cp -rf ../openwrt_ma/config/Config-kernel.in ./config/Config-kernel.in
-#sed -i '/HOST_LOADLIBES/d' include/kernel-build.mk
-#sed -i '/HOST_LOADLIBES/d' include/kernel.mk
-#sed -i 's,KBUILD_HOSTLDLIBS,KBUILD_HOSTLDFLAGS,g' include/kernel.mk
-#sed -i '/HOST_LOADLIBES/d' package/kernel/bpf-headers/Makefile
-wget -qO - https://github.com/openwrt/openwrt/commit/21733cb6.patch | patch -p1
-wget -qO - https://github.com/openwrt/openwrt/commit/aa95787e.patch | patch -p1
-wget -qO - https://github.com/openwrt/openwrt/commit/29d7d6a8.patch | patch -p1
+cp -rf ../immortalwrt/config/Config-kernel.in ./config/Config-kernel.in
 rm -rf ./tools/dwarves
 cp -rf ../openwrt_ma/tools/dwarves ./tools/dwarves
+wget -qO - https://github.com/openwrt/openwrt/commit/aa95787e.patch | patch -p1
+wget -qO - https://github.com/openwrt/openwrt/commit/29d7d6a8.patch | patch -p1
 rm -rf ./tools/elfutils
 cp -rf ../openwrt_ma/tools/elfutils ./tools/elfutils
-cp -rf ../openwrt_ma/target/linux/generic/backport-5.10/200-v5.18-tools-resolve_btfids-Build-with-host-flags.patch ./target/linux/generic/backport-5.10/200-v5.18-tools-resolve_btfids-Build-with-host-flags.patch
+rm -rf ./package/libs/elfutils
+cp -rf ../openwrt_ma/package/libs/elfutils ./package/libs/elfutils
+wget -qO - https://github.com/openwrt/openwrt/commit/b839f3d5.patch | patch -p1
 rm -rf ./feeds/packages/net/frr
 cp -rf ../openwrt_pkg_ma/net/frr feeds/packages/net/frr
-#rm -rf ./package/kernel/mac80211
-#cp -rf ../openwrt_ma/package/kernel/mac80211 ./package/kernel/mac80211
-#sed -i '/ +kmod-qrtr-mhi/d' package/kernel/mac80211/ath.mk
-#sed -i '/ +kmod-qrtr-smd/d' package/kernel/mac80211/ath.mk
+cp -rf ../immortalwrt_pkg/net/dae ./feeds/packages/net/dae
+ln -sf ../../../feeds/packages/net/dae ./package/feeds/packages/dae
 # i915
 wget -qO - https://github.com/openwrt/openwrt/commit/c21a3570.patch | patch -p1
 cp -rf ../lede/target/linux/x86/64/config-5.10 ./target/linux/x86/64/config-5.10
@@ -167,25 +158,25 @@ sed -i 's/"中断均衡器"/"中断均衡"/g' ./package/waynesg/luci-app-irqbala
 # AutoUpdate
 git clone https://github.com/waynesg/luci-app-autoupdate package/waynesg/luci-app-autoupdate
 # 更换 Nodejs 版本
-#rm -rf ./feeds/packages/lang/node
-#cp -rf ../openwrt-node/node ./feeds/packages/lang/node
-#rm -rf ./feeds/packages/lang/node-arduino-firmata
-#cp -rf ../openwrt-node/node-arduino-firmata ./feeds/packages/lang/node-arduino-firmata
-#rm -rf ./feeds/packages/lang/node-cylon
-#cp -rf ../openwrt-node/node-cylon ./feeds/packages/lang/node-cylon
-#rm -rf ./feeds/packages/lang/node-hid
-#cp -rf ../openwrt-node/node-hid ./feeds/packages/lang/node-hid
-#rm -rf ./feeds/packages/lang/node-homebridge
-#cp -rf ../openwrt-node/node-homebridge ./feeds/packages/lang/node-homebridge
-#rm -rf ./feeds/packages/lang/node-serialport
-#cp -rf ../openwrt-node/node-serialport ./feeds/packages/lang/node-serialport
-#rm -rf ./feeds/packages/lang/node-serialport-bindings
-#cp -rf ../openwrt-node/node-serialport-bindings ./feeds/packages/lang/node-serialport-bindings
-#rm -rf ./feeds/packages/lang/node-yarn
-#cp -rf ../openwrt-node/node-yarn ./feeds/packages/lang/node-yarn
-#ln -sf ../../../feeds/packages/lang/node-yarn ./package/feeds/packages/node-yarn
-#cp -rf ../openwrt-node/node-serialport-bindings-cpp ./feeds/packages/lang/node-serialport-bindings-cpp
-#ln -sf ../../../feeds/packages/lang/node-serialport-bindings-cpp ./package/feeds/packages/node-serialport-bindings-cpp
+rm -rf ./feeds/packages/lang/node
+cp -rf ../openwrt-node/node ./feeds/packages/lang/node
+rm -rf ./feeds/packages/lang/node-arduino-firmata
+cp -rf ../openwrt-node/node-arduino-firmata ./feeds/packages/lang/node-arduino-firmata
+rm -rf ./feeds/packages/lang/node-cylon
+cp -rf ../openwrt-node/node-cylon ./feeds/packages/lang/node-cylon
+rm -rf ./feeds/packages/lang/node-hid
+cp -rf ../openwrt-node/node-hid ./feeds/packages/lang/node-hid
+rm -rf ./feeds/packages/lang/node-homebridge
+cp -rf ../openwrt-node/node-homebridge ./feeds/packages/lang/node-homebridge
+rm -rf ./feeds/packages/lang/node-serialport
+cp -rf ../openwrt-node/node-serialport ./feeds/packages/lang/node-serialport
+rm -rf ./feeds/packages/lang/node-serialport-bindings
+cp -rf ../openwrt-node/node-serialport-bindings ./feeds/packages/lang/node-serialport-bindings
+rm -rf ./feeds/packages/lang/node-yarn
+cp -rf ../openwrt-node/node-yarn ./feeds/packages/lang/node-yarn
+ln -sf ../../../feeds/packages/lang/node-yarn ./package/feeds/packages/node-yarn
+cp -rf ../openwrt-node/node-serialport-bindings-cpp ./feeds/packages/lang/node-serialport-bindings-cpp
+ln -sf ../../../feeds/packages/lang/node-serialport-bindings-cpp ./package/feeds/packages/node-serialport-bindings-cpp
 # R8168驱动
 git clone -b master --depth 1 https://github.com/BROBIRD/openwrt-r8168.git package/waynesg/r8168
 patch -p1 <../PATCH/r8168/r8168-fix_LAN_led-for_r4s-from_TL.patch
@@ -477,6 +468,11 @@ sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
 sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
 sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
 
+### 收尾 ###
+## 生成默认配置及缓存
+rm -rf .config
+cat ../extra.cfg >> ./target/linux/generic/config-5.10
+
 ### Shortcut-FE 部分 ###
 # Patch Kernel 以支持 Shortcut-FE
 cp -rf ../lede/target/linux/generic/hack-5.10/953-net-patch-linux-kernel-to-support-shortcut-fe.patch ./target/linux/generic/hack-5.10/953-net-patch-linux-kernel-to-support-shortcut-fe.patch
@@ -491,9 +487,5 @@ cp -rf ../lede/package/lean/shortcut-fe/simulated-driver ./package/lean/shortcut
 wget -qO - https://github.com/coolsnowwolf/lede/commit/e517080.patch | patch -p1
 #exit 0
 
-### 收尾 ###
-## 生成默认配置及缓存
-#rm -rf .config
-cat ../extra.cfg >> ./target/linux/generic/config-5.10
 
 
