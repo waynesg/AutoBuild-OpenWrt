@@ -112,15 +112,15 @@ jobs:
         df -hT $PWD
     
     - name: 下载源码
-      #working-directory: /${{matrix.target}}
+      working-directory: /${{matrix.target}}
       run: |
         sudo chown -R runner:runner /home/runner/work/AutoBuild-OpenWrt
         cp -r ./build/Official_source/. ./build/
         cp -r ./build/. ./
         /bin/bash Step_1.sh
-        #ln -sf /${{matrix.target}}/openwrt $GITHUB_WORKSPACE/openwrt
-        echo "Home=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
-        echo "PATH1=${GITHUB_WORKSPACE}/build/${{matrix.target}}" >> $GITHUB_ENV
+        ln -sf /${{matrix.target}}/openwrt $GITHUB_WORKSPACE/openwrt
+        echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
+        echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/${{matrix.target}}" >> $GITHUB_ENV
         
     - name: 下载插件
       run: |
