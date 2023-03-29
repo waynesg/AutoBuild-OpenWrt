@@ -48,10 +48,10 @@ GET_TARGET_INFO() {
 			Firmware_sfx="bin"
 		fi
 	;;
-	"openwrt-18.06")
-		LUCI_Name="tl-18.06"
-		REPO_Name="Tianling"
-		ZUOZHE="ctcgfw"
+	"openwrt-21.02")
+		LUCI_Name="immortalwrt-21.02"
+		REPO_Name="immortalwrt"
+		ZUOZHE="immortalwrt"
 		if [[ "${TARGET_PROFILE}" == "x86-64" ]]; then
 			Legacy_Firmware="immortalwrt-x86-64-generic-squashfs-combined.${Firmware_sfxo}"
 			UEFI_Firmware="immortalwrt-x86-64-generic-squashfs-combined-efi.${Firmware_sfxo}"
