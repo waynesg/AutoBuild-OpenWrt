@@ -49,7 +49,6 @@ rm -rf ./feeds/packages/net/dns2socks
 rm -rf ./feeds/packages/net/dns2tcp
 rm -rf ./feeds/packages/net/dnsforwarder
 rm -rf ./feeds/packages/net/hysteria
-rm -rf ./feeds/packages/net/iptvhelper
 rm -rf ./feeds/packages/net/microsocks
 rm -rf ./feeds/packages/net/naiveproxy
 rm -rf ./feeds/packages/net/open-app-filter
@@ -68,7 +67,6 @@ rm -rf ./feeds/packages/net/tcping
 rm -rf ./feeds/packages/net/ipt2socks
 rm -rf ./feeds/packages/net/adguardhome
 rm -rf ./feeds/packages/net/go-aliyundrive-webdav
-rm -rf ./feeds/packages/net/gowebdav
 rm -rf ./feeds/packages/net/msd_lite
 rm -rf ./feeds/packages/net/pdnsd-alt
 rm -rf ./feeds/packages/net/v2ray-geodata
