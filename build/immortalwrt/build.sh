@@ -8,11 +8,11 @@ PROFILE="generic"
 
 PACKAGES=""
 
-# Passwall2
-PACKAGES="$PACKAGES luci-app-passwall2 CONFIG_PACKAGE_luci-i18n-passwall2-zh-cn=y"
+
 
 # Argon 主题
 PACKAGES="$PACKAGES luci-theme-argon luci-i18n-argon-config-zh-cn"
+PACKAGES="$PACKAGES luci-app-tn-netports luci-i18n-tn-netports-zh-cn"
 
 # 常用系统管理组件
 
@@ -29,6 +29,8 @@ PACKAGES="$PACKAGES luci-i18n-statistics-zh-cn"
 PACKAGES="$PACKAGES luci-app-openclash"
 # Passwall 代理
 PACKAGES="$PACKAGES luci-i18n-passwall-zh-cn"
+# Passwall2
+PACKAGES="$PACKAGES luci-app-passwall2 CONFIG_PACKAGE_luci-i18n-passwall2-zh-cn=y"
 # frp 和 nps 内网穿透
 PACKAGES="$PACKAGES luci-i18n-nps-zh-cn luci-i18n-frpc-zh-cn"
 
