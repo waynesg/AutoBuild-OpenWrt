@@ -8,6 +8,9 @@ PROFILE="generic"
 
 PACKAGES=""
 
+# Passwall2
+PACKAGES="$PACKAGES luci-app-passwall2 CONFIG_PACKAGE_luci-i18n-passwall2-zh-cn=y"
+
 # Argon 主题
 PACKAGES="$PACKAGES luci-theme-argon luci-i18n-argon-config-zh-cn"
 
