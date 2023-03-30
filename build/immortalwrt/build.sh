@@ -30,7 +30,7 @@ PACKAGES="$PACKAGES luci-app-openclash"
 # Passwall 代理
 PACKAGES="$PACKAGES luci-i18n-passwall-zh-cn"
 # Passwall2
-PACKAGES="$PACKAGES luci-app-passwall2 CONFIG_PACKAGE_luci-i18n-passwall2-zh-cn=y"
+PACKAGES="$PACKAGES luci-app-passwall2 luci-i18n-passwall2-zh-cn=y"
 # frp 和 nps 内网穿透
 PACKAGES="$PACKAGES luci-i18n-nps-zh-cn luci-i18n-frpc-zh-cn"
 
