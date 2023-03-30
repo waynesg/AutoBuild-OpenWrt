@@ -279,12 +279,13 @@ jobs:
     - name: 更新Step 2
       continue-on-error: true
       if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
-      uses: svenstaro/upload-release-action@v2
+      uses: ncipollo/release-action@v1
       with:
-        repo_token: ${{ secrets.REPO_TOKEN }}
-        file: openwrt/bin/Firmware/*
+        allowUpdates: true
+        token: ${{ secrets.REPO_TOKEN }}        
         tag: AutoUpdate
-        overwrite: true
+        bodyFile: ${{ env.PATH1 }}/releaseinfo.md
+        artifacts: "openwrt/bin/Firmware/*"
         
     - name: 更新Step 3
       if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true'
