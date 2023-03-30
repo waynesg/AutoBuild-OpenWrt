@@ -68,16 +68,6 @@ jobs:
       - name: Upload Firmware to Artifacts
         uses: actions/upload-artifact@main
         with:
-          cd bin/targets/*/*
-          find -name "*buildinfo*" | xargs -i rm -rf {}
-          find -name "*sha256sums*" | xargs -i rm -rf {}
-          find -name "*manifest*" | xargs -i rm -rf {}
-          find -name "*vmlinuz*" | xargs -i rm -rf {}
-          find -name "*Image*" | xargs -i rm -rf {}
-          find -name "*rootfs*" | xargs -i rm -rf {}
-          find -name "*efi.img*" | xargs -i rm -rf {}
-          find -name "*kernel*" | xargs -i rm -rf {}
-          rm -rf packages
           name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86_64-images-${{ env.DATETIME }}
           path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64/bin/targets/x86/64/*
 
