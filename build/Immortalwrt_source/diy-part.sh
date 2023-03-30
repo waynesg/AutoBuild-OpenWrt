@@ -69,7 +69,6 @@ rm -rf ./feeds/packages/net/go-aliyundrive-webdav
 rm -rf ./feeds/packages/net/msd_lite
 rm -rf ./feeds/packages/net/pdnsd-alt
 rm -rf ./feeds/packages/net/v2ray-geodata
-rm -rf ./feeds/packages/utils/cpulimit
 rm -rf ./feeds/packages/net/kcptun
 rm -rf ./feeds/packages/lang/lua-neturl
 rm -rf ./feeds/packages/lang/lua-maxminddb
