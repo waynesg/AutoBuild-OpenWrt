@@ -32,7 +32,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [immortalwrt_source]
+        target: [Immortalwrt_source]
 
         # [Lede_source,Lienol_source,Mortal_source,Tianling_source]
 
