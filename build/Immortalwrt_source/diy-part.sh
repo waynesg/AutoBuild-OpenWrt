@@ -29,19 +29,18 @@ rm -rf package/waynesg && git clone -b js https://github.com/waynesg/OpenWrt-Sof
 
 echo
 TIME r "删除无用主题"
-rm -rf ./feeds/luci/themes/luci-theme-argon
-rm -rf ./feeds/luci/themes/luci-theme-material
+rm -rf package/waynesg/luci-theme-argon
 TIME r "删除重复插件"
-rm -rf ./feeds/luci/applications/luci-app-argon-config
+rm -rf package/waynesg/luci-app-argon-config
 rm -rf package/waynesg/luci-app-netdata
-rm -rf ./feeds/luci/applications/luci-app-serverchan
-rm -rf ./feeds/luci/applications/luci-app-pushbot
-rm -rf ./feeds/luci/applications/luci-app-mosdns
-rm -rf ./feeds/luci/applications/luci-app-omcproxy
-rm -rf ./feeds/luci/applications/luci-app-cpufreq
-rm -rf ./feeds/luci/applications/luci-app-cpulimit
-rm -rf ./feeds/packages/net/mosdns
-rm -rf ./feeds/packages/net/alist
+rm -rf package/waynesg/luci-app-serverchan
+rm -rf package/waynesg/luci-app-pushbot
+rm -rf package/waynesg/luci-app-mosdns
+rm -rf package/waynesg/luci-app-omcproxy
+rm -rf package/waynesg/luci-app-cpufreq
+rm -rf package/waynesg/luci-app-cpulimit
+rm -rf package/waynesg/luci-app-mosdns
+rm -rf package/waynesg/luci-app-alist
 rm -rf ./feeds/packages/net/brook
 rm -rf ./feeds/packages/net/cdnspeedtest
 rm -rf ./feeds/packages/net/chinadns-ng
