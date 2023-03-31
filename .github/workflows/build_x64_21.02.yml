@@ -267,7 +267,7 @@ jobs:
         name: ${{ env.CODE }}-${{ env.TARGET_PROFILE }}
         tag: ${{ env.date }}
         token: ${{ secrets.REPO_TOKEN }}
-        bodyFile: "update_log.txt"
+        bodyFile: ${{ env.PATH1 }}/releaseinfo.md
         artifacts: "${{ env.FIRMWARE }}/*"
         
     - name: 更新Step 1
