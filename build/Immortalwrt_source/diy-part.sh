@@ -25,76 +25,8 @@ TIME() {
 
 echo 
 TIME y "添加软件包"
-rm -rf package/waynesg && git clone -b js https://github.com/waynesg/OpenWrt-Software package/waynesg
-
-echo
-TIME r "删除无用主题"
-rm -rf package/waynesg/luci-theme-argon
-TIME r "删除重复插件"
-rm -rf package/waynesg/luci-app-argon-config
-rm -rf package/waynesg/luci-app-netdata
-rm -rf package/waynesg/luci-app-serverchan
-rm -rf package/waynesg/luci-app-pushbot
-rm -rf package/waynesg/luci-app-mosdns
-rm -rf package/waynesg/luci-app-omcproxy
-rm -rf package/waynesg/luci-app-cpufreq
-rm -rf package/waynesg/luci-app-cpulimit
-rm -rf package/waynesg/luci-app-mosdns
-rm -rf package/waynesg/luci-app-alist
-rm -rf ./feeds/packages/net/brook
-rm -rf ./feeds/packages/net/cdnspeedtest
-rm -rf ./feeds/packages/net/chinadns-ng
-rm -rf ./feeds/packages/net/dns2socks
-rm -rf ./feeds/packages/net/dns2tcp
-rm -rf ./feeds/packages/net/dnsforwarder
-rm -rf ./feeds/packages/net/hysteria
-rm -rf ./feeds/packages/net/microsocks
-rm -rf ./feeds/packages/net/naiveproxy
-rm -rf ./feeds/packages/net/open-app-filter
-rm -rf ./feeds/packages/net/shadowsocks-rust
-rm -rf ./feeds/packages/net/shadowsocksr-libev
-rm -rf ./feeds/packages/net/simple-obfs
-rm -rf ./feeds/packages/net/subconverter
-rm -rf ./feeds/packages/net/trojan
-rm -rf ./feeds/packages/net/trojan-go
-rm -rf ./feeds/packages/net/trojan-plus
-rm -rf ./feeds/packages/net/v2ray-core
-rm -rf ./feeds/packages/net/v2ray-plugin
-rm -rf ./feeds/packages/net/xray-core
-rm -rf ./feeds/packages/net/xray-plugin
-rm -rf ./feeds/packages/net/tcping
-rm -rf ./feeds/packages/net/ipt2socks
-rm -rf ./feeds/packages/net/adguardhome
-rm -rf ./feeds/packages/net/go-aliyundrive-webdav
-rm -rf ./feeds/packages/net/msd_lite
-rm -rf ./feeds/packages/net/pdnsd-alt
-rm -rf ./feeds/packages/net/v2ray-geodata
-rm -rf ./feeds/packages/net/kcptun
-rm -rf ./feeds/packages/lang/lua-neturl
-rm -rf ./feeds/packages/lang/lua-maxminddb
-rm -rf ./feeds/packages/libs/quickjspp
-rm -rf ./feeds/packages/libs/libcron
-rm -rf ./feeds/packages/libs/rapidjson
-rm -rf ./feeds/packages/libs/toml11
-rm -rf ./feeds/luci/libs/luci-lib-ipkg
-rm -rf package/waynesg/luci-app-diskman
-rm -rf package/waynesg/luci-app-eqos
-rm -rf package/waynesg/luci-app-fileassistant
-rm -rf package/waynesg/luci-app-filebrowser
-rm -rf package/waynesg/luci-app-gowebdav
-rm -rf package/waynesg/luci-app-ipsec-vpnserver-manyusers
-rm -rf package/waynesg/luci-app-iptvhelper
-rm -rf package/waynesg/luci-app-msd_lite
-rm -rf package/waynesg/luci-app-openvpn-server
-rm -rf ./feeds/luci/applications/luci-app-passwall
-rm -rf package/waynesg/luci-app-socat
-rm -rf package/waynesg/luci-app-ssr-plus
-rm -rf ./feeds/luci/applications/luci-app-turboacc
-rm -rf package/waynesg/luci-app-unblockneteasemusic
-rm -rf package/waynesg/luci-app-usb-printer
-rm -rf package/waynesg/luci-app-vsftpd
-rm -rf ./feeds/luci/applications/luci-app-vssr
-rm -rf package/waynesg/luci-app-zerotier
+#rm -rf package/waynesg && git clone -b js https://github.com/waynesg/OpenWrt-Software package/waynesg
+svn co https://github.com/waynesg/OpenWrt-Software/trunk/luci-app-tn-netports package/waynesg/luci-app-tn-netports
 
 echo
 TIME b "修改 系统文件..."
