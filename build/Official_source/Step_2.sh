@@ -229,7 +229,7 @@ pushd feeds/luci
 wget -qO- https://github.com/openwrt/luci/commit/0b5fb915.patch | patch -p1
 popd
 # CPU 控制相关
-cp -rf ../waynesg_pkg/luci-app-cpufreq ./feeds/luci/applications/luci-app-cpufreq
+cp -rf ../immortalwrt_luci/applications/luci-app-cpufreq ./feeds/luci/applications/luci-app-cpufreq
 sed -i 's/"CPU 性能优化调节"/"CPU优化"/g' ./feeds/luci/applications/luci-app-cpufreq/po/zh_Hans/cpufreq.po
 ln -sf ../../../feeds/luci/applications/luci-app-cpufreq ./package/feeds/luci/luci-app-cpufreq
 sed -i 's,1608,1800,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
@@ -237,7 +237,7 @@ sed -i 's,2016,2208,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-def
 sed -i 's,1512,1608,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/10-cpufreq
 rm -rf ./feeds/luci/applications/luci-app-cpulimit
 rm -rf ./feeds/packages/utils/miniupnpd
-cp -rf ../waynesg_pkg/luci-app-cpulimit ./package/waynesg/luci-app-cpulimit
+cp -rf ../immortalwrt_luci/applications/luci-app-cpulimit ./package/waynesg/luci-app-cpulimit
 sed -i 's/"CPU占用率限制"/"CPU限制"/g' ./package/waynesg/luci-app-cpulimit/po/zh_Hans/cpulimit.po
 cp -rf ../immortalwrt_pkg/utils/cpulimit ./feeds/packages/utils/cpulimit
 ln -sf ../../../feeds/packages/utils/cpulimit ./package/feeds/packages/cpulimit
@@ -444,41 +444,26 @@ cp -rf ../waynesg_pkg/luci-app-smartinfo ./package/waynesg/luci-app-smartinfo
 # 网络接口图标
 cp -rf ../waynesg_pkg/luci-app-tn-netports ./package/waynesg/luci-app-tn-netports
 # TurboACC
-cp -rf ../waynesg_pkg/luci-app-turboacc ./package/waynesg/luci-app-turboacc
-sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' ./package/waynesg/luci-app-turboacc/po/zh-cn/turboacc.po
-cp -rf ../waynesg_pkg/luci-app-dependence/shortcut-fe ./package/waynesg/shortcut-fe
-cp -rf ../waynesg_pkg/luci-app-dependence/dnsforwarder ./package/waynesg/dnsforwarder
-cp -rf ../lede_pkg/net/dnsproxy ./package/waynesg/dnsproxy
+#cp -rf ../waynesg_pkg/luci-app-turboacc ./package/waynesg/luci-app-turboacc
+#sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' ./package/waynesg/luci-app-turboacc/po/zh-cn/turboacc.po
+#cp -rf ../waynesg_pkg/luci-app-dependence/shortcut-fe ./package/waynesg/shortcut-fe
+#cp -rf ../waynesg_pkg/luci-app-dependence/dnsforwarder ./package/waynesg/dnsforwarder
+#cp -rf ../lede_pkg/net/dnsproxy ./package/waynesg/dnsproxy
 #Others Menu Modify
 sed -i 's/"Web 管理"/"Web管理"/g' `grep "Web 管理" -rl ./`
 sed -i 's/"备份\/升级"/"备份升级"/g' `grep "备份\/升级" -rl ./`
-sed -i 's/"管理权"/"权限管理"/g' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
-sed -i 's/"重启"/"立即重启"/g' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
-sed -i '''s/'"系统"'/'"系统设置"'/g''' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
-sed -i 's/"挂载点"/"挂载路径"/g' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
-sed -i 's/"启动项"/"启动管理"/g' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
-sed -i 's/"软件包"/"软件管理"/g' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
-sed -i 's/"Terminal"/"命令终端"/g' ./feeds/luci/applications/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
+#sed -i 's/"管理权"/"权限管理"/g' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
+#sed -i 's/"重启"/"立即重启"/g' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
+#sed -i '''s/'"系统"'/'"系统设置"'/g''' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
+#sed -i 's/"挂载点"/"挂载路径"/g' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
+#sed -i 's/"启动项"/"启动管理"/g' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
+#sed -i 's/"软件包"/"软件管理"/g' ./feeds/luci/modules/luci-base/po/zh_Hans/base.po
+#sed -i 's/"Terminal"/"命令终端"/g' ./feeds/luci/applications/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
 sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
 sed -i 's/"实时流量监测"/"流量"/g' `grep "实时流量监测" -rl ./`
 sed -i 's/"USB 打印服务器"/"打印服务"/g' `grep "USB 打印服务器" -rl ./`
 sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
 sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
 sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
-
-### Shortcut-FE 部分 ###
-# Patch Kernel 以支持 Shortcut-FE
-cp -rf ../lede/target/linux/generic/hack-5.10/953-net-patch-linux-kernel-to-support-shortcut-fe.patch ./target/linux/generic/hack-5.10/953-net-patch-linux-kernel-to-support-shortcut-fe.patch
-# Patch LuCI 以增添 Shortcut-FE 开关
-patch -p1 < ../PATCH/firewall/luci-app-firewall_add_sfe_switch.patch
-# Shortcut-FE 相关组件
-mkdir ./package/lean
-mkdir ./package/lean/shortcut-fe
-cp -rf ../lede/package/lean/shortcut-fe/fast-classifier ./package/lean/shortcut-fe/fast-classifier
-cp -rf ../lede/package/lean/shortcut-fe/shortcut-fe ./package/lean/shortcut-fe/shortcut-fe
-cp -rf ../lede/package/lean/shortcut-fe/simulated-driver ./package/lean/shortcut-fe/simulated-driver
-wget -qO - https://github.com/coolsnowwolf/lede/commit/e517080.patch | patch -p1
-#exit 0
-
 
 
