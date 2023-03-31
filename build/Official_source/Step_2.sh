@@ -466,11 +466,6 @@ sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
 sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
 sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
 
-### 收尾 ###
-## 生成默认配置及缓存
-rm -rf .config
-cat ../extra.cfg >> ./target/linux/generic/config-5.10
-
 ### Shortcut-FE 部分 ###
 # Patch Kernel 以支持 Shortcut-FE
 cp -rf ../lede/target/linux/generic/hack-5.10/953-net-patch-linux-kernel-to-support-shortcut-fe.patch ./target/linux/generic/hack-5.10/953-net-patch-linux-kernel-to-support-shortcut-fe.patch
