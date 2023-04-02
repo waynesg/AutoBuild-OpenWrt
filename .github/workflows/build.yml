@@ -28,4 +28,4 @@ jobs:
       # Runs a single command using the runners shell
       - name: Build image
         run: |
-          ./run.sh --image=openwrtorg/imagebuilder:x86-64-22.03.3  
+          ./build/IB/run.sh --image=openwrtorg/imagebuilder:x86-64-22.03.3  
