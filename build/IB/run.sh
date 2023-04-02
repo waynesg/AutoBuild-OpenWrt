@@ -64,7 +64,7 @@ version: "3.5"
 services:
   imagebuilder:
     image: "$IMAGEBUILDER_IMAGE"
-    user:root
+    privileged: true
     container_name: imagebuilder
     environment:
       - PROFILE=$PROFILE
