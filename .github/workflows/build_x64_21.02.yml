@@ -94,7 +94,7 @@ jobs:
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /usr/lib/jvm /opt/ghc
         sudo -E apt-get -qq update -y
         sudo -E apt-get -qq full-upgrade -y
-        sudo -E apt-get -qq install -y libfuse-dev
+        sudo -E apt-get -qq install -y libfuse-dev rename
         sudo bash -c 'bash <(curl -s https://build-scripts.immortalwrt.eu.org/init_build_environment.sh)'
         sudo -E apt-get -qq autoremove -y --purge
         sudo -E apt-get -qq clean
