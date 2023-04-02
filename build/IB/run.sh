@@ -74,7 +74,7 @@ services:
       - ./bin:$BUILD_DIR/bin
       - ./build.sh:$BUILD_DIR/build.sh
       - ./files:$BUILD_DIR/custom_files
-    command: "./build.sh"
+    command: "sudo ./build.sh"
 END
 
 )
