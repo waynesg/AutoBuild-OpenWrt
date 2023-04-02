@@ -75,7 +75,8 @@ services:
       - ./bin:$BUILD_DIR/bin
       - ./build.sh:$BUILD_DIR/build.sh
       - ./files:$BUILD_DIR/custom_files
-    command: "sudo chmod +x build.sh && ./build.sh"
+    command: "sudo chmod +x build.sh"
+    command: ”./build.sh“
 END
 
 )
