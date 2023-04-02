@@ -71,10 +71,10 @@ services:
     env_file:
       - ./.env
     volumes:
-      - ./bin:$BUILD_DIR/bin
-      - ./build.sh:$BUILD_DIR/build.sh
-      - ./files:$BUILD_DIR/custom_files
-    command: "sudo ./build.sh"
+      - ./bin:$BUILD_DIR/bin:z
+      - ./build.sh:$BUILD_DIR/build.sh:z
+      - ./files:$BUILD_DIR/custom_files:z
+    command: "./build.sh"
 END
 
 )
