@@ -72,9 +72,9 @@ services:
     env_file:
       - ./.env
     volumes:
-      - ./bin:$BUILD_DIR/bin
-      - ./build.sh:$BUILD_DIR/build.sh
-      - ./files:$BUILD_DIR/custom_files
+      - ./build/IB//bin:$BUILD_DIR/bin
+      - ./build/IB//build.sh:$BUILD_DIR/build.sh
+      - ./build/IB//files:$BUILD_DIR/custom_files
     command: "sudo chmod +x build.sh"
     command: ”./build.sh“
 END
