@@ -70,7 +70,7 @@ jobs:
         run: |
           echo "Home=${GITHUB_WORKSPACE}/${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64" >> $GITHUB_ENV
           cd ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64
-          cp -Rf bin/targets/*/* "${Home}"/upgrade
+          sudo cp -Rf bin/targets/*/* "${Home}"/upgrade
           cd bin/targets/*/*
           find -name "*buildinfo*" | xargs -i rm -rf {}
           find -name "*sha256sums*" | xargs -i rm -rf {}
