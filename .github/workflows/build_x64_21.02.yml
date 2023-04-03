@@ -265,7 +265,7 @@ jobs:
         name: ${{ env.CODE }}-${{ env.TARGET_PROFILE }}
         tag: ${{ env.date }}
         token: ${{ secrets.REPO_TOKEN }}
-        bodyFile: ${{ env.PATH1 }}/releaseinfo.md
+        bodyFile: "update_log.txt"
         artifacts: "${{ env.FIRMWARE }}/*"
         
     - name: 更新Step 1
@@ -277,13 +277,12 @@ jobs:
     - name: 更新Step 2
       continue-on-error: true
       if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
-      uses: ncipollo/release-action@v1
+      uses: svenstaro/upload-release-action@v2
       with:
-        allowUpdates: true
-        token: ${{ secrets.REPO_TOKEN }}        
+        repo_token: ${{ secrets.REPO_TOKEN }}
+        file: openwrt/bin/Firmware/*
         tag: AutoUpdate
-        bodyFile: ${{ env.PATH1 }}/releaseinfo.md
-        artifacts: "openwrt/bin/Firmware/*"
+        overwrite: true
         
     - name: 更新Step 3
       if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true'
