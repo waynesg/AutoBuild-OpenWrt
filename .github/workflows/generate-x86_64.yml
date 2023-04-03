@@ -10,7 +10,7 @@ on:
       release: 
         description: 将编译出的镜像上传到 Release
         required: false
-        default: 'false'
+        default: 'true'
 
 env:
   DOWNLOAD_BASE: https://downloads.immortalwrt.org
@@ -77,20 +77,17 @@ jobs:
           find -name "*manifest*" | xargs -i rm -rf {}
           find -name "*vmlinuz*" | xargs -i rm -rf {}
           find -name "*rootfs*" | xargs -i rm -rf {}
-          find -name "*efi.img*" | xargs -i rm -rf {}
           find -name "*kernel*" | xargs -i rm -rf {}
+          find -name "*qcow2*" | xargs -i rm -rf {}
+          find -name "*vdi*" | xargs -i rm -rf {}
+          find -name "*ext4*" | xargs -i rm -rf {}
+          find -name "*vmdk*" | xargs -i rm -rf {}
+
           rm -rf packages
           rename -v "s/^openwrt/${{ env.date1 }}-${{ env.CODE }}/" *
           echo "FIRMWARE=$PWD" >> $GITHUB_ENV
           echo "BOT=TRUE" >> $GITHUB_ENV
           echo "ORGANIZERSTATUS=success" >> $GITHUB_ENV
-            
-      - name: Upload Firmware to Artifacts
-        if: env.ORGANIZERSTATUS == 'success'
-        uses: actions/upload-artifact@main
-        with:
-          name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86_64-images-${{ env.DATETIME }}
-          path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64/bin/targets/x86/64/*
          
       - name: Upload Firmware to Release
         if: github.event.inputs.release == 'true'
