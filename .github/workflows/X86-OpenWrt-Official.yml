@@ -31,6 +31,27 @@ jobs:
       uses: actions/checkout@main
       with:
           fetch-depth: 0
+          
+    - name: 读取设置
+      run: |
+        echo "REPO_URL=${REPO_URL}" >> $GITHUB_ENV
+        echo "REPO_BRANCH=${REPO_BRANCH}" >> $GITHUB_ENV
+        echo "CONFIG_FILE=${CONFIG_FILE}" >> $GITHUB_ENV
+        echo "DIY_PART_SH=${DIY_PART_SH}" >> $GITHUB_ENV
+        echo "SSH_ACTIONS=${SSH_ACTIONS}" >> $GITHUB_ENV
+        echo "UPLOAD_BIN_DIR=${UPLOAD_BIN_DIR}" >> $GITHUB_ENV
+        echo "UPLOAD_CONFIG=${UPLOAD_CONFIG}" >> $GITHUB_ENV
+        echo "UPLOAD_FIRMWARE=${UPLOAD_FIRMWARE}" >> $GITHUB_ENV
+        echo "UPLOAD_COWTRANSFER=${UPLOAD_COWTRANSFER}" >> $GITHUB_ENV
+        echo "UPLOAD_RELEASE=${UPLOAD_RELEASE}" >> $GITHUB_ENV
+        echo "SERVERCHAN_SCKEY=${SERVERCHAN_SCKEY}" >> $GITHUB_ENV
+        echo "REGULAR_UPDATE=${REGULAR_UPDATE}" >> $GITHUB_ENV
+        echo "USE_CACHEWRTBUILD=${USE_CACHEWRTBUILD}" >> $GITHUB_ENV
+        echo "BY_INFORMATION=${BY_INFORMATION}" >> $GITHUB_ENV
+        echo "AUTOMATIC_AMLOGIC=${AUTOMATIC_AMLOGIC}" >> $GITHUB_ENV
+        echo "CangKu=${Apidz##*/}" >> $GITHUB_ENV
+        echo "Modelfile=${{matrix.target}}" >> $GITHUB_ENV
+        echo "{name}={value}" >> $GITHUB_OUTPUT
 
     - name: Init build dependencies
       env:
@@ -50,7 +71,7 @@ jobs:
         df -h
     - name: Prepare Mixedwrt
       run: |
-        sudo chown -R runner:runner /home/runner/work/YAOF
+        sudo chown -R runner:runner /home/runner/work/AutoBuild-OpenWrt
         cp -r ./build/Official/SCRIPTS/X86/. ./build/Official/SCRIPTS/
         cp -r ./build/Official/SCRIPTS/. ./
         /bin/bash 01_get_ready.sh
@@ -90,10 +111,19 @@ jobs:
       with:
         mixkey: ${{ env.TARGET_DEVICE_ARCH }}
         prefix: ${{ github.workspace }}/openwrt
+    
+    - name: 加载缓存
+      if: env.USE_CACHEWRTBUILD == 'true'
+      uses: stupidloud/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        prefix: ${{ github.workspace }}/openwrt
+        
     - name: Make Download
       run: |
         cd openwrt
         make download -j50
+        
     - name: Compile Openwrt
       id: compileopenwrt
       continue-on-error: true
@@ -102,44 +132,91 @@ jobs:
         #echo | make kernel_oldconfig -j$(($(nproc) + 1)) 
         IGNORE_ERRORS=1 make -j$(($(nproc) + 1))
         echo $?
+        
     - name: If Error
       if: steps.compileopenwrt.outcome == 'failure'
       run: |
         cat openwrt/.config
         echo '================================================================'
         cd openwrt && make -j1 V=s
+        
     - name: Print Disk Space After
       run: df -h
+      
     - name: Organize files
       id: organize
       run: |
-        rm -rf ./artifact/
-        mkdir -p ./artifact/
-        mv openwrt/bin/targets/x86/64/*combined-efi.img* ./artifact/
-        cd ./artifact/
-        ls -Ahl
-        gzip -d *.gz && exit 0
-        gzip --best *.img
-        ls -Ahl
-        sha256sum openwrt*x86* | tee X86-GC404-$(date +%Y-%m-%d)-${{ env.latest_release }}.sha256sum
-        zip X86-GC404-Docker-$(date +%Y-%m-%d)-${{ env.latest_release }}-ext4.zip *ext4-combined*
-        zip X86-GC404-Docker-$(date +%Y-%m-%d)-${{ env.latest_release }}-sfs.zip *squashfs-combined*
-        ls -Ahl
-    - name: Upload artifact
+        echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
+        echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/Official" >> $GITHUB_ENV
+        cd openwrt
+        cp -Rf bin/targets/*/* "${Home}"/upgrade
+        cd bin/targets/*/*
+        find -name "*buildinfo*" | xargs -i rm -rf {}
+        find -name "*sha256sums*" | xargs -i rm -rf {}
+        find -name "*manifest*" | xargs -i rm -rf {}
+        find -name "*vmlinuz*" | xargs -i rm -rf {}
+        find -name "*Image*" | xargs -i rm -rf {}
+        find -name "*rootfs*" | xargs -i rm -rf {}
+        find -name "*efi.img*" | xargs -i rm -rf {}
+        find -name "*kernel*" | xargs -i rm -rf {}
+        rm -rf packages
+        rename -v "s/^openwrt/${{ env.date1 }}-${{ env.CODE }}/" *
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        echo "BOT=TRUE" >> $GITHUB_ENV
+        echo "ORGANIZERSTATUS=success" >> $GITHUB_ENV   
+        
+    - name: 上传固件
+      if: env.ORGANIZERSTATUS == 'success' && env.UPLOAD_FIRMWARE == 'true'
       uses: actions/upload-artifact@main
       with:
-        name: OpenWRT_${{ env.latest_release }}
-        path: ./artifact/
-
-    - name: Create release
-      id: create_release
-      uses: ncipollo/release-action@main
+        name: ${{ env.OpenWrt_name }}-${{ env.CODE }}-${{ env.TARGET_PROFILE }}-firmware-${{ env.Compile_Date }}
+        path: ${{ env.FIRMWARE }}
+          
+    - name: 发布信息
+      if: env.ORGANIZERSTATUS == 'success' && env.UPLOAD_RELEASE == 'true'
+      run: |
+        echo "### $(date +"%Y年%m月%d号-%H点%M分")" > update_log.txt
+ 
+    - name: 发布固件
+      if: env.ORGANIZERSTATUS == 'success' && env.UPLOAD_RELEASE == 'true' && env.REPO_TOKEN
+      uses: ncipollo/release-action@v1
       with:
-        name: OpenWRT-${{ env.latest_release }}
-        allowUpdates: true
-        prerelease: false
-        tag: ${{ env.latest_release }}
-        commit: 22.03
-        replacesArtifacts: true
-        token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: ./artifact/*.zip
+        name: ${{ env.CODE }}-${{ env.TARGET_PROFILE }}
+        tag: ${{ env.date }}
+        token: ${{ secrets.REPO_TOKEN }}
+        bodyFile: "update_log.txt"
+        artifacts: "${{ env.FIRMWARE }}/*"
+        
+    - name: 更新Step 1
+      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
+      run: |
+       cd openwrt
+       source "${PATH1}/upgrade.sh" && Diy_Part3
+        
+    - name: 更新Step 2
+      continue-on-error: true
+      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.REPO_TOKEN }}
+        file: openwrt/bin/Firmware/*
+        tag: AutoUpdate
+        overwrite: true
+        file_glob: true
+        
+    - name: 更新Step 3
+      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true'
+      run: |
+        mkdir -p Github_Tags
+        cd Github_Tags
+        wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/AutoUpdate -O Github_Tags
+        
+    - name: 更新Step 4
+      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.REPO_TOKEN }}
+        file: Github_Tags/*
+        tag: AutoUpdate
+        overwrite: true
+        file_glob: true
