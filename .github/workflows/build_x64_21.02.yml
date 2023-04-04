@@ -42,6 +42,15 @@ jobs:
         echo -e "Total CPU cores\t: $(nproc)"
         cat /proc/cpuinfo | grep 'model name'
         ulimit -a
+        
+    - name: 空间配置
+      uses: easimon/maximize-build-space@master
+      with:
+        swap-size-mb: 2048
+        root-reserve-mb: 2048
+        remove-dotnet: 'true'
+        remove-android: 'true'
+        remove-haskell: 'true'
 
     - name: 准备完成
       uses: actions/checkout@v3
@@ -190,7 +199,7 @@ jobs:
       id: package
       run: |
         cd openwrt
-        make download -j8
+        make download -j50
         find dl -size -1024c -exec rm -f {} \;
     
     - name: 开始通知
@@ -208,11 +217,18 @@ jobs:
       id: compile
       run: |
         cd openwrt
-        echo -e "$(nproc) thread compile"
-        make -j$(nproc) || make -j1 V=s
+        #echo -e "$(nproc) thread compile"
+        IGNORE_ERRORS=1 make -j$(($(nproc) + 1))
         echo "COMPILESTATUS=success" >> $GITHUB_ENV
         echo "date=$(date "+%Y%m%d%H%M%S")" >> $GITHUB_ENV
         echo "date1=$(date +'%m-%d')" >> $GITHUB_ENV
+        
+    - name: 提交错误
+      if: steps.compileopenwrt.outcome == 'failure'
+      run: |
+        cat openwrt/.config
+        echo '================================================================'
+        cd openwrt && make -j1 V=s
         
     - name: 上传配置
       if: env.UPLOAD_CONFIG == 'true'
