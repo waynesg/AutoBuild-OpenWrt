@@ -28,7 +28,7 @@ zgrep -m 1 "Depends: kernel (=.*)$" Packages.gz | sed -e 's/.*-\(.*\))/\1/' >.ve
 sed -i -e 's/^\(.\).*vermagic$/\1cp $(TOPDIR)\/.vermagic $(LINUX_DIR)\/.vermagic/' include/kernel-defaults.mk
 
 # 预配置一些插件
-cp -rf ..build/Official/PATCH/files ./files
+cp -rf ../build/Official/files ./files
 
 chmod -R 755 ./
 find ./ -name *.orig | xargs rm -f
