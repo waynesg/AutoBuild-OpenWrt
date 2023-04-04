@@ -21,11 +21,11 @@ sed -i '/unshift/d' scripts/download.pl
 sed -i '/mirror02/d' scripts/download.pl
 echo "net.netfilter.nf_conntrack_helper = 1" >>./package/kernel/linux/files/sysctl-nf-conntrack.conf
 # Nginx
-sed -i "s/client_max_body_size 128M/client_max_body_size 2048M/g" feeds/packages/net/nginx-util/files/uci.conf.template
-sed -i '/client_max_body_size/a\\tclient_body_buffer_size 8192M;' feeds/packages/net/nginx-util/files/uci.conf.template
-sed -i '/ubus_parallel_req/a\        ubus_script_timeout 600;' feeds/packages/net/nginx/files-luci-support/60_nginx-luci-support
-sed -ri "/luci-webui.socket/i\ \t\tuwsgi_send_timeout 600\;\n\t\tuwsgi_connect_timeout 600\;\n\t\tuwsgi_read_timeout 600\;" feeds/packages/net/nginx/files-luci-support/luci.locations
-sed -ri "/luci-cgi_io.socket/i\ \t\tuwsgi_send_timeout 600\;\n\t\tuwsgi_connect_timeout 600\;\n\t\tuwsgi_read_timeout 600\;" feeds/packages/net/nginx/files-luci-support/luci.locations
+#sed -i "s/client_max_body_size 128M/client_max_body_size 2048M/g" feeds/packages/net/nginx-util/files/uci.conf.template
+#sed -i '/client_max_body_size/a\\tclient_body_buffer_size 8192M;' feeds/packages/net/nginx-util/files/uci.conf.template
+#sed -i '/ubus_parallel_req/a\        ubus_script_timeout 600;' feeds/packages/net/nginx/files-luci-support/60_nginx-luci-support
+#sed -ri "/luci-webui.socket/i\ \t\tuwsgi_send_timeout 600\;\n\t\tuwsgi_connect_timeout 600\;\n\t\tuwsgi_read_timeout 600\;" feeds/packages/net/nginx/files-luci-support/luci.locations
+#sed -ri "/luci-cgi_io.socket/i\ \t\tuwsgi_send_timeout 600\;\n\t\tuwsgi_connect_timeout 600\;\n\t\tuwsgi_read_timeout 600\;" feeds/packages/net/nginx/files-luci-support/luci.locations
 
 ### 必要的 Patches ###
 # introduce "MG-LRU" Linux kernel patches
@@ -54,13 +54,13 @@ cp -rf ../lede/target/linux/generic/hack-5.10/952-net-conntrack-events-support-m
 cp -rf ../lede/target/linux/generic/hack-5.10/982-add-bcm-fullconenat-support.patch ./target/linux/generic/hack-5.10/982-add-bcm-fullconenat-support.patch
 # Patch FireWall 以增添 FullCone 功能
 # FW4
-rm -rf ./package/network/config/firewall4
-cp -rf ../immortalwrt/package/network/config/firewall4 ./package/network/config/firewall4
-cp -f ../build/Official/PATCH/firewall/990-unconditionally-allow-ct-status-dnat.patch ./package/network/config/firewall4/patches/990-unconditionally-allow-ct-status-dnat.patch
-rm -rf ./package/libs/libnftnl
-cp -rf ../immortalwrt/package/libs/libnftnl ./package/libs/libnftnl
-rm -rf ./package/network/utils/nftables
-cp -rf ../immortalwrt/package/network/utils/nftables ./package/network/utils/nftables
+#rm -rf ./package/network/config/firewall4
+#cp -rf ../immortalwrt/package/network/config/firewall4 ./package/network/config/firewall4
+#cp -f ../build/Official/PATCH/firewall/990-unconditionally-allow-ct-status-dnat.patch ./package/network/config/firewall4/patches/990-unconditionally-allow-ct-status-dnat.patch
+#rm -rf ./package/libs/libnftnl
+#cp -rf ../immortalwrt/package/libs/libnftnl ./package/libs/libnftnl
+#rm -rf ./package/network/utils/nftables
+#cp -rf ../immortalwrt/package/network/utils/nftables ./package/network/utils/nftables
 # FW3
 mkdir -p package/network/config/firewall/patches
 cp -rf ../immortalwrt_21/package/network/config/firewall/patches/100-fullconenat.patch ./package/network/config/firewall/patches/100-fullconenat.patch
@@ -78,30 +78,6 @@ git clone --depth 1 https://github.com/fullcone-nat-nftables/nft-fullcone packag
 cp -rf ../Lienol/package/network/utils/fullconenat ./package/waynesg/fullconenat
 
 ### 获取额外的基础软件包 ###
-# 更换为 ImmortalWrt Uboot 以及 Target
-rm -rf ./target/linux/rockchip
-cp -rf ../lede/target/linux/rockchip ./target/linux/rockchip
-rm -rf ./target/linux/rockchip/Makefile
-cp -rf ../openwrt_release/target/linux/rockchip/Makefile ./target/linux/rockchip/Makefile
-rm -rf ./target/linux/rockchip/armv8/config-5.10
-cp -rf ../openwrt_release/target/linux/rockchip/armv8/config-5.10 ./target/linux/rockchip/armv8/config-5.10
-rm -rf ./target/linux/rockchip/patches-5.10/002-net-usb-r8152-add-LED-configuration-from-OF.patch
-rm -rf ./target/linux/rockchip/patches-5.10/003-dt-bindings-net-add-RTL8152-binding-documentation.patch
-cp -rf ../build/Official/PATCH/rockchip-5.10/* ./target/linux/rockchip/patches-5.10/
-rm -rf ./package/firmware/linux-firmware/intel.mk
-cp -rf ../lede/package/firmware/linux-firmware/intel.mk ./package/firmware/linux-firmware/intel.mk
-rm -rf ./package/firmware/linux-firmware/Makefile
-cp -rf ../lede/package/firmware/linux-firmware/Makefile ./package/firmware/linux-firmware/Makefile
-mkdir -p target/linux/rockchip/files-5.10
-cp -rf ../build/Official/PATCH/files-5.10 ./target/linux/rockchip/
-sed -i 's,+LINUX_6_1:kmod-drm-display-helper,,g' target/linux/rockchip/modules.mk
-sed -i '/drm_dp_aux_bus\.ko/d' target/linux/rockchip/modules.mk
-rm -rf ./package/boot/uboot-rockchip
-cp -rf ../lede/package/boot/uboot-rockchip ./package/boot/uboot-rockchip
-cp -rf ../lede/package/boot/arm-trusted-firmware-rockchip-vendor ./package/boot/arm-trusted-firmware-rockchip-vendor
-rm -rf ./package/kernel/linux/modules/video.mk
-cp -rf ../immortalwrt/package/kernel/linux/modules/video.mk ./package/kernel/linux/modules/video.mk
-sed -i '/nouveau\.ko/d' package/kernel/linux/modules/video.mk
 # Disable Mitigations
 sed -i 's,rootwait,rootwait mitigations=off,g' target/linux/rockchip/image/mmc.bootscript
 sed -i 's,rootwait,rootwait mitigations=off,g' target/linux/rockchip/image/nanopi-r2s.bootscript
@@ -300,18 +276,17 @@ cp -rf ../passwall_luci/luci-app-passwall ./package/waynesg/luci-app-passwall
 pushd package/waynesg/luci-app-passwall
 sed -i 's,iptables-legacy,iptables-nft,g' Makefile
 popd
-cp -rf ../waynesg_pkg/luci-app-dependence ./package/waynesg/luci-app-dependence
-#cp -rf ../passwall_pkg/tcping ./package/waynesg/tcping
-#cp -rf ../passwall_pkg/chinadns-ng ./package/waynesg/chinadns-ng
-#cp -rf ../passwall_pkg/trojan-go ./package/waynesg/trojan-go
-#cp -rf ../passwall_pkg/brook ./package/waynesg/brook
-#cp -rf ../passwall_pkg/ssocks ./package/waynesg/ssocks
-#cp -rf ../passwall_pkg/microsocks ./package/waynesg/microsocks
-#cp -rf ../passwall_pkg/dns2socks ./package/waynesg/dns2socks
-#cp -rf ../passwall_pkg/ipt2socks ./package/waynesg/ipt2socks
-#cp -rf ../passwall_pkg/pdnsd-alt ./package/waynesg/pdnsd-alt
-#cp -rf ../passwall_pkg/trojan-plus ./package/waynesg/trojan-plus
-#cp -rf ../passwall_pkg/xray-plugin ./package/waynesg/xray-plugin
+cp -rf ../passwall_pkg/tcping ./package/waynesg/tcping
+cp -rf ../passwall_pkg/chinadns-ng ./package/waynesg/chinadns-ng
+cp -rf ../passwall_pkg/trojan-go ./package/waynesg/trojan-go
+cp -rf ../passwall_pkg/brook ./package/waynesg/brook
+cp -rf ../passwall_pkg/ssocks ./package/waynesg/ssocks
+cp -rf ../passwall_pkg/microsocks ./package/waynesg/microsocks
+cp -rf ../passwall_pkg/dns2socks ./package/waynesg/dns2socks
+cp -rf ../passwall_pkg/ipt2socks ./package/waynesg/ipt2socks
+cp -rf ../passwall_pkg/pdnsd-alt ./package/waynesg/pdnsd-alt
+cp -rf ../passwall_pkg/trojan-plus ./package/waynesg/trojan-plus
+cp -rf ../passwall_pkg/xray-plugin ./package/waynesg/xray-plugin
 # Passwall 白名单
 echo '
 teamviewer.com
