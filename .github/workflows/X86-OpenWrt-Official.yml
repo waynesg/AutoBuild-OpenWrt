@@ -1,24 +1,42 @@
 name: X86-OpenWrt-Official
 
 on:
-#  schedule:
-#    - cron: 5 6 * * 0
-  watch:
-    types: started
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'ssh-action'
+        required: false
+        default: 'ssh-actions'
 
+  schedule:
+   - cron: 0 0 1 * *
+
+env:
+  Github: https://github.com/${{github.repository}}
+  Author: ${{github.actor}}
+  Apidz: ${{github.repository}}
+  Run_number: ${{github.run_number}}
+  Run_workflow: ${{github.workflow}}
+  REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+  SCKEY: ${{ secrets.SCKEY }}
+  PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TZ: Asia/Shanghai
+  
 jobs:
   build:
     runs-on: ubuntu-22.04
     if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
-    - name: Show system
+    - name: 机器配置
       run: |
         echo -e "Total CPU cores\t: $(nproc)"
         cat /proc/cpuinfo | grep 'model name'
         ulimit -a
         
-    - name: Maximize build space
+    - name: 空间配置
       uses: easimon/maximize-build-space@master
       with:
         swap-size-mb: 2048
@@ -27,7 +45,7 @@ jobs:
         remove-android: 'true'
         remove-haskell: 'true'
         
-    - name: Checkout
+    - name: 准备完成
       uses: actions/checkout@main
       with:
           fetch-depth: 0
@@ -53,7 +71,7 @@ jobs:
         echo "Modelfile=${{matrix.target}}" >> $GITHUB_ENV
         echo "{name}={value}" >> $GITHUB_OUTPUT
 
-    - name: Init build dependencies
+    - name: 部署环境
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
@@ -69,62 +87,87 @@ jobs:
         sudo -E apt-get -qq clean
         sudo -E git config --global user.name 'GitHub Actions' && git config --global user.email 'noreply@github.com'
         df -h
-    - name: Prepare Mixedwrt
+        
+    - name: 准备源码
       run: |
         sudo chown -R runner:runner /home/runner/work/AutoBuild-OpenWrt
         cp -r ./build/Official/SCRIPTS/X86/. ./build/Official/SCRIPTS/
         cp -r ./build/Official/SCRIPTS/. ./
         /bin/bash 01_get_ready.sh
-    - name: Prepare Package
+        echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
+        echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/Official" >> $GITHUB_ENV
+        
+    - name: 准备插件
       run: |
         cd openwrt
         cp -r ../build/Official/SCRIPTS/. ./
         /bin/bash 02_prepare_package.sh
         /bin/bash 02_target_only.sh
         /bin/bash 04_remove_upx.sh
-    - name: QTMDFW4
+        
+    - name: 加载设置
       run: |
+        echo "Compile_Date=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+        cp -Rf `find ./ -maxdepth 1 -type d ! -path './openwrt' ! -path './'` openwrt
+        mv -f "${Home}"/build/common/*.sh "${PATH1}"
+        source "${PATH1}/common.sh" && Diy_all
         cd openwrt
         cp -rf ../build/Official/SEED/X86/config.seed .config
         /bin/bash 07_fw3.sh
-    - name: Convert Translation
+        
+    - name: 语言转换
       run: |
         cd openwrt
         /bin/bash 03_convert_translation.sh
-    - name: Add ACL
+        
+    - name: 访问控制
       run: |
         cd openwrt
         /bin/bash 05_create_acl_for_luci.sh -a
-    - name: Make Config
+        
+    - name: 生成配置
       run: |
         cd openwrt
         make defconfig
-    - name: Get Architecture
+        
+    - name: 配置架构
       working-directory: ${{ github.workspace }}/openwrt
       run: |
         TARGET_DEVICE_ARCH="$(grep "^CONFIG_TARGET_.*_.*=y$" ".config" | head -n 1 | sed 's/^CONFIG_TARGET_//g' | awk -F '_' '{print $1}')"
         echo "TARGET_DEVICE_ARCH=${TARGET_DEVICE_ARCH}" >>$GITHUB_ENV
         latest_release="$(curl -s https://github.com/openwrt/openwrt/tags | grep -Eo "v[0-9\.]+\-*r*c*[0-9]*.tar.gz" | sed -n '/[2-9][0-9]/p' | sed -n 1p | sed 's/.tar.gz//g' | sed 's/v//g')"
         echo "latest_release=${latest_release}" >>$GITHUB_ENV
-    - name: Cache
+        
+    - name: 加载缓存
       uses: HiGarfield/cachewrtbuild@main
       with:
         mixkey: ${{ env.TARGET_DEVICE_ARCH }}
         prefix: ${{ github.workspace }}/openwrt
-    
-    - name: 加载缓存
-      if: env.USE_CACHEWRTBUILD == 'true'
-      uses: stupidloud/cachewrtbuild@main
-      with:
-        ccache: 'true'
-        prefix: ${{ github.workspace }}/openwrt
         
-    - name: Make Download
+    - name: SSH连接
+      if: env.SSH_ACTIONS == 'true' || (github.event.inputs.ssh == 'ssh')
+      uses: danshui-git/debugger-action@main
+      env:
+         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        
+    - name: 下载dl库
       run: |
         cd openwrt
         make download -j50
         
-    - name: Compile Openwrt
+    - name: 推送通知
+      if: env.PUSH_PLUS_TOKEN && env.SERVERCHAN_SCKEY == 'PUSH' || env.TELEGRAM_BOT_TOKEN && env.SERVERCHAN_SCKEY == 'TELE'
+      run: |
+        echo `date +'%Y-%m-%d %H:%M:%S'` > runtime.log
+        starttime=$(echo `date +'%Y-%m-%d %H:%M:%S'`)
+        if [[ "${SERVERCHAN_SCKEY}" == "TELE" ]]; then
+          curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=🎉 主人：您正在使用【${{matrix.target}}】文件夹编译固件中(${{env.CangKu}}仓库的#${{env.Run_number}}号),请耐心等待...... 😋" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+        elif [[ "${SERVERCHAN_SCKEY}" == "PUSH" ]]; then
+          curl -k --data token="${{ secrets.PUSH_PLUS_TOKEN }}" --data title="🎉开始编译" --data "content=🎉正在使用【${{matrix.target}}】文件夹编译固件中(${{env.CangKu}}仓库的#${{env.Run_number}}号),请您耐心等待...... 😋💐" "http://www.pushplus.plus/send"
+        fi
+        
+    - name: 编译固件
       id: compileopenwrt
       continue-on-error: true
       run: |
@@ -133,21 +176,19 @@ jobs:
         IGNORE_ERRORS=1 make -j$(($(nproc) + 1))
         echo $?
         
-    - name: If Error
+    - name: 提交错误
       if: steps.compileopenwrt.outcome == 'failure'
       run: |
         cat openwrt/.config
         echo '================================================================'
         cd openwrt && make -j1 V=s
         
-    - name: Print Disk Space After
+    - name: 剩余空间
       run: df -h
       
-    - name: Organize files
+    - name: 整理文件
       id: organize
       run: |
-        echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
-        echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/Official" >> $GITHUB_ENV
         cd openwrt
         cp -Rf bin/targets/*/* "${Home}"/upgrade
         cd bin/targets/*/*
