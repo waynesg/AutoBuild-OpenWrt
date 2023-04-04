@@ -136,14 +136,8 @@ jobs:
         TARGET_DEVICE_ARCH="$(grep "^CONFIG_TARGET_.*_.*=y$" ".config" | head -n 1 | sed 's/^CONFIG_TARGET_//g' | awk -F '_' '{print $1}')"
         echo "TARGET_DEVICE_ARCH=${TARGET_DEVICE_ARCH}" >>$GITHUB_ENV
         latest_release="$(curl -s https://github.com/openwrt/openwrt/tags | grep -Eo "v[0-9\.]+\-*r*c*[0-9]*.tar.gz" | sed -n '/[2-9][0-9]/p' | sed -n 1p | sed 's/.tar.gz//g' | sed 's/v//g')"
-        echo "latest_release=${latest_release}" >>$GITHUB_ENV
-        
-    - name: 加载缓存
-      uses: HiGarfield/cachewrtbuild@main
-      with:
-        mixkey: ${{ env.TARGET_DEVICE_ARCH }}
-        prefix: ${{ github.workspace }}/openwrt
-        
+        echo "latest_release=${latest_release}" >>$GITHUB_ENV     
+            
     - name: SSH连接
       if: env.SSH_ACTIONS == 'true' || (github.event.inputs.ssh == 'ssh')
       uses: danshui-git/debugger-action@main
@@ -151,21 +145,16 @@ jobs:
          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         
+    - name: 加载缓存
+      uses: HiGarfield/cachewrtbuild@main
+      with:
+        mixkey: ${{ env.TARGET_DEVICE_ARCH }}
+        prefix: ${{ github.workspace }}/openwrt
+        
     - name: 下载dl库
       run: |
         cd openwrt
         make download -j50
-        
-    - name: 推送通知
-      if: env.PUSH_PLUS_TOKEN && env.SERVERCHAN_SCKEY == 'PUSH' || env.TELEGRAM_BOT_TOKEN && env.SERVERCHAN_SCKEY == 'TELE'
-      run: |
-        echo `date +'%Y-%m-%d %H:%M:%S'` > runtime.log
-        starttime=$(echo `date +'%Y-%m-%d %H:%M:%S'`)
-        if [[ "${SERVERCHAN_SCKEY}" == "TELE" ]]; then
-          curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=🎉 主人：您正在使用【${{matrix.target}}】文件夹编译固件中(${{env.CangKu}}仓库的#${{env.Run_number}}号),请耐心等待...... 😋" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
-        elif [[ "${SERVERCHAN_SCKEY}" == "PUSH" ]]; then
-          curl -k --data token="${{ secrets.PUSH_PLUS_TOKEN }}" --data title="🎉开始编译" --data "content=🎉正在使用【${{matrix.target}}】文件夹编译固件中(${{env.CangKu}}仓库的#${{env.Run_number}}号),请您耐心等待...... 😋💐" "http://www.pushplus.plus/send"
-        fi
         
     - name: 编译固件
       id: compileopenwrt
