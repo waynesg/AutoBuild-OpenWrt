@@ -157,6 +157,9 @@ cp -rf ../waynesg_pkg/luci-app-irqbalance ./package/waynesg/luci-app-irqbalance
 sed -i 's/"中断均衡器"/"中断均衡"/g' ./package/waynesg/luci-app-irqbalance/po/zh-cn/luci-app-irqbalance.po
 # AutoUpdate
 git clone https://github.com/waynesg/luci-app-autoupdate package/waynesg/luci-app-autoupdate
+cp -Rf ../build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} ./package/base-files/files/bin
+sed -i 's/"定时更新"/"更新固件"/g' ./package/waynesg/luci-app-autoupdate/po/zh-cn/autoupdate.po
+sed -i 's/定时更新 LUCI/固件更新 LUCI/g' ./package/waynesg/luci-app-autoupdate/po/zh-cn/autoupdate.po
 # 更换 Nodejs 版本
 #rm -rf ./feeds/packages/lang/node
 #cp -rf ../openwrt-node/node ./feeds/packages/lang/node
