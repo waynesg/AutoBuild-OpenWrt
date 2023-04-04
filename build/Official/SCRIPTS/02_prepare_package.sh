@@ -300,17 +300,18 @@ cp -rf ../passwall_luci/luci-app-passwall ./package/waynesg/luci-app-passwall
 pushd package/waynesg/luci-app-passwall
 sed -i 's,iptables-legacy,iptables-nft,g' Makefile
 popd
-cp -rf ../passwall_pkg/tcping ./package/waynesg/tcping
-cp -rf ../passwall_pkg/chinadns-ng ./package/waynesg/chinadns-ng
-cp -rf ../passwall_pkg/trojan-go ./package/waynesg/trojan-go
-cp -rf ../passwall_pkg/brook ./package/waynesg/brook
-cp -rf ../passwall_pkg/ssocks ./package/waynesg/ssocks
-cp -rf ../passwall_pkg/microsocks ./package/waynesg/microsocks
-cp -rf ../passwall_pkg/dns2socks ./package/waynesg/dns2socks
-cp -rf ../passwall_pkg/ipt2socks ./package/waynesg/ipt2socks
-cp -rf ../passwall_pkg/pdnsd-alt ./package/waynesg/pdnsd-alt
-cp -rf ../passwall_pkg/trojan-plus ./package/waynesg/trojan-plus
-cp -rf ../passwall_pkg/xray-plugin ./package/waynesg/xray-plugin
+cp -rf ../waynesg_pkg/luci-app-dependence ./package/waynesg/luci-app-dependence
+#cp -rf ../passwall_pkg/tcping ./package/waynesg/tcping
+#cp -rf ../passwall_pkg/chinadns-ng ./package/waynesg/chinadns-ng
+#cp -rf ../passwall_pkg/trojan-go ./package/waynesg/trojan-go
+#cp -rf ../passwall_pkg/brook ./package/waynesg/brook
+#cp -rf ../passwall_pkg/ssocks ./package/waynesg/ssocks
+#cp -rf ../passwall_pkg/microsocks ./package/waynesg/microsocks
+#cp -rf ../passwall_pkg/dns2socks ./package/waynesg/dns2socks
+#cp -rf ../passwall_pkg/ipt2socks ./package/waynesg/ipt2socks
+#cp -rf ../passwall_pkg/pdnsd-alt ./package/waynesg/pdnsd-alt
+#cp -rf ../passwall_pkg/trojan-plus ./package/waynesg/trojan-plus
+#cp -rf ../passwall_pkg/xray-plugin ./package/waynesg/xray-plugin
 # Passwall 白名单
 echo '
 teamviewer.com
@@ -440,7 +441,7 @@ sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host"/"PKG_BUILD_DEPENDS:=go
 # 组播路由
 cp -rf ../waynesg_pkg/luci-app-msd_lite ./package/waynesg/luci-app-msd_lite
 sed -i 's/"MultiSD_Lite"/"组播路由"/g'  ./package/waynesg/luci-app-msd_lite/luasrc/controller/msd_lite.lua
-cp -rf ../waynesg_pkg/luci-app-dependence/msd_lite ./package/waynesg/msd_lite
+#cp -rf ../waynesg_pkg/luci-app-dependence/msd_lite ./package/waynesg/msd_lite
 # 在线设备
 cp -rf ../waynesg_pkg/luci-app-onliner ./package/waynesg/luci-app-onliner
 # 设备信息监控
