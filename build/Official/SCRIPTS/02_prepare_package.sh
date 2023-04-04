@@ -466,6 +466,10 @@ sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
 sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
 sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
 
+# 自定义Tools命令
+#mkdir -p package/base-files/files/usr/bin
+#cp -rf ../OpenWrt-Add/fuck ./package/base-files/files/usr/bin/fuck
+
 # 生成默认配置及缓存
 rm -rf .config
 cat ../build/Official/SEED/extra.cfg >> ./target/linux/generic/config-5.10
