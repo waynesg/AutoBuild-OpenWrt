@@ -117,7 +117,7 @@ cp -rf ../openwrt_luci_ma/modules/luci-mod-network/htdocs/luci-static/resources/
 
 ### 获取额外的 LuCI 应用、主题和依赖 ###
 #apinger
-rm -rf ./feeds/luci/luci-app-apinger
+rm -rf ./feeds/luci/applications/luci-app-apinger
 # dae ready
 cp -rf ../immortalwrt/config/Config-kernel.in ./config/Config-kernel.in
 rm -rf ./tools/dwarves
