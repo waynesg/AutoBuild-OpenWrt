@@ -125,15 +125,16 @@ jobs:
          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         
     - name: 加载缓存
-      uses: HiGarfield/cachewrtbuild@main
+      uses: stupidloud/cachewrtbuild@main
       with:
-        mixkey: ${{ env.TARGET_DEVICE_ARCH }}
+        ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
         
     - name: 下载dl库
       run: |
         cd openwrt
-        make download -j50
+        make download -j8
+        find dl -size -1024c -exec rm -f {} \;
         
     - name: 编译固件
       id: compileopenwrt
