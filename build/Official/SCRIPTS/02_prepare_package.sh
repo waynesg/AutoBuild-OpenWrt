@@ -29,17 +29,17 @@ sed -ri "/luci-cgi_io.socket/i\ \t\tuwsgi_send_timeout 600\;\n\t\tuwsgi_connect_
 
 ### 必要的 Patches ###
 # introduce "MG-LRU" Linux kernel patches
-cp -rf ./build/Official/PATCH/backport/MG-LRU/* ./target/linux/generic/pending-5.10/
+cp -rf ../build/Official/PATCH/backport/MG-LRU/* ./target/linux/generic/pending-5.10/
 # TCP optimizations
-cp -rf ./build/Official/PATCH/backport/TCP/* ./target/linux/generic/backport-5.10/
+cp -rf ../build/Official/PATCH/backport/TCP/* ./target/linux/generic/backport-5.10/
 # Patch arm64 型号名称
 cp -rf ../immortalwrt/target/linux/generic/hack-5.10/312-arm64-cpuinfo-Add-model-name-in-proc-cpuinfo-for-64bit-ta.patch ./target/linux/generic/hack-5.10/312-arm64-cpuinfo-Add-model-name-in-proc-cpuinfo-for-64bit-ta.patch
 # BBRv2
-cp -rf ./build/Official/PATCH/BBRv2/kernel/* ./target/linux/generic/hack-5.10/
-cp -rf ./build/Official/PATCH/BBRv2/openwrt/package ./
+cp -rf ../build/Official/PATCH/BBRv2/kernel/* ./target/linux/generic/hack-5.10/
+cp -rf ../build/Official/PATCH/BBRv2/openwrt/package ./
 wget -qO - https://github.com/openwrt/openwrt/commit/7db9763.patch | patch -p1
 # LRNG
-cp -rf ./build/Official/PATCH/LRNG/* ./target/linux/generic/hack-5.10/
+cp -rf ../build/Official/PATCH/LRNG/* ./target/linux/generic/hack-5.10/
 # SSL
 rm -rf ./package/libs/mbedtls
 cp -rf ../immortalwrt/package/libs/mbedtls ./package/libs/mbedtls
@@ -56,7 +56,7 @@ cp -rf ../lede/target/linux/generic/hack-5.10/982-add-bcm-fullconenat-support.pa
 # FW4
 rm -rf ./package/network/config/firewall4
 cp -rf ../immortalwrt/package/network/config/firewall4 ./package/network/config/firewall4
-cp -f ../PATCH/firewall/990-unconditionally-allow-ct-status-dnat.patch ./package/network/config/firewall4/patches/990-unconditionally-allow-ct-status-dnat.patch
+cp -f ../build/Official/PATCH/firewall/990-unconditionally-allow-ct-status-dnat.patch ./package/network/config/firewall4/patches/990-unconditionally-allow-ct-status-dnat.patch
 rm -rf ./package/libs/libnftnl
 cp -rf ../immortalwrt/package/libs/libnftnl ./package/libs/libnftnl
 rm -rf ./package/network/utils/nftables
@@ -87,13 +87,13 @@ rm -rf ./target/linux/rockchip/armv8/config-5.10
 cp -rf ../openwrt_release/target/linux/rockchip/armv8/config-5.10 ./target/linux/rockchip/armv8/config-5.10
 rm -rf ./target/linux/rockchip/patches-5.10/002-net-usb-r8152-add-LED-configuration-from-OF.patch
 rm -rf ./target/linux/rockchip/patches-5.10/003-dt-bindings-net-add-RTL8152-binding-documentation.patch
-cp -rf ./build/Official/PATCH/rockchip-5.10/* ./target/linux/rockchip/patches-5.10/
+cp -rf ../build/Official/PATCH/rockchip-5.10/* ./target/linux/rockchip/patches-5.10/
 rm -rf ./package/firmware/linux-firmware/intel.mk
 cp -rf ../lede/package/firmware/linux-firmware/intel.mk ./package/firmware/linux-firmware/intel.mk
 rm -rf ./package/firmware/linux-firmware/Makefile
 cp -rf ../lede/package/firmware/linux-firmware/Makefile ./package/firmware/linux-firmware/Makefile
 mkdir -p target/linux/rockchip/files-5.10
-cp -rf ./build/Official/PATCH/files-5.10 ./target/linux/rockchip/
+cp -rf ../build/Official/PATCH/files-5.10 ./target/linux/rockchip/
 sed -i 's,+LINUX_6_1:kmod-drm-display-helper,,g' target/linux/rockchip/modules.mk
 sed -i '/drm_dp_aux_bus\.ko/d' target/linux/rockchip/modules.mk
 rm -rf ./package/boot/uboot-rockchip
@@ -179,13 +179,13 @@ git clone https://github.com/waynesg/luci-app-autoupdate package/waynesg/luci-ap
 #ln -sf ../../../feeds/packages/lang/node-serialport-bindings-cpp ./package/feeds/packages/node-serialport-bindings-cpp
 # R8168驱动
 git clone -b master --depth 1 https://github.com/BROBIRD/openwrt-r8168.git package/waynesg/r8168
-patch -p1 <./build/Official/PATCH/r8168/r8168-fix_LAN_led-for_r4s-from_TL.patch
+patch -p1 < ../build/Official/PATCH/r8168/r8168-fix_LAN_led-for_r4s-from_TL.patch
 # R8152驱动
 cp -rf ../immortalwrt/package/kernel/r8152 ./package/waynesg/r8152
 # r8125驱动
 git clone https://github.com/sbwml/package_kernel_r8125 package/waynesg/r8125
 # igc-backport
-cp -rf ./build/Official/PATCH/igc-files-5.10 ./target/linux/x86/files-5.10
+cp -rf ../build/Official/PATCH/igc-files-5.10 ./target/linux/x86/files-5.10
 # UPX 可执行软件压缩
 sed -i '/patchelf pkgconf/i\tools-y += ucl upx' ./tools/Makefile
 sed -i '\/autoconf\/compile :=/i\$(curdir)/upx/compile := $(curdir)/ucl/compile' ./tools/Makefile
@@ -480,7 +480,7 @@ cat ../build/Official/SEED/extra.cfg >> ./target/linux/generic/config-5.10
 # Patch Kernel 以支持 Shortcut-FE
 cp -rf ../lede/target/linux/generic/hack-5.10/953-net-patch-linux-kernel-to-support-shortcut-fe.patch ./target/linux/generic/hack-5.10/953-net-patch-linux-kernel-to-support-shortcut-fe.patch
 # Patch LuCI 以增添 Shortcut-FE 开关
-patch -p1 < ./build/Official/PATCH/firewall/luci-app-firewall_add_sfe_switch.patch
+patch -p1 < ../build/Official/PATCH/firewall/luci-app-firewall_add_sfe_switch.patch
 # Shortcut-FE 相关组件
 mkdir ./package/lean
 mkdir ./package/lean/shortcut-fe
