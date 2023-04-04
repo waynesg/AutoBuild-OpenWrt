@@ -12,7 +12,6 @@ on:
    - cron: 0 0 1 * *
 
 env:
-  Github: https://github.com/${{github.repository}}
   Author: ${{github.actor}}
   Apidz: ${{github.repository}}
   Run_number: ${{github.run_number}}
@@ -73,8 +72,6 @@ jobs:
         cp -r ./build/Official/SCRIPTS/X86/. ./build/Official/SCRIPTS/
         cp -r ./build/Official/SCRIPTS/. ./
         /bin/bash 01_get_ready.sh
-        echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
-        echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/Official" >> $GITHUB_ENV
         
     - name: 准备插件
       run: |
@@ -83,13 +80,9 @@ jobs:
         /bin/bash 02_prepare_package.sh
         /bin/bash 02_target_only.sh
         /bin/bash 04_remove_upx.sh
-        
+ 
     - name: 加载设置
       run: |
-        echo "Compile_Date=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
-        cp -Rf `find ./ -maxdepth 1 -type d ! -path './openwrt' ! -path './'` openwrt
-        mv -f "${Home}"/build/common/*.sh "${PATH1}"
-        source "${PATH1}/common.sh" && Diy_all
         cd openwrt
         cp -rf ../build/Official/SEED/X86/config.seed .config
         /bin/bash 07_fw3.sh
@@ -118,7 +111,7 @@ jobs:
         echo "latest_release=${latest_release}" >>$GITHUB_ENV     
             
     - name: SSH连接
-      if: env.SSH_ACTIONS == 'true' || (github.event.inputs.ssh == 'ssh')
+      if: github.event.inputs.ssh == 'ssh'
       uses: danshui-git/debugger-action@main
       env:
          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -133,8 +126,7 @@ jobs:
     - name: 下载dl库
       run: |
         cd openwrt
-        make download -j8
-        find dl -size -1024c -exec rm -f {} \;
+        make download -j50
         
     - name: 编译固件
       id: compileopenwrt
@@ -159,7 +151,7 @@ jobs:
       id: organize
       run: |
         cd openwrt
-        cp -Rf bin/targets/*/* "${Home}"/upgrade
+        cp -Rf bin/targets/*/* "${GITHUB_WORKSPACE}/openwrt/upgrade"
         cd bin/targets/*/*
         find -name "*buildinfo*" | xargs -i rm -rf {}
         find -name "*sha256sums*" | xargs -i rm -rf {}
@@ -201,7 +193,7 @@ jobs:
       if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
       run: |
        cd openwrt
-       source "${PATH1}/upgrade.sh" && Diy_Part3
+       source "../build/Official/upgrade.sh" && Diy_Part3
         
     - name: 更新Step 2
       continue-on-error: true
