@@ -150,13 +150,15 @@ jobs:
       env:
          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-
+         
     - name: 生成配置
       run: |
         cd openwrt
-        #source "${PATH1}/common.sh" && Diy_chajian > /dev/null 2>&1
-        #make defconfig > /dev/null 2>&1
-        #./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/config.txt
+        make defconfig
+
+    - name: 获取架构
+      run: |
+        cd openwrt
         echo "TARGET_BOARD=$(awk -F '[="]+' '/TARGET_BOARD/{print $2}' .config)" >> $GITHUB_ENV
         echo "TARGET_SUBTARGET=$(awk -F '[="]+' '/TARGET_SUBTARGET/{print $2}' .config)" >> $GITHUB_ENV
         if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
