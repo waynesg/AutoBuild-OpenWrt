@@ -28,6 +28,7 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
+        chmod -R +x "${GITHUB_WORKSPACE}/build/Official"
         ./build/Official/scripts/00_init.sh build_env
 
     - name: Clone OpenWrt
