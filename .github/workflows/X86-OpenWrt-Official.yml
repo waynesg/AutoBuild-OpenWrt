@@ -22,7 +22,7 @@ jobs:
 
     steps:
     - name: Clone Repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@main
       with:
         ref: ${{ github.event.inputs.branch }}
 
@@ -30,11 +30,11 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        ${GITHUB_WORKSPACE}/build/Official/scripts/00_init.sh build_env
+        ./build/Official/scripts/00_init.sh build_env
 
     - name: Clone OpenWrt
       run: |
-        ${GITHUB_WORKSPACE}/build/Official/scripts/00_init.sh openwrt
+        .}/build/Official/scripts/00_init.sh openwrt
 
     - name: Get variable
       working-directory: ./openwrt
