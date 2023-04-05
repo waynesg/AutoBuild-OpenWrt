@@ -1,1 +1,1 @@
-x86_customization.sh
+./x86_customization.sh
