@@ -28,6 +28,8 @@ TIME y "添加软件包"
 #rm -rf package/waynesg && git clone -b js https://github.com/waynesg/OpenWrt-Software package/waynesg
 
 rm -rf ./feeds/luci/applications/luci-app-passwall
+rm -rf ./feeds/luci/themes/luci-theme-argon
+git clone -b master --depth 1 https://github.com/jerrykuku/luci-theme-argon.git package/waynesg/luci-theme-argon
 svn co https://github.com/sbwml/luci-app-alist/trunk package/waynesg/luci-app-alist
 svn co https://github.com/sirpdboy/luci-app-autotimeset/trunk package/waynesg/luci-app-autotimeset
 svn co https://github.com/kiddin9/openwrt-packages/trunk/luci-app-bypass package/waynesg/luci-app-bypass
