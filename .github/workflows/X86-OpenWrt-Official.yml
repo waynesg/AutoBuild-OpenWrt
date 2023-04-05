@@ -6,11 +6,11 @@ on:
       branch:
         description: 'your local repo branch'
         required: true
-        default: openwrt-22.03
+        default: 22.03
         type: choice
         options:
         - master
-        - openwrt-22.03
+        - 22.03
         - 21.02
 
 jobs:
