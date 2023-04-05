@@ -7,8 +7,8 @@
 cp -rf ../immortalwrt-luci/applications/luci-app-accesscontrol package/waynesg/
 
 # ADBYBY Plus +
-svn export -q https://github.com/coolsnowwolf/luci/trunk/applications/luci-app-adbyby-plus package/waynesg/luci-app-adbyby-plus
-cp -rf ../immortalwrt-packages/net/adbyby package/waynesg/
+# svn export -q https://github.com/coolsnowwolf/luci/trunk/applications/luci-app-adbyby-plus package/waynesg/luci-app-adbyby-plus
+# cp -rf ../immortalwrt-packages/net/adbyby package/waynesg/
 
 # arpbind
 cp -rf ../immortalwrt-luci/applications/luci-app-arpbind package/waynesg/
@@ -16,7 +16,7 @@ cp -rf ../immortalwrt-luci/applications/luci-app-arpbind package/waynesg/
 # AutoCore
 cp -rf ../immortalwrt/package/emortal/autocore package/waynesg/
 cp -rf ../immortalwrt/package/utils/mhz package/utils/
-cp -rf ../immortalwrt-luci/modules/luci-base/root/usr/libexec/rpcd/luci feeds/luci/modules/luci-base/root/usr/libexec/rpcd/
+cp -rf ../immortalwrt-luci/modules/luci-base/root/usr/share/rpcd/ucode/luci feeds/luci/modules/luci-base/root/usr/libexec/rpcd/
 # grant getCPUUsage access
 sed -i 's|"getTempInfo"|"getTempInfo", "getCPUBench", "getCPUUsage"|g' package/waynesg/autocore/files/generic/luci-mod-status-autocore.json
 
@@ -67,10 +67,10 @@ rm -rf package/libs/mbedtls
 cp -rf ../immortalwrt/package/libs/mbedtls package/libs/
 
 # OLED
-svn export -q https://github.com/NateLol/luci-app-oled/trunk package/waynesg/luci-app-oled
+# svn export -q https://github.com/NateLol/luci-app-oled/trunk package/waynesg/luci-app-oled
 
 # OpenClash
-svn export -q https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/waynesg/luci-app-openclash
+# svn export -q https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/waynesg/luci-app-openclash
 
 # Realtek R8125, RTL8152/8153, RTL8192EU
 cp -rf ../immortalwrt/package/kernel/{r8125,r8152,rtl8192eu} package/waynesg/
@@ -79,10 +79,10 @@ cp -rf ../immortalwrt/package/kernel/{r8125,r8152,rtl8192eu} package/waynesg/
 cp -rf ../immortalwrt-luci/applications/luci-app-ramfree package/waynesg/
 
 # Scheduled Reboot
-cp -rf ../immortalwrt-luci/applications/luci-app-autoreboot package/waynesg/
+# cp -rf ../immortalwrt-luci/applications/luci-app-autoreboot package/waynesg/
 
 # SeverChan
-svn export -q https://github.com/tty228/luci-app-serverchan/trunk package/waynesg/luci-app-serverchan
+# svn export -q https://github.com/tty228/luci-app-serverchan/trunk package/waynesg/luci-app-serverchan
 
 # ShadowsocksR Plus+
 svn export -q https://github.com/fw876/helloworld/trunk package/helloworld
@@ -91,13 +91,6 @@ rm -rf ./feeds/packages/net/{xray-core,shadowsocks-libev}
 
 # USB Printer
 cp -rf ../immortalwrt-luci/applications/luci-app-usb-printer package/waynesg/
-
-# vlmcsd
-cp -rf ../immortalwrt-luci/applications/luci-app-vlmcsd package/waynesg/
-cp -rf ../immortalwrt-packages/net/vlmcsd package/waynesg/
-
-# xlnetacc
-cp -rf ../immortalwrt-luci/applications/luci-app-xlnetacc package/waynesg/
 
 # Zerotier
 cp -rf ../immortalwrt-luci/applications/luci-app-zerotier package/waynesg/
