@@ -54,6 +54,8 @@ jobs:
         
     - name: 准备完成
       uses: actions/checkout@v3
+      with:
+          fetch-depth: 0
 
     - name: 读取设置
       run: |
@@ -84,10 +86,6 @@ jobs:
           echo "ZZZ=package/lean/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
           echo "CODE=Lede" >> $GITHUB_ENV
           echo "OpenWrt_name=18.06" >> $GITHUB_ENV
-        elif [[ "${REPO_BRANCH}" == "19.07" ]]; then
-          echo "ZZZ=package/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
-          echo "CODE=Lienol" >> $GITHUB_ENV
-          echo "OpenWrt_name=19.07" >> $GITHUB_ENV
         elif [[ "${REPO_BRANCH}" == "openwrt-22.03" ]]; then
           echo "CODE=Official" >> $GITHUB_ENV
           echo "OpenWrt_name=22.03" >> $GITHUB_ENV
@@ -168,12 +166,6 @@ jobs:
     - name: 配置架构
       working-directory: ${{ github.workspace }}/openwrt
       run: |
-        TARGET_DEVICE_ARCH="$(grep "^CONFIG_TARGET_.*_.*=y$" ".config" | head -n 1 | sed 's/^CONFIG_TARGET_//g' | awk -F '_' '{print $1}')"
-        echo "TARGET_DEVICE_ARCH=${TARGET_DEVICE_ARCH}" >>$GITHUB_ENV
-        latest_release="$(curl -s https://github.com/openwrt/openwrt/tags | grep -Eo "v[0-9\.]+\-*r*c*[0-9]*.tar.gz" | sed -n '/[2-9][0-9]/p' | sed -n 1p | sed 's/.tar.gz//g' | sed 's/v//g')"
-        echo "latest_release=${latest_release}" >>$GITHUB_ENV
-        make defconfig > /dev/null 2>&1
-        ./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/config.txt
         echo "TARGET_BOARD=$(awk -F '[="]+' '/TARGET_BOARD/{print $2}' .config)" >> $GITHUB_ENV
         echo "TARGET_SUBTARGET=$(awk -F '[="]+' '/TARGET_SUBTARGET/{print $2}' .config)" >> $GITHUB_ENV
         if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
@@ -203,7 +195,6 @@ jobs:
        
     - name: 编译信息
       run: |
-        wget -qO- --no-check-certificate https://raw.githubusercontent.com/waynesg/scripts/main/serverbench.sh | bash
         cd openwrt
         source "${PATH1}/common.sh" && Diy_chuli > /dev/null 2>&1
         if [ "${REGULAR_UPDATE}" == "true" ]; then
@@ -220,7 +211,6 @@ jobs:
       run: |
         cd openwrt
         make download -j50
-        find dl -size -1024c -exec rm -f {} \;
     
     - name: 开始通知
       if: env.PUSH_PLUS_TOKEN && env.SERVERCHAN_SCKEY == 'PUSH' || env.TELEGRAM_BOT_TOKEN && env.SERVERCHAN_SCKEY == 'TELE'
@@ -237,11 +227,17 @@ jobs:
       id: compile
       run: |
         cd openwrt
-        echo -e "$(nproc) thread compile"
-        make -j$(nproc) || make -j1 V=s
+        IGNORE_ERRORS=1 make -j$(($(nproc) + 1))
         echo "COMPILESTATUS=success" >> $GITHUB_ENV
         echo "date=$(date "+%Y%m%d%H%M%S")" >> $GITHUB_ENV
         echo "date1=$(date +'%m-%d')" >> $GITHUB_ENV
+        
+    - name: 提交错误
+      if: steps.compile.outcome == 'failure' || 'failed'
+      run: |
+        cat openwrt/.config
+        echo '================================================================'
+        cd openwrt && make -j1 V=s
 
     - name: 上传配置
       if: env.UPLOAD_CONFIG == 'true'
