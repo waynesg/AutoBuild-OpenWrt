@@ -3,222 +3,141 @@ name: X86-OpenWrt-Official
 on:
   workflow_dispatch:
     inputs:
-      ssh:
-        description: 'ssh-action'
-        required: false
-        default: 'ssh-actions'
+      branch:
+        description: 'your local repo branch'
+        required: true
+        default: 22.03
+        type: choice
+        options:
+        - master
+        - 22.03
+        - 21.02
 
-  schedule:
-   - cron: 0 0 1 * *
-
-env:
-  Author: ${{github.actor}}
-  Apidz: ${{github.repository}}
-  Run_number: ${{github.run_number}}
-  Run_workflow: ${{github.workflow}}
-  REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
-  SCKEY: ${{ secrets.SCKEY }}
-  PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
-  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-  TZ: Asia/Shanghai
-  
 jobs:
   build:
-    runs-on: ubuntu-22.04
-    if: github.event.repository.owner.id == github.event.sender.id
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        target: [x86-64]
 
     steps:
-    - name: 机器配置
-      run: |
-        echo -e "Total CPU cores\t: $(nproc)"
-        cat /proc/cpuinfo | grep 'model name'
-        ulimit -a
-        
-    - name: 空间配置
-      uses: easimon/maximize-build-space@master
+    - name: Clone Repository
+      uses: actions/checkout@v3
       with:
-        swap-size-mb: 2048
-        root-reserve-mb: 2048
-        remove-dotnet: 'true'
-        remove-android: 'true'
-        remove-haskell: 'true'
-        
-    - name: 准备完成
-      uses: actions/checkout@main
-      with:
-          fetch-depth: 0
+        ref: ${{ github.event.inputs.branch }}
 
-    - name: 部署环境
+    - name: Init build dependencies
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        sudo swapoff -a
-        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
-        sudo -E apt-get -qq update
-        sudo -E apt-get -qq install aria2
-        sudo -E wget -P /usr/local/sbin/ https://github.com/HiGarfield/lede-17.01.4-Mod/raw/master/.github/backup/apt-fast
-        sudo -E chmod -R 755 /usr/local/sbin/apt-fast
-        sudo -E apt-fast -y -qq install dwarves llvm clang lldb lld libfuse-dev build-essential rsync asciidoc binutils bzip2 gawk gettext git libncurses5-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc-s1 libc6-dev-i386 subversion flex uglifyjs gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libreadline-dev libglib2.0-dev xmlto qemu-utils upx-ucl libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget ccache curl swig coreutils vim nano python3 python3-pip python3-ply haveged lrzsz scons libpython3-dev
-        sudo -E pip3 install pyelftools
-        sudo -E apt-get -qq autoremove --purge
-        sudo -E apt-get -qq clean
-        sudo -E git config --global user.name 'GitHub Actions' && git config --global user.email 'noreply@github.com'
-        df -h
-        
-    - name: 准备源码
+        ./build/Official/scripts/00_init.sh build_env
+
+    - name: Clone OpenWrt
       run: |
-        sudo chown -R runner:runner /home/runner/work/AutoBuild-OpenWrt
-        cp -r ./build/Official/SCRIPTS/X86/. ./build/Official/SCRIPTS/
-        cp -r ./build/Official/SCRIPTS/. ./
-        /bin/bash 01_get_ready.sh
-        
-    - name: 准备插件
+        ./build/Official/scripts/00_init.sh openwrt
+
+    - name: Get variable
+      working-directory: ./openwrt
+      id: var
       run: |
-        cd openwrt
-        cp -r ../build/Official/SCRIPTS/. ./
-        /bin/bash 02_prepare_package.sh
-        /bin/bash 02_target_only.sh
-        /bin/bash 04_remove_upx.sh
- 
-    - name: 加载设置
+        case ${{ github.event.inputs.branch }} in
+          master)
+            _release_tag=snapshot-r$(date +%g.%j)
+            _prerelease=true
+            ;;
+          22.03)
+            _release_tag=$(git tag --sort=taggerdate --list 'v22.*' | tail -1)
+            git checkout $_release_tag
+            _prerelease=false
+            ;;
+          21.02)
+            _release_tag=$(git tag --sort=taggerdate --list 'v21.*' | tail -1)
+            git checkout $_release_tag
+            _prerelease=false
+            ;;
+          *)
+            echo "Can't get local/upstream's branch/tags"
+            ;;
+        esac
+        case ${{ matrix.target }} in
+          x86-64)           _device=x86-64            ;;
+          *)                echo "wrong devices"      ;;
+        esac
+        _artifact=${{ matrix.target }}
+        _artifact_path=openwrt/bin/targets/${_artifact/-//}
+        echo "release_tag=$_release_tag" >> $GITHUB_OUTPUT
+        echo "prerelease=$_prerelease" >> $GITHUB_OUTPUT
+        echo "device=$_device" >> $GITHUB_OUTPUT
+        echo "artifact=$_artifact_path" >> $GITHUB_OUTPUT
+
+    - name: Fetch Other repos
       run: |
-        cd openwrt
-        cp -rf ../build/Official/SEED/X86/config.seed .config
-        /bin/bash 07_fw3.sh
-        
-    - name: 语言转换
+        ./build/Official/scripts/00_init.sh other-repos
+
+    - name: Feeds update & install
       run: |
-        cd openwrt
-        /bin/bash 03_convert_translation.sh
-        
-    - name: 访问控制
+        ./build/Official/scripts/00_init.sh feeds
+
+    - name: Customize Packages
+      working-directory: ./openwrt
       run: |
-        cd openwrt
-        /bin/bash 05_create_acl_for_luci.sh -a
-        
-    - name: 生成配置
+        cp -L ../build/Official/scripts/${{ steps.var.outputs.device }}_customization.sh .
+        cp ../build/Official/scripts/01_customize_packages.sh .
+        /bin/bash ${{ steps.var.outputs.device }}_customization.sh
+
+    - name: Convert Translation
+      working-directory: ./openwrt
       run: |
-        cd openwrt
-        make defconfig
-        
-    - name: 配置架构
-      working-directory: ${{ github.workspace }}/openwrt
+        cp ../build/Official/scripts/02_convert_translation.sh .
+        /bin/bash 02_convert_translation.sh
+
+    - name: Add ACL
+      working-directory: ./openwrt
       run: |
-        TARGET_DEVICE_ARCH="$(grep "^CONFIG_TARGET_.*_.*=y$" ".config" | head -n 1 | sed 's/^CONFIG_TARGET_//g' | awk -F '_' '{print $1}')"
-        echo "TARGET_DEVICE_ARCH=${TARGET_DEVICE_ARCH}" >>$GITHUB_ENV
-        latest_release="$(curl -s https://github.com/openwrt/openwrt/tags | grep -Eo "v[0-9\.]+\-*r*c*[0-9]*.tar.gz" | sed -n '/[2-9][0-9]/p' | sed -n 1p | sed 's/.tar.gz//g' | sed 's/v//g')"
-        echo "latest_release=${latest_release}" >>$GITHUB_ENV     
-            
-    - name: SSH连接
-      if: github.event.inputs.ssh == 'ssh'
-      uses: danshui-git/debugger-action@main
-      env:
-         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        
-    - name: 加载缓存
-      uses: stupidloud/cachewrtbuild@main
+        cp ../build/Official/scripts/03_create_acl_for_luci.sh .
+        /bin/bash 03_create_acl_for_luci.sh -a
+
+    - name: Get cache toolchain
+      uses: HiGarfield/cachewrtbuild@main
       with:
-        ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
-        
-    - name: 下载dl库
+        mixkey: ${{ matrix.target }}
+
+    - name: Make Config
+      working-directory: ./openwrt
       run: |
-        cd openwrt
-        make download -j50
-        
-    - name: 编译固件
-      id: compileopenwrt
-      continue-on-error: true
+        cp ../build/Official/config/${{ steps.var.outputs.device }}_defconfig .config
+        make defconfig
+
+    - name: Make Download
+      working-directory: ./openwrt
       run: |
-        cd openwrt
-        #echo | make kernel_oldconfig -j$(($(nproc) + 1)) 
-        IGNORE_ERRORS=1 make -j$(($(nproc) + 1))
-        echo $?
-        
-    - name: 提交错误
-      if: steps.compileopenwrt.outcome == 'failure'
+        make download -j`nproc`
+
+    - name: Compile OpenWrt
+      working-directory: ./openwrt
       run: |
-        cat openwrt/.config
-        echo '================================================================'
-        cd openwrt && make -j1 V=s
-        
-    - name: 剩余空间
-      run: df -h
-      
-    - name: 整理文件
-      id: organize
+        make -j`nproc` || make -j1 V=s
+
+    - name: Assemble Artifact
       run: |
-        cd openwrt
-        cp -Rf bin/targets/*/* "${GITHUB_WORKSPACE}/openwrt/upgrade"
-        cd bin/targets/*/*
-        find -name "*buildinfo*" | xargs -i rm -rf {}
-        find -name "*sha256sums*" | xargs -i rm -rf {}
-        find -name "*manifest*" | xargs -i rm -rf {}
-        find -name "*vmlinuz*" | xargs -i rm -rf {}
-        find -name "*Image*" | xargs -i rm -rf {}
-        find -name "*rootfs*" | xargs -i rm -rf {}
-        find -name "*efi.img*" | xargs -i rm -rf {}
-        find -name "*kernel*" | xargs -i rm -rf {}
-        rm -rf packages
-        rename -v "s/^openwrt/${{ env.date1 }}-${{ env.CODE }}/" *
-        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
-        echo "BOT=TRUE" >> $GITHUB_ENV
-        echo "ORGANIZERSTATUS=success" >> $GITHUB_ENV   
-        
-    - name: 上传固件
-      if: env.ORGANIZERSTATUS == 'success' && env.UPLOAD_FIRMWARE == 'true'
-      uses: actions/upload-artifact@main
+        ls ${{ steps.var.outputs.artifact }}
+        cat ${{ steps.var.outputs.artifact }}/config.buildinfo
+        rm -rf ${{ steps.var.outputs.artifact }}/{packages,*.buildinfo,*.json,*.manifest,*kernel.bin,*-rootfs.*,sha256sums}
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.OpenWrt_name }}-${{ env.CODE }}-${{ env.TARGET_PROFILE }}-firmware-${{ env.Compile_Date }}
-        path: ${{ env.FIRMWARE }}
-          
-    - name: 发布信息
-      if: env.ORGANIZERSTATUS == 'success' && env.UPLOAD_RELEASE == 'true'
-      run: |
-        echo "### $(date +"%Y年%m月%d号-%H点%M分")" > update_log.txt
- 
-    - name: 发布固件
-      if: env.ORGANIZERSTATUS == 'success' && env.UPLOAD_RELEASE == 'true' && env.REPO_TOKEN
-      uses: ncipollo/release-action@v1
+        name: ${{ steps.var.outputs.release_tag }}
+        path: ${{ steps.var.outputs.artifact }}/*
+
+    - name: Upload Release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: ${{ env.CODE }}-${{ env.TARGET_PROFILE }}
-        tag: ${{ env.date }}
-        token: ${{ secrets.REPO_TOKEN }}
-        bodyFile: "update_log.txt"
-        artifacts: "${{ env.FIRMWARE }}/*"
-        
-    - name: 更新Step 1
-      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
-      run: |
-       cd openwrt
-       source "../build/Official/upgrade.sh" && Diy_Part3
-        
-    - name: 更新Step 2
-      continue-on-error: true
-      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.REPO_TOKEN }}
-        file: openwrt/bin/Firmware/*
-        tag: AutoUpdate
-        overwrite: true
-        file_glob: true
-        
-    - name: 更新Step 3
-      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true'
-      run: |
-        mkdir -p Github_Tags
-        cd Github_Tags
-        wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/AutoUpdate -O Github_Tags
-        
-    - name: 更新Step 4
-      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.REPO_TOKEN }}
-        file: Github_Tags/*
-        tag: AutoUpdate
-        overwrite: true
-        file_glob: true
+        draft: false
+        target_commitish: ${{ github.event.inputs.branch }}
+        prerelease: ${{ steps.var.outputs.prerelease }}
+        tag_name: ${{ steps.var.outputs.release_tag }}
+        files: ${{ steps.var.outputs.artifact }}/*
