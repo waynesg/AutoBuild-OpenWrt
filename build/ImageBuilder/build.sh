@@ -8,7 +8,7 @@ PROFILE="generic"
 
 PACKAGES=""
 # 删除的组件
-PACKAGES="$PACKAGES -luci-app-cpulimit -luci-app-nps -luci-app-frpc -luci-app-hd-idle -luci-app-gowebdav -luci-app-qbittorrent -luci-app-aria2 -luci-app-syncdial -luci-app-mwan3"
+PACKAGES="$PACKAGES -luci-app-openclash -luci-app-passwall -luci-app-cpulimit -luci-app-nps -luci-app-frpc -luci-app-hd-idle -luci-app-gowebdav -luci-app-qbittorrent -luci-app-aria2 -luci-app-syncdial -luci-app-mwan3"
 
 # Argon 主题
 PACKAGES="$PACKAGES luci-theme-argon luci-i18n-argon-config-zh-cn"
@@ -23,11 +23,11 @@ PACKAGES="$PACKAGES luci-i18n-diskman-zh-cn"
 PACKAGES="$PACKAGES luci-i18n-statistics-zh-cn"
 
 # 常用软件服务
-
+PACKAGES="$PACKAGES luci-app-accesscontrol luci-app-argon-config luci-app-arpbind luci-app-cpufreq luci-app-ddns luci-app-msd_lite luci-app-openvpn luci-app-openvpn-server luci-app-smartdns luci-app-socat luci-app-ssr-plus luci-app-ttyd 
 # OpenClash 代理
-PACKAGES="$PACKAGES luci-app-openclash"
+# PACKAGES="$PACKAGES luci-app-openclash"
 # Passwall 代理
-PACKAGES="$PACKAGES luci-i18n-passwall-zh-cn"
+# PACKAGES="$PACKAGES luci-i18n-passwall-zh-cn"
 # frp 和 nps 内网穿透
 # PACKAGES="$PACKAGES luci-i18n-nps-zh-cn luci-i18n-frpc-zh-cn"
 
@@ -87,7 +87,7 @@ PACKAGES="$PACKAGES nano"
 # X/Y/ZMODEM 文件传输
 # PACKAGES="$PACKAGES lrzsz"
 # OpenSSH
-# PACKAGES="$PACKAGES openssh-server openssh-client"
+PACKAGES="$PACKAGES openssh-server openssh-client"
 # Netdata 系统监控界面
 PACKAGES="$PACKAGES netdata"
 
@@ -95,6 +95,6 @@ PACKAGES="$PACKAGES netdata"
 FILES="files"
 
 # 禁用 openssh-server 的 sshd 服务和 docker 的 dockerd 服务以防止冲突
-# DISABLED_SERVICES="sshd dockerd"
+DISABLED_SERVICES="sshd dockerd"
 
 make image PROFILE="$PROFILE" PACKAGES="$PACKAGES" FILES="$FILES" DISABLED_SERVICES="$DISABLED_SERVICES"
