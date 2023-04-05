@@ -154,9 +154,9 @@ jobs:
     - name: 生成配置
       run: |
         cd openwrt
-        source "${PATH1}/common.sh" && Diy_chajian > /dev/null 2>&1
-        make defconfig > /dev/null 2>&1
-        ./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/config.txt
+        #source "${PATH1}/common.sh" && Diy_chajian > /dev/null 2>&1
+        #make defconfig > /dev/null 2>&1
+        #./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/config.txt
         echo "TARGET_BOARD=$(awk -F '[="]+' '/TARGET_BOARD/{print $2}' .config)" >> $GITHUB_ENV
         echo "TARGET_SUBTARGET=$(awk -F '[="]+' '/TARGET_SUBTARGET/{print $2}' .config)" >> $GITHUB_ENV
         if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
@@ -213,7 +213,7 @@ jobs:
         echo "date1=$(date +'%m-%d')" >> $GITHUB_ENV
         
     - name: 提交错误
-      if: steps.compile.outcome == 'failure'
+      if: steps.compile.outcome == 'failure' || 'failed'
       run: |
         cat openwrt/.config
         echo '================================================================'
