@@ -33,7 +33,7 @@ jobs:
 
     - name: Clone OpenWrt
       run: |
-        .}/build/Official/scripts/00_init.sh openwrt
+        ./build/Official/scripts/00_init.sh openwrt
 
     - name: Get variable
       working-directory: ./openwrt
