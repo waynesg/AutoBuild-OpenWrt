@@ -30,11 +30,11 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        ${GITHUB_WORKSPACE}//build/Official/scripts/00_init.sh build_env
+        ${GITHUB_WORKSPACE}/build/Official/scripts/00_init.sh build_env
 
     - name: Clone OpenWrt
       run: |
-        ${GITHUB_WORKSPACE}//build/Official/scripts/00_init.sh openwrt
+        ${GITHUB_WORKSPACE}/build/Official/scripts/00_init.sh openwrt
 
     - name: Get variable
       working-directory: ./openwrt
