@@ -7,6 +7,8 @@ make info
 PROFILE="generic"
 
 PACKAGES=""
+# 删除的组件
+PACKAGES="$PACKAGES -luci-app-cpulimit -luci-app-nps -luci-app-frpc -luci-app-hd-idle -luci-app-gowebdav -luci-app-qbittorrent -luci-app-aria2 -luci-app-syncdial -luci-app-mwan3"
 
 # Argon 主题
 PACKAGES="$PACKAGES luci-theme-argon luci-i18n-argon-config-zh-cn"
@@ -16,7 +18,7 @@ PACKAGES="$PACKAGES luci-theme-argon luci-i18n-argon-config-zh-cn"
 # Diskman 磁盘管理
 PACKAGES="$PACKAGES luci-i18n-diskman-zh-cn"
 # CPU 占用限制
-PACKAGES="$PACKAGES luci-i18n-cpulimit-zh-cn"
+# PACKAGES="$PACKAGES luci-i18n-cpulimit-zh-cn"
 # collectd 统计
 PACKAGES="$PACKAGES luci-i18n-statistics-zh-cn"
 
@@ -27,24 +29,24 @@ PACKAGES="$PACKAGES luci-app-openclash"
 # Passwall 代理
 PACKAGES="$PACKAGES luci-i18n-passwall-zh-cn"
 # frp 和 nps 内网穿透
-PACKAGES="$PACKAGES luci-i18n-nps-zh-cn luci-i18n-frpc-zh-cn"
+# PACKAGES="$PACKAGES luci-i18n-nps-zh-cn luci-i18n-frpc-zh-cn"
 
 # 常用的网络存储组件
 
 # 文件助手
 PACKAGES="$PACKAGES luci-app-fileassistant"
 # 硬盘休眠
-PACKAGES="$PACKAGES luci-i18n-hd-idle-zh-cn"
+# PACKAGES="$PACKAGES luci-i18n-hd-idle-zh-cn"
 # p910nd 打印服务器
 PACKAGES="$PACKAGES luci-i18n-p910nd-zh-cn"
 # GoWebDav
-PACKAGES="$PACKAGES luci-i18n-gowebdav-zh-cn"
+# PACKAGES="$PACKAGES luci-i18n-gowebdav-zh-cn"
 # Samba 网络共享
 PACKAGES="$PACKAGES luci-i18n-samba4-zh-cn"
 # qBittorrent 下载器
-PACKAGES="$PACKAGES luci-i18n-qbittorrent-zh-cn"
+# PACKAGES="$PACKAGES luci-i18n-qbittorrent-zh-cn"
 # Aria2 下载器
-PACKAGES="$PACKAGES luci-i18n-aria2-zh-cn"
+# PACKAGES="$PACKAGES luci-i18n-aria2-zh-cn"
 # FTP 服务器
 PACKAGES="$PACKAGES luci-i18n-vsftpd-zh-cn"
 
@@ -63,7 +65,7 @@ PACKAGES="$PACKAGES luci-i18n-zerotier-zh-cn"
 # EQoS 网速控制
 PACKAGES="$PACKAGES luci-i18n-eqos-zh-cn"
 # 多线多拨与负载均衡
-PACKAGES="$PACKAGES luci-app-syncdial luci-i18n-mwan3-zh-cn"
+# PACKAGES="$PACKAGES luci-app-syncdial luci-i18n-mwan3-zh-cn"
 # 宽带监控 Nlbwmon
 PACKAGES="$PACKAGES luci-i18n-nlbwmon-zh-cn"
 
@@ -80,12 +82,12 @@ PACKAGES="$PACKAGES kmod-usb-printer kmod-lp"
 
 # zsh 终端
 PACKAGES="$PACKAGES zsh"
-# Vim 完整版，带语法高亮
-PACKAGES="$PACKAGES vim-fuller"
+# nano 完整版，带语法高亮
+PACKAGES="$PACKAGES nano"
 # X/Y/ZMODEM 文件传输
-PACKAGES="$PACKAGES lrzsz"
+# PACKAGES="$PACKAGES lrzsz"
 # OpenSSH
-PACKAGES="$PACKAGES openssh-server openssh-client"
+# PACKAGES="$PACKAGES openssh-server openssh-client"
 # Netdata 系统监控界面
 PACKAGES="$PACKAGES netdata"
 
@@ -93,6 +95,6 @@ PACKAGES="$PACKAGES netdata"
 FILES="files"
 
 # 禁用 openssh-server 的 sshd 服务和 docker 的 dockerd 服务以防止冲突
-DISABLED_SERVICES="sshd dockerd"
+# DISABLED_SERVICES="sshd dockerd"
 
 make image PROFILE="$PROFILE" PACKAGES="$PACKAGES" FILES="$FILES" DISABLED_SERVICES="$DISABLED_SERVICES"
