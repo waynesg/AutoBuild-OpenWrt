@@ -1,3 +1,6 @@
 https://github.com/brvphoenix/wrtbwmon/releases/download/v1.2.1-3/wrtbwmon_1.2.1-3_all.ipk
 https://github.com/brvphoenix/luci-app-wrtbwmon/releases/download/release-2.0.10/luci-app-wrtbwmon_2.0.10_all.ipk
 https://github.com/brvphoenix/luci-app-wrtbwmon/releases/download/release-2.0.10/luci-i18n-wrtbwmon-zh-cn_211213.07899_all.ipk
+https://github.com/waynesg/Actions-Applications/raw/packages/x86_64-22.03/luci-app-tn-netports_2.0.3_all.ipk
+https://github.com/waynesg/Actions-Applications/raw/packages/x86_64-22.03/luci-i18n-tn-netports-zh-cn_git-23.089.44565-ecc9377_all.ipk
+https://github.com/waynesg/Actions-Applications/raw/packages/x86_64-22.03/luci-app-temp-status_0.3-5_all.ipk
