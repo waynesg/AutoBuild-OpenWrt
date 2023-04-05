@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        target: [bcm53xx-generic, ramips-mt7621, rockchip-armv8, sunxi-cortexa7, x86-64, x86-generic]
+        target: [x86-64]
 
     steps:
     - name: Clone Repository
@@ -30,11 +30,11 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        ./build/Official/scripts/00_init.sh build_env
+        ${GITHUB_WORKSPACE}//build/Official/scripts/00_init.sh build_env
 
     - name: Clone OpenWrt
       run: |
-        ./build/Official/scripts/00_init.sh openwrt
+        ${GITHUB_WORKSPACE}//build/Official/scripts/00_init.sh openwrt
 
     - name: Get variable
       working-directory: ./openwrt
@@ -60,12 +60,7 @@ jobs:
             ;;
         esac
         case ${{ matrix.target }} in
-          bcm53xx-generic)  _device=k3                ;;
-          ramips-mt7621)    _device=k2p               ;;
-          rockchip-armv8)   _device=r2c-r2s           ;;
-          sunxi-cortexa7)   _device=zeropi            ;;
           x86-64)           _device=x86-64            ;;
-          x86-generic)      _device=x86-generic       ;;
           *)                echo "wrong devices"      ;;
         esac
         _artifact=${{ matrix.target }}
