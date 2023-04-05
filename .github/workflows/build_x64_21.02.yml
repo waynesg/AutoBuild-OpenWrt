@@ -213,7 +213,7 @@ jobs:
         echo "date1=$(date +'%m-%d')" >> $GITHUB_ENV
         
     - name: 提交错误
-      if: steps.compileopenwrt.outcome == 'failure'
+      if: steps.compile.outcome == 'failure'
       run: |
         cat openwrt/.config
         echo '================================================================'
