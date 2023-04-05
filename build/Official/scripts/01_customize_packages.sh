@@ -33,12 +33,12 @@ cp -rf ../immortalwrt-luci/applications/luci-app-cpufreq package/waynesg/
 cp -rf ../immortalwrt-packages/net/ddns-scripts_{aliyun,dnspod} package/waynesg/
 
 # dnsmasq: add filter aaa option
-cp -rf ../patches/910-add-filter-aaaa-option-support.patch package/network/services/dnsmasq/patches/
-patch -p1 -i ../patches/dnsmasq-add-filter-aaaa-option.patch
-patch -d feeds/luci -p1 -i ../../../patches/filter-aaaa-luci.patch
+cp -rf ../build/Official/patches/910-add-filter-aaaa-option-support.patch package/network/services/dnsmasq/patches/
+patch -p1 -i ../build/Official/patches/dnsmasq-add-filter-aaaa-option.patch
+patch -d feeds/luci -p1 -i ../../../build/Official/patches/filter-aaaa-luci.patch
 
 # dnsmasq: use nft ruleset for dns_redirect
-patch -p1 -i ../patches/dnsmasq-use-nft-ruleset-for-dns_redirect.patch
+patch -p1 -i ../build/Official/patches/dnsmasq-use-nft-ruleset-for-dns_redirect.patch
 
 # Filetransfer
 cp -rf ../immortalwrt-luci/applications/luci-app-filetransfer package/waynesg/
@@ -57,10 +57,10 @@ sed -i '/PKG_INSTALL:=1/i\PKG_FIXUP:=autoreconf' package/libs/libnftnl/Makefile
 rm -rf package/network/utils/nftables/
 cp -rf ../immortalwrt/package/network/utils/nftables package/network/utils/
 # patch firewall4
-cp -rf ../immortalwrt/package/network/config/firewall4/patches package/network/config/firewall4/
-sed -i 's|+kmod-nft-nat +kmod-nft-nat6|+kmod-nft-nat +kmod-nft-nat6 +kmod-nft-fullcone|g' package/network/config/firewall4/Makefile
+#cp -rf ../immortalwrt/package/network/config/firewall4/patches package/network/config/firewall4/
+#sed -i 's|+kmod-nft-nat +kmod-nft-nat6|+kmod-nft-nat +kmod-nft-nat6 +kmod-nft-fullcone|g' package/network/config/firewall4/Makefile
 # patch luci
-patch -d feeds/luci -p1 -i ../../../patches/fullconenat-luci.patch
+patch -d feeds/luci -p1 -i ../../../build/Official/patches/fullconenat-luci.patch
 
 # mbedtls
 rm -rf package/libs/mbedtls
@@ -96,7 +96,7 @@ cp -rf ../immortalwrt-luci/applications/luci-app-usb-printer package/waynesg/
 cp -rf ../immortalwrt-luci/applications/luci-app-zerotier package/waynesg/
 
 # default settings and translation
-cp -rf ../default-settings package/waynesg/
+cp -rf ../build/Official/default-settings package/waynesg/
 
 # fix include luci.mk
 find package/waynesg/ -type f -name Makefile -exec sed -i 's,../../luci.mk,$(TOPDIR)/feeds/luci/luci.mk,g' {} +
