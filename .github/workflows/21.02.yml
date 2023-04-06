@@ -96,7 +96,7 @@ jobs:
     - name: 自定义配置
       run: |
         cd openwrt
-        #cp -Rf ../build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} "${PATH1}"/
+        cp -Rf ../build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} "${PATH1}"/
         cp -f feeds/waynesg/openwrt-diy/default-settings package/emortal/default-settings/files/99-default-settings
         rm -rf feeds/packages/net/{alist,adguardhome,brook,gost,mosdns,redsocks*,smartdns,trojan*,v2ray*,xray*}
         sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
