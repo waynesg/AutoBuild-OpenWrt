@@ -57,8 +57,6 @@ jobs:
         
     - name: 检查
       uses: actions/checkout@v3
-      with:
-          fetch-depth: 0
 
     - name: 初始化环境
       env:
@@ -113,6 +111,12 @@ jobs:
         sed -i "s/%D %V, %C/openwrt $(date +'%m.%d') by waynesg/g" package/base-files/files/etc/banner
         ./scripts/feeds update -a && ./scripts/feeds install -a
         cp -f feeds/waynesg/openwrt-diy/immortalwrt.config .config && make defconfig
+    
+    - name: 下载包文件
+      working-directory: ./openwrt
+      run: |
+        make download -j$(nproc)
+        find dl -size -1024c -exec rm -f {} \;
         
     - name: 设置缓存
       uses: stupidloud/cachewrtbuild@main
@@ -126,12 +130,6 @@ jobs:
       env:
          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        
-    - name: 下载包文件
-      working-directory: ./openwrt
-      run: |
-        make download -j$(nproc)
-        find dl -size -1024c -exec rm -f {} \;
         
     - name: 编译固件
       working-directory: ./openwrt
