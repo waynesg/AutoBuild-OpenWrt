@@ -21,7 +21,8 @@ sed -i 's|"getTempInfo"|"getTempInfo", "getCPUBench", "getCPUUsage"|g' package/w
 cp -rf ../lede/package/lean/automount package/waynesg/
 cp -rf ../lede/package/lean/ntfs3-mount package/waynesg/
 # backport ntfs3 patches
-#cp -rf ../lede/target/linux/generic/files-5.10 target/linux/generic/
+#
+cp -rf ../lede/target/linux/generic/files-5.10 target/linux/generic/
 
 # cpufreq
 cp -rf ../immortalwrt-luci/applications/luci-app-cpufreq package/waynesg/
@@ -43,21 +44,21 @@ cp -rf ../immortalwrt-luci/libs/luci-lib-fs package/waynesg/
 
 # FullCone nat for nftables
 # patch kernel
-#cp -f ../immortalwrt/target/linux/generic/hack-5.4/952-net-conntrack-events-support-multiple-registrant.patch target/linux/generic/hack-5.10/
+cp -f ../immortalwrt/target/linux/generic/hack-5.10/952-net-conntrack-events-support-multiple-registrant.patch target/linux/generic/hack-5.10/
 # fullconenat-nft
-#cp -rf ../immortalwrt/package/network/utils/fullconenat-nft package/network/utils/
+cp -rf ../immortalwrt/package/network/utils/fullconenat-nft package/network/utils/
 # patch libnftnl
-#cp -rf ../immortalwrt/package/libs/libnftnl/patches package/libs/libnftnl/
-#sed -i '/PKG_INSTALL:=1/i\PKG_FIXUP:=autoreconf' package/libs/libnftnl/Makefile
+cp -rf ../immortalwrt/package/libs/libnftnl/patches package/libs/libnftnl/
+sed -i '/PKG_INSTALL:=1/i\PKG_FIXUP:=autoreconf' package/libs/libnftnl/Makefile
 # patch nftables
-#cp -f ../immortalwrt/package/network/utils/nftables/patches/002-nftables-add-fullcone-expression-support.patch package/network/utils/nftables/patches/
-#rm -rf package/network/utils/nftables/
-#cp -rf ../immortalwrt/package/network/utils/nftables package/network/utils/
+cp -f ../immortalwrt/package/network/utils/nftables/patches/002-nftables-add-fullcone-expression-support.patch package/network/utils/nftables/patches/
+rm -rf package/network/utils/nftables/
+cp -rf ../immortalwrt/package/network/utils/nftables package/network/utils/
 # patch firewall4
-#cp -rf ../immortalwrt/package/network/config/firewall4/patches package/network/config/firewall4/
-#sed -i 's|+kmod-nft-nat +kmod-nft-nat6|+kmod-nft-nat +kmod-nft-nat6 +kmod-nft-fullcone|g' package/network/config/firewall4/Makefile
+cp -rf ../immortalwrt/package/network/config/firewall4/patches package/network/config/firewall4/
+sed -i 's|+kmod-nft-nat +kmod-nft-nat6|+kmod-nft-nat +kmod-nft-nat6 +kmod-nft-fullcone|g' package/network/config/firewall4/Makefile
 # patch luci
-#patch -d feeds/luci -p1 -i ../../../build/Official/patches/fullconenat-luci.patch
+patch -d feeds/luci -p1 -i ../../../build/Official/patches/fullconenat-luci.patch
 
 # mbedtls
 rm -rf package/libs/mbedtls
