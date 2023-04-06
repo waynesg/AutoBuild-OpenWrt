@@ -70,9 +70,6 @@ jobs:
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean ) &
         sudo timedatectl set-timezone "$TZ"
-        sudo mkdir -p /${{matrix.target}}
-        sudo chown $USER:$GROUPS /${{matrix.target}}
-
 
     - name: 设置当前的日期
       id: date
@@ -89,6 +86,7 @@ jobs:
         REPO_BRANCH: openwrt-21.02
         TZ: Asia/Shanghai        
       run: |
+        sudo chown -R runner:runner /home/runner/work/AutoBuild-OpenWrt
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
         ln -sf /${{matrix.target}}/openwrt $GITHUB_WORKSPACE/openwrt
