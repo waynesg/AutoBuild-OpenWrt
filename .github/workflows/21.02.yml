@@ -33,7 +33,7 @@ jobs:
     runs-on: Ubuntu-22.04   
     if: github.event.repository.owner.id == github.event.sender.id
 
-    name: Build ${{matrix.target}}
+    name: Build
     strategy:
       fail-fast: false
       matrix:
@@ -63,6 +63,8 @@ jobs:
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean ) &
         sudo timedatectl set-timezone "$TZ"
+        sudo mkdir -p /${{matrix.target}}
+        sudo chown $USER:$GROUPS /${{matrix.target}}
 
     - name: 设置当前的日期
       id: date
@@ -70,9 +72,8 @@ jobs:
         echo "date=$(date +'%m/%d_%Y_%H/%M')" >> $GITHUB_ENV
         echo "date2=$(date +'%Y/%m %d')" >> $GITHUB_ENV
         echo "date3=$(date +'%m.%d')" >> $GITHUB_ENV
-        sudo chown -R runner:runner /home/runner/work/AutoBuild-OpenWrt
         echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
-        echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/Immortalwrt_source" >> $GITHUB_ENV
+        echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/${{matrix.target}}" >> $GITHUB_ENV
         VERSION="$(echo "${{github.event.action}}" | grep -Eo " [0-9.]+" | sed -e 's/ //')" || true
         [ "$VERSION" ] && echo "VERSION=$VERSION" >> $GITHUB_ENV || echo "VERSION=$(date +'%m.%d')" >> $GITHUB_ENV      
 
