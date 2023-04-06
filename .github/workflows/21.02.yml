@@ -96,7 +96,7 @@ jobs:
         echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
         echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/Immortalwrt_source" >> $GITHUB_ENV
         cd openwrt
-        cp -Rf ../build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} "${PATH1}"
+        cp -Rf ../build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} "${PATH1}"/
         cp -f feeds/waynesg/openwrt-diy/default-settings package/emortal/default-settings/files/99-default-settings
         rm -rf feeds/packages/net/{alist,adguardhome,brook,gost,mosdns,redsocks*,smartdns,trojan*,v2ray*,xray*}
         sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
