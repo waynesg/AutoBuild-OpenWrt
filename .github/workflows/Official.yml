@@ -23,8 +23,6 @@ jobs:
     steps:
     - name: Clone Repository
       uses: actions/checkout@v3
-      with:
-        ref: ${{ github.event.inputs.branch }}
 
     - name: Init build dependencies
       env:
