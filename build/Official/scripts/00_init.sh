@@ -30,7 +30,7 @@ __init_build_env() {
 }
 
 __init_feeds() {
-    ../openwrt/scripts/feeds update -a && ../openwrt/scripts/feeds install -a
+    ./openwrt/scripts/feeds update -a && ./openwrt/scripts/feeds install -a
 }
 
 
