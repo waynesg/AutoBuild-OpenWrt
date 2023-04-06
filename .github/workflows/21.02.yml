@@ -103,7 +103,7 @@ jobs:
         rm -rf feeds/packages/net/{alist,adguardhome,brook,gost,mosdns,redsocks*,smartdns,trojan*,v2ray*,xray*}
         sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
         cp -f feeds/waynesg/openwrt-diy/banner package/base-files/files/etc/banner
-        cp -f feeds/waynesg/openwrt-diy/argon  feeds/luci/modules/luci-base/htdocs/luci-static/
+        cp -Rf feeds/waynesg/openwrt-diy/argon  feeds/luci/modules/luci-base/htdocs/luci-static/
         sed -i "s/%D %V, %C/openwrt $(date +'%m.%d') by waynesg/g" package/base-files/files/etc/banner
         #source ../build/common/common.sh && Diy_all
         ./scripts/feeds update -a && ./scripts/feeds install -a
