@@ -4,14 +4,14 @@ set -ex
 
 
 __get_openwrt() {
-    git clone https://github.com/openwrt/openwrt
+    git clone -b openwrt-22.03 https://github.com/openwrt/openwrt
 }
 
 __get_other-repos() {
     git clone -b master --depth 1 --single-branch https://github.com/coolsnowwolf/lede lede
-    git clone -b master --single-branch https://github.com/immortalwrt/immortalwrt immortalwrt
-    git clone -b master --depth 1 --single-branch https://github.com/immortalwrt/packages immortalwrt-packages
-    git clone -b master --depth 1 --single-branch https://github.com/immortalwrt/luci immortalwrt-luci
+    git clone -b openwrt-21.02 --depth 1 https://github.com/immortalwrt/immortalwrt immortalwrt
+    git clone -b openwrt-21.02 --depth 1 --single-branch https://github.com/immortalwrt/packages immortalwrt-packages
+    git clone -b openwrt-21.02 --depth 1 --single-branch https://github.com/immortalwrt/luci immortalwrt-luci
 }
 
 __init_build_env() {
