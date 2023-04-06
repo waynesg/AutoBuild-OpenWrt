@@ -151,7 +151,7 @@ jobs:
     - name: 下载包文件
       working-directory: ./openwrt
       run: |
-        make download -j50
+        make download -j$(nproc)
         find dl -size -1024c -exec rm -f {} \;
         
     - name: 编译固件
