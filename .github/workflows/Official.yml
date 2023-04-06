@@ -1,4 +1,4 @@
-name: official
+name: Official
 
 on:
   workflow_dispatch:
@@ -28,6 +28,7 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
+        chmod +x ./build/Official/scripts/*
         ./build/Official/scripts/00_init.sh build_env
 
     - name: Clone OpenWrt
