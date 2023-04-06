@@ -70,6 +70,9 @@ jobs:
         echo "date=$(date +'%m/%d_%Y_%H/%M')" >> $GITHUB_ENV
         echo "date2=$(date +'%Y/%m %d')" >> $GITHUB_ENV
         echo "date3=$(date +'%m.%d')" >> $GITHUB_ENV
+        sudo chown -R runner:runner /home/runner/work/AutoBuild-OpenWrt
+        echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
+        echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/Immortalwrt_source" >> $GITHUB_ENV
         VERSION="$(echo "${{github.event.action}}" | grep -Eo " [0-9.]+" | sed -e 's/ //')" || true
         [ "$VERSION" ] && echo "VERSION=$VERSION" >> $GITHUB_ENV || echo "VERSION=$(date +'%m.%d')" >> $GITHUB_ENV      
 
@@ -92,9 +95,6 @@ jobs:
         
     - name: 自定义配置
       run: |
-        sudo chown -R runner:runner /home/runner/work/AutoBuild-OpenWrt
-        echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
-        echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/Immortalwrt_source" >> $GITHUB_ENV
         cd openwrt
         #cp -Rf ../build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} "${PATH1}"/
         cp -f feeds/waynesg/openwrt-diy/default-settings package/emortal/default-settings/files/99-default-settings
