@@ -101,8 +101,8 @@ jobs:
         
     - name: 自定义配置
       run: |
-        cp -f ../build/common/*.sh ../build/Immortalwrt_source/
         cd openwrt
+        cp -f ../build/common/*.sh ../build/Immortalwrt_source/
         git clone https://github.com/waynesg/luci-app-autoupdate feeds/luci/applications/luci-app-autoupdate
         cp -Rf ../build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} package/base-files/files/bin
         cp -Rf ../build/Immortalwrt_source/diy/* ./
