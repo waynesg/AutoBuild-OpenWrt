@@ -84,7 +84,6 @@ jobs:
         [ "$VERSION" ] && echo "VERSION=$VERSION" >> $GITHUB_ENV || echo "VERSION=$(date +'%m.%d')" >> $GITHUB_ENV      
 
     - name: 克隆源代码
-      working-directory: /${{matrix.target}}
       env: 
         REPO_URL: https://github.com/immortalwrt/immortalwrt
         REPO_BRANCH: openwrt-21.02
@@ -92,9 +91,6 @@ jobs:
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
-        ln -sf /${{matrix.target}}/openwrt $GITHUB_WORKSPACE/openwrt
-        echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
-        echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/${{matrix.target}}" >> $GITHUB_ENV
         sed -i '$a src-git waynesg https://github.com/waynesg/OpenWrt-Software.git;js' feeds.conf.default
 
     - name: 更新 & 安装 feeds
@@ -105,14 +101,16 @@ jobs:
     - name: 自定义配置
       run: |
         cd openwrt
-        cp -Rf ../build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} "${PATH1}"
+        git clone https://github.com/waynesg/luci-app-autoupdate feeds/luci/applications/luci-app-autoupdate
+        cp -Rf ../build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} package/base-files/files/bin
+        cp -Rf ../build/Immortalwrt_source/diy/* ./
+        cp -Rf ../build/Immortalwrt_source/files ./ && chmod -R +x ./files
         cp -f feeds/waynesg/openwrt-diy/default-settings package/emortal/default-settings/files/99-default-settings
         rm -rf feeds/packages/net/{alist,adguardhome,brook,gost,mosdns,redsocks*,smartdns,trojan*,v2ray*,xray*}
         sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
         #cp -f feeds/waynesg/openwrt-diy/banner package/base-files/files/etc/banner
         #cp -Rf feeds/waynesg/openwrt-diy/argon  feeds/luci/modules/luci-base/htdocs/luci-static/
         sed -i "s/%D %V, %C/openwrt $(date +'%m.%d') by waynesg/g" package/base-files/files/etc/banner
-        source ../build/common/common.sh && Diy_all
         ./scripts/feeds update -a && ./scripts/feeds install -a
         cp -f feeds/waynesg/openwrt-diy/immortalwrt.config .config && make defconfig
         
