@@ -34,7 +34,8 @@ env:
   BY_INFORMATION: true
   CODE: OpenWrt
   OpenWrt_name: 21.02
-  TARGET_PROFILE: x86-64  
+  TARGET_PROFILE: x86-64
+  CangKu: ${Apidz##*/}
   TZ: Asia/Shanghai
     
 jobs:
@@ -70,8 +71,8 @@ jobs:
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean ) &
         sudo timedatectl set-timezone "$TZ"
-        #sudo mkdir -p /${{matrix.target}}
-        #sudo chown $USER:$GROUPS /${{matrix.target}}
+        sudo mkdir -p /${{matrix.target}}
+        sudo chown $USER:$GROUPS /${{matrix.target}}
 
     - name: 设置当前的日期
       id: date
@@ -83,6 +84,7 @@ jobs:
         [ "$VERSION" ] && echo "VERSION=$VERSION" >> $GITHUB_ENV || echo "VERSION=$(date +'%m.%d')" >> $GITHUB_ENV      
 
     - name: 克隆源代码
+      working-directory: /${{matrix.target}}
       env: 
         REPO_URL: https://github.com/immortalwrt/immortalwrt
         REPO_BRANCH: openwrt-21.02
@@ -91,9 +93,17 @@ jobs:
         sudo chown -R runner:runner /home/runner/work/AutoBuild-OpenWrt
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
-        echo "Home=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
-        echo "PATH1=${GITHUB_WORKSPACE}/build/${{matrix.target}}" >> $GITHUB_ENV
+        ln -sf /${{matrix.target}}/openwrt $GITHUB_WORKSPACE/openwrt
+        echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
+        echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/${{matrix.target}}" >> $GITHUB_ENV
         sed -i '$a src-git waynesg https://github.com/waynesg/OpenWrt-Software.git;js' feeds.conf.default
+        
+    - name: SSH连接
+      if: env.SSH_ACTIONS == 'true' || (github.event.inputs.ssh == 'ssh')
+      uses: danshui-git/debugger-action@main
+      env:
+         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
     - name: 更新 & 安装 feeds
       working-directory: ./openwrt
@@ -142,13 +152,6 @@ jobs:
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
-        
-    - name: SSH连接
-      if: env.SSH_ACTIONS == 'true' || (github.event.inputs.ssh == 'ssh')
-      uses: danshui-git/debugger-action@main
-      env:
-         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         
     - name: 编译固件
       working-directory: ./openwrt
