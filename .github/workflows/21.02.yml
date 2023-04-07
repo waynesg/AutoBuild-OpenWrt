@@ -70,8 +70,8 @@ jobs:
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean ) &
         sudo timedatectl set-timezone "$TZ"
-        sudo mkdir -p /${{matrix.target}}
-        sudo chown $USER:$GROUPS /${{matrix.target}}
+        #sudo mkdir -p /${{matrix.target}}
+        #sudo chown $USER:$GROUPS /${{matrix.target}}
 
     - name: 设置当前的日期
       id: date
@@ -88,10 +88,11 @@ jobs:
         REPO_BRANCH: openwrt-21.02
         TZ: Asia/Shanghai        
       run: |
+        sudo chown -R runner:runner /home/runner/work/AutoBuild-OpenWrt
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
-        echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
-        echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/${{matrix.target}}" >> $GITHUB_ENV
+        echo "Home=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
+        echo "PATH1=${GITHUB_WORKSPACE}/build/${{matrix.target}}" >> $GITHUB_ENV
         sed -i '$a src-git waynesg https://github.com/waynesg/OpenWrt-Software.git;js' feeds.conf.default
 
     - name: 更新 & 安装 feeds
@@ -102,7 +103,8 @@ jobs:
     - name: 自定义配置
       run: |
         cd openwrt
-        cp -f ../build/common/*.sh ../build/Immortalwrt_source/
+        cp -f "${Home}"/build/common/*.sh "${PATH1}"
+        #cp -f ../build/common/*.sh ../build/Immortalwrt_source/
         git clone https://github.com/waynesg/luci-app-autoupdate feeds/luci/applications/luci-app-autoupdate
         cp -Rf ../build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} package/base-files/files/bin
         cp -Rf ../build/Immortalwrt_source/diy/* ./
@@ -116,6 +118,19 @@ jobs:
         ./scripts/feeds update -a && ./scripts/feeds install -a
         cp -f feeds/waynesg/openwrt-diy/immortalwrt.config .config && make defconfig
         ./scripts/diffconfig.sh > ../config.txt
+        
+    - name: 编译信息
+      run: |
+        cd openwrt
+        source "${PATH1}/common.sh" && Diy_chuli > /dev/null 2>&1
+        if [ "${REGULAR_UPDATE}" == "true" ]; then
+          source "${PATH1}/upgrade.sh" && Diy_Part2 > /dev/null 2>&1
+        fi
+        if [ "${BY_INFORMATION}" == "true" ]; then
+          source "${PATH1}/upgrade.sh" && GET_TARGET_INFO
+          source "${PATH1}/common.sh" && Diy_xinxi
+          chmod -R 755 .
+        fi
     
     - name: 下载包文件
       working-directory: ./openwrt
