@@ -105,11 +105,12 @@ jobs:
     - name: 自定义配置
       run: |
         cd openwrt
-        cp -f "${Home}"/build/common/*.sh "${PATH1}"
+        cp -f "${Home}"/build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh}.sh "${PATH1}"
+        source "${PATH1}/common.sh" && Diy_all
         git clone https://github.com/waynesg/luci-app-autoupdate feeds/luci/applications/luci-app-autoupdate
-        cp -Rf ./build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} package/base-files/files/bin
-        cp -Rf ./build/Immortalwrt_source/diy/* ./
-        cp -Rf ./build/Immortalwrt_source/files ./ && chmod -R +x ./files
+        #cp -Rf ./build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} package/base-files/files/bin
+        #cp -Rf ./build/Immortalwrt_source/diy/* ./
+        #cp -Rf ./build/Immortalwrt_source/files ./ && chmod -R +x ./files
         cp -f feeds/waynesg/openwrt-diy/default-settings package/emortal/default-settings/files/99-default-settings
         rm -rf feeds/packages/net/{alist,adguardhome,brook,mosdns,redsocks*,trojan*,v2ray-*,xray*}
         sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
@@ -120,18 +121,18 @@ jobs:
         cp -f feeds/waynesg/openwrt-diy/immortalwrt.config .config && make defconfig
         ./scripts/diffconfig.sh > ./config.txt
         
-#    - name: 编译信息
-#      run: |
-#        cd openwrt
-#        source "${PATH1}/common.sh" && Diy_chuli > /dev/null 2>&1
-#        if [ "${REGULAR_UPDATE}" == "true" ]; then
-#          source "${PATH1}/upgrade.sh" && Diy_Part2 > /dev/null 2>&1
-#        fi
-#        if [ "${BY_INFORMATION}" == "true" ]; then
-#          source "${PATH1}/upgrade.sh" && GET_TARGET_INFO
-#          source "${PATH1}/common.sh" && Diy_xinxi
-#          chmod -R 755 .
-#        fi
+    - name: 编译信息
+      run: |
+        cd openwrt
+        source "${PATH1}/common.sh" && Diy_chuli > /dev/null 2>&1
+        if [ "${REGULAR_UPDATE}" == "true" ]; then
+          source "${PATH1}/upgrade.sh" && Diy_Part2 > /dev/null 2>&1
+        fi
+        if [ "${BY_INFORMATION}" == "true" ]; then
+          source "${PATH1}/upgrade.sh" && GET_TARGET_INFO
+          source "${PATH1}/common.sh" && Diy_xinxi
+          chmod -R 755 .
+        fi
    
     - name: 下载包文件
       working-directory: ./openwrt
