@@ -104,8 +104,8 @@ jobs:
         
     - name: 自定义配置
       run: |
+        cp -f "${Home}"/build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh}.sh "${PATH1}"
         cd openwrt
-        cp -f ../build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh}.sh "${PATH1}"
         source "${PATH1}/common.sh" && Diy_all
         git clone https://github.com/waynesg/luci-app-autoupdate feeds/luci/applications/luci-app-autoupdate
         #cp -Rf ./build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} package/base-files/files/bin
