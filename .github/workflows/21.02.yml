@@ -120,18 +120,18 @@ jobs:
         cp -f feeds/waynesg/openwrt-diy/immortalwrt.config .config && make defconfig
         ./scripts/diffconfig.sh > ./config.txt
         
-    - name: 编译信息
-      run: |
-        cd openwrt
-        source "${PATH1}/common.sh" && Diy_chuli > /dev/null 2>&1
-        if [ "${REGULAR_UPDATE}" == "true" ]; then
-          source "${PATH1}/upgrade.sh" && Diy_Part2 > /dev/null 2>&1
-        fi
-        if [ "${BY_INFORMATION}" == "true" ]; then
-          source "${PATH1}/upgrade.sh" && GET_TARGET_INFO
-          source "${PATH1}/common.sh" && Diy_xinxi
-          chmod -R 755 .
-        fi
+#    - name: 编译信息
+#      run: |
+#        cd openwrt
+#        source "${PATH1}/common.sh" && Diy_chuli > /dev/null 2>&1
+#        if [ "${REGULAR_UPDATE}" == "true" ]; then
+#          source "${PATH1}/upgrade.sh" && Diy_Part2 > /dev/null 2>&1
+#        fi
+#        if [ "${BY_INFORMATION}" == "true" ]; then
+#          source "${PATH1}/upgrade.sh" && GET_TARGET_INFO
+#          source "${PATH1}/common.sh" && Diy_xinxi
+#          chmod -R 755 .
+#        fi
    
     - name: 下载包文件
       working-directory: ./openwrt
