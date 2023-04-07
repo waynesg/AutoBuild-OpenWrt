@@ -111,7 +111,7 @@ jobs:
         cp -Rf ./build/Immortalwrt_source/diy/* ./
         cp -Rf ./build/Immortalwrt_source/files ./ && chmod -R +x ./files
         cp -f feeds/waynesg/openwrt-diy/default-settings package/emortal/default-settings/files/99-default-settings
-        rm -rf feeds/packages/net/{alist,adguardhome,brook,gost,mosdns,redsocks*,smartdns,trojan*,v2ray*,xray*}
+        rm -rf feeds/packages/net/{alist,adguardhome,brook,mosdns,redsocks*,trojan*,v2ray-*,xray*}
         sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
         #cp -f feeds/waynesg/openwrt-diy/banner package/base-files/files/etc/banner
         #cp -Rf feeds/waynesg/openwrt-diy/argon  feeds/luci/modules/luci-base/htdocs/luci-static/
