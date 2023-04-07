@@ -83,7 +83,6 @@ jobs:
         [ "$VERSION" ] && echo "VERSION=$VERSION" >> $GITHUB_ENV || echo "VERSION=$(date +'%m.%d')" >> $GITHUB_ENV      
 
     - name: 克隆源代码
-      working-directory: /${{matrix.target}}
       env: 
         REPO_URL: https://github.com/immortalwrt/immortalwrt
         REPO_BRANCH: openwrt-21.02
