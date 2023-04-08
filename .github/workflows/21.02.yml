@@ -26,6 +26,8 @@ env:
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
   CODE: OpenWrt
   OpenWrt_name: 21.02
+  TARGET_BOARD: x86
+  TARGET_SUBTARGET: 64
   TARGET_PROFILE: x86-64
   TZ: Asia/Shanghai
     
