@@ -112,7 +112,6 @@ jobs:
         cp -f feeds/waynesg/openwrt-diy/default-settings package/emortal/default-settings/files/99-default-settings
         rm -rf feeds/packages/net/{alist,adguardhome,brook,mosdns,redsocks*,trojan*,v2ray-*,xray*}
         sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
-        sed -i "s/%D %V, %C/openwrt $(date +'%m.%d') by waynesg/g" package/base-files/files/etc/banner
         ./scripts/feeds update -a && ./scripts/feeds install -a
         cp -f feeds/waynesg/openwrt-diy/immortalwrt.config .config && make defconfig
         ./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/config.txt
