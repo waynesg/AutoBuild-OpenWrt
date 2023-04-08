@@ -148,13 +148,8 @@ jobs:
       env:
          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-         
-    - name: 生成配置
-      run: |
-        cd openwrt
-        make defconfig
 
-    - name: 获取架构
+    - name: 生成配置
       run: |
         source "${PATH1}/common.sh" && Diy_chajian > /dev/null 2>&1
         make defconfig > /dev/null 2>&1
