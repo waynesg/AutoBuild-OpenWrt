@@ -151,6 +151,7 @@ jobs:
 
     - name: 生成配置
       run: |
+        cd openwrt
         source "${PATH1}/common.sh" && Diy_chajian > /dev/null 2>&1
         make defconfig > /dev/null 2>&1
         ./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/config.txt
