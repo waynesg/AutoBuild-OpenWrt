@@ -91,13 +91,13 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /usr/lib/jvm /opt/ghc
-        sudo -E apt-get -qq update -y
-        sudo -E apt-get -qq full-upgrade -y
-        sudo -E apt-get -qq install -y libfuse-dev rename
-        sudo bash -c 'bash <(curl -s https://build-scripts.immortalwrt.eu.org/init_build_environment.sh)'
-        sudo -E apt-get -qq autoremove -y --purge
-        sudo -E apt-get -qq clean
+        ( sudo -E apt-get -qq update
+        sudo -E apt-get -qq install build-essential clang flex g++ gawk gcc-multilib gettext \
+        git libncurses5-dev libssl-dev python3-distutils rsync unzip zlib1g-dev swig libpython3-dev aria2 jq subversion qemu-utils ccache rename libelf-dev libfuse-dev
+        sudo -E apt-get -qq purge azure-cli ghc* zulu* hhvm llvm* firefox powershell openjdk* dotnet* google* mysql* php* android*
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean ) &
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /${{matrix.target}}
         sudo chown $USER:$GROUPS /${{matrix.target}}
@@ -119,8 +119,6 @@ jobs:
         echo "Compile_Date=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
         cp -Rf `find ./ -maxdepth 1 -type d ! -path './openwrt' ! -path './'` openwrt
         mv -f "${Home}"/build/common/*.sh "${PATH1}"
-        source "${PATH1}/common.sh" && Diy_settings
-        [[ "${{ github.event.inputs.ssh }}" == 'ssh' ]] && echo "SSHYC=true" >> $GITHUB_ENV
         cd openwrt
         if [[ "${REPO_BRANCH}" == "master" ]]; then
           source "${PATH1}/common.sh" && Diy_lede
@@ -158,7 +156,9 @@ jobs:
 
     - name: 获取架构
       run: |
-        cd openwrt
+        source "${PATH1}/common.sh" && Diy_chajian > /dev/null 2>&1
+        make defconfig > /dev/null 2>&1
+        ./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/config.txt
         echo "TARGET_BOARD=$(awk -F '[="]+' '/TARGET_BOARD/{print $2}' .config)" >> $GITHUB_ENV
         echo "TARGET_SUBTARGET=$(awk -F '[="]+' '/TARGET_SUBTARGET/{print $2}' .config)" >> $GITHUB_ENV
         if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
@@ -215,7 +215,7 @@ jobs:
         echo "date1=$(date +'%m-%d')" >> $GITHUB_ENV
         
     - name: 提交错误
-      if: steps.compile.outcome == 'failure' || 'failed'
+      if: steps.compile.outcome == 'failure'
       run: |
         cat openwrt/.config
         echo '================================================================'
