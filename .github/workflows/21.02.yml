@@ -47,8 +47,19 @@ jobs:
         cat /proc/cpuinfo | grep 'model name'
         ulimit -a
         
-    - name: 检查
-      uses: actions/checkout@main
+    - name: 构建磁盘
+      uses: easimon/maximize-build-space@master
+      with:
+        swap-size-mb: 2048
+        root-reserve-mb: 2048
+        remove-dotnet: 'true'
+        remove-android: 'true'
+        remove-haskell: 'true'
+
+    - name: 准备完成
+      uses: actions/checkout@v3
+      with:
+          fetch-depth: 0
       
     - name: 读取设置
       run: |
