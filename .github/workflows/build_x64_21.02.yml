@@ -86,10 +86,6 @@ jobs:
           echo "ZZZ=package/lean/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
           echo "CODE=Lede" >> $GITHUB_ENV
           echo "OpenWrt_name=18.06" >> $GITHUB_ENV
-        elif [[ "${REPO_BRANCH}" == "19.07" ]]; then
-          echo "ZZZ=package/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
-          echo "CODE=Lienol" >> $GITHUB_ENV
-          echo "OpenWrt_name=19.07" >> $GITHUB_ENV
         elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
           echo "ZZZ=package/emortal/default-settings/files/99-default-settings" >> $GITHUB_ENV
           echo "CODE=immortalwrt" >> $GITHUB_ENV
@@ -107,11 +103,11 @@ jobs:
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean ) &
+        echo "文件系统        类型   容量  已用  可用 使用% 挂载点"
+        df -hT $PWD
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /${{matrix.target}}
         sudo chown $USER:$GROUPS /${{matrix.target}}
-        echo "文件系统        类型   容量  已用  可用 使用% 挂载点"
-        df -hT $PWD
     
     - name: 下载源码
       working-directory: /${{matrix.target}}
@@ -128,6 +124,8 @@ jobs:
         echo "Compile_Date=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
         cp -Rf `find ./ -maxdepth 1 -type d ! -path './openwrt' ! -path './'` openwrt
         mv -f "${Home}"/build/common/*.sh "${PATH1}"
+        source "${PATH1}/common.sh" && Diy_settings
+        [[ "${{ github.event.inputs.ssh }}" == 'ssh' ]] && echo "SSHYC=true" >> $GITHUB_ENV
         cd openwrt
         if [[ "${REPO_BRANCH}" == "master" ]]; then
           source "${PATH1}/common.sh" && Diy_lede
