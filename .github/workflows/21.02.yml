@@ -109,19 +109,13 @@ jobs:
         cd openwrt
         cp -Rf ./build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} "${PATH1}"
         source "${PATH1}/common.sh" && Diy_all
-        #git clone https://github.com/waynesg/luci-app-autoupdate feeds/luci/applications/luci-app-autoupdate
-        #cp -Rf ./build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} package/base-files/files/bin
-        #cp -Rf ./build/Immortalwrt_source/diy/* ./
-        #cp -Rf ./build/Immortalwrt_source/files ./ && chmod -R +x ./files
         cp -f feeds/waynesg/openwrt-diy/default-settings package/emortal/default-settings/files/99-default-settings
         rm -rf feeds/packages/net/{alist,adguardhome,brook,mosdns,redsocks*,trojan*,v2ray-*,xray*}
         sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
-        #cp -f feeds/waynesg/openwrt-diy/banner package/base-files/files/etc/banner
-        #cp -Rf feeds/waynesg/openwrt-diy/argon  feeds/luci/modules/luci-base/htdocs/luci-static/
         sed -i "s/%D %V, %C/openwrt $(date +'%m.%d') by waynesg/g" package/base-files/files/etc/banner
         ./scripts/feeds update -a && ./scripts/feeds install -a
         cp -f feeds/waynesg/openwrt-diy/immortalwrt.config .config && make defconfig
-        ./scripts/diffconfig.sh > ./config.txt
+        ./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/config.txt
         
     - name: 编译信息
       run: |
@@ -269,7 +263,7 @@ jobs:
     - name: 删除工作流
       uses: Mattraks/delete-workflow-runs@main
       with:
-        retain_days: 1
+        retain_days: 30
         keep_minimum_runs: 0
 
     - name: 删除旧版本
