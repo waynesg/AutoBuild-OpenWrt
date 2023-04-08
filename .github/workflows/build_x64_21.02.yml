@@ -173,11 +173,10 @@ jobs:
           chmod -R 755 .
         fi
 
-    - name: 下载dl库
-      id: package
+    - name: 下载包文件
+      working-directory: ./openwrt
       run: |
-        cd openwrt
-        make download -j50
+        make download -j$(nproc)
         find dl -size -1024c -exec rm -f {} \;
     
     - name: 开始通知
