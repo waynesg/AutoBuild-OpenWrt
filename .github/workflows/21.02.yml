@@ -105,7 +105,7 @@ jobs:
         echo "Compile_Date=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
         cd openwrt
         cp -Rf ./build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} "${PATH1}"
-        source "${PATH1}/common.sh" && Diy_all
+        source "${PATH1}/com/common.sh" && Diy_all
         rm -rf feeds/luci/luci-app-passwall
         cp -f feeds/waynesg/openwrt-diy/default-settings package/emortal/default-settings/files/99-default-settings
         rm -rf feeds/packages/net/{alist,adguardhome,brook,mosdns,redsocks*,trojan*,v2ray-*,xray*}
@@ -117,13 +117,13 @@ jobs:
     - name: 编译信息
       run: |
         cd openwrt
-        source "${PATH1}/common.sh" && Diy_chuli > /dev/null 2>&1
+        source "${PATH1}/com/common.sh" && Diy_chuli > /dev/null 2>&1
         if [ "${REGULAR_UPDATE}" == "true" ]; then
-          source "${PATH1}/upgrade.sh" && Diy_Part2 > /dev/null 2>&1
+          source "${PATH1}/com/upgrade.sh" && Diy_Part2 > /dev/null 2>&1
         fi
         if [ "${BY_INFORMATION}" == "true" ]; then
-          source "${PATH1}/upgrade.sh" && GET_TARGET_INFO
-          source "${PATH1}/common.sh" && Diy_xinxi
+          source "${PATH1}/com/upgrade.sh" && GET_TARGET_INFO
+          source "${PATH1}/com/common.sh" && Diy_xinxi
           chmod -R 755 .
         fi
    
@@ -231,7 +231,7 @@ jobs:
       if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
       run: |
        cd openwrt
-       source "${PATH1}/upgrade.sh" && Diy_Part3
+       source "${PATH1}/com/upgrade.sh" && Diy_Part3
         
     - name: 更新Step 2
       continue-on-error: true
