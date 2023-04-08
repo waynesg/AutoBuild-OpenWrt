@@ -34,6 +34,7 @@ env:
   UPLOAD_RELEASE: true
   REGULAR_UPDATE: true
   BY_INFORMATION: true
+  SERVERCHAN_SCKEY: PUSH
   CODE: OpenWrt
   OpenWrt_name: 21.02
   TARGET_PROFILE: x86-64
@@ -74,16 +75,6 @@ jobs:
         sudo -E apt-get -qq clean ) &
         sudo timedatectl set-timezone "$TZ"
 
-    - name: 设置当前的日期
-      id: date
-      run: |
-        echo "Compile_Date=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
-        echo "date=$(date +'%m/%d_%Y_%H/%M')" >> $GITHUB_ENV
-        echo "date2=$(date +'%Y/%m %d')" >> $GITHUB_ENV
-        echo "date3=$(date +'%m.%d')" >> $GITHUB_ENV
-        VERSION="$(echo "${{github.event.action}}" | grep -Eo " [0-9.]+" | sed -e 's/ //')" || true
-        [ "$VERSION" ] && echo "VERSION=$VERSION" >> $GITHUB_ENV || echo "VERSION=$(date +'%m.%d')" >> $GITHUB_ENV      
-
     - name: 克隆源代码
       env: 
         REPO_URL: https://github.com/immortalwrt/immortalwrt
@@ -106,6 +97,7 @@ jobs:
         
     - name: 自定义配置
       run: |
+        echo "Compile_Date=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
         cd openwrt
         cp -Rf ./build/common/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh} "${PATH1}"
         source "${PATH1}/common.sh" && Diy_all
@@ -147,10 +139,22 @@ jobs:
       env:
          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+         
+    - name: 开始通知
+      if: env.PUSH_PLUS_TOKEN && env.SERVERCHAN_SCKEY == 'PUSH' || env.TELEGRAM_BOT_TOKEN && env.SERVERCHAN_SCKEY == 'TELE'
+      run: |
+        echo `date +'%Y-%m-%d %H:%M:%S'` > runtime.log
+        starttime=$(echo `date +'%Y-%m-%d %H:%M:%S'`)
+        if [[ "${SERVERCHAN_SCKEY}" == "TELE" ]]; then
+          curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=🎉 主人：您正在使用【${{matrix.target}}】文件夹编译固件中(${{env.CangKu}}仓库的#${{env.Run_number}}号),请耐心等待...... 😋" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+        elif [[ "${SERVERCHAN_SCKEY}" == "PUSH" ]]; then
+          curl -k --data token="${{ secrets.PUSH_PLUS_TOKEN }}" --data title="🎉开始编译" --data "content=🎉正在使用【${{matrix.target}}】文件夹编译固件中(${{env.CangKu}}仓库的#${{env.Run_number}}号),请您耐心等待...... 😋💐" "http://www.pushplus.plus/send"
+        fi
         
     - name: 编译固件
-      working-directory: ./openwrt
+      id: compile
       run: |
+        cd openwrt
         echo -e "$(($(nproc)+1)) thread compile"
         make -j$(($(nproc)+1)) || make -j1 V=s   
         echo "COMPILESTATUS=success" >> $GITHUB_ENV
