@@ -254,7 +254,7 @@ if [[ "${BY_INFORMATION}" == "true" ]]; then
 	#elif [[ `grep -c "KERNEL_PATCHVER=" ${Home}/target/linux/${TARGET_BOARD}/Makefile` -eq '1' ]]; then
 	#	PATCHVER=$(grep KERNEL_PATCHVER= ${Home}/target/linux/${TARGET_BOARD}/Makefile | cut -c17-100)
 	#else
-	#	PATCHVER="unknown"
+		PATCHVER="unknown"
 	#fi
 	if [[ ! "${PATCHVER}" == "unknown" ]]; then
 		PATCHVER=$(egrep -o "${PATCHVER}.[0-9]+" ${Home}/include/kernel-version.mk)
