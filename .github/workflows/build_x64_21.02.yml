@@ -1,14 +1,12 @@
-name: 21.02
+name: openwrt_21.02
+
 on:
   workflow_dispatch:
     inputs:
       ssh:
-        description: 'ssh-action'
+        description: 'SSH connection to Actions'
         required: false
         default: 'ssh-actions'
-
-  schedule:
-   - cron: 0 0 1 * *
 
 env:
   Github: https://github.com/${{github.repository}}
@@ -17,28 +15,28 @@ env:
   Run_number: ${{github.run_number}}
   Run_workflow: ${{github.workflow}}
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
-  SCKEY: ${{ secrets.SCKEY }}
   PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-  TARGET_BOARD: x86
-  TARGET_SUBTARGET: 64
-  TARGET_PROFILE: x86-64
+  #TARGET_BOARD: x86
+  #TARGET_SUBTARGET: 64
+  #TARGET_PROFILE: x86-64
   TZ: Asia/Shanghai
+
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
-    if: ${{ github.event.repository.owner.id }} == ${{ github.event.sender.id }}
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
 
     name: 编译 "${{matrix.target}}"
     strategy:
       fail-fast: false
       matrix:
-        target: [Immortalwrt_source]
+        target: [openwrt_amlogic]
 
-        # [Lede_source,Lienol_source,Mortal_source,Tianling_source]
-
+        # [Lede_source,Lienol_source,Mortal_source,Tianling_source,openwrt_amlogic]
+    
     steps:
     - name: 分配机器
       run: |
@@ -54,8 +52,8 @@ jobs:
         remove-dotnet: 'true'
         remove-android: 'true'
         remove-haskell: 'true'
-
-    - name: 准备完成
+        
+    - name: 准备结束
       uses: actions/checkout@v3
       with:
           fetch-depth: 0
@@ -71,7 +69,6 @@ jobs:
         echo "UPLOAD_BIN_DIR=${UPLOAD_BIN_DIR}" >> $GITHUB_ENV
         echo "UPLOAD_CONFIG=${UPLOAD_CONFIG}" >> $GITHUB_ENV
         echo "UPLOAD_FIRMWARE=${UPLOAD_FIRMWARE}" >> $GITHUB_ENV
-        echo "UPLOAD_COWTRANSFER=${UPLOAD_COWTRANSFER}" >> $GITHUB_ENV
         echo "UPLOAD_RELEASE=${UPLOAD_RELEASE}" >> $GITHUB_ENV
         echo "SERVERCHAN_SCKEY=${SERVERCHAN_SCKEY}" >> $GITHUB_ENV
         echo "REGULAR_UPDATE=${REGULAR_UPDATE}" >> $GITHUB_ENV
@@ -79,10 +76,9 @@ jobs:
         echo "BY_INFORMATION=${BY_INFORMATION}" >> $GITHUB_ENV
         echo "AUTOMATIC_AMLOGIC=${AUTOMATIC_AMLOGIC}" >> $GITHUB_ENV
         echo "CangKu=${Apidz##*/}" >> $GITHUB_ENV
-        echo "Modelfile=${{matrix.target}}" >> $GITHUB_ENV
-        echo "{name}={value}" >> $GITHUB_OUTPUT
+        echo "Modelfile=${{matrix.target}}" >> $GITHUB_ENV 
         
-    - name: 源码版本
+    - name: 初始化
       run: |
         chmod -R +x "${GITHUB_WORKSPACE}/build/common"
         if [[ "${REPO_BRANCH}" == "master" ]]; then
@@ -91,10 +87,10 @@ jobs:
           echo "OpenWrt_name=18.06" >> $GITHUB_ENV
         elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
           echo "ZZZ=package/emortal/default-settings/files/99-default-settings" >> $GITHUB_ENV
-          echo "CODE=immortalwrt" >> $GITHUB_ENV
+          echo "CODE=Immortalwrt" >> $GITHUB_ENV
           echo "OpenWrt_name=21.02" >> $GITHUB_ENV
         fi
-
+        
     - name: 部署环境
       env:
         DEBIAN_FRONTEND: noninteractive
@@ -106,6 +102,7 @@ jobs:
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean ) &
+        echo "================================================="
         echo "文件系统        类型   容量  已用  可用 使用% 挂载点"
         df -hT $PWD
         sudo timedatectl set-timezone "$TZ"
@@ -140,28 +137,32 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a > /dev/null 2>&1
         ./scripts/feeds install -a
-        cp -f "$PATH1/$CONFIG_FILE" .config
+        mv "$PATH1/$CONFIG_FILE" .config
         if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           source "${PATH1}/upgrade.sh" && Diy_Part1
         fi
+
+    - name: 生成配置
+      run: |
+        cd openwrt
+        source "${PATH1}/common.sh" && Diy_chajian > /dev/null 2>&1
+        make defconfig > /dev/null 2>&1
+        ./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/config.txt
+        echo "TARGET_BOARD=$(awk -F '[="]+' '/TARGET_BOARD/{print $2}' .config)" >> $GITHUB_ENV
+        echo "TARGET_SUBTARGET=$(awk -F '[="]+' '/TARGET_SUBTARGET/{print $2}' .config)" >> $GITHUB_ENV
+        if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
+         echo "TARGET_PROFILE=x86-64" >> $GITHUB_ENV
+        elif [ `grep -c "CONFIG_TARGET_x86_generic=y" .config` -eq '1' ]; then
+         echo "TARGET_PROFILE=x86-32" >> $GITHUB_ENV
+        elif [ `grep -c "CONFIG_TARGET.*DEVICE.*=y" .config` -eq '1' ]; then
+          grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+          [ -s DEVICE_NAME ] && echo "TARGET_PROFILE=$(cat DEVICE_NAME)" >> $GITHUB_ENV
+        else
+          echo "TARGET_PROFILE=armvirt" >> $GITHUB_ENV
+        fi
         
-    - name: 加载缓存
-      if: env.USE_CACHEWRTBUILD == 'true'
-      uses: stupidloud/cachewrtbuild@main
-      with:
-        ccache: 'true'
-        prefix: ${{ github.workspace }}/openwrt
-        
-    - name: SSH连接
-      if: env.SSH_ACTIONS == 'true' || (github.event.inputs.ssh == 'ssh')
-      uses: danshui-git/debugger-action@main
-      env:
-         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-       
     - name: 编译信息
       run: |
-        wget -qO- --no-check-certificate https://raw.githubusercontent.com/waynesg/scripts/main/serverbench.sh | bash
         cd openwrt
         source "${PATH1}/common.sh" && Diy_chuli > /dev/null 2>&1
         if [ "${REGULAR_UPDATE}" == "true" ]; then
@@ -172,40 +173,46 @@ jobs:
           source "${PATH1}/common.sh" && Diy_xinxi
           chmod -R 755 .
         fi
-
-    - name: 下载包文件
-      working-directory: ./openwrt
+        
+    - name: 电报通知
+      if: env.SERVERCHAN_SCKEY == 'true'
       run: |
-        make download -j$(nproc)
-        find dl -size -1024c -exec rm -f {} \;
+        cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c > CPU
+        cat /proc/cpuinfo | grep "cpu cores" | uniq >> CPU
+        sed -i 's|[[:space:]]||g; s|^.||' CPU && sed -i 's|CPU||g; s|pucores:||' CPU
+        CPUNAME="$(awk 'NR==1' CPU)" && CPUCORES="$(awk 'NR==2' CPU)"
+        curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=🔔 您正在使用【${CPUNAME} CPU】【${CPUCORES}核心】【${CODE}】源码 编译固件中,请耐心等待...... ⏳" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
     
-    - name: 开始通知
-      if: env.PUSH_PLUS_TOKEN && env.SERVERCHAN_SCKEY == 'PUSH' || env.TELEGRAM_BOT_TOKEN && env.SERVERCHAN_SCKEY == 'TELE'
+    - name: 下载dl库
+      id: package
       run: |
-        echo `date +'%Y-%m-%d %H:%M:%S'` > runtime.log
-        starttime=$(echo `date +'%Y-%m-%d %H:%M:%S'`)
-        if [[ "${SERVERCHAN_SCKEY}" == "TELE" ]]; then
-          curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=🎉 主人：您正在使用【${{matrix.target}}】文件夹编译固件中(${{env.CangKu}}仓库的#${{env.Run_number}}号),请耐心等待...... 😋" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
-        elif [[ "${SERVERCHAN_SCKEY}" == "PUSH" ]]; then
-          curl -k --data token="${{ secrets.PUSH_PLUS_TOKEN }}" --data title="🎉开始编译" --data "content=🎉正在使用【${{matrix.target}}】文件夹编译固件中(${{env.CangKu}}仓库的#${{env.Run_number}}号),请您耐心等待...... 😋💐" "http://www.pushplus.plus/send"
-        fi
+        cd openwrt
+        make download -j8
+        find dl -size -1024c -exec rm -f {} \;
+        
+    - name: 加载缓存
+      if: env.USE_CACHEWRTBUILD == 'true'
+      uses: klever1988/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        prefix: ${{ github.workspace }}/openwrt
+        
+    - name: SSH连接
+      if: env.SSH_ACTIONS == 'true' || (github.event.inputs.ssh == 'ssh')
+      uses: danshui-git/debugger-action@main
+      env:
+         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         
     - name: 编译固件
       id: compile
       run: |
         cd openwrt
-        #echo -e "$(nproc) thread compile"
-        IGNORE_ERRORS=1 make -j$(($(nproc) + 1))
+        echo -e "$(($(nproc)+1)) thread compile"
+        make -j$(($(nproc)+1)) || make -j1 V=s   
         echo "COMPILESTATUS=success" >> $GITHUB_ENV
         echo "date=$(date "+%Y%m%d%H%M%S")" >> $GITHUB_ENV
         echo "date1=$(date +'%m-%d')" >> $GITHUB_ENV
-        
-    - name: 提交错误
-      if: steps.compile.outcome == 'failure'
-      run: |
-        cat openwrt/.config
-        echo '================================================================'
-        cd openwrt && make -j1 V=s
         
     - name: 上传配置
       if: env.UPLOAD_CONFIG == 'true'
@@ -278,6 +285,8 @@ jobs:
         file: openwrt/bin/Firmware/*
         tag: AutoUpdate
         overwrite: true
+        file_glob: true
+
         
     - name: 更新Step 3
       if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true'
@@ -304,7 +313,7 @@ jobs:
         elif [[ "${SERVERCHAN_SCKEY}" == "PUSH" ]]; then
           curl -k --data token="${{ secrets.PUSH_PLUS_TOKEN }}" --data title="[${{ env.CODE }}-${{ env.TARGET_PROFILE }}]编译成功" --data "content=✨Congratulations✨：您使用【${{matrix.target}}】文件夹编译的[${{ env.CODE }}-${{ env.TARGET_PROFILE }}]固件(${{env.CangKu}}仓库的#${{env.Run_number}}号)顺利编译完成了！💐" "http://www.pushplus.plus/send"
         fi
-
+        
     - name: 清理脚本
       uses: Mattraks/delete-workflow-runs@v2
       continue-on-error: true
