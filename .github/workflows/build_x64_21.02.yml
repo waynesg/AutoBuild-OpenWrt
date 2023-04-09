@@ -1,4 +1,4 @@
-name: openwrt_21.02
+name: 21.02
 
 on:
   workflow_dispatch:
