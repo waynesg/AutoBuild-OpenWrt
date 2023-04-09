@@ -12,6 +12,7 @@ __get_other-repos() {
     git clone -b master --single-branch https://github.com/immortalwrt/immortalwrt immortalwrt
     git clone -b openwrt-21.02 --depth 1 --single-branch https://github.com/immortalwrt/packages immortalwrt-packages
     git clone -b openwrt-21.02 --depth 1 --single-branch https://github.com/immortalwrt/luci immortalwrt-luci
+    git clone -b js --depth 1 --single-branch https://github.com/waynesg/OpenWrt-Software waynesg
 }
 
 __init_build_env() {
