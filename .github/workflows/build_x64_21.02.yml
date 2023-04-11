@@ -187,8 +187,7 @@ jobs:
       id: package
       run: |
         cd openwrt
-        make download -j8
-        find dl -size -1024c -exec rm -f {} \;
+        make download -j50
         
     - name: 加载缓存
       if: env.USE_CACHEWRTBUILD == 'true'
