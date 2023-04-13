@@ -143,6 +143,9 @@ jobs:
           source "${PATH1}/com/common.sh" && Diy_xinxi
           chmod -R 755 .
         fi
+        echo "================================================="
+        echo "文件系统        类型   容量  已用  可用 使用% 挂载点"
+        df -hT $PWD
    
     - name: 下载包文件
       id: package
