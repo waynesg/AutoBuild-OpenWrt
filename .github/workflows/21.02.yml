@@ -180,7 +180,7 @@ jobs:
           curl -k --data token="${{ secrets.PUSH_PLUS_TOKEN }}" --data title="🎉开始编译" --data "content=🎉正在使用【${{matrix.target}}】文件夹编译固件中(${{env.CangKu}}仓库的#${{env.Run_number}}号),请您耐心等待...... 😋💐" "http://www.pushplus.plus/send"
         fi
         
-    - name:安装IPK
+    - name: 安装IPK
       run: |
         cd openwrt
         mkdir -p package/custom
@@ -188,7 +188,7 @@ jobs:
         wget -O luci-app-temp-status_0.3-5_all.ipk https://github.com/waynesg/Actions-Applications/raw/packages/x86_64-22.03/luci-app-temp-status_0.3-5_all.ipk -P package/custom
         wget -O luci-app-tn-netports_2.0.3_all.ipk https://github.com/waynesg/Actions-Applications/raw/packages/x86_64-22.03/luci-app-tn-netports_2.0.3_all.ipk -P package/custom
         wget -O luci-i18n-tn-netports-zh-cn_git-23.101.28253-9844552_all.ipk https://github.com/waynesg/Actions-Applications/raw/packages/x86_64-22.03/luci-i18n-tn-netports-zh-cn_git-23.101.28253-9844552_all.ipk -P package/custom
-        echo "src-link custom ${HOME}/package/custom" >> feeds.conf.default
+        echo "src-link custom ${GITHUB_WORKSPACE}/openwrt/package/custom" >> feeds.conf.default
         ./scripts/feeds update custom
         ./scripts/feeds install -a -p custom
         
