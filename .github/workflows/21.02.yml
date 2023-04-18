@@ -110,7 +110,6 @@ jobs:
         echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
         echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/${{matrix.target}}" >> $GITHUB_ENV
         sed -i '$a src-git waynesg https://github.com/waynesg/OpenWrt-Software.git;js' feeds.conf.default
-        sed -i '$a src-git ipk https://github.com/waynesg/Actions-Applications;packages/x86_64-22.03' feeds.conf.default
 
     - name: 更新 & 安装 feeds
       working-directory: ./openwrt
