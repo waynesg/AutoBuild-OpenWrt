@@ -26,7 +26,7 @@ TIME() {
 echo 
 TIME y "添加软件包"
 rm -rf ./feeds/luci/applications/{luci-app-passwall,luci-app-socat}
-rm -rf ./feeds/packages/net/{alist,adguardhome,cdnspeedtest,msd_lite,mosdns,open-app-filter}
+rm -rf ./feeds/packages/net/{alist,adguardhome,cdnspeedtest,mosdns,open-app-filter}
 
 git clone -b master --depth 1 https://github.com/sbwml/luci-app-alist.git package/waynesg/luci-app-alist
 svn co https://github.com/sirpdboy/luci-app-autotimeset/trunk package/waynesg/luci-app-autotimeset
