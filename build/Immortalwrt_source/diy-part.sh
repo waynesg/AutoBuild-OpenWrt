@@ -25,11 +25,9 @@ TIME() {
 
 echo 
 TIME y "添加软件包"
-#rm -rf package/waynesg && git clone -b js https://github.com/waynesg/OpenWrt-Software package/waynesg
+rm -rf ./feeds/luci/applications/{luci-app-passwall,luci-app-socat}
+rm -rf ./feeds/packages/net/{alist,adguardhome,cdnspeedtest,msd_lite,mosdns,open-app-filter}
 
-rm -rf ./feeds/luci/applications/luci-app-passwall
-rm -rf ./feeds/luci/themes/luci-theme-argon
-git clone -b master --depth 1 https://github.com/jerrykuku/luci-theme-argon.git package/waynesg/luci-theme-argon
 git clone -b master --depth 1 https://github.com/sbwml/luci-app-alist.git package/waynesg/luci-app-alist
 svn co https://github.com/sirpdboy/luci-app-autotimeset/trunk package/waynesg/luci-app-autotimeset
 svn co https://github.com/kiddin9/openwrt-packages/trunk/luci-app-bypass package/waynesg/luci-app-bypass
@@ -44,11 +42,17 @@ svn co https://github.com/waynesg/luci-app-tn-netports/trunk package/waynesg/luc
 svn co https://github.com/sirpdboy/netspeedtest/trunk package/waynesg/luci-app-netspeedtest
 svn co https://github.com/destan19/OpenAppFilter/trunk package/waynesg/luci-app-oaf
 svn co https://github.com/Hyy2001X/AutoBuild-Packages/trunk/luci-app-onliner package/waynesg/luci-app-onliner
-git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall -b luci-smartdns-new-version package/waynesg/openwrt-passwall && mvdir openwrt-passwall
-git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall2 package/waynesg/openwrt-passwall2 && mvdir openwrt-passwall2
 svn co https://github.com/zzsj0928/luci-app-pushbot/trunk package/waynesg/luci-app-pushbot
-svn co https://github.com/iamaluckyguy/luci-app-smartinfo/trunk package/waynesg/luci-app-smartinfo
-
+svn co https://github.com/QiuSimons/OpenWrt-Add/trunk/luci-app-airconnect package/waynesg/luci-app-airconnect
+svn co https://github.com/QiuSimons/OpenWrt-Add/trunk/airconnect package/waynesg/luci-app-airconnect/airconnect
+svn co https://github.com/kiddin9/luci-app-wizard/trunk package/waynesg/luci-app-wizard
+svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-advanced package/waynesg/luci-app-advanced
+svn co https://github.com/kiddin9/openwrt-packages/trunk/luci-app-wrtbwmon package/waynesg/luci-app-wrtbwmon
+svn co https://github.com/kiddin9/openwrt-packages/trunk/wrtbwmon package/waynesg/luci-app-wrtbwmon/wrtbwmon
+svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-socat package/waynesg/luci-app-socat
+git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall -b luci-smartdns-new-version package/waynesg/openwrt-passwall
+git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall2 package/waynesg/openwrt-passwall2
+git clone -b master --depth 1 https://github.com/waynesg/luci-app-internet-detector package/waynesg/luci-app-internet-detector
 
 echo
 TIME b "修改 系统文件..."
