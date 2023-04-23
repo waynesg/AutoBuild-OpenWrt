@@ -8,7 +8,7 @@ PROFILE="generic"
 
 PACKAGES=""
 # 删除的组件
-PACKAGES="$PACKAGES -luci-app-openclash -luci-app-passwall -luci-app-cpulimit -luci-app-nps -luci-app-frpc -luci-app-hd-idle -luci-app-gowebdav -luci-app-qbittorrent -luci-app-aria2 -luci-app-syncdial -luci-app-mwan3"
+PACKAGES="$PACKAGES -luci-app-passwall -luci-app-cpulimit -luci-app-nps -luci-app-frpc -luci-app-hd-idle -luci-app-gowebdav -luci-app-qbittorrent -luci-app-aria2 -luci-app-syncdial -luci-app-mwan3"
 
 # Argon 主题
 PACKAGES="$PACKAGES luci-theme-argon luci-i18n-argon-config-zh-cn"
@@ -25,9 +25,9 @@ PACKAGES="$PACKAGES luci-i18n-statistics-zh-cn"
 # 常用软件服务
 PACKAGES="$PACKAGES luci-app-accesscontrol luci-app-argon-config luci-app-arpbind luci-app-ddns luci-app-msd_lite luci-app-openvpn luci-app-openvpn-server luci-app-smartdns luci-app-socat luci-app-ssr-plus luci-app-ttyd" 
 # OpenClash 代理
-# PACKAGES="$PACKAGES luci-app-openclash"
+PACKAGES="$PACKAGES luci-app-openclash"
 # Passwall 代理
-# PACKAGES="$PACKAGES luci-i18n-passwall-zh-cn"
+PACKAGES="$PACKAGES luci-i18n-passwall-zh-cn"
 # frp 和 nps 内网穿透
 # PACKAGES="$PACKAGES luci-i18n-nps-zh-cn luci-i18n-frpc-zh-cn"
 
