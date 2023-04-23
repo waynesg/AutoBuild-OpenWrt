@@ -87,7 +87,7 @@ PACKAGES="$PACKAGES nano"
 # X/Y/ZMODEM 文件传输
 # PACKAGES="$PACKAGES lrzsz"
 # OpenSSH
-PACKAGES="$PACKAGES openssh-server openssh-client"
+# PACKAGES="$PACKAGES openssh-server openssh-client"
 # Netdata 系统监控界面
 PACKAGES="$PACKAGES netdata"
 
@@ -95,6 +95,6 @@ PACKAGES="$PACKAGES netdata"
 FILES="./build/ImageBuilder/files"
 
 # 禁用 openssh-server 的 sshd 服务和 docker 的 dockerd 服务以防止冲突
-DISABLED_SERVICES="sshd dockerd"
+# DISABLED_SERVICES="sshd dockerd"
 
 make image PROFILE="$PROFILE" PACKAGES="$PACKAGES" FILES="$FILES" DISABLED_SERVICES="$DISABLED_SERVICES"
