@@ -13,9 +13,10 @@ on:
         default: 'true'
 
 env:
-  DOWNLOAD_BASE: https://downloads.immortalwrt.org
-  VENDOR: immortalwrt
-  VERSION: 21.02.3
+  DOWNLOAD_BASE: https://downloads.openwrt.org
+  VENDOR: openwrt
+  VERSION: 22.03.4
+  #[https://downloads.immortalwrt.org]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
