@@ -72,7 +72,7 @@ sed -i "s/2022.02.01/$(TZ=UTC-8 date "+%Y.%m.%d")/g" package/lean/autocore/files
 
 echo 
 TIME y "自定义固件版本名字"
-sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ
+sed -i "s/OpenWrt /Powered by Immortalwrt @ OpenWrt /g" $ZZZ
 
 echo
 TIME y "更换golang版本"
