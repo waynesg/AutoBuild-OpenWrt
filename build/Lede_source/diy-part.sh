@@ -47,7 +47,7 @@ rm -rf ./feeds/luci/applications/luci-app-argon-config
 
 echo 
 TIME y "添加软件包"
-rm -rf package/waynesg && git clone https://github.com/waynesg/OpenWrt-Software package/waynesg
+rm -rf package/waynesg && git clone --depth 1 https://github.com/waynesg/OpenWrt-Software.git -b main package/waynesg
 
 echo
 TIME b "修改 系统文件..."
@@ -95,7 +95,7 @@ TIME y ”关闭开机串口跑码“
 sed -i 's/console=tty0//g'  target/linux/x86/image/Makefile
 
 # ttyd设置空密码
-#sed -i 's/\/bin\/login/\/bin\/login -f root/' /etc/config/ttyd
+sed -i 's/\/bin\/login/\/bin\/login -f root/' /etc/config/ttyd
 
 echo 
 TIME y "修改连接数"
