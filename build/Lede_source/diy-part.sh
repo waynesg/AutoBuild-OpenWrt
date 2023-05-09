@@ -22,28 +22,6 @@ TIME() {
 	 }
       }
 }
-echo
-TIME r "删除无用主题"
-rm -rf ./feeds/freifunk/themes
-rm -rf ./feeds/luci/themes/luci-theme-argon
-rm -rf ./feeds/luci/themes/luci-theme-material
-TIME r "删除重复插件"
-rm -rf ./feeds/packages/admin/netdata
-rm -rf ./feeds/luci/applications/luci-app-netdata
-rm -rf ./feeds/luci/applications/luci-app-serverchan
-rm -rf ./feeds/luci/applications/luci-app-pushbot
-rm -rf ./feeds/luci/applications/luci-app-unblockmusic
-rm -rf ./feeds/luci/applications/luci-app-mosdns
-rm -rf ./feeds/luci/applications/luci-app-omcproxy
-rm -rf ./feeds/packages/net/mosdns
-rm -rf ./feeds/packages/net/adguardhome
-rm -rf ./feeds/packages/net/go-aliyundrive-webdav
-rm -rf ./feeds/packages/net/gowebdav
-rm -rf ./feeds/packages/net/msd_lite
-rm -rf ./feeds/packages/net/pdnsd-alt
-rm -rf ./feeds/packages/net/v2ray-geodata
-rm -rf ./feeds/luci/libs/luci-lib-ipkg
-rm -rf ./feeds/luci/applications/luci-app-argon-config
 
 echo 
 TIME y "添加软件包"
@@ -95,7 +73,7 @@ TIME y ”关闭开机串口跑码“
 sed -i 's/console=tty0//g'  target/linux/x86/image/Makefile
 
 # ttyd自动登录
-sed -i "s?/bin/login?/usr/libexec/login.sh?g" feeds/packages/utils/ttyd/files/ttyd.config
+sed -i "$lan\set ttyd.@ttyd[0].command='/bin/login -f root'" package/base-files/files/bin/config_generate
 
 # samba解除root限制
 sed -i 's/invalid users = root/#&/g' feeds/packages/net/samba4/files/smb.conf.template
