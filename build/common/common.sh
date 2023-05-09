@@ -26,11 +26,12 @@ Compte=$(date +%Y年%m月%d号%H时%M分)
 # LEDE源码通用diy.sh文件
 ################################################################################################################
 Diy_lede() {
-
-if [[ ! "${Modelfile}" == "openwrt_amlogic" ]]; then
-	sed -i '/IMAGES_GZIP/d' "${PATH1}/${CONFIG_FILE}" > /dev/null 2>&1
-	echo -e "\nCONFIG_TARGET_IMAGES_GZIP=y" >> "${PATH1}/${CONFIG_FILE}"
-fi
+find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon' -o -name 'luci-theme-material' | xargs -i rm -rf {}
+find . -name 'netdata' -o -name 'luci-app-netdata' -o -name 'luci-app-serverchan' | xargs -i rm -rf {}
+find . -name 'luci-app-pushbot' -o -name 'luci-app-unblockmusic' -o -name 'luci-app-omcproxy' | xargs -i rm -rf {}
+find . -name 'mosdns' -o -name 'luci-app-mosdns' -o -name 'v2dat' | xargs -i rm -rf {}
+find . -name 'adguardhome' -o -name 'go-aliyundrive-webdav' -o -name 'gowebdav' | xargs -i rm -rf {}
+find . -name 'msd_lite' -o -name 'pdnsd-alt' -o -name 'v2ray-geodata' -o -name 'luci-lib-ipkg' | xargs -i rm -rf {}
 }
 
 
