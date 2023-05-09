@@ -94,8 +94,11 @@ echo
 TIME y ”关闭开机串口跑码“
 sed -i 's/console=tty0//g'  target/linux/x86/image/Makefile
 
-# ttyd设置空密码
-sed -i 's/\/bin\/login/\/bin\/login -f root/' /etc/config/ttyd
+# ttyd自动登录
+sed -i "s?/bin/login?/usr/libexec/login.sh?g" feeds/packages/utils/ttyd/files/ttyd.config
+
+# samba解除root限制
+sed -i 's/invalid users = root/#&/g' feeds/packages/net/samba4/files/smb.conf.template
 
 echo 
 TIME y "修改连接数"
@@ -103,6 +106,15 @@ sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' packag
 
 ## containerd临时关闭hash验证
 #sed -i 's/PKG_HASH.*/PKG_HASH:=skip/' feeds/packages/utils/containerd/Makefile
+
+NAME=$"package/waynesg/luci-app-unblockneteasemusic/root/usr/share/unblockneteasemusic" && mkdir -p $NAME/core
+curl 'https://api.github.com/repos/UnblockNeteaseMusic/server/commits?sha=enhanced&path=precompiled' -o commits.json
+echo "$(grep sha commits.json | sed -n "1,1p" | cut -c 13-52)">"$NAME/core_local_ver"
+curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/precompiled/app.js -o $NAME/core/app.js
+curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/precompiled/bridge.js -o $NAME/core/bridge.js
+curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/ca.crt -o $NAME/core/ca.crt
+curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/server.crt -o $NAME/core/server.crt
+curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/server.key -o $NAME/core/server.key
 
 echo
 TIME y "添加upx"
@@ -114,11 +126,17 @@ TIME b "菜单 调整..."
 sed -i 's/\"services\"/\"control\"/g' feeds/luci/applications/luci-app-wol/luasrc/controller/wol.lua
 #sed -i 's/\"services\"/\"control\"/g' package/waynesg/luci-app-accesscontrol-plus/luasrc/controller/miaplus.lua
 sed -i 's/\"network\"/\"control\"/g'  package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/appfilter.lua
+sed -i 's/\"services\"/\"vpn\"/g' feeds/luci/applications/luci-app-openvpn/luasrc/controller/openvpn.lua
+sed -i 's/_("PassWall 2"), -1/_("PassWall 2"), 2/g' package/waynesg/luci-app-passwall2/luasrc/controller/passwall2.lua
+sed -i 's/60/32/g' package/waynesg/luci-app-smartdns/luasrc/controller/smartdns.lua
+sed -i 's/30/40/g' package/waynesg/luci-app-pushbot/luasrc/controller/pushbot.lua
+sed -i 's/99/35/g' package/waynesg/luci-app-cloudflarespeedtest/luasrc/controller/cloudflarespeedtest.lua
+
+
 echo             
 TIME b "插件 重命名..."
 echo "重命名系统菜单"
 #system menu
-sed -i 's/"Web 管理"/"Web管理"/g' `grep "Web 管理" -rl ./`
 sed -i 's/"备份\/升级"/"备份升级"/g' `grep "备份\/升级" -rl ./`
 sed -i 's/"管理权"/"权限管理"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
 sed -i 's/"重启"/"立即重启"/g' feeds/luci/modules/luci-base/po/zh-cn/base.po
@@ -139,8 +157,11 @@ sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
 sed -i 's/"在线用户"/"在线设备"/g' package/waynesg/luci-app-onliner/luasrc/controller/onliner.lua
 #sed -i 's/"上网时间控制Plus"/"上网时间"/g' package/waynesg/luci-app-accesscontrol-plus/po/zh-cn/miaplus.po
 #sed -i 's/"autoipsetadder"/"自动设置IP"/g' `grep "autoipsetadder" -rl ./`
+#Docker
+sed -i 's/"存储卷"/"卷标"/g' feeds/luci/applications/luci-app-dockerman/po/zh-cn/dockerman.po
 echo "重命名服务菜单"
 #services menu
+sed -i 's/"AirConnect"/"隔空传送"/g' package/waynesg/luci-app-airconnect/luasrc/controller/airconnect.lua
 #sed -i 's/WireGuard 状态/WG状态/g' feeds/luci/applications/luci-app-wireguard/po/zh-cn/wireguard.po
 sed -i 's/"PassWall 2"/"PassWall+"/g' package/waynesg/luci-app-passwall2/luasrc/controller/passwall2.lua
 sed -i 's/"MultiSD_Lite"/"组播路由"/g'  package/waynesg/luci-app-msd_lite/luasrc/controller/msd_lite.lua
