@@ -69,8 +69,8 @@ jobs:
         sudo -E apt-get -qq update -y
         sudo -E apt-get -qq install -y gawk git gettext libssl-dev xsltproc zip git-core wget curl grep python2.7 python3 python3-pip python3-ply
         sudo timedatectl set-timezone "$TZ"
-        sudo mkdir -p /${{ env.DIY_WORK }}
-        sudo chown $USER:$GROUPS /${{ env.DIY_WORK }}
+        sudo mkdir -p /${{matrix.target}}
+        sudo chown $USER:$GROUPS /${{matrix.target}}
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --global user.name "github-actions[bot]"
         
@@ -95,24 +95,6 @@ jobs:
         if [ -n "$(ls -A build/common/1022gg 2>/dev/null)" ]; then
           source build/common/common.sh && Diy_gonggao
         fi
-
-    - name: 部署环境
-      env:
-        DEBIAN_FRONTEND: noninteractive
-      run: |
-        ( sudo -E apt-get -qq update
-        sudo -E apt-get -qq install build-essential clang flex g++ gawk gcc-multilib gettext \
-        git libncurses5-dev libssl-dev python3-distutils rsync unzip zlib1g-dev swig libpython3-dev aria2 jq subversion qemu-utils ccache rename libelf-dev libfuse-dev
-        sudo -E apt-get -qq purge azure-cli ghc* zulu* hhvm llvm* firefox powershell openjdk* dotnet* google* mysql* php* android*
-        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
-        sudo -E apt-get -qq autoremove --purge
-        sudo -E apt-get -qq clean ) &
-        echo "================================================="
-        echo "文件系统        类型   容量  已用  可用 使用% 挂载点"
-        df -hT $PWD
-        sudo timedatectl set-timezone "$TZ"
-        sudo mkdir -p /${{matrix.target}}
-        sudo chown $USER:$GROUPS /${{matrix.target}}
     
     - name: 下载源码
       working-directory: /${{matrix.target}}
