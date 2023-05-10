@@ -23,6 +23,17 @@ Compte=$(date +%Y年%m月%d号%H时%M分)
 }
 
 function settings_variable() {
+if [[ -n "${REPO_BRANCH}" ]]; then
+  ymlpath="build/${FOLDER_NAME}/settings.ini"
+  if [[ ! -d "build/${FOLDER_NAME}/relevance" ]]; then
+    mkdir -p build/${FOLDER_NAME}/relevance
+  else
+    rm -rf build/${FOLDER_NAME}/relevance/*.ini
+  fi
+  ymlsettings="build/${FOLDER_NAME}/relevance/settings.ini"
+  echo "ymlsettings=${ymlsettings}" >> ${GITHUB_ENV}
+  cp -Rf "${ymlpath}" "${ymlsettings}"
+  
   if [[ `echo "${INPUTS_CPU_SELECTION}" |grep -Eoc 'E5'` -eq '1' ]] || [[ `echo "${INPUTS_CPU_SELECTION}" |grep -Eoc 'e5'` -eq '1' ]]; then
     export INPUTS_CPU_SELECTION="E5"
   elif [[ `echo "${INPUTS_CPU_SELECTION}" |grep -Eoc '8370'` -eq '1' ]]; then
