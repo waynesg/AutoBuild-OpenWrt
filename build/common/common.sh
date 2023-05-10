@@ -546,13 +546,13 @@ Diy_xinxi() {
 if [[ "${TARGET_PROFILE}" =~ (friendlyarm_nanopi-r2s|friendlyarm_nanopi-r4s|armvirt) ]]; then
 	REGULAR_UPDATE="false"
 fi
-export KERNEL_PATCH="$(grep "KERNEL_PATCHVER" "${HOME}/target/linux/${TARGET_BOARD}/Makefile" |grep -Eo "[0-9]+\.[0-9]+")"
+export KERNEL_PATCH="$(grep "KERNEL_PATCHVER" "${GITHUB_WORKSPACE}/openwrt/target/linux/${TARGET_BOARD}/Makefile" |grep -Eo "[0-9]+\.[0-9]+")"
 export KERNEL_patc="kernel-${KERNEL_PATCH}"
-if [[ `ls -1 "${HOME}/include" |grep -c "${KERNEL_patc}"` -eq '1' ]]; then
-  export LINUX_KERNEL="$(grep "LINUX_KERNEL_HASH" "${HOME}/include/${KERNEL_patc}" |sed s/[[:space:]]//g |cut -d '-' -f2 |cut -d '=' -f1)"
+if [[ `ls -1 "${GITHUB_WORKSPACE}/openwrt/include" |grep -c "${KERNEL_patc}"` -eq '1' ]]; then
+  export LINUX_KERNEL="$(grep "LINUX_KERNEL_HASH" "${GITHUB_WORKSPACE}/openwrt/include/${KERNEL_patc}" |sed s/[[:space:]]//g |cut -d '-' -f2 |cut -d '=' -f1)"
   [[ -z ${LINUX_KERNEL} ]] && export LINUX_KERNEL="nono"
 else
-  export LINUX_KERNEL="$(grep "LINUX_KERNEL_HASH" "${HOME}/include/kernel-version.mk" |grep -Eo "${KERNEL_PATCH}\.[0-9]+")"
+  export LINUX_KERNEL="$(grep "LINUX_KERNEL_HASH" "${GITHUB_WORKSPACE}/openwrt/include/kernel-version.mk" |grep -Eo "${KERNEL_PATCH}\.[0-9]+")"
   [[ -z ${LINUX_KERNEL} ]] && export LINUX_KERNEL="nono"
 fi
 echo
