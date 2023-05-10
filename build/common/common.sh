@@ -265,7 +265,7 @@ esac
 
 if [[ "${Continue_selecting}" == "1" ]]; then
   cd ${GITHUB_WORKSPACE}
-  git clone -b main https://github.com/${GIT_REPOSITORY}.git ${FOLDER_NAME}
+  git clone -b main https://github.com/${Apidz}.git ${FOLDER_NAME}
   if [[ ! -d "${FOLDER_NAME}/build/${FOLDER_NAME}/relevance" ]]; then
     mkdir -p "${FOLDER_NAME}/build/${FOLDER_NAME}/relevance"
   fi
@@ -308,7 +308,7 @@ if [[ "${Continue_selecting}" == "1" ]]; then
   cd ${FOLDER_NAME}
   git add .
   git commit -m "${chonglaixx}-${FOLDER_NAME}-${LUCI_EDITION}-${TARGET_PROFILE}"
-  git push --force "https://${REPO_TOKEN}@github.com/${GIT_REPOSITORY}" HEAD:main
+  git push --force "https://${REPO_TOKEN}@github.com/${Apidz}" HEAD:main
   exit 1
 fi
 }
