@@ -60,6 +60,7 @@ jobs:
         echo "AUTOMATIC_AMLOGIC=${AUTOMATIC_AMLOGIC}" >> $GITHUB_ENV
         echo "CangKu=${Apidz##*/}" >> $GITHUB_ENV
         echo "Modelfile=${{matrix.target}}" >> $GITHUB_ENV
+        echo "CPU_SELECTION=${{ CPU_SELECTION }}" >> $GITHUB_ENV
         echo "{name}={value}" >> $GITHUB_OUTPUT
         
     - name: 编译环境
