@@ -81,6 +81,7 @@ else
   fi
 fi
 echo "CPU_SELECTION=${CPU_SELECTION}" >> ${GITHUB_ENV}
+echo "SOURCE="Lede" >> ${GITHUB_ENV}
 }
 #####################
 # 触发
