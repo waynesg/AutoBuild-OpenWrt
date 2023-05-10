@@ -169,7 +169,7 @@ jobs:
     - name: 上传配置
       if: steps.compile.outcome == 'success'
       continue-on-error: true
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@main
       with:
         name: .config_${{ env.CODE }}_${{ env.TARGET_PROFILE }}_${{ env.Compile_Date }}
         path: config.txt
@@ -188,18 +188,22 @@ jobs:
         fi
         
     - name: 清理空间
+      continue-on-error: true
+      if: env.REPO_TOKEN
       uses: Mattraks/delete-workflow-runs@v2
-      continue-on-error: true
       with:
-        retain_days: 40
+        token: ${{ secrets.REPO_TOKEN }}
+        repository: ${{ github.repository }}
+        retain_days: ${{ env.RETAIN_DAYS }}
         keep_minimum_runs: 1
-        
+    
     - name: 删除发布
-      uses: dev-drprasad/delete-older-releases@master
       continue-on-error: true
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      if: env.REPO_TOKEN
+      uses: danshui-git/delete-older-releases@main
       with:
-        keep_latest: 3
+        repo: ${{ github.repository }}
+        keep_latest: ${{ env.KEEP_LATEST }}
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
@@ -209,7 +213,7 @@ jobs:
       if: steps.compile.outcome == 'success' && env.REPO_TOKEN
       run: |
         cd ${GITHUB_WORKSPACE}
-        source ${PATH1}/common.sh && build_openwrt
+        source "${PATH1}/common.sh" && build_openwrt
 
     
     - name: 开始通知
