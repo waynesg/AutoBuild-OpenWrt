@@ -102,7 +102,7 @@ elif [[ `echo "${CPU_SELECTION}" |grep -Eoc '8171'` -eq '1' ]]; then
 else
   export kaisbianyixx=Compile""
 fi
-git clone -b main https://github.com/${GIT_REPOSITORY}.git ${FOLDER_NAME}
+git clone -b main https://github.com/${Apidz}.git ${FOLDER_NAME}
 export YML_PATH="${FOLDER_NAME}/.github/workflows/compile.yml"
 export TARGET1="$(grep 'target: \[' "${YML_PATH}" |sed 's/^[ ]*//g' |grep -v '^#' |sed 's/\[/\\&/' |sed 's/\]/\\&/')"
 export TARGET2="target: \\[${FOLDER_NAME}\\]"
