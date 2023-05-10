@@ -59,8 +59,6 @@ jobs:
         echo "CangKu=${Apidz##*/}" >> $GITHUB_ENV
         echo "Modelfile=${{matrix.target}}" >> $GITHUB_ENV
         echo "{name}={value}" >> $GITHUB_OUTPUT
-        echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
-        echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/${{matrix.target}}" >> $GITHUB_ENV
         cd ${GITHUB_WORKSPACE}
         cp -f build/common/*.sh build/${{matrix.target}}/
         sudo chmod -R +x build
@@ -95,6 +93,8 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /${{matrix.target}}
         sudo chown $USER:$GROUPS /${{matrix.target}}
+        echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
+        echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/${{matrix.target}}" >> $GITHUB_ENV
 
     - name: 下载源码
       working-directory: /${{matrix.target}}
