@@ -208,7 +208,7 @@ jobs:
       if: steps.compile.outcome == 'success' && env.REPO_TOKEN
       run: |
         cd ${GITHUB_WORKSPACE}
-        source ${BUILD_PATH}/common.sh && build_openwrt
+        source ${PATH1}/common.sh && build_openwrt
 
     
     - name: 开始通知
