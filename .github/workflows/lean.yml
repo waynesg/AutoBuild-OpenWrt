@@ -43,6 +43,9 @@ jobs:
 
     - name: 读取设置
       run: |
+        cd ${GITHUB_WORKSPACE}
+        cp -f build/common/*.sh build/${{matrix.target}}/
+        sudo chmod -R +x build
         source "${GITHUB_WORKSPACE}/build/${{matrix.target}}/settings.ini"
         echo "REPO_URL=${REPO_URL}" >> $GITHUB_ENV
         echo "REPO_BRANCH=${REPO_BRANCH}" >> $GITHUB_ENV
@@ -62,7 +65,7 @@ jobs:
         echo "CangKu=${Apidz##*/}" >> $GITHUB_ENV
         echo "Modelfile=${{matrix.target}}" >> $GITHUB_ENV
         echo "CPU_SELECTION=${INPUTS_CPU_SELECTION}" >> $GITHUB_ENV
-        source "${GITHUB_WORKSPACE}/build/common/common.sh && settings_variable"
+        source build/${{ env.FOLDER_NAME }}/common.sh && settings_variable
         echo "{name}={value}" >> $GITHUB_OUTPUT
         
     - name: 编译环境
