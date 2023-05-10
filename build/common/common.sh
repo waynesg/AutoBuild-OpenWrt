@@ -82,6 +82,7 @@ else
 fi
 echo "CPU_SELECTION=${CPU_SELECTION}" >> ${GITHUB_ENV}
 echo "SOURCE=Lede" >> ${GITHUB_ENV}
+echo "LUCI_EDITION=18.06" >> ${GITHUB_ENV}
 }
 #####################
 # 触发
