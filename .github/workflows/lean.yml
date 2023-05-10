@@ -167,7 +167,8 @@ jobs:
         fi
         
     - name: 上传配置
-      if: env.UPLOAD_CONFIG == 'true'
+      if: steps.compile.outcome == 'success'
+      continue-on-error: true
       uses: actions/upload-artifact@v3
       with:
         name: .config_${{ env.CODE }}_${{ env.TARGET_PROFILE }}_${{ env.Compile_Date }}
