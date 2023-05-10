@@ -167,9 +167,8 @@ jobs:
         fi
         
     - name: 上传配置
-      if: steps.compile.outcome == 'success'
-      continue-on-error: true
-      uses: actions/upload-artifact@main
+      if: env.UPLOAD_CONFIG == 'true'
+      uses: actions/upload-artifact@v3
       with:
         name: .config_${{ env.CODE }}_${{ env.TARGET_PROFILE }}_${{ env.Compile_Date }}
         path: config.txt
@@ -210,7 +209,7 @@ jobs:
         
     - name: 触发编译
       id: gitpush
-      if: steps.compile.outcome == 'success' && env.REPO_TOKEN
+      if: env.UPLOAD_CONFIG == 'true'
       run: |
         cd ${GITHUB_WORKSPACE}
         source "${PATH1}/common.sh" && build_openwrt
