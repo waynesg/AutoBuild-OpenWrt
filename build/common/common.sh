@@ -142,7 +142,7 @@ else
   echo "获取变量失败,请勿胡乱修改定时启动编译时的数值设置"
   exit 1
 fi
-cp -Rf ${HOME_PATH}/build_logo/config.txt ${FOLDER_NAME}/build/${FOLDER_NAME}/${CONFIG_FILE}
+cp -Rf ${HOME_PATH}/config.txt ${FOLDER_NAME}/build/${FOLDER_NAME}/${CONFIG_FILE}
 
 restartsj="$(cat "${FOLDER_NAME}/build/${FOLDER_NAME}/relevance/start" |awk '$0=NR" "$0' |awk 'END {print}' |awk '{print $(1)}')"
 if [[ "${restartsj}" -lt "3" ]]; then
