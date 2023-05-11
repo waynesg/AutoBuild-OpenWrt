@@ -59,10 +59,32 @@ jobs:
         echo "Modelfile=${{matrix.target}}" >> $GITHUB_ENV
         echo "CPU_SELECTION=${CPU_SELECTION}" >> $GITHUB_ENV
         echo "{name}={value}" >> $GITHUB_OUTPUT
+        
+    - name: 源码版本
+      run: |
+        chmod -R +x "${GITHUB_WORKSPACE}/build/common"
+        if [[ "${REPO_BRANCH}" == "master" ]]; then
+          echo "ZZZ=package/lean/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
+          echo "CODE=Lede" >> $GITHUB_ENV
+          echo "OpenWrt_name=18.06" >> $GITHUB_ENV
+        elif [[ "${REPO_BRANCH}" == "19.07" ]]; then
+          echo "ZZZ=package/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
+          echo "CODE=Lienol" >> $GITHUB_ENV
+          echo "OpenWrt_name=19.07" >> $GITHUB_ENV
+        elif [[ "${REPO_BRANCH}" == "openwrt-18.06" ]]; then
+          echo "ZZZ=package/emortal/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
+          echo "CODE=Mortal" >> $GITHUB_ENV
+          echo "OpenWrt_name=18.06" >> $GITHUB_ENV
+        fi
+        echo "NETIP=package/base-files/files/etc/networkip" >> $GITHUB_ENV
+        echo "DELETE=package/base-files/files/etc/deletefile" >> $GITHUB_ENV
         cd ${GITHUB_WORKSPACE}
         cp -f build/common/*.sh build/${{matrix.target}}/
         sudo chmod -R +x build
         source build/${{matrix.target}}/common.sh && Diy_variable
+        if [ -n "$(ls -A build/common/1022gg 2>/dev/null)" ]; then
+          source build/common/common.sh && Diy_gonggao
+        fi
 
     - name: CPU检测
       run: |
