@@ -52,6 +52,8 @@ if [[ -n "${REPO_BRANCH}" ]]; then
   UPLOAD_FIRMWARE1="$(grep "UPLOAD_FIRMWARE=" "${ymlpath}" |sed 's/^[ ]*//g' |grep -v '^#' |awk '{print $(1)}' |sed 's?=?\\&?g' |sed 's?"?\\&?g')"
   UPLOAD_RELEASE1="$(grep "UPLOAD_RELEASE=" "${ymlpath}" |sed 's/^[ ]*//g' |grep -v '^#' |awk '{print $(1)}' |sed 's?=?\\&?g' |sed 's?"?\\&?g')"
   CPU_SELECTION1="$(grep "CPU_SELECTION=" "${ymlpath}" |sed 's/^[ ]*//g' |grep -v '^#' |awk '{print $(1)}' |sed 's?=?\\&?g' |sed 's?"?\\&?g')"
+  USE_CACHEWRTBUILD1="$(grep "USE_CACHEWRTBUILD=" "${ymlpath}" |sed 's/^[ ]*//g' |grep -v '^#' |awk '{print $(1)}' |sed 's?=?\\&?g' |sed 's?"?\\&?g')"
+  REGULAR_UPDATE1="$(grep "REGULAR_UPDATE=" "${ymlpath}" |sed 's/^[ ]*//g' |grep -v '^#' |awk '{print $(1)}' |sed 's?=?\\&?g' |sed 's?"?\\&?g')"
   
   REPO_URL2="REPO_URL\\=\\\"${REPO_URL}\\\""
   REPO_BRANCH2="REPO_BRANCH\\=\\\"${REPO_BRANCH}\\\""
@@ -59,6 +61,8 @@ if [[ -n "${REPO_BRANCH}" ]]; then
   UPLOAD_FIRMWARE2="UPLOAD_FIRMWARE\\=\\\"${UPLOAD_FIRMWARE}\\\""
   UPLOAD_RELEASE2="UPLOAD_RELEASE\\=\\\"${UPLOAD_RELEASE}\\\""
   CPU_SELECTION2="CPU_SELECTION\\=\\\"${CPU_SELECTION}\\\""
+  USE_CACHEWRTBUILD2="USE_CACHEWRTBUILD\\=\\\"${USE_CACHEWRTBUILD}\\\""
+  REGULAR_UPDATE2="REGULAR_UPDATE\\=\\\"${REGULAR_UPDATE}\\\""
 
   sed -i "s?${REPO_URL1}?${REPO_URL2}?g" "${ymlsettings}"
   sed -i "s?${REPO_BRANCH1}?${REPO_BRANCH2}?g" "${ymlsettings}"
@@ -66,6 +70,8 @@ if [[ -n "${REPO_BRANCH}" ]]; then
   sed -i "s?${UPLOAD_FIRMWARE1}?${UPLOAD_FIRMWARE2}?g" "${ymlsettings}"
   sed -i "s?${UPLOAD_RELEASE1}?${UPLOAD_RELEASE2}?g" "${ymlsettings}"
   sed -i "s?${CPU_SELECTION1}?${CPU_SELECTION2}?g" "${ymlsettings}"
+  sed -i "s?${USE_CACHEWRTBUILD1}?${USE_CACHEWRTBUILD2}?g" "${ymlsettings}"
+  sed -i "s?${REGULAR_UPDATE1}?${REGULAR_UPDATE2}?g" "${ymlsettings}"
   export t1=`date -d "$(date +'%Y-%m-%d %H:%M:%S')" +%s`
   echo "t1=${t1}" >> ${GITHUB_ENV}
   mv "${ymlsettings}" build/${FOLDER_NAME}/relevance/${t1}.ini
