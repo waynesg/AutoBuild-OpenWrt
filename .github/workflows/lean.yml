@@ -65,7 +65,7 @@ jobs:
         echo "CangKu=${Apidz##*/}" >> $GITHUB_ENV
         echo "LUCI_EDITION=18.06" >> ${GITHUB_ENV}
         echo "Modelfile=${{matrix.target}}" >> $GITHUB_ENV
-        echo "INPUTS_CPU_SELECTION=${INPUTS_CPU_SELECTION}" >> $GITHUB_ENV
+        echo "CPU_SELECTION=${CPU_SELECTION}" >> $GITHUB_ENV
         source build/${{ env.FOLDER_NAME }}/common.sh && settings_variable
         echo "{name}={value}" >> $GITHUB_OUTPUT
         
