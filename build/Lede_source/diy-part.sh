@@ -28,7 +28,7 @@ TIME y "添加软件包"
 rm -rf package/waynesg && git clone --depth 1 https://github.com/waynesg/OpenWrt-Software.git -b main package/waynesg
 
 echo
-TIME b "修改 系统文件..."
+TIME y "修改系统文件"
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
 curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/index.htm > ./package/lean/autocore/files/x86/index.htm
 curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/ethinfo > ./package/lean/autocore/files/x86/sbin/ethinfo
@@ -38,27 +38,17 @@ curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openw
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/cpuinfo > ./package/lean/autocore/files/x86/sbin/cpuinfo
 # curl -fsSL https://raw.githubusercontent.com/immortalwrt/packages/master/net/dnsproxy/Makefile > feeds/packages/net/dnsproxy/Makefile
 # rm -rf ./package/lean/autocore/files/x86/sbin/getcpu
-TIME b "系统文件 修改完成"
-
-#echo 
-#TIME y "更换内核为5.4"
-#sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.4/g' ./target/linux/x86/Makefile
 
 echo 
-TIME y "更新固件 编译日期"
+TIME y "更新固件编译日期"
 sed -i "s/2022.02.01/$(TZ=UTC-8 date "+%Y.%m.%d")/g" package/lean/autocore/files/x86/index.htm
 
 echo 
 TIME y "自定义固件版本名字"
 sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ
 
-echo
-TIME y "更换golang版本"
-rm -rf feeds/packages/lang/golang
-svn export https://github.com/sbwml/packages_lang_golang/branches/19.x feeds/packages/lang/golang
-
 echo 
-TIME y "调整网络诊断地址到www.baidu.com"
+TIME y "调整网络诊断地址到baidu.com"
 sed -i "/exit 0/d" package/lean/default-settings/files/zzz-default-settings
 cat <<EOF >>package/lean/default-settings/files/zzz-default-settings
 uci set luci.diag.ping=www.baidu.com
@@ -69,23 +59,21 @@ exit 0
 EOF
 
 echo 
-TIME y ”关闭开机串口跑码“
+TIME y "已关闭开机串口跑码"
 sed -i 's/console=tty0//g'  target/linux/x86/image/Makefile
 
 echo 
-TIME y ”ttyd自动登录"
+TIME y "ttyd自动登录"
 sed -i "s?/bin/login?/usr/libexec/login.sh?g" feeds/packages/utils/ttyd/files/ttyd.config
 
 echo 
-TIME y ”samba解除root限制"
+TIME y "samba解除root限制"
 sed -i 's/invalid users = root/#&/g' feeds/packages/net/samba4/files/smb.conf.template
 
 echo 
 TIME y "修改连接数"
 sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' package/base-files/files/etc/sysctl.conf
 
-## containerd临时关闭hash验证
-#sed -i 's/PKG_HASH.*/PKG_HASH:=skip/' feeds/packages/utils/containerd/Makefile
 echo 
 TIME y "下载UnblockNeteaseMusic内核"
 NAME=$"package/waynesg/luci-app-unblockneteasemusic/root/usr/share/unblockneteasemusic" && mkdir -p $NAME/core
@@ -96,6 +84,19 @@ curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/precompiled/b
 curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/ca.crt -o $NAME/core/ca.crt
 curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/server.crt -o $NAME/core/server.crt
 curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/server.key -o $NAME/core/server.key
+
+echo
+TIME y "更换golang版本"
+rm -rf feeds/packages/lang/golang
+svn export https://github.com/sbwml/packages_lang_golang/branches/19.x feeds/packages/lang/golang
+
+#echo 
+#TIME y "更换内核为5.4"
+#sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.4/g' ./target/linux/x86/Makefile
+
+## containerd临时关闭hash验证
+#sed -i 's/PKG_HASH.*/PKG_HASH:=skip/' feeds/packages/utils/containerd/Makefile
+
 
 echo
 TIME y "添加upx"
@@ -191,7 +192,6 @@ sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-
 sed -i 's/"OpenVPN"/"OpenVPN 客户端"/g' feeds/luci/applications/luci-app-openvpn/luasrc/controller/openvpn.lua
 TIME b "重命名 完成"
 echo
-TIME b "自定义文件修复权限"
 chmod -R 755 package/waynesg
 echo
 TIME g "配置更新完成"
