@@ -83,21 +83,6 @@ fi
 
 
 function Diy_variable() {
-if [[ "${REPO_BRANCH}" == "master" ]]; then
-  echo "ZZZ=package/lean/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
-  echo "CODE=Lede" >> $GITHUB_ENV
-  echo "LUCI_EDITION=18.06" >> $GITHUB_ENV
-elif [[ "${REPO_BRANCH}" == "19.07" ]]; then
-  echo "ZZZ=package/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
-  echo "CODE=Lienol" >> $GITHUB_ENV
-  echo "LUCI_EDITION=19.07" >> $GITHUB_ENV
-elif [[ "${REPO_BRANCH}" == "openwrt-18.06" ]]; then
-  echo "ZZZ=package/emortal/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
-  echo "CODE=Mortal" >> $GITHUB_ENV
-  echo "LUCI_EDITION=18.06" >> $GITHUB_ENV
-fi
-echo "NETIP=package/base-files/files/etc/networkip" >> $GITHUB_ENV
-echo "DELETE=package/base-files/files/etc/deletefile" >> $GITHUB_ENV
 if [[ -n "${BENDI_VERSION}" ]]; then
   source "${GITHUB_WORKSPACE}/operates/${FOLDER_NAME}/settings.ini"
 elif [[ "${Manually_Run}" == "1" ]]; then
