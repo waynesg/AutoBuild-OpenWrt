@@ -34,16 +34,16 @@ if [[ -n "${REPO_BRANCH}" ]]; then
   echo "ymlsettings=${ymlsettings}" >> ${GITHUB_ENV}
   cp -Rf "${ymlpath}" "${ymlsettings}"
   
-  if [[ `echo "${INPUTS_CPU_SELECTION}" |grep -Eoc 'E5'` -eq '1' ]] || [[ `echo "${INPUTS_CPU_SELECTION}" |grep -Eoc 'e5'` -eq '1' ]]; then
-    export INPUTS_CPU_SELECTION="E5"
-  elif [[ `echo "${INPUTS_CPU_SELECTION}" |grep -Eoc '8370'` -eq '1' ]]; then
-    export INPUTS_CPU_SELECTION="8370"
-  elif [[ `echo "${INPUTS_CPU_SELECTION}" |grep -Eoc '8272'` -eq '1' ]]; then
-    export INPUTS_CPU_SELECTION="8272"
-  elif [[ `echo "${INPUTS_CPU_SELECTION}" |grep -Eoc '8171'` -eq '1' ]]; then
-    export INPUTS_CPU_SELECTION="8171"
+  if [[ `echo "${CPU_SELECTION}" |grep -Eoc 'E5'` -eq '1' ]] || [[ `echo "${CPU_SELECTION}" |grep -Eoc 'e5'` -eq '1' ]]; then
+    export CPU_SELECTION="E5"
+  elif [[ `echo "${CPU_SELECTION}" |grep -Eoc '8370'` -eq '1' ]]; then
+    export CPU_SELECTION="8370"
+  elif [[ `echo "${CPU_SELECTION}" |grep -Eoc '8272'` -eq '1' ]]; then
+    export CPU_SELECTION="8272"
+  elif [[ `echo "${CPU_SELECTION}" |grep -Eoc '8171'` -eq '1' ]]; then
+    export CPU_SELECTION="8171"
   else
-    export INPUTS_CPU_SELECTION="E5"
+    export CPU_SELECTION="E5"
   fi
   
   REPO_URL1="$(grep "REPO_URL=" "${ymlpath}" |sed 's/^[ ]*//g' |grep -v '^#' |awk '{print $(1)}' |sed 's?=?\\&?g' |sed 's?"?\\&?g')"
