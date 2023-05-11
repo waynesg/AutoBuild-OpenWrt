@@ -574,7 +574,7 @@ else
   [[ -z ${LINUX_KERNEL} ]] && export LINUX_KERNEL="nono"
 fi
 echo
-TIME b "编译源码: ${CODE}"
+TIME b "编译源码: ${SOURCE}"
 TIME b "源码链接: ${REPO_URL}"
 TIME b "源码分支: ${REPO_BRANCH}"
 TIME b "源码作者: ${ZUOZHE}"
