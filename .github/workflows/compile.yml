@@ -57,7 +57,9 @@ jobs:
         echo "BY_INFORMATION=${BY_INFORMATION}" >> $GITHUB_ENV
         echo "AUTOMATIC_AMLOGIC=${AUTOMATIC_AMLOGIC}" >> $GITHUB_ENV
         echo "CangKu=${Apidz##*/}" >> $GITHUB_ENV
+        echo "LUCI_EDITION=18.06" >> ${GITHUB_ENV}
         echo "Modelfile=${{matrix.target}}" >> $GITHUB_ENV
+        echo "CPU_SELECTION=${CPU_SELECTION}" >> $GITHUB_ENV
         echo "{name}={value}" >> $GITHUB_OUTPUT
         cd ${GITHUB_WORKSPACE}
         cp -f build/common/*.sh build/${{matrix.target}}/
@@ -71,8 +73,8 @@ jobs:
         if [[ -n "${{ github.event.workflow }}" ]]; then
           export CPU_SELECTIOY="$(source "${GITHUB_WORKSPACE}/build/${FOLDER_NAME}/settings.ini" && echo "${CPU_SELECTION}")"
         else
-          export CPU_PASSWORD="1683767212"
-          export CPU_OPTIMIZATION="E5"
+          export CPU_PASSWORD="1683766704"
+          export CPU_OPTIMIZATION=""
         fi
         source build/${FOLDER_NAME}/common.sh && CPU_Priority
         
