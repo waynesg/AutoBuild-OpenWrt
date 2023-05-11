@@ -190,6 +190,27 @@ find . -name 'mosdns' -o -name 'luci-app-mosdns' -o -name 'v2dat' | xargs -i rm 
 find . -name 'adguardhome' -o -name 'go-aliyundrive-webdav' -o -name 'gowebdav' | xargs -i rm -rf {}
 find . -name 'msd_lite' -o -name 'pdnsd-alt' -o -name 'v2ray-geodata' -o -name 'luci-lib-ipkg' | xargs -i rm -rf {}
 }
+################################################################################################################
+# LIENOL源码通用diy.sh文件
+################################################################################################################
+Diy_lienol() {
+
+find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-argon' | xargs -i rm -rf {}
+find . -name 'ddns-scripts_aliyun' -o -name 'ddns-scripts_dnspod' -o -name 'luci-app-wol' | xargs -i rm -rf {}
+find . -name 'luci-app-wrtbwmon' -o -name 'wrtbwmon' -o -name 'pdnsd-alt' | xargs -i rm -rf {}
+
+}
+
+
+################################################################################################################
+# 天灵源码18.06 diy.sh文件
+################################################################################################################
+Diy_mortal() {
+
+find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon' -o -name 'luci-light' | xargs -i rm -rf {}
+find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-openwrt' -o -name 'luci-app-cifs' | xargs -i rm -rf {}
+find . -name 'luci-app-wrtbwmon' -o -name 'wrtbwmon' | xargs -i rm -rf {}
+}
 
 function CPU_Priority() {
 export TARGET_BOARD="$(awk -F '[="]+' '/TARGET_BOARD/{print $2}' build/${FOLDER_NAME}/${CONFIG_FILE})"
