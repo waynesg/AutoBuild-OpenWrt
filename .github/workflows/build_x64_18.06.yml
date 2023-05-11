@@ -1,4 +1,4 @@
-name: 18.06
+name: 18.06 
 on:
   workflow_dispatch:
     inputs:
