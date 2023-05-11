@@ -102,7 +102,7 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        bash <(curl -fsSL https://raw.githubusercontent.com/waynesg/openwrt/main/build/common/custom/ubuntu.sh)
+        bash <(curl -fsSL https://raw.githubusercontent.com/waynesg/AutoBuild-OpenWrt/main/build/common/Custom/ubuntu.sh)
         echo "================================================="
         echo "文件系统        类型   容量  已用  可用 使用% 挂载点"
         df -hT $PWD
