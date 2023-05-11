@@ -188,52 +188,6 @@ find . -name 'adguardhome' -o -name 'go-aliyundrive-webdav' -o -name 'gowebdav' 
 find . -name 'msd_lite' -o -name 'pdnsd-alt' -o -name 'v2ray-geodata' -o -name 'luci-lib-ipkg' | xargs -i rm -rf {}
 }
 
-
-################################################################################################################
-# LIENOL源码通用diy.sh文件
-################################################################################################################
-Diy_lienol() {
-find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon' -o -name 'luci-light' | xargs -i rm -rf {}
-
-if [[ ! "${Modelfile}" == "openwrt_amlogic" ]]; then
-	sed -i '/IMAGES_GZIP/d' "${PATH1}/${CONFIG_FILE}" > /dev/null 2>&1
-	echo -e "\nCONFIG_TARGET_IMAGES_GZIP=y" >> "${PATH1}/${CONFIG_FILE}"
-fi
-
-}
-
-
-################################################################################################################
-# Immortalwrt21.02 diy.sh文件
-################################################################################################################
-Diy_Immortalwrt() {
-
-#find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-openwrt' -o -name 'luci-app-cifs' | xargs -i rm -rf {}
-
-if [[ ! "${Modelfile}" == "openwrt_amlogic" ]]; then
-	sed -i '/IMAGES_GZIP/d' "${PATH1}/${CONFIG_FILE}" > /dev/null 2>&1
-	echo -e "\nCONFIG_TARGET_IMAGES_GZIP=y" >> "${PATH1}/${CONFIG_FILE}"
-fi
-
-}
-
-################################################################################################################
-# Official 22.03 diy.sh文件
-################################################################################################################
-Diy_Official() {
-
-#find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-openwrt' -o -name 'luci-app-cifs' | xargs -i rm -rf {}
-
-if [[ ! "${Modelfile}" == "openwrt_amlogic" ]]; then
-	sed -i '/IMAGES_GZIP/d' "${PATH1}/${CONFIG_FILE}" > /dev/null 2>&1
-	echo -e "\nCONFIG_TARGET_IMAGES_GZIP=y" >> "${PATH1}/${CONFIG_FILE}"
-fi
-
-}
-
-############
-#CPU 检测
-############
 function CPU_Priority() {
 export TARGET_BOARD="$(awk -F '[="]+' '/TARGET_BOARD/{print $2}' build/${FOLDER_NAME}/${CONFIG_FILE})"
 export TARGET_SUBTARGET="$(awk -F '[="]+' '/TARGET_SUBTARGET/{print $2}' build/${FOLDER_NAME}/${CONFIG_FILE})"
@@ -262,7 +216,7 @@ E5|弃用E5系列|弃用E5)
     export chonglaixx="Recompile-Kick-E5"
     export Continue_selecting="1"
   else
-    TIME g " 恭喜,不是E5系列的CPU啦"
+    TIME g " 恭喜,正在使用非E5系列CPU执行编译"
     export Continue_selecting="0"
   fi
 ;;
