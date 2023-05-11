@@ -72,10 +72,12 @@ echo
 TIME y ”关闭开机串口跑码“
 sed -i 's/console=tty0//g'  target/linux/x86/image/Makefile
 
-# ttyd自动登录
-sed -i "$lan\set ttyd.@ttyd[0].command='/bin/login -f root'" package/base-files/files/bin/config_generate
+echo 
+TIME y ”ttyd自动登录"
+sed -i "s?/bin/login?/usr/libexec/login.sh?g" feeds/packages/utils/ttyd/files/ttyd.config
 
-# samba解除root限制
+echo 
+TIME y ”samba解除root限制"
 sed -i 's/invalid users = root/#&/g' feeds/packages/net/samba4/files/smb.conf.template
 
 echo 
@@ -84,7 +86,8 @@ sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' packag
 
 ## containerd临时关闭hash验证
 #sed -i 's/PKG_HASH.*/PKG_HASH:=skip/' feeds/packages/utils/containerd/Makefile
-
+echo 
+TIME y "下载UnblockNeteaseMusic内核"
 NAME=$"package/waynesg/luci-app-unblockneteasemusic/root/usr/share/unblockneteasemusic" && mkdir -p $NAME/core
 curl 'https://api.github.com/repos/UnblockNeteaseMusic/server/commits?sha=enhanced&path=precompiled' -o commits.json
 echo "$(grep sha commits.json | sed -n "1,1p" | cut -c 13-52)">"$NAME/core_local_ver"
