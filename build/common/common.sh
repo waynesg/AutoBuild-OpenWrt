@@ -83,6 +83,21 @@ fi
 
 
 function Diy_variable() {
+if [[ "${REPO_BRANCH}" == "master" ]]; then
+  echo "ZZZ=package/lean/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
+  echo "CODE=Lede" >> $GITHUB_ENV
+  echo "LUCI_EDITION=18.06" >> $GITHUB_ENV
+elif [[ "${REPO_BRANCH}" == "19.07" ]]; then
+  echo "ZZZ=package/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
+  echo "CODE=Lienol" >> $GITHUB_ENV
+  echo "LUCI_EDITION=19.07" >> $GITHUB_ENV
+elif [[ "${REPO_BRANCH}" == "openwrt-18.06" ]]; then
+  echo "ZZZ=package/emortal/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
+  echo "CODE=Mortal" >> $GITHUB_ENV
+  echo "LUCI_EDITION=18.06" >> $GITHUB_ENV
+fi
+echo "NETIP=package/base-files/files/etc/networkip" >> $GITHUB_ENV
+echo "DELETE=package/base-files/files/etc/deletefile" >> $GITHUB_ENV
 if [[ -n "${BENDI_VERSION}" ]]; then
   source "${GITHUB_WORKSPACE}/operates/${FOLDER_NAME}/settings.ini"
 elif [[ "${Manually_Run}" == "1" ]]; then
@@ -104,9 +119,6 @@ else
     source "${GITHUB_WORKSPACE}/build/${FOLDER_NAME}/settings.ini"
   fi
 fi
-echo "CPU_SELECTION=${CPU_SELECTION}" >> ${GITHUB_ENV}
-echo "SOURCE=Lede" >> ${GITHUB_ENV}
-echo "LUCI_EDITION=18.06" >> ${GITHUB_ENV}
 }
 #####################
 # 触发
@@ -172,9 +184,9 @@ cp -Rf config.txt ${FOLDER_NAME}/build/${FOLDER_NAME}/${CONFIG_FILE}
 
 restartsj="$(cat "${FOLDER_NAME}/build/${FOLDER_NAME}/relevance/start" |awk '$0=NR" "$0' |awk 'END {print}' |awk '{print $(1)}')"
 if [[ "${restartsj}" -lt "3" ]]; then
-  echo "${SOURCE}-${REPO_BRANCH}-${CONFIG_FILE}-$(date +%Y年%m月%d号%H时%M分%S秒)" >> ${FOLDER_NAME}/build/${FOLDER_NAME}/relevance/start
+  echo "${CODE}-${REPO_BRANCH}-${CONFIG_FILE}-$(date +%Y年%m月%d号%H时%M分%S秒)" >> ${FOLDER_NAME}/build/${FOLDER_NAME}/relevance/start
 else
-  echo "${SOURCE}-${REPO_BRANCH}-${CONFIG_FILE}-$(date +%Y年%m月%d号%H时%M分%S秒)" > ${FOLDER_NAME}/build/${FOLDER_NAME}/relevance/start
+  echo "${CODE}-${REPO_BRANCH}-${CONFIG_FILE}-$(date +%Y年%m月%d号%H时%M分%S秒)" > ${FOLDER_NAME}/build/${FOLDER_NAME}/relevance/start
 fi
 
 cd ${FOLDER_NAME}
