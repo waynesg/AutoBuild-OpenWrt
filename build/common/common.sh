@@ -46,8 +46,25 @@ if [[ -n "${REPO_BRANCH}" ]]; then
     export INPUTS_CPU_SELECTION="E5"
   fi
   
-  CPU_SELECTION1="$(grep "CPU_SELECTION=" "${ymlpath}" |sed 's/^[ ]*//g' |grep -v '^#' |awk '{print $(1)}' |sed 's?=?\\&?g' |sed 's?"?\\&?g')"  
-  CPU_SELECTION2="CPU_SELECTION\\=\\\"${INPUTS_CPU_SELECTION}\\\""
+  REPO_URL1="$(grep "REPO_URL=" "${ymlpath}" |sed 's/^[ ]*//g' |grep -v '^#' |awk '{print $(1)}' |sed 's?=?\\&?g' |sed 's?"?\\&?g')"
+  REPO_BRANCH1="$(grep "REPO_BRANCH=" "${ymlpath}" |sed 's/^[ ]*//g' |grep -v '^#' |awk '{print $(1)}' |sed 's?=?\\&?g' |sed 's?"?\\&?g')"
+  CONFIG_FILE1="$(grep "CONFIG_FILE=" "${ymlpath}" |sed 's/^[ ]*//g' |grep -v '^#' |awk '{print $(1)}' |sed 's?=?\\&?g' |sed 's?"?\\&?g')"
+  UPLOAD_FIRMWARE1="$(grep "UPLOAD_FIRMWARE=" "${ymlpath}" |sed 's/^[ ]*//g' |grep -v '^#' |awk '{print $(1)}' |sed 's?=?\\&?g' |sed 's?"?\\&?g')"
+  UPLOAD_RELEASE1="$(grep "UPLOAD_RELEASE=" "${ymlpath}" |sed 's/^[ ]*//g' |grep -v '^#' |awk '{print $(1)}' |sed 's?=?\\&?g' |sed 's?"?\\&?g')"
+  CPU_SELECTION1="$(grep "CPU_SELECTION=" "${ymlpath}" |sed 's/^[ ]*//g' |grep -v '^#' |awk '{print $(1)}' |sed 's?=?\\&?g' |sed 's?"?\\&?g')"
+  
+  REPO_URL2="REPO_URL\\=\\\"${REPO_URL}\\\""
+  REPO_BRANCH2="REPO_BRANCH\\=\\\"${REPO_BRANCH}\\\""
+  CONFIG_FILE2="CONFIG_FILE\\=\\\"${CONFIG_FILE}\\\""
+  UPLOAD_FIRMWARE2="UPLOAD_FIRMWARE\\=\\\"${UPLOAD_FIRMWARE}\\\""
+  UPLOAD_RELEASE2="UPLOAD_RELEASE\\=\\\"${UPLOAD_RELEASE}\\\""
+  CPU_SELECTION2="CPU_SELECTION\\=\\\"${CPU_SELECTION}\\\""
+
+  sed -i "s?${REPO_URL1}?${REPO_URL2}?g" "${ymlsettings}"
+  sed -i "s?${REPO_BRANCH1}?${REPO_BRANCH2}?g" "${ymlsettings}"
+  sed -i "s?${CONFIG_FILE1}?${CONFIG_FILE2}?g" "${ymlsettings}"
+  sed -i "s?${UPLOAD_FIRMWARE1}?${UPLOAD_FIRMWARE2}?g" "${ymlsettings}"
+  sed -i "s?${UPLOAD_RELEASE1}?${UPLOAD_RELEASE2}?g" "${ymlsettings}"
   sed -i "s?${CPU_SELECTION1}?${CPU_SELECTION2}?g" "${ymlsettings}"
   export t1=`date -d "$(date +'%Y-%m-%d %H:%M:%S')" +%s`
   echo "t1=${t1}" >> ${GITHUB_ENV}
@@ -57,6 +74,7 @@ else
   echo "t1=${t1}" >> ${GITHUB_ENV}
 fi
 }
+
 
 function Diy_variable() {
 if [[ -n "${BENDI_VERSION}" ]]; then
