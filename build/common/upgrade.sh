@@ -109,7 +109,7 @@ Diy_Part2() {
 	GET_TARGET_INFO
 	cat >${In_Firmware_Info} <<-EOF
 	Github=${Github}
-	Luci_Edition=${OpenWrt_name}
+	Luci_Edition=${LUCI_EDITION}
 	CURRENT_Version=${Openwrt_Version}
 	DEFAULT_Device=${TARGET_PROFILE}
 	Firmware_Type=${Firmware_sfx}
