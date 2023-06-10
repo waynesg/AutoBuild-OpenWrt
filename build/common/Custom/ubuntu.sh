@@ -3,52 +3,12 @@
 #
 # Copyright (C) ImmortalWrt.org
 
-function Delete_useless(){
-# 删除一些不需要的东西
-sudo apt-get update -y
 docker rmi `docker images -q`
-sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /usr/lib/jvm /opt/ghc /swapfile
-# sudo -E apt-get -qq remove -y --purge azure-cli ghc* zulu* llvm* firefox google* powershell openjdk* msodbcsql17 mongodb* moby* snapd* mysql*
-}
-
-function install_mustrelyon(){
-# 安装我仓库需要的依赖
-sudo apt-get install -y rename pigz curl libfuse-dev upx
-if [[ -z "${BENDI_VERSION}" ]]; then
-  git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-  git config --global user.name "github-actions[bot]"
-fi
-
-# 安装天灵大佬的依赖
-sudo bash -c 'bash <(curl -s https://build-scripts.immortalwrt.eu.org/init_build_environment.sh)'
-}
-
-function ophub_amlogic-s9xxx(){
-# 安装打包N1需要用到的依赖
-sudo apt-get install -y $(curl -fsSL https://is.gd/depend_ubuntu2204_openwrt) > /dev/null 2>&1
-}
-
-function update_apt_source(){
-node --version
-yarn --version
-sudo apt-get autoremove -y --purge
-sudo apt-get clean
-}
-
-function main(){
-	if [[ -n "${BENDI_VERSION}" ]]; then
-		INS="sudo apt-get"
-		echo "开始升级ubuntu插件和安装依赖....."
-		install_mustrelyon
-		ophub_amlogic-s9xxx
-		update_apt_source
-	else
-		INS="sudo -E apt-get -qq"
-		Delete_useless
-		install_mustrelyon
-		ophub_amlogic-s9xxx
-		update_apt_source
-	fi
-}
-
-main
+sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
+sudo -E apt update
+sudo -E apt -y purge azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* moby* snap*
+sudo -E apt -y full-upgrade
+sudo -E apt -y install ack antlr3 aria2 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache libfuse-dev cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz mkisofs msmtp nano nodejs ninja-build p7zip p7zip-full patch pkgconf python3 python3-pip libpython3-dev qemu-utils rsync rename scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
+sudo -E systemctl daemon-reload
+sudo -E apt-get -y autoremove --purge
+sudo -E apt-get clean
