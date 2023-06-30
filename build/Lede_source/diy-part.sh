@@ -114,6 +114,8 @@ sed -i 's/60/32/g' package/waynesg/luci-app-smartdns/luasrc/controller/smartdns.
 sed -i 's/30/40/g' package/waynesg/luci-app-pushbot/luasrc/controller/pushbot.lua
 sed -i 's/99/35/g' package/waynesg/luci-app-cloudflarespeedtest/luasrc/controller/cloudflarespeedtest.lua
 sed -i 's/_("OpenClash"), 50/_("OpenClash"), -10/g' package/waynesg/luci-app-openclash/luasrc/controller/openclash.lua
+sed -i 's/_("Base Setting"),1/_("Base Setting"),-15/g' package/waynesg/luci-app-adguardhome/luasrc/controller/AdGuardHome.lua
+
 
 
 echo             
