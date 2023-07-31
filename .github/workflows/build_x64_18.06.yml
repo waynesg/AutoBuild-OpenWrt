@@ -8,7 +8,7 @@ on:
         default: 'ssh-actions'
 
   schedule:
-   - cron: 15 16 $(cal -d tomorrow +%e)-$(cal -d "$(date -d tomorrow +%Y-%m-01) +1 month -1 day" +%e) * *
+   - cron: "15 16 $(cal -d tomorrow +%e)-$(cal -d "$(date -d tomorrow +%Y-%m-01) +1 month -1 day" +%e) * *"
 
 env:
   Github: https://github.com/${{github.repository}}
