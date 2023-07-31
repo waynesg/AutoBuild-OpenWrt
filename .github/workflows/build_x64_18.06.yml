@@ -8,8 +8,8 @@ on:
         default: 'ssh-actions'
 
   schedule:
-  - cron: "18 16 28-31 * *"
-  - cron: "18 16 27 2 *"
+    - cron: "18 16 28-31 * *"
+    - cron: "18 16 27 2 *"
 
 env:
   Github: https://github.com/${{github.repository}}
