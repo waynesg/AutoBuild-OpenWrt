@@ -8,7 +8,7 @@ on:
         default: 'ssh-actions'
 
   schedule:
-    - cron: 40 16 28-31 * *
+    - cron: 46 14 28-31 * *
 
 env:
   Github: https://github.com/${{github.repository}}
@@ -37,16 +37,7 @@ jobs:
 
         # [Lede_source,Lienol_source,Mortal_source,Tianling_source]
 
-    steps:
-    - name: 日期检查
-      run: |
-        if [ "$(date --date=tomorrow +\%d)" == "01" ]; then
-          echo "今天是下个月的第一天，执行其他操作..."
-        else
-          echo "这不是下个月的第一天，跳过其他操作。"
-          exit 0
-        fi
-          
+    steps:          
     - name: 准备完成
       uses: actions/checkout@v3
 
