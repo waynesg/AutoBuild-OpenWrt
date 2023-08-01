@@ -224,6 +224,13 @@ jobs:
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "BOT=TRUE" >> $GITHUB_ENV
         echo "ORGANIZERSTATUS=success" >> $GITHUB_ENV
+        echo "编译完成时间:"
+        START_SECONDS=${{ env.START_SECONDS }}
+        END_TIME=`date +'%Y-%m-%d %H:%M:%S'`
+        END_SECONDS=$(date --date="$END_TIME" +%s)
+        SECONDS=$((END_SECONDS-START_SECONDS))
+        HOUR=$(( $SECONDS/3600 )) && MIN=$(( ($SECONDS-${HOUR}*3600)/60 )) && SEC=$(( $SECONDS-${HOUR}*3600-${MIN}*60 ))
+        echo "BUILD_TIME=${HOUR}时${MIN}分${SEC}秒" >> $GITHUB_ENV
         
     - name: 上传固件
       if: env.ORGANIZERSTATUS == 'success' && env.UPLOAD_FIRMWARE == 'true'
@@ -246,6 +253,14 @@ jobs:
         token: ${{ secrets.REPO_TOKEN }}
         bodyFile: "update_log.txt"
         artifacts: "${{ env.FIRMWARE }}/*"
+        body: |            
+            仓库源码 : ${{ env.REPO_URL }}
+            仓库分支 : ${{ env.REPO_BRANCH }}
+            编译版本：${{ env.LUCI_EDITION }}
+            内核版本：${{ env.LINUX_KERNEL }}
+            编译时间：${{ env.Compte }}
+            编译用时：${{ env.BUILD_TIME }}
+
         
     - name: 更新Step 1
       if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
