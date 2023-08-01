@@ -34,7 +34,17 @@ jobs:
       matrix:
         target: [Lede_source]
 
-    steps:  
+    steps:
+    - name: 构建空间
+      uses: easimon/maximize-build-space@master
+      with:
+        swap-size-mb: 512
+        temp-reserve-mb: 100
+        root-reserve-mb: 1280
+        remove-dotnet: 'true'
+        remove-android: 'true'
+        remove-haskell: 'true'
+        remove-codeql: 'true'
     - name: 准备结束
       uses: actions/checkout@v3
 
@@ -103,31 +113,6 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        echo "=============================================================================="
-        echo "Freeing up disk space on CI system"
-        echo "=============================================================================="
-        echo "Listing 100 largest packages"
-        dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n | tail -n 100
-        df -h
-        echo "Removing large packages"
-        sudo apt-get remove -y '^dotnet-.*'
-        sudo apt-get remove -y '^llvm-.*'
-        sudo apt-get remove -y 'php.*'
-        sudo apt-get remove -y '^mongodb-.*'
-        sudo apt-get remove -y '^mysql-.*'
-        sudo apt-get remove -y azure-cli google-cloud-sdk google-chrome-stable firefox powershell mono-devel libgl1-mesa-dri
-        sudo apt-get autoremove -y
-        sudo apt-get clean
-        df -h
-        echo "Removing large directories"
-        sudo rm -rf /usr/share/dotnet/
-        sudo rm -rf /usr/local/graalvm/
-        sudo rm -rf /usr/local/.ghcup/
-        sudo rm -rf /usr/local/share/powershell
-        sudo rm -rf /usr/local/share/chromium
-        sudo rm -rf /usr/local/lib/android
-        df -h
-
         ( sudo -E apt-get -qq update
         sudo -E apt-get -qq install libfuse-dev rename build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc-s1 libc6-dev-i386 subversion flex uglifyjs gcc-multilib g++-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx-ucl libelf-dev autoconf automake libtool autopoint device-tree-compiler ccache xsltproc rename antlr3 gperf wget curl swig rsync
         sudo -E apt-get -qq purge azure-cli ghc* zulu* hhvm llvm* firefox powershell openjdk* dotnet* google* mysql* php* android*
