@@ -35,14 +35,6 @@ jobs:
         target: [Lede_source]
 
     steps:
-    - name: 构建空间
-      uses: easimon/maximize-build-space@master
-      with:
-        swap-size-mb: 4096
-        remove-dotnet: 'true'
-        remove-android: 'true'
-        remove-haskell: 'true'
-        remove-codeql: 'true'
     - name: 准备结束
       uses: actions/checkout@main
 
