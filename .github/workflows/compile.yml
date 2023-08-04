@@ -277,7 +277,7 @@ jobs:
       with:
         repo_token: ${{ secrets.REPO_TOKEN }}
         file: openwrt/bin/Firmware/*
-        tag: AutoUpdate
+        tag: AutoUpdate -- {{ env.FILE_TIME1 }}
         overwrite: true
         file_glob: true
         body: |                       
