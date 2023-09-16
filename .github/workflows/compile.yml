@@ -99,11 +99,15 @@ jobs:
         fi
         source build/${FOLDER_NAME}/common.sh && CPU_Priority
 
-    - name: 清理空间
-      uses: jlumbroso/free-disk-space@main
+    # temporary workaround for an error in free disk space action
+      # https://github.com/jlumbroso/free-disk-space/issues/14
+    - name: Update Package List and Remove Dotnet
       run: |
         sudo apt-get update
         sudo apt-get remove -y '^dotnet-.*'
+
+    - name: 清理空间
+      uses: jlumbroso/free-disk-space@main
       with:
         # this might remove tools that are actually needed,
         # if set to "true" but frees about 6 GB
