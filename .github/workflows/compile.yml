@@ -101,6 +101,9 @@ jobs:
 
     - name: 清理空间
       uses: jlumbroso/free-disk-space@main
+      run: |
+        sudo apt-get update
+        sudo apt-get remove -y '^dotnet-.*'
       with:
         # this might remove tools that are actually needed,
         # if set to "true" but frees about 6 GB
