@@ -12,7 +12,7 @@
 mkdir -p files/etc/openclash/core
 mkdir -p files/usr/share/openclash/ui/yacd
 mkdir -p files/usr/share/openclash/ui/dashboard
-mkdir -p files/user/share/openclash/ui/metacubexd
+mkdir -p files/usr/share/openclash/ui/metacubexd
 
 CORE_VERSION="$(curl -fsSL https://raw.githubusercontent.com/vernesong/OpenClash/core/master/core_version | grep '^[0-9].*')"
 CLASH_DEV_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/master/dev/clash-linux-${1}.tar.gz"
