@@ -101,10 +101,10 @@ jobs:
 
     # temporary workaround for an error in free disk space action
       # https://github.com/jlumbroso/free-disk-space/issues/14
-    - name: 删除框架
-      run: |
-        sudo apt-get update
-        sudo apt-get remove -y '^dotnet-.*'
+    #- name: 删除框架
+    #  run: |
+    #    sudo apt-get update
+    #    sudo apt-get remove -y '^dotnet-.*'
 
     - name: 清理空间
       uses: jlumbroso/free-disk-space@main
@@ -119,6 +119,7 @@ jobs:
         dotnet: true
         haskell: true
         large-packages: true
+        docker-images: true
         swap-storage: true
         
     - name: 部署环境
