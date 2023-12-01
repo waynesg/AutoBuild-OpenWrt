@@ -88,7 +88,7 @@ curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/server.key -o
 echo
 TIME y "更换golang版本"
 rm -rf feeds/packages/lang/golang
-git clone https://github.com/sbwml/packages_lang_golang -b 20.x feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 21.x feeds/packages/lang/golang
 
 #echo 
 #TIME y "更换内核为5.4"
