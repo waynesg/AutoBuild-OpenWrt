@@ -8,8 +8,7 @@ on:
         default: 'ssh-actions'
 
   schedule:
-    - cron: '0 0 28 * *'
-    #- cron: 0 0 1 * *
+    - cron: 0 0 1 * *
 
 env:
   Github: https://github.com/${{github.repository}}
@@ -41,20 +40,6 @@ jobs:
     steps:          
     - name: 准备完成
       uses: actions/checkout@v3
-
-    - name: 日期检测
-      run: |
-        python - <<EOF
-        from datetime import date, timedelta
-
-        today = date.today()
-        last_day_of_month = date(today.year, today.month + 1, 1) - timedelta(days=1)
-
-        if today == last_day_of_month:
-          print( "今天是本月最后一天，编译步骤继续运行。" )
-            # 执行编译步骤的命令
-        else:
-          print( "今天不是本月最后一天，编译步骤终止。"  )
 
     - name: 读取设置
       run: |
