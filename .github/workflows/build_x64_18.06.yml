@@ -8,7 +8,36 @@ on:
         default: 'ssh-actions'
 
   schedule:
-    - cron: 0 0 1 * *
+    - name: Trigger on last day of month
+      on:
+        schedule:
+          - cron: '0 0 * * *'
+      jobs:
+        check-last-day:
+          runs-on: ubuntu-latest
+          steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+
+            - name: Set up Python
+              uses: actions/setup-python@v2
+              with:
+                python-version: '3.x'
+
+            - name: Run script
+              run: |
+                python - <<EOF
+                from datetime import date, timedelta
+
+                today = date.today()
+                last_day_of_month = date(today.year, today.month + 1, 1) - timedelta(days=1)
+
+                if today == last_day_of_month:
+                  print("It's the last day of the month! Run your compilation steps here.")
+                else:
+                  print("Not the last day of the month. No compilation needed.")
+                EOF
+    #- cron: 0 0 1 * *
 
 env:
   Github: https://github.com/${{github.repository}}
