@@ -23,9 +23,9 @@ TIME() {
       }
 }
 
-echo 
-TIME y "添加软件包"
-rm -rf package/waynesg && git clone --depth 1 https://github.com/waynesg/OpenWrt-Software.git -b main package/waynesg
+#echo 
+#TIME y "添加软件包"
+#rm -rf package/waynesg && git clone --depth 1 https://github.com/waynesg/OpenWrt-Software.git -b main package/waynesg
 
 echo
 TIME y "修改系统文件"
