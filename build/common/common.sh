@@ -188,7 +188,7 @@ find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon' -o -name 'luci-
 find . -name 'luci-app-pushbot' -o -name 'luci-app-unblockmusic' -o -name 'luci-app-omcproxy' | xargs -i rm -rf {}
 find . -name 'mosdns' -o -name 'luci-app-mosdns' -o -name 'v2dat' | xargs -i rm -rf {}
 find . -name 'adguardhome' -o -name 'go-aliyundrive-webdav' | xargs -i rm -rf {}
-find . -name 'msd_lite' -o -name 'v2ray-geodata' -o -name 'luci-lib-ipkg' | xargs -i rm -rf {}
+find . -name 'msd_lite' -o -name 'v2ray-geodata' | xargs -i rm -rf {}
 }
 ################################################################################################################
 # LIENOL源码通用diy.sh文件
