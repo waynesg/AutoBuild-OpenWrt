@@ -42,82 +42,79 @@ clone_or_update_git_repo() {
 }
 
 # theme
-git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon waynesg/luci-theme-argon
-git clone --depth=1 https://github.com/sirpdboy/luci-theme-opentopd waynesg/luci-theme-opentopd
-git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge waynesg/luci-theme-edge
-git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git waynesg/luci-theme-neobird
-clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package waynesg/luci-theme-opentomcat "" luci-theme-opentomcat
+git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon package/waynesg/luci-theme-argon
+git clone --depth=1 https://github.com/sirpdboy/luci-theme-opentopd package/waynesg/luci-theme-opentopd
+git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/waynesg/luci-theme-edge
+git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/waynesg/luci-theme-neobird
+clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-theme-opentomcat "" luci-theme-opentomcat
 # argon-theme-config
-git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-app-argon-config waynesg/luci-app-argon-config
+git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
 #mosdns
-git clone --depth=1 -b v5 https://github.com/sbwml/luci-app-mosdns waynesg/luci-app-mosdns
+git clone --depth=1 -b v5 https://github.com/sbwml/luci-app-mosdns package/waynesg/luci-app-mosdns
 #ssr-plus
-clone_or_update_git_repo https://github.com/fw876/helloworld waynesg/luci-app-ssr-plus master luci-app-ssr-plus
+clone_or_update_git_repo https://github.com/fw876/helloworld package/waynesg/luci-app-ssr-plus master luci-app-ssr-plus
 #passwall
-clone_or_update_git_repo https://github.com/xiaorouji/openwrt-passwall waynesg/luci-app-passwall luci-smartdns-dev luci-app-passwall
-#git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall -b luci-smartdns-dev openwrt-passwall && mv openwrt-passwall waynesg/luci-app-passwall
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2 waynesg/luci-app-passwall2
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages waynesg/luci-app-dependence
-git clone --depth=1 https://github.com/jerrykuku/node-request waynesg/luci-app-dependence/node-request
-git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb waynesg/lua-maxminddb
-clone_or_update_git_repo https://github.com/fw876/helloworld waynesg/luci-app-dependence/lua-neturl master lua-neturl
-clone_or_update_git_repo https://github.com/fw876/helloworld waynesg/luci-app-dependence/shadow-tls master shadow-tls    
-clone_or_update_git_repo https://github.com/kenzok8/small waynesg/luci-app-dependence/redsocks2 "" redsocks2
-clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages waynesg/luci-app-dependence/wrtbwmon "" wrtbwmon
+clone_or_update_git_repo https://github.com/xiaorouji/openwrt-passwall package/waynesg/luci-app-passwall luci-smartdns-dev luci-app-passwall
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2 package/waynesg/luci-app-passwall2
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/waynesg/luci-app-dependence
+git clone --depth=1 https://github.com/jerrykuku/node-request package/waynesg/luci-app-dependence/node-request
+git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb package/waynesg/lua-maxminddb
+clone_or_update_git_repo https://github.com/fw876/helloworld package/waynesg/luci-app-dependence/lua-neturl master lua-neturl
+clone_or_update_git_repo https://github.com/fw876/helloworld package/waynesg/luci-app-dependence/shadow-tls master shadow-tls    
+clone_or_update_git_repo https://github.com/kenzok8/small package/waynesg/luci-app-dependence/redsocks2 "" redsocks2
+clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-dependence/wrtbwmon "" wrtbwmon
 #openclash
-git clone --depth=1 -b dev https://github.com/vernesong/OpenClash waynesg/luci-app-openclash
+git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/waynesg/luci-app-openclash
 #serverchan
-git clone --depth 1 https://github.com/tty228/luci-app-serverchan waynesg/luci-app-serverchan
+git clone --depth=1 https://github.com/tty228/luci-app-serverchan package/waynesg/luci-app-serverchan
 #poweroff
-git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff waynesg/luci-app-poweroff
+git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff package/waynesg/luci-app-poweroff
 #openappfilter
-git clone --depth=1 https://github.com/destan19/OpenAppFilter waynesg/luci-app-oaf
+git clone --depth=1 https://github.com/destan19/OpenAppFilter package/waynesg/luci-app-oaf
 #advanced
-clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package waynesg/luci-app-advanced "" luci-app-advanced
-#speedlimited
-clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package waynesg/luci-app-control-speedlimit "" luci-app-control-speedlimit
+clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-app-advanced "" luci-app-advanced
 #filebrowser
-clone_or_update_git_repo https://github.com/Lienol/openwrt-package waynesg/luci-app-filebrowser "" luci-app-filebrowser
+clone_or_update_git_repo https://github.com/Lienol/openwrt-package package/waynesg/luci-app-filebrowser "" luci-app-filebrowser
 #fileassistant
-clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package waynesg/luci-app-fileassistant "" luci-app-fileassistant
+clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-app-fileassistant "" luci-app-fileassistant
 #timewol
-clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages waynesg/luci-app-control-timewol "" luci-app-control-timewol
+clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-timewol "" luci-app-control-timewol
 #weburl
-clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages waynesg/luci-app-control-weburl "" luci-app-control-weburl
+clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-weburl "" luci-app-control-weburl
 #webrestriction
-clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages waynesg/luci-app-control-webrestriction "" luci-app-control-webrestriction
+clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-webrestriction "" luci-app-control-webrestriction
 #speedlimited
-clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages waynesg/luci-app-control-speedlimit "" luci-app-control-speedlimit
+clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-speedlimit "" luci-app-control-speedlimit
 #ikoolproxy
-git clone --depth=1 https://github.com/iyaof/luci-app-ikoolproxy waynesg/luci-app-ikoolproxy
+git clone --depth=1 https://github.com/iyaof/luci-app-ikoolproxy package/waynesg/luci-app-ikoolproxy
 #unblockneteasemusic
-git clone -depth=1 -b master https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic waynesg/luci-app-unblockneteasemusic
+git clone --depth=1 -b master https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic package/waynesg/luci-app-unblockneteasemusic
 #pushbot
-git clone -depth=1 https://github.com/zzsj0928/luci-app-pushbot waynesg/luci-app-pushbot
+git clone --depth=1 https://github.com/zzsj0928/luci-app-pushbot package/waynesg/luci-app-pushbot
 #iptv
-git clone -depth=1 https://github.com/riverscn/openwrt-iptvhelper waynesg/luci-app-iptvhelper
-git clone -depth=1 -b 18.06 https://github.com/riverscn/luci-app-omcproxy waynesg/luci-app-omcproxy
+git clone --depth=1 https://github.com/riverscn/openwrt-iptvhelper package/waynesg/luci-app-iptvhelper
+git clone --depth=1 -b 18.06 https://github.com/riverscn/luci-app-omcproxy package/waynesg/luci-app-omcproxy
 #cloudflareSppedtest
-clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages waynesg/luci-app-cloudflarespeedtest "" luci-app-cloudflarespeedtest
-clone_or_update_git_repo https://github.com/immortalwrt-collections/openwrt-cdnspeedtest waynesg/luci-app-cloudflarespeedtest/cdnspeedtest "" cdnspeedtest
+clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-cloudflarespeedtest "" luci-app-cloudflarespeedtest
+clone_or_update_git_repo https://github.com/immortalwrt-collections/openwrt-cdnspeedtest package/waynesg/luci-app-cloudflarespeedtest/cdnspeedtest "" cdnspeedtest
 #speedtest
-git clone -depth=1 https://github.com/sirpdboy/netspeedtest waynesg/luci-app-netspeedtest
+git clone --depth=1 https://github.com/sirpdboy/netspeedtest package/waynesg/luci-app-netspeedtest
 #onliner
-clone_or_update_git_repo https://github.com/Hyy2001X/AutoBuild-Packages waynesg/luci-app-onliner "" luci-app-onliner
+clone_or_update_git_repo https://github.com/Hyy2001X/AutoBuild-Packages package/waynesg/luci-app-onliner "" luci-app-onliner
 #alist
-git clone -depth=1 https://github.com/sbwml/luci-app-alist waynesg/luci-app-alist
+git clone --depth=1 https://github.com/sbwml/luci-app-alist package/waynesg/luci-app-alist
 #parents-control
-git clone -depth=1 https://github.com/sirpdboy/luci-app-parentcontrol waynesg/luci-app-parentcontrol
+git clone --depth=1 https://github.com/sirpdboy/luci-app-parentcontrol package/waynesg/luci-app-parentcontrol
 #msd_lite
-git clone -depth=1 https://github.com/ximiTech/luci-app-msd_lite waynesg/luci-app-msd_lite
-git clone -depth=1 https://github.com/ximiTech/msd_lite waynesg/luci-app-msd_lite/msd_lite
+git clone --depth=1 https://github.com/ximiTech/luci-app-msd_lite package/waynesg/luci-app-msd_lite
+git clone --depth=1 https://github.com/ximiTech/msd_lite package/waynesg/luci-app-msd_lite/msd_lite
 #airconnect
-git clone -depth=1 https://github.com/sbwml/luci-app-airconnect waynesg/luci-app-airconnect
+git clone --depth=1 https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect
 #eqosplus
-git clone -depth=1 https://github.com/sirpdboy/luci-app-eqosplus waynesg/luci-app-eqosplus
+git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/waynesg/luci-app-eqosplus
 #homeproxy
-git clone --depth=1 https://github.com/immortalwrt/homeproxy waynesg/luci-app-homeproxy
+git clone --depth=1 https://github.com/immortalwrt/homeproxy package/waynesg/luci-app-homeproxy
 #subconverter
-git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter ./luci-app-subconverter
+git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter package/waynesg/luci-app-subconverter
 
 
