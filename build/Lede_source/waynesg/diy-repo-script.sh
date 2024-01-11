@@ -1,8 +1,4 @@
 #!/bin/bash
-function mvdir() {
-mv -n `find $1/* -maxdepth 0 -type d` ./
-rm -rf $1
-}
 
 CURRENT_PATH=$(pwd)
 
@@ -83,8 +79,6 @@ clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/way
 clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-weburl "" luci-app-control-weburl
 #webrestriction
 clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-webrestriction "" luci-app-control-webrestriction
-#speedlimited
-clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-speedlimit "" luci-app-control-speedlimit
 #ikoolproxy
 git clone --depth=1 https://github.com/iyaof/luci-app-ikoolproxy package/waynesg/luci-app-ikoolproxy
 #unblockneteasemusic
