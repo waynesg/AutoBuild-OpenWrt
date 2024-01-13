@@ -209,7 +209,7 @@ jobs:
         
     - name: 触发编译
       id: gitpush
-      if: env.UPLOAD_CONFIG == 'true'
+      if: env.UPLOAD_CONFIG == 'true' && secrets.WAYNE_TOKEN
       run: |
         cd ${GITHUB_WORKSPACE}
         source "${PATH1}/common.sh" && build_openwrt
