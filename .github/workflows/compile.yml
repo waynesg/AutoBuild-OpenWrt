@@ -18,6 +18,7 @@ env:
   PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  ACTION_TOKEN: ${{ secrets.ACTION_TOKEN }}
   TZ: Asia/Shanghai
 
 
@@ -233,7 +234,7 @@ jobs:
     - name: 编译固件
       id: compile
       run: |
-        cd openwrt
+        cd openwrt && env.ACTION_TOKEN
         echo -e "$(nproc) thread compile"
         make -j$(nproc) || make -j1 V=s
         echo "COMPILESTATUS=success" >> $GITHUB_ENV
