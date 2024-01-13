@@ -21,6 +21,7 @@ env:
   PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  WAYNE_TOKEN: ${{ secrets.WAYNE_TOKEN }}
   TZ: Asia/Shanghai
 
 jobs:
