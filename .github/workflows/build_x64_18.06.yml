@@ -21,7 +21,7 @@ env:
   PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-  ACTION_TOKEN: ${{ secrets.ACTION_TOKEN }}
+  WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
   TZ: Asia/Shanghai
 
 jobs:
@@ -210,7 +210,7 @@ jobs:
         
     - name: 触发编译
       id: gitpush
-      if: env.UPLOAD_CONFIG == 'true' && env.ACTION_TOKEN
+      if: env.UPLOAD_CONFIG == 'true' && env.WORKFLOW_TOKEN
       run: |
         cd ${GITHUB_WORKSPACE}
         source "${PATH1}/common.sh" && build_openwrt
