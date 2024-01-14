@@ -232,6 +232,7 @@ jobs:
         find dl -size -1024c -exec rm -f {} \;
     
     - name: 编译固件
+      if: env.WORKFLOW_TOKEN
       id: compile
       run: |
         cd openwrt
