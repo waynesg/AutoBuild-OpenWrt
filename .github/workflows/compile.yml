@@ -180,7 +180,7 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a > /dev/null 2>&1
         ./scripts/feeds install -a
-        mv "$PATH1/$CONFIG_FILE" .config && env.WORKFLOW_TOKEN
+        mv "$PATH1/$CONFIG_FILE" .config
         if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           source "${PATH1}/upgrade.sh" && Diy_Part1
         fi
@@ -232,7 +232,7 @@ jobs:
         find dl -size -1024c -exec rm -f {} \;
     
     - name: 编译固件
-      if: env.WORKFLOW_TOKEN
+      #if: env.WORKFLOW_TOKEN
       id: compile
       run: |
         cd openwrt
