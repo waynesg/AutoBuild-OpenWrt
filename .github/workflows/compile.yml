@@ -126,6 +126,7 @@ jobs:
     - name: 部署环境
       env:
         DEBIAN_FRONTEND: noninteractive
+      if: env.WORKFLOW_TOKEN
       run: |
         bash <(curl -fsSL https://raw.githubusercontent.com/waynesg/AutoBuild-OpenWrt/main/build/common/Custom/ubuntu.sh)
         echo "================================================="
@@ -232,7 +233,6 @@ jobs:
         find dl -size -1024c -exec rm -f {} \;
     
     - name: 编译固件
-      #if: env.WORKFLOW_TOKEN
       id: compile
       run: |
         cd openwrt
