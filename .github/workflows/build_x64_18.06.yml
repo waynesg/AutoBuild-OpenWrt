@@ -40,7 +40,7 @@ jobs:
 
     steps:          
     - name: 准备完成
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: 读取设置
       run: |
@@ -99,8 +99,8 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /${{matrix.target}}
         sudo chown $USER:$GROUPS /${{matrix.target}}
-        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-[bot]@users.noreply.github.com"
+        git config --global user.name "github-[bot]"
     
     - name: 下载源码
       working-directory: /${{matrix.target}}
@@ -142,7 +142,7 @@ jobs:
         fi
         
     - name: SSH连接
-      if: env.SSH_ACTIONS == 'true' || (github.event.inputs.ssh == 'ssh')
+      if: env.SSH_ == 'true' || (github.event.inputs.ssh == 'ssh')
       uses: danshui-git/debugger-action@main
       env:
          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -169,7 +169,7 @@ jobs:
         
     - name: 上传配置
       if: env.UPLOAD_CONFIG == 'true'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: .config_${{ env.CODE }}_${{ env.TARGET_PROFILE }}_${{ env.Compile_Date }}
         path: config.txt
@@ -200,11 +200,11 @@ jobs:
     - name: 删除发布
       continue-on-error: true
       if: env.REPO_TOKEN
-      uses: danshui-git/delete-older-releases@main
+      uses: dev-drprasad/delete-older-releases@main
       with:
         repo: ${{ github.repository }}
         keep_latest: ${{ env.KEEP_LATEST }}
-        delete_tags: true
+        delete_tags: flase
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
         
