@@ -200,7 +200,7 @@ jobs:
     - name: 删除发布
       continue-on-error: true
       if: env.REPO_TOKEN
-      uses: dev-drprasad/delete-older-releases@main
+      uses: dev-drprasad/delete-older-releases@master
       with:
         repo: ${{ github.repository }}
         keep_latest: ${{ env.KEEP_LATEST }}
