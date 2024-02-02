@@ -188,7 +188,8 @@ jobs:
  
     - name: 加载缓存
       if: env.USE_CACHEWRTBUILD == 'true'
-      uses: stupidloud/cachewrtbuild@main
+      uses: klever1988/cachewrtbuild@main
+      #uses: stupidloud/cachewrtbuild@main
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
