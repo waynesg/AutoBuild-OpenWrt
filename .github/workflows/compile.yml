@@ -95,7 +95,7 @@ jobs:
         if [[ -n "${{ github.event.workflow }}" ]]; then
           export CPU_SELECTIOY="$(source "${GITHUB_WORKSPACE}/build/${FOLDER_NAME}/settings.ini" && echo "${CPU_SELECTION}")"
         else
-          export CPU_PASSWORD="1706846472"
+          export CPU_PASSWORD="1706847184"
           export CPU_OPTIMIZATION="E5"
         fi
         source build/${FOLDER_NAME}/common.sh && CPU_Priority
