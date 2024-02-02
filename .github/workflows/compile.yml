@@ -228,9 +228,12 @@ jobs:
     - name: 下载dl库
       id: package
       run: |
+        #cd openwrt
+        #make download -j8
+        #find dl -size -1024c -exec rm -f {} \;
         cd openwrt
-        make download -j8
-        find dl -size -1024c -exec rm -f {} \;
+        make defconfig
+        make download -j16
     
     - name: 编译固件
       id: compile
