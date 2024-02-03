@@ -85,10 +85,10 @@ curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/ca.crt -o $NA
 curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/server.crt -o $NAME/core/server.crt
 curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/server.key -o $NAME/core/server.key
 
-echo
-TIME y "更换golang版本"
-rm -rf feeds/packages/lang/golang
-git clone https://github.com/sbwml/packages_lang_golang -b 21.x feeds/packages/lang/golang
+#echo
+#TIME y "更换golang版本"
+#rm -rf feeds/packages/lang/golang
+#git clone https://github.com/sbwml/packages_lang_golang -b 21.x feeds/packages/lang/golang
 
 #echo 
 #TIME y "更换内核为5.4"
@@ -98,10 +98,10 @@ git clone https://github.com/sbwml/packages_lang_golang -b 21.x feeds/packages/l
 #sed -i 's/PKG_HASH.*/PKG_HASH:=skip/' feeds/packages/utils/containerd/Makefile
 
 
-echo
-TIME y "添加upx"
-sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host"/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host upx\/host"/g' package/waynesg/luci-app-netspeedtest/homebox/Makefile
-sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx\/host"/g' package/waynesg/luci-app-mosdns/mosdns/Makefile
+#echo
+#TIME y "添加upx"
+#sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host"/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host upx\/host"/g' package/waynesg/luci-app-netspeedtest/homebox/Makefile
+#sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx\/host"/g' package/waynesg/luci-app-mosdns/mosdns/Makefile
 
 echo
 TIME b "菜单 调整..."
