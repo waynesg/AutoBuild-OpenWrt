@@ -54,7 +54,7 @@ clone_or_update_git_repo https://github.com/xiaorouji/openwrt-passwall package/w
 #git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2 package/waynesg/luci-app-passwall2
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/waynesg/luci-app-dependence
 git clone --depth=1 https://github.com/jerrykuku/node-request package/waynesg/luci-app-dependence/node-request
-git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb package/waynesg/lua-maxminddb
+git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb package/waynesg/luci-app-dependence/lua-maxminddb
 clone_or_update_git_repo https://github.com/fw876/helloworld package/waynesg/luci-app-dependence/lua-neturl master lua-neturl
 clone_or_update_git_repo https://github.com/fw876/helloworld package/waynesg/luci-app-dependence/shadow-tls master shadow-tls    
 clone_or_update_git_repo https://github.com/kenzok8/small package/waynesg/luci-app-dependence/redsocks2 "" redsocks2
@@ -62,7 +62,7 @@ clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/way
 #openclash
 git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/waynesg/luci-app-openclash
 #serverchan
-git clone --depth=1 -b openwrt-18.06 https://github.com/tty228/luci-app-wechatpush package/waynesg/luci-app-wechatpush
+#git clone --depth=1 -b openwrt-18.06 https://github.com/tty228/luci-app-wechatpush package/waynesg/luci-app-wechatpush
 #poweroff
 git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff package/waynesg/luci-app-poweroff
 #openappfilter
