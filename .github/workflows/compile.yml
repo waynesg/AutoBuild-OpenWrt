@@ -192,7 +192,7 @@ jobs:
       with:
         ccache: false
         mixkey: ${{ env.LUCI_EDITION }}-${{ env.CODE }}-${{ env.TARGET_PROFILE }}-${{ env.Compile_Date }}
-        prefix: ${GITHUB_WORKSPACE}/openwrt
+        prefix: ${{ github.workspace }}/openwrt
 
     - name: 生成配置
       run: |
