@@ -89,8 +89,8 @@ git clone --depth=1 https://github.com/zzsj0928/luci-app-pushbot package/waynesg
 #git clone --depth=1 https://github.com/riverscn/openwrt-iptvhelper package/waynesg/luci-app-iptvhelper
 #git clone --depth=1 -b 18.06 https://github.com/riverscn/luci-app-omcproxy package/waynesg/luci-app-omcproxy
 #cloudflareSppedtest
-clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-cloudflarespeedtest "" luci-app-cloudflarespeedtest
-clone_or_update_git_repo https://github.com/immortalwrt-collections/openwrt-cdnspeedtest package/waynesg/luci-app-cloudflarespeedtest/cdnspeedtest "" cdnspeedtest
+#clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-cloudflarespeedtest "" luci-app-cloudflarespeedtest
+#clone_or_update_git_repo https://github.com/immortalwrt-collections/openwrt-cdnspeedtest package/waynesg/luci-app-cloudflarespeedtest/cdnspeedtest "" cdnspeedtest
 #speedtest
 git clone --depth=1 https://github.com/sirpdboy/netspeedtest package/waynesg/luci-app-netspeedtest
 #onliner
