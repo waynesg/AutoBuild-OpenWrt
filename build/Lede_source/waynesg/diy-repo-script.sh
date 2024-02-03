@@ -80,7 +80,7 @@ clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/way
 #webrestriction
 clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-webrestriction "" luci-app-control-webrestriction
 #ikoolproxy
-git clone --depth=1 https://github.com/iyaof/luci-app-ikoolproxy package/waynesg/luci-app-ikoolproxy
+#git clone --depth=1 https://github.com/iyaof/luci-app-ikoolproxy package/waynesg/luci-app-ikoolproxy
 #unblockneteasemusic
 git clone --depth=1 -b master https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic package/waynesg/luci-app-unblockneteasemusic
 #pushbot
@@ -107,7 +107,7 @@ git clone --depth=1 https://github.com/sbwml/luci-app-airconnect package/waynesg
 #eqosplus
 git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/waynesg/luci-app-eqosplus
 #homeproxy
-git clone --depth=1 https://github.com/immortalwrt/homeproxy package/waynesg/luci-app-homeproxy
+#git clone --depth=1 https://github.com/immortalwrt/homeproxy package/waynesg/luci-app-homeproxy
 #subconverter
 git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter package/waynesg/luci-app-subconverter
 
