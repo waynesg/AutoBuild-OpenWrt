@@ -188,11 +188,11 @@ jobs:
  
     - name: 加载缓存
       if: env.USE_CACHEWRTBUILD == 'true'
-      uses: klever1988/cachewrtbuild@main
-      #uses: stupidloud/cachewrtbuild@main
+      uses: HiGarfield/cachewrtbuild@main
       with:
-        ccache: 'true'
-        prefix: ${{ github.workspace }}/openwrt
+        ccache: false
+        mixkey: ${{ env.LUCI_EDITION }}-${{ env.CODE }}-${{ env.TARGET_PROFILE }}-firmware-${{ env.Compile_Date }}-self
+        prefix: ${GITHUB_WORKSPACE}/openwrt
 
     - name: 生成配置
       run: |
