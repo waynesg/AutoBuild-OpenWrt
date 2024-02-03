@@ -191,7 +191,7 @@ jobs:
       uses: HiGarfield/cachewrtbuild@main
       with:
         ccache: false
-        mixkey: ${{ env.LUCI_EDITION }}-${{ env.CODE }}-${{ env.TARGET_PROFILE }}-firmware-${{ env.Compile_Date }}-self
+        mixkey: ${{ env.LUCI_EDITION }}-${{ env.CODE }}-${{ env.TARGET_PROFILE }}-${{ env.Compile_Date }}
         prefix: ${GITHUB_WORKSPACE}/openwrt
 
     - name: 生成配置
