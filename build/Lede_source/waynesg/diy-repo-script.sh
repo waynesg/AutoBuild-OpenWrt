@@ -46,7 +46,7 @@ clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/wa
 # argon-theme-config
 git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
 #mosdns
-#git clone --depth=1 -b v5 https://github.com/sbwml/luci-app-mosdns package/waynesg/luci-app-mosdns
+git clone --depth=1 -b v5 https://github.com/sbwml/luci-app-mosdns package/waynesg/luci-app-mosdns
 #ssr-plus
 clone_or_update_git_repo https://github.com/fw876/helloworld package/waynesg/luci-app-ssr-plus master luci-app-ssr-plus
 #passwall
