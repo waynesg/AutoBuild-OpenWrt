@@ -130,7 +130,7 @@ jobs:
           source "${PATH1}/common.sh" && Diy_mortal
         fi
         source "${PATH1}/common.sh" && Diy_all
-        /bin/bash "${PATH1}/waynesg/diy-repo-script.sh"
+        #/bin/bash "${PATH1}/waynesg/diy-repo-script.sh"
         /bin/bash "${PATH1}/$DIY_PART_SH"
         /bin/bash "${PATH1}/waynesg/preset-clash-core.sh" amd64
         ./scripts/feeds update -a
