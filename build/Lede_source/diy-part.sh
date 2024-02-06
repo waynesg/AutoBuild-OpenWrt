@@ -38,6 +38,7 @@ curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openw
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/cpuinfo > ./package/lean/autocore/files/x86/sbin/cpuinfo
 # curl -fsSL https://raw.githubusercontent.com/immortalwrt/packages/master/net/dnsproxy/Makefile > feeds/packages/net/dnsproxy/Makefile
 # rm -rf ./package/lean/autocore/files/x86/sbin/getcpu
+sed -i 's/iperf3-ssl[[:space:]]*//g' target/linux/x86/Makefile
 
 echo 
 TIME y "更新固件编译日期"
