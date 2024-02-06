@@ -59,6 +59,9 @@ clone_or_update_git_repo https://github.com/fw876/helloworld package/waynesg/luc
 clone_or_update_git_repo https://github.com/fw876/helloworld package/waynesg/luci-app-dependence/shadow-tls master shadow-tls    
 clone_or_update_git_repo https://github.com/kenzok8/small package/waynesg/luci-app-dependence/redsocks2 "" redsocks2
 clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-dependence/wrtbwmon "" wrtbwmon
+#smartdns
+git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns package/waynesg/luci-app-smartdns
+git clone --depth=1 https://github.com/pymumu/openwrt-smartdns package/waynesg//luci-app-smartdns/smartdns
 #openclash
 git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/waynesg/luci-app-openclash
 #serverchan
