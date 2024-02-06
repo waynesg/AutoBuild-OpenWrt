@@ -185,9 +185,9 @@ git push --force "https://${REPO_TOKEN}@github.com/${Apidz}" HEAD:main
 Diy_lede() {
 find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon' -o -name 'luci-theme-material' -o -name 'luci-app-serverchan' | xargs -i rm -rf {}
 #find . -name 'netdata' -o -name 'luci-app-netdata' -o -name 'luci-app-serverchan' | xargs -i rm -rf {}
-find . -name 'mosdns' -o -name 'luci-app-mosdns' -o -name 'smartdns' -o -name 'luci-app-smartdns' | xargs -i rm -rf {}
+#find . -name 'mosdns' -o -name 'luci-app-mosdns' -o -name 'smartdns' -o -name 'luci-app-smartdns' -o -name 'pdnsd-alt' -o -name 'v2ray-geodata' | xargs -i rm -rf {}
 find . -name 'adguardhome' -o -name 'go-aliyundrive-webdav' | xargs -i rm -rf {}
-find . -name 'luci-app-qbittorrent' -o -name 'luci-app-unblockmusic' -o -name 'luci-app-pushbot' -o -name 'msd_lite' -o -name 'pdnsd-alt' -o -name 'v2ray-geodata' | xargs -i rm -rf {}
+find . -name 'luci-app-qbittorrent' -o -name 'luci-app-unblockmusic' -o -name 'luci-app-pushbot' | xargs -i rm -rf {}
 }
 ################################################################################################################
 # LIENOL源码通用diy.sh文件
