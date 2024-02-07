@@ -39,7 +39,7 @@ jobs:
     - name: 释放空间
       uses: easimon/maximize-build-space@master
       with:
-        root-reserve-mb: 40960
+        root-reserve-mb: 29696
         remove-dotnet: true
         remove-android: true
         remove-haskell: true
