@@ -39,6 +39,20 @@ jobs:
     - name: 准备结束
       uses: actions/checkout@main
 
+    - name: 释放空间
+      uses: jlumbroso/free-disk-space@main
+      with:
+        # this might remove tools that are actually needed,
+        # if set to "true" but frees about 6 GB
+        tool-cache: true
+        # all of these default to true, but feel free to set to
+        # "false" if necessary for your workflow
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        swap-storage: true
+
     - name: 读取脚本
       run: |
         cd ${GITHUB_WORKSPACE}
@@ -99,29 +113,6 @@ jobs:
           export CPU_OPTIMIZATION="E5"
         fi
         source build/${FOLDER_NAME}/common.sh && CPU_Priority
-
-    # temporary workaround for an error in free disk space action
-      # https://github.com/jlumbroso/free-disk-space/issues/14
-    #- name: 删除框架
-    #  run: |
-    #    sudo apt-get update
-    #    sudo apt-get remove -y '^dotnet-.*'
-
-    - name: 清理空间
-      uses: jlumbroso/free-disk-space@main
-      with:
-        # this might remove tools that are actually needed,
-        # if set to "true" but frees about 6 GB
-        tool-cache: true
-        
-        # all of these default to true, but feel free to set to
-        # "false" if necessary for your workflow
-        android: true
-        dotnet: true
-        haskell: true
-        large-packages: true
-        docker-images: true
-        swap-storage: true
         
     - name: 部署环境
       env:
