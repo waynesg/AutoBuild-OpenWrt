@@ -39,20 +39,6 @@ jobs:
     - name: 准备结束
       uses: actions/checkout@main
 
-    - name: 释放空间
-      uses: jlumbroso/free-disk-space@main
-      with:
-        # this might remove tools that are actually needed,
-        # if set to "true" but frees about 6 GB
-        tool-cache: true
-        # all of these default to true, but feel free to set to
-        # "false" if necessary for your workflow
-        android: true
-        dotnet: true
-        haskell: true
-        large-packages: true
-        swap-storage: true
-
     - name: 读取脚本
       run: |
         cd ${GITHUB_WORKSPACE}
@@ -113,6 +99,21 @@ jobs:
           export CPU_OPTIMIZATION="E5"
         fi
         source build/${FOLDER_NAME}/common.sh && CPU_Priority
+
+    - name: 释放空间
+      uses: jlumbroso/free-disk-space@main
+      with:
+        # this might remove tools that are actually needed,
+        # if set to "true" but frees about 6 GB
+        tool-cache: true
+        # all of these default to true, but feel free to set to
+        # "false" if necessary for your workflow
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        swap-storage: true
+
         
     - name: 部署环境
       env:
@@ -179,10 +180,9 @@ jobs:
  
     - name: 加载缓存
       if: env.USE_CACHEWRTBUILD == 'true'
-      uses: HiGarfield/cachewrtbuild@main
+      uses: stupidloud/cachewrtbuild@main
       with:
-        ccache: false
-        mixkey: ${{ env.LUCI_EDITION }}-${{ env.CODE }}-${{ env.TARGET_PROFILE }}-${{ env.Compile_Date }}
+        ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
 
     - name: 生成配置
