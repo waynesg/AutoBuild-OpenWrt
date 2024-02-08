@@ -45,7 +45,7 @@ jobs:
         remove-haskell: 'true'
         remove-codeql: 'true'
         remove-docker-images: 'true'
-        build-mount-path: '/home/runner/'
+        build-mount-path: '/home/runner/ruuners/'
         
     - name: 准备结束
       uses: actions/checkout@main
