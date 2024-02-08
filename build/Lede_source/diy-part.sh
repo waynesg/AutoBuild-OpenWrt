@@ -38,7 +38,7 @@ curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openw
 # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/cpuinfo > ./package/lean/autocore/files/x86/sbin/cpuinfo
 # curl -fsSL https://raw.githubusercontent.com/immortalwrt/packages/master/net/dnsproxy/Makefile > feeds/packages/net/dnsproxy/Makefile
 # rm -rf ./package/lean/autocore/files/x86/sbin/getcpu
-sed -i 's/iperf3-ssl[[:space:]]*//g' target/linux/x86/Makefile
+#sed -i 's/iperf3-ssl[[:space:]]*//g' target/linux/x86/Makefile
 
 echo 
 TIME y "更新固件编译日期"
@@ -101,7 +101,7 @@ curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/server.key -o
 
 echo
 TIME y "添加upx"
-sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host"/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host upx\/host"/g' package/waynesg/luci-app-netspeedtest/homebox/Makefile
+#sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host"/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host upx\/host"/g' package/waynesg/luci-app-netspeedtest/homebox/Makefile
 sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx\/host"/g' package/waynesg/luci-app-mosdns/mosdns/Makefile
 
 echo
