@@ -67,7 +67,7 @@ jobs:
         remove-haskell: 'true'
         remove-codeql: 'true'
         remove-docker-images: 'true'
-        build-mount-path: '/home/runner/work/AutoBuild-OpenWrt/AutoBuild-OpenWrt/'
+        build-mount-path: '/home/runner/work/AutoBuild-OpenWrt/AutoBuild-OpenWrt/${{matrix.target}}/'
         
     - name: 准备结束
       uses: actions/checkout@main
