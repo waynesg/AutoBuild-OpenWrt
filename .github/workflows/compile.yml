@@ -36,38 +36,19 @@ jobs:
         target: [Lede_source]
 
     steps:
-    - name: 优化空间
-      uses: "hugoalh/disk-space-optimizer-ghaction@v0.8.0"
-      with:
-        operate_sudo: "True"
-        general_include: ".+"
-        general_exclude: |-
-          ^GCC$
-          ^G\+\+$
-          Clang
-          LLVM
-        docker_include: ".+"
-        docker_prune: "True"
-        docker_clean: "True"
-        apt_prune: "True"
-        apt_clean: "True"
-        homebrew_prune: "True"
-        homebrew_clean: "True"
-        npm_prune: "True"
-        npm_clean: "True"
-        os_swap: "True"
-        
-   # - name: 释放空间
-   #   uses: easimon/maximize-build-space@v8
-   #   with: 
-   #     root-reserve-mb: 2048
-   #     swap-size-mb: 1
-   #     remove-dotnet: 'true'
-   #     remove-android: 'true'
-   #     remove-haskell: 'true'
-   #     remove-codeql: 'true'
-   #     remove-docker-images: 'true'
-   #     build-mount-path: '/home/runner/work/AutoBuild-OpenWrt/AutoBuild-OpenWrt/'
+    - name: 释放空间
+      uses: endersonmenezes/free-disk-space@v2
+        with:
+          remove_android: true
+          remove_dotnet: true
+          remove_haskell: true
+          remove_tool_cache: true
+          remove_swap: true
+          remove_packages: "azure-cli google-cloud-cli microsoft-edge-stable google-chrome-stable firefox postgresql* temurin-* *llvm* mysql* dotnet-sdk-*"
+          remove_packages_one_command: true
+          remove_folders: "/usr/share/swift /usr/share/miniconda /usr/share/az* /usr/share/glade* /usr/local/lib/node_modules /usr/local/share/chromium /usr/local/share/powershell"
+          testing: false
+    
         
     - name: 准备结束
       uses: actions/checkout@main
@@ -132,21 +113,6 @@ jobs:
           export CPU_OPTIMIZATION="E5"
         fi
         source build/${FOLDER_NAME}/common.sh && CPU_Priority
-
-    - name: 释放空间
-      uses: jlumbroso/free-disk-space@main
-      with:
-        # this might remove tools that are actually needed,
-        # if set to "true" but frees about 6 GB
-        tool-cache: true
-        # all of these default to true, but feel free to set to
-        # "false" if necessary for your workflow
-        android: true
-        dotnet: true
-        haskell: true
-        large-packages: true
-        docker-images: true
-        swap-storage: true
         
     - name: 部署环境
       env:
