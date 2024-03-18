@@ -418,6 +418,13 @@ install_mytv_latest_apk() {
     install_apk_by_url "https://github.com/lizongying/my-tv/releases/latest" "com.lizongying.mytv" "my-tv-"
 }
 
+# 安装my-tv-0(自定义版)
+# release地址、包名、apk命名前缀
+install_mytv0_latest_apk() {
+    echo -e "${BLUE}项目主页:https://github.com/lizongying/my-tv-0 ${NC}"
+    install_apk_by_url "https://github.com/lizongying/my-tv-0/releases/latest" "com.lizongying.mytv0" "my-tv0-"
+}
+
 # 安装bbll
 # release地址、包名、apk命名前缀
 install_BBLL_latest_apk() {
@@ -709,6 +716,7 @@ menu_options=(
     "安装文件管理器+"
     "安装Downloader"
     "安装my-tv最新版(lizongying)"
+    "安装my-tv-0最新版(自定义版)"
     "安装BBLL最新版(xiaye13579)"
     "自定义批量安装/tmp/upload目录下的所有apk"
     "安装Mix-Apps用于显示全部应用"
@@ -734,7 +742,7 @@ commands=(
     ["模拟菜单键"]="show_menu_keycode"
     ["为Google TV系统安装Play商店图标"]="show_playstore_icon"
     ["给软路由添加主机名映射(自定义挟持域名,仅限主路由模式)"]="add_dhcp_domain"
-    ["安装my-tv最新版(lizongying)"]="install_mytv_latest_apk"
+    ["安装my-tv-0最新版(自定义版)"]="install_mytv0_latest_apk"
     ["安装BBLL最新版(xiaye13579)"]="install_BBLL_latest_apk"
     ["安装文件管理器+"]="install_file_manager_plus"
     ["安装Downloader"]="install_downloader"
