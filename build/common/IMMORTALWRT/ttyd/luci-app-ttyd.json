@@ -1,5 +1,5 @@
 {
-	"admin/system/ttyd": {
+	"admin/system/ttyd": { 
 		"title": "Terminal",
 		"order": 10,
     "action": {
