@@ -39,9 +39,11 @@ clone_or_update_git_repo() {
 
 # theme
 git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon package/waynesg/luci-theme-argon
+git clone --depth=1 -b main https://github.com/sirpdboy/luci-theme-kucat package/waynesg/luci-theme-kucat
 git clone --depth=1 https://github.com/sirpdboy/luci-theme-opentopd package/waynesg/luci-theme-opentopd
 git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/waynesg/luci-theme-edge
 git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/waynesg/luci-theme-neobird
+git clone --depth=1 https://github.com/sirpdboy/luci-app-advancedplus package/waynesg/luci-app-advancedplus
 clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-theme-opentomcat "" luci-theme-opentomcat
 # argon-theme-config
 git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
@@ -71,7 +73,7 @@ git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff package/
 #openappfilter
 git clone --depth=1 https://github.com/destan19/OpenAppFilter package/waynesg/luci-app-oaf
 #advanced
-clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-app-advanced "" luci-app-advanced
+#clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-app-advanced "" luci-app-advanced
 #filebrowser
 #clone_or_update_git_repo https://github.com/Lienol/openwrt-package package/waynesg/luci-app-filebrowser "" luci-app-filebrowser
 #fileassistant
