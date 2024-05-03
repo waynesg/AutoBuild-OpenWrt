@@ -1,18 +1,18 @@
-#!/bin/sh
+#!/bin/ash
 [ -e /tmp/.failsafe ] && export FAILSAFE=1
 
 [ -f /etc/banner ] && cat /etc/banner
 [ -n "$FAILSAFE" ] && cat /etc/banner.failsafe
 [ -n "$FAILSAFE" -a -x /bin/bash ]  || {
-	for FILE in /etc/shell-motd.d/*.sh; do
-		[ -f "$FILE" ] && env -i bash "$FILE"
-	done
-	unset FILE
+        for FILE in /etc/shell-motd.d/*.sh; do
+                [ -f "$FILE" ] && env -i bash "$FILE"
+        done
+        unset FILE
 }
 
 fgrep -sq '/ overlay ro,' /proc/mounts && {
-	echo 'Your JFFS2-partition seems full and overlayfs is mounted read-only.'
-	echo 'Please try to remove files from /overlay/upper/... and reboot!'
+        echo 'Your JFFS2-partition seems full and overlayfs is mounted read-only.'
+        echo 'Please try to remove files from /overlay/upper/... and reboot!'
 }
 
 export PATH="/usr/sbin:/usr/bin:/sbin:/bin"
@@ -21,15 +21,18 @@ export HOME=${HOME:-/root}
 export PS1='\u@\h:\w\$ '
 
 case "$TERM" in
-	xterm*|rxvt*)
-		export PS1='\[\e]0;\u@\h: \w\a\]'$PS1
-		;;
+        xterm*|rxvt*)
+                export PS1='\[\e]0;\u@\h: \w\a\]'$PS1
+                ;;
 esac
 
-[ -x /bin/more ] || alias more=less
-[ -x /usr/bin/vim ] && alias vi=vim || alias vim=vi
+[ -x /bin/more ] || more=less
+[ -x /usr/bin/vim ] && vi=vim || vim=vi
 
-alias ll='ls -alF --color=auto'
+export PS1
+export more
+export vi
+export vim
 
 [ -z "$KSH_VERSION" -o \! -s /etc/mkshrc ] || . /etc/mkshrc
 
@@ -37,45 +40,44 @@ alias ll='ls -alF --color=auto'
 [ -x /usr/bin/ldd ] || ldd() { LD_TRACE_LOADED_OBJECTS=1 $*; }
 
 [ -n "$FAILSAFE" ] || {
-	for FILE in /etc/profile.d/*.sh; do
-		[ -e "$FILE" ] && . "$FILE"
-	done
-	unset FILE
+        for FILE in /etc/profile.d/*.sh; do
+                [ -e "$FILE" ] && . "$FILE"
+        done
+        unset FILE
 }
 
 if ( grep -qs '^root::' /etc/shadow && \
      [ -z "$FAILSAFE" ] )
 then
-cat << EOF
-=== WARNING! =====================================
-There is no root password defined on this device!
-Use the "passwd" command to set up a new password
-in order to prevent unauthorized SSH logins.
---------------------------------------------------
-EOF
+echo '=== WARNING! ====================================='
+echo 'There is no root password defined on this device!'
+echo 'Use the "passwd" command to set up a new password'
+echo 'in order to prevent unauthorized SSH logins.'
+echo '--------------------------------------------------'
 fi
 
 if [ ! -x /usr/sbin/service ]; then
 service() {
-	[ -f "/etc/init.d/$1" ] || {
-		echo "service "'"'"$1"'"'" not found, the following services are available:"
-		ls "/etc/init.d"
-		return 1
-	}
-	/etc/init.d/$@
+        [ -f "/etc/init.d/$1" ] || {
+                echo "service $1 not found, the following services are available:"
+                ls "/etc/init.d"
+                return 1
+        }
+        /etc/init.d/$@
 }
 fi
-alias reload='/etc/profile'
-alias autoupdate='bash /bin/AutoUpdate.sh'
-alias tools='bash /bin/AutoBuild_Tools.sh'
-alias tv='bash /bin/tv.sh'
-alias coremarkd='/etc/coremark.sh'
-alias shutdown='sync && block umount && poweroff'
-alias ls='ls --color=auto'
-alias l='ls -CF'
-alias ll='ls -alF'
-alias la='ls -A'
-alias cls='clear'
-alias dh='df -h'
-alias syslog='cat $(uci get system.@system[0].log_file) 2> /dev/null'
-alias ramfree='sync && echo 3 > /proc/sys/vm/drop_caches'
+
+reload() { . /etc/profile; }
+autoupdate() { bash /bin/AutoUpdate.sh; }
+tools() { bash /bin/AutoBuild_Tools.sh; }
+tv() { bash /bin/tvbox.sh; }
+coremarkd() { bash /etc/coremark.sh; }
+shutdown() { sync && block umount && poweroff; }
+ls() { command ls --color=auto "$@"; }
+l() { command ls -CF "$@"; }
+ll() { command ls -alF "$@"; }
+la() { command ls -A "$@"; }
+cls() { clear; }
+dh() { df -h "$@"; }
+syslog() { cat $(uci get system.@system[0].log_file) 2> /dev/null "$@"; }
+ramfree() { sync && echo 3 > /proc/sys/vm/drop_caches "$@"; }
