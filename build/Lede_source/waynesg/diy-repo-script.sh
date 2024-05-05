@@ -65,7 +65,7 @@ clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/way
 git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns package/waynesg/luci-app-smartdns
 git clone --depth=1 https://github.com/pymumu/openwrt-smartdns package/waynesg//luci-app-smartdns/smartdns
 #openclash
-git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/waynesg/luci-app-openclash
+git clone --depth=1 -b master https://github.com/vernesong/OpenClash package/waynesg/luci-app-openclash
 #serverchan
 #git clone --depth=1 -b openwrt-18.06 https://github.com/tty228/luci-app-wechatpush package/waynesg/luci-app-wechatpush
 #poweroff
