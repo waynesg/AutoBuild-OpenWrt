@@ -88,7 +88,7 @@ curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/server.key -o
 
 echo
 TIME y "修改dashboard password"
-sed -i "s/$(uci -q get openclash.config.dashboard_password)/uci -q set openclash.config.dashboard_password='xrvXExR1'/g" package/waynesg/luci-app-openclash/luci-app-openclash/root/etc/uci-defaults/luci-openclash
+sed -i '/uci -q set openclash.config.dashboard_password/d' package/waynesg/luci-app-openclash/luci-app-openclash/root/etc/uci-defaults/luci-openclash
 
 echo
 TIME y "更换golang版本"
