@@ -14,7 +14,8 @@ mkdir -p files/usr/share/openclash/ui/yacd
 mkdir -p files/usr/share/openclash/ui/dashboard
 mkdir -p files/usr/share/openclash/ui/metacubexd
 
-CORE_VERSION="$(curl -fsSL https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version | grep '^[0-9].*')"
+#CORE_VERSION="$(curl -fsSL https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version | grep '^[0-9].*')"
+CORE_VERSION="$(curl -fsSL https://raw.githubusercontent.com/vernesong/OpenClash/core/master/core_version | grep '^[0-9].*')"
 CLASH_DEV_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/dev/clash-linux-${1}.tar.gz"
 CLASH_TUN_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/premium/clash-linux-${1}-${CORE_VERSION}.gz"
 CLASH_META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/meta/clash-linux-${1}.tar.gz"
