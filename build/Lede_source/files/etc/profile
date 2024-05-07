@@ -70,7 +70,7 @@ fi
 reload() { . /etc/profile; }
 autoupdate() { bash /bin/AutoUpdate.sh; }
 tools() { bash /bin/AutoBuild_Tools.sh; }
-tv() { bash /bin/tvbox.sh; }
+tvbox() { bash /bin/tv.sh; }
 coremarkd() { bash /etc/coremark.sh; }
 shutdown() { sync && block umount && poweroff; }
 ls() { command ls --color=auto "$@"; }
