@@ -21,9 +21,9 @@ CLASH_TUN_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/pr
 CLASH_META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/meta/clash-linux-${1}.tar.gz"
 GEOIP_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
 GEOSITE_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
-YACD_META_URL="https://raw.githubusercontent.com/DustinWin/clash-tools/main/Clash-dashboard/Yacd-meta.tar.gz"
-RAZORD_META_URL="https://raw.githubusercontent.com/DustinWin/clash-tools/main/Clash-dashboard/Razord-meta.tar.gz"
-METACUBEXD_META_URL="https://raw.githubusercontent.com/DustinWin/clash-tools/main/Clash-dashboard/metacubexd.tar.gz"
+YACD_META_URL="https://raw.githubusercontent.com/DustinWin/clash_singbox-tools/main/Clash-dashboard/Yacd-meta.tar.gz"
+RAZORD_META_URL="https://raw.githubusercontent.com/DustinWin/clash_singbox-tools/main/Clash-dashboard/Razord-meta.tar.gz"
+METACUBEXD_META_URL="https://raw.githubusercontent.com/DustinWin/clash_singbox-tools/main/Clash-dashboard/metacubexd.tar.gz"
                
 
 wget -qO- $CLASH_DEV_URL | tar xOvz > files/etc/openclash/core/clash
