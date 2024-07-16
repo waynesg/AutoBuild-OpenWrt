@@ -47,6 +47,7 @@ git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/w
 clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-theme-opentomcat "" luci-theme-opentomcat
 # argon-theme-config
 git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
+git clone --depth=1 https://github.com/kiddin9/openwrt-thunder.git package/waynesg/openwrt-thunder
 #mosdns
 git clone --depth=1 -b v5 https://github.com/sbwml/luci-app-mosdns package/waynesg/luci-app-mosdns
 #ssr-plus
