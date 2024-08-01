@@ -109,7 +109,7 @@ git clone --depth=1 https://github.com/sirpdboy/luci-app-parentcontrol package/w
 git clone --depth=1 https://github.com/ximiTech/luci-app-msd_lite package/waynesg/luci-app-msd_lite
 git clone --depth=1 https://github.com/ximiTech/msd_lite package/waynesg/luci-app-msd_lite/msd_lite
 #airconnect
-git clone --depth=1 https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect
+git clone --depth=1 -b lua https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect
 #eqosplus
 git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/waynesg/luci-app-eqosplus
 #homeproxy
