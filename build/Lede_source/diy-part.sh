@@ -154,7 +154,7 @@ sed -i 's/"在线用户"/"在线设备"/g' package/waynesg/luci-app-onliner/luas
 # sed -i 's/"存储卷"/"卷标"/g' feeds/luci/applications/luci-app-dockerman/po/zh-cn/dockerman.po
 echo "重命名服务菜单"
 #services menu
-sed -i 's/"迅雷"/"迅雷下载"/g' package/waynesg/openwrt-thunder/luci-app-thunder/po/zh-cn/xunlei.po
+# sed -i 's/"迅雷"/"迅雷下载"/g' package/waynesg/openwrt-thunder/luci-app-thunder/po/zh-cn/xunlei.po
 sed -i 's/"AirConnect"/"隔空传送"/g' package/waynesg/luci-app-airconnect/luci-app-airconnect/luasrc/controller/airconnect.lua
 #sed -i 's/"AirPlay 2 Receiver"/"隔空传送"/g' feeds/luci/applications/luci-app-airplay2/luasrc/controller/shairport-sync.lua
 #sed -i 's/WireGuard 状态/WG状态/g' feeds/luci/applications/luci-app-wireguard/po/zh-cn/wireguard.po
