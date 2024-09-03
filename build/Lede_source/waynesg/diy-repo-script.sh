@@ -102,7 +102,7 @@ git clone --depth=1 https://github.com/sirpdboy/netspeedtest package/waynesg/luc
 #onliner
 clone_or_update_git_repo https://github.com/Hyy2001X/AutoBuild-Packages package/waynesg/luci-app-onliner "" luci-app-onliner
 #alist
-git clone --depth=1 https://github.com/sbwml/luci-app-alist package/waynesg/luci-app-alist
+git clone --depth=1 -b lua https://github.com/sbwml/luci-app-alist package/waynesg/luci-app-alist
 #parents-control
 git clone --depth=1 https://github.com/sirpdboy/luci-app-parentcontrol package/waynesg/luci-app-parentcontrol
 #msd_lite
