@@ -154,7 +154,6 @@ sed -i 's/"在线用户"/"在线设备"/g' package/waynesg/luci-app-onliner/luas
 # sed -i 's/"存储卷"/"卷标"/g' feeds/luci/applications/luci-app-dockerman/po/zh-cn/dockerman.po
 echo "重命名服务菜单"
 #services menu
-sed -i 's/"挂载 SMB/CIFS 网络共享文件夹"/"挂载 SMB"/g' feeds/luci/applications/luci-app-cifs-mount/po/zh-cn/cifs.po
 sed -i 's/"迅雷"/"迅雷下载"/g' package/waynesg/openwrt-thunder/luci-app-thunder/po/zh-cn/xunlei.po
 sed -i 's/"AirConnect"/"隔空传送"/g' package/waynesg/luci-app-airconnect/luci-app-airconnect/luasrc/controller/airconnect.lua
 #sed -i 's/"AirPlay 2 Receiver"/"隔空传送"/g' feeds/luci/applications/luci-app-airplay2/luasrc/controller/shairport-sync.lua
@@ -199,6 +198,7 @@ echo "重命名存储菜单"
 # sed -i 's/"文件浏览器"/"文件管理"/g' package/waynesg/luci-app-filebrowser/po/zh-cn/filebrowser.po
 sed -i 's/"FTP 服务器"/"FTP 服务"/g' feeds/luci/applications/luci-app-vsftpd/po/zh-cn/vsftpd.po
 sed -i 's/"Alist 文件列表"/"Alist列表"/g' package/waynesg/luci-app-alist/luci-app-alist/po/zh-cn/alist.po
+sed -i 's/"挂载 SMB 网络共享"/"挂载 SMB"/g' feeds/luci/applications/luci-app-cifs-mount/po/zh-cn/cifs.po
 #vpn
 sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
 sed -i 's/"OpenVPN"/"OpenVPN 客户端"/g' feeds/luci/applications/luci-app-openvpn/luasrc/controller/openvpn.lua
