@@ -99,8 +99,8 @@ git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/l
 #echo 
 #TIME y "更换内核"
 #sed -i 's/KERNEL_PATCHVER:=6.6/KERNEL_PATCHVER:=6.6/g' ./target/linux/x86/Makefile
-sed -i 's/LINUX_VERSION-6.6 = .50/LINUX_VERSION-6.6 = .46/g' ./include/kernel-6.6
-sed -i 's/LINUX_KERNEL_HASH-6.6.50 = c065e36daf28210060c91a37ef3e92ac5814784e634577e04e406297ead2e86e/LINUX_KERNEL_HASH-6.6.46 = 052f932396d9c7d84ceeda91226a8ef797c12188bde41e6c419602d990dd45f2/g' ./include/kernel-6.6
+#sed -i 's/LINUX_VERSION-6.6 = .50/LINUX_VERSION-6.6 = .46/g' ./include/kernel-6.6
+#sed -i 's/LINUX_KERNEL_HASH-6.6.50 = c065e36daf28210060c91a37ef3e92ac5814784e634577e04e406297ead2e86e/LINUX_KERNEL_HASH-6.6.46 = 052f932396d9c7d84ceeda91226a8ef797c12188bde41e6c419602d990dd45f2/g' ./include/kernel-6.6
 
 ## containerd临时关闭hash验证
 #sed -i 's/PKG_HASH.*/PKG_HASH:=skip/' feeds/packages/utils/containerd/Makefile
