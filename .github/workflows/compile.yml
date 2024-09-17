@@ -237,7 +237,7 @@ jobs:
         fi
 
     - name: 交叉编译
-        run: |
+      run: |
           cd openwrt
           make toolchain/install -j1 V=s
         
