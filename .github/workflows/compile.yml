@@ -235,6 +235,11 @@ jobs:
           source "${PATH1}/common.sh" && Diy_xinxi
           chmod -R 755 .
         fi
+
+    - name: 交叉编译
+        run: |
+          cd openwrt
+          make toolchain/install -j1 V=s
         
     - name: 下载dl库
       id: package
