@@ -201,7 +201,7 @@ jobs:
       if: env.USE_CACHEWRTBUILD == 'true'
       uses: stupidloud/cachewrtbuild@main
       with:
-        ccache: 'flase'
+        ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
 
     - name: 生成配置
