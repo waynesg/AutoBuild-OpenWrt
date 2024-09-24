@@ -111,7 +111,7 @@ jobs:
         [[ "${{ github.event.inputs.ssh }}" == 'ssh' ]] && echo "SSHYC=true" >> $GITHUB_ENV
         cd openwrt
         if [[ "${REPO_BRANCH}" == "master" ]]; then
-          source "${PATH1}/common.sh" && Diy_lede
+          source "${PATH1}/common.sh" && Diy_mortal
         fi
         source "${PATH1}/common.sh" && Diy_all
         /bin/bash "${PATH1}/waynesg/diy-repo-script.sh"
