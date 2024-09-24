@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'build/Lede_source/relevance/start'
+      - 'build/Immortalwrt_source/relevance/start'
       - 'build/Immortalwrt_source/relevance/start'
 
 
@@ -35,7 +35,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [Lede_source, Immortalwrt_source]
+        target: [Immortalwrt_source]
 
     steps:
     - name: 优化空间
@@ -120,7 +120,7 @@ jobs:
         if [[ -n "${{ github.event.workflow }}" ]]; then
           export CPU_SELECTIOY="$(source "${GITHUB_WORKSPACE}/build/${FOLDER_NAME}/settings.ini" && echo "${CPU_SELECTION}")"
         else
-          export CPU_PASSWORD="1726670490"
+          export CPU_PASSWORD="1727174805"
           export CPU_OPTIMIZATION="E5"
         fi
         source build/${FOLDER_NAME}/common.sh && CPU_Priority
