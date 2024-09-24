@@ -68,6 +68,7 @@ fi
 alias reload='/etc/profile'
 alias autoupdate='bash /bin/AutoUpdate.sh'
 alias tools='bash /bin/AutoBuild_Tools.sh'
+alias tvbox='bash /bin/tv.sh'
 alias coremarkd='/etc/coremark.sh'
 alias shutdown='sync && block umount && poweroff'
 alias ls='ls --color=auto'
