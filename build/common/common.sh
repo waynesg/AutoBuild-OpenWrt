@@ -202,13 +202,13 @@ find . -name 'luci-app-wrtbwmon' -o -name 'wrtbwmon' -o -name 'pdnsd-alt' | xarg
 
 
 ################################################################################################################
-# 天灵源码18.06 diy.sh文件
+# Immortalwrt diy.sh文件
 ################################################################################################################
 Diy_mortal() {
 
-find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon' -o -name 'luci-light' | xargs -i rm -rf {}
-find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-openwrt' -o -name 'luci-app-cifs' | xargs -i rm -rf {}
-find . -name 'luci-app-wrtbwmon' -o -name 'wrtbwmon' | xargs -i rm -rf {}
+#find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon' -o -name 'luci-light' | xargs -i rm -rf {}
+#find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-openwrt' -o -name 'luci-app-cifs' | xargs -i rm -rf {}
+#find . -name 'luci-app-wrtbwmon' -o -name 'wrtbwmon' | xargs -i rm -rf {}
 }
 
 function CPU_Priority() {
@@ -326,10 +326,10 @@ elif [[ "${REPO_BRANCH}" == "19.07" ]]; then
 	cp -Rf "${Home}"/build/common/LIENOL/files "${Home}"
 	cp -Rf "${Home}"/build/common/LIENOL/diy/* "${Home}"
 	cp -Rf "${Home}"/build/common/LIENOL/patches/* "${PATH1}/patches"
-#elif [[ "${REPO_BRANCH}" == "openwrt-22.03" ]]; then
-#	cp -Rf "${Home}"/build/common/OFFICIAL/files "${Home}"
-#	cp -Rf "${Home}"/build/common/OFFICIAL/diy/* "${Home}"
-#	cp -Rf "${Home}"/build/common/OFFICIAL/patches/* "${PATH1}/patches"
+elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
+	cp -Rf "${Home}"/build/common/IMMORTALWRT/files "${Home}"
+	cp -Rf "${Home}"/build/common/IMMORTALWRT/diy/* "${Home}"
+	cp -Rf "${Home}"/build/common/IMMORTALWRT/patches/* "${PATH1}/patches"
 
 fi
 if [ -n "$(ls -A "${PATH1}/diy" 2>/dev/null)" ]; then
