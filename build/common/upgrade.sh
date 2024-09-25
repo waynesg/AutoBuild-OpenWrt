@@ -120,6 +120,7 @@ GET_TARGET_INFO() {
 
 Diy_Part1() {
 sed -i 's/DEFAULT_PACKAGES +=/DEFAULT_PACKAGES += luci-app-autoupdate luci-app-ttyd/g' target/linux/*/Makefile
+sed -i 's/+libpcre \\$/+libpcre2 \\/g' package/feeds/telephony/freeswitch/Makefile
 }
 
 Diy_Part2() {
