@@ -29,8 +29,6 @@ TIME() {
 # TIME y "自定义固件版本名字"
 # sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ
 
-sed -i 's/libpcre/libpcre2/g' package/feeds/telephony/freeswitch/Makefile
-
 echo 
 TIME y "调整网络诊断地址到www.baidu.com"
 sed -i "/exit 0/d" package/emortal/default-settings/files/99-default-settings
