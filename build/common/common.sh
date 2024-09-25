@@ -204,10 +204,12 @@ find . -name 'luci-app-wrtbwmon' -o -name 'wrtbwmon' -o -name 'pdnsd-alt' | xarg
 ################################################################################################################
 # Immortalwrt diy.sh文件
 ################################################################################################################
-Diy_mortal() {
+Diy_Immortalwrt() {
 
 find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon' -o -name 'luci-app-openclash' | xargs -i rm -rf {}
-# find . -name 'luci-app-wrtbwmon' -o -name 'wrtbwmon' | xargs -i rm -rf {}
+find . -name 'subconverter' -o -name 'toml11' | xargs -i rm -rf {}
+find . -name 'rapidjson' -o -name 'quickjspp' -o -name 'open-app-filter' | xargs -i rm -rf {}
+find . -name 'mosdns' -o -name 'libcron' | xargs -i rm -rf {}
 }
 
 function CPU_Priority() {
