@@ -203,6 +203,7 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a > /dev/null 2>&1
         ./scripts/feeds install -a
+        sleep 5
         if [[ "${FOLDER_NAME}" == "Immortalwrt_source" ]]; then
         sed -i 's/+libpcre \\$/+libpcre2 \\/g' "${Home}"/package/feeds/telephony/freeswitch/Makefile
         fi
