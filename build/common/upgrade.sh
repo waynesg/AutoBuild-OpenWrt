@@ -9,7 +9,7 @@ GET_TARGET_INFO() {
 	}
 	case "${REPO_BRANCH}" in
 	"master")
-            if [[ "${{ matrix.target }}" == "Lede_source" ]]; then
+            if [[ "${FOLDER_NAME}" == "Lede_source" ]]; then
 		LUCI_Name="18.06"
 		REPO_Name="lede"
 		ZUOZHE="Lean's"
@@ -32,7 +32,7 @@ GET_TARGET_INFO() {
 			Up_Firmware="openwrt-${TARGET_BOARD}-${TARGET_SUBTARGET}-${TARGET_PROFILE}-squashfs-sysupgrade.bin"
 			Firmware_sfx="bin"
 		fi
-            elif [[ "${{ matrix.target }}" == "Immortalwrt_source" ]]; then
+            elif [[ "${FOLDER_NAME}" == "Immortalwrt_source" ]]; then
 	# ImmortalWrt 源相关设置
 	        LUCI_Name="immortalwrt-23.05"
 		REPO_Name="immortalwrt"
