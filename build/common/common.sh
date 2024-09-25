@@ -210,6 +210,7 @@ find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon' -o -name 'luci-
 find . -name 'subconverter' -o -name 'toml11' | xargs -i rm -rf {}
 find . -name 'rapidjson' -o -name 'quickjspp' -o -name 'open-app-filter' | xargs -i rm -rf {}
 find . -name 'mosdns' -o -name 'libcron' | xargs -i rm -rf {}
+sed -i 's/+libpcre \\$/+libpcre2 \\/g' package/feeds/telephony/freeswitch/Makefile
 }
 
 function CPU_Priority() {
