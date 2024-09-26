@@ -209,7 +209,7 @@ Diy_Immortalwrt() {
 find . -name 'luci-app-openclash' -o -name 'open-app-filter' | xargs -i rm -rf {}
 find . -name 'toml11' | xargs -i rm -rf {}
 find . -name 'rapidjson' -o -name 'quickjspp' | xargs -i rm -rf {}
-find . -name 'libcron' | xargs -i rm -rf {}
+find . -name 'libcron' -o -name 'subconverter' | xargs -i rm -rf {}
 }
 
 function CPU_Priority() {
