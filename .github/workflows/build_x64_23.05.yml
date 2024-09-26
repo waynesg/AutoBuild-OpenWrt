@@ -110,9 +110,7 @@ jobs:
         source "${PATH1}/common.sh" && Diy_settings
         [[ "${{ github.event.inputs.ssh }}" == 'ssh' ]] && echo "SSHYC=true" >> $GITHUB_ENV
         cd openwrt
-        if [[ "${REPO_BRANCH}" == "master" ]]; then
-          source "${PATH1}/common.sh" && Diy_Immortalwrt
-        fi
+        source "${PATH1}/common.sh" && Diy_Immortalwrt
         source "${PATH1}/common.sh" && Diy_all
         /bin/bash "${PATH1}/waynesg/diy-repo-script.sh"
         /bin/bash "${PATH1}/$DIY_PART_SH"
