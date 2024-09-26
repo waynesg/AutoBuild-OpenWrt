@@ -38,7 +38,7 @@ clone_or_update_git_repo() {
 }
 
 # theme
-git clone --depth=1 -b master https://github.com/jerrykuku/luci-theme-argon package/waynesg/luci-theme-argon
+#git clone --depth=1 -b master https://github.com/jerrykuku/luci-theme-argon package/waynesg/luci-theme-argon
 #git clone --depth=1 https://github.com/sirpdboy/luci-theme-opentopd package/waynesg/luci-theme-opentopd
 #git clone --depth=1 -b master https://github.com/kiddin9/luci-theme-edge package/waynesg/luci-theme-edge
 #git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/waynesg/luci-theme-neobird
@@ -70,7 +70,7 @@ git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/waynes
 #poweroff
 #git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff package/waynesg/luci-app-poweroff
 #openappfilter
-git clone --depth=1 https://github.com/destan19/OpenAppFilter package/waynesg/luci-app-oaf
+#git clone --depth=1 https://github.com/destan19/OpenAppFilter package/waynesg/luci-app-oaf
 #advanced
 clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-app-advanced "" luci-app-advanced
 #filebrowser
@@ -100,5 +100,5 @@ clone_or_update_git_repo https://github.com/sbwml/luci-app-airconnect package/wa
 #eqosplus
 git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/waynesg/luci-app-eqosplus
 #subconverter
-git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter package/waynesg/luci-app-subconverter
+#git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter package/waynesg/luci-app-subconverter
 
