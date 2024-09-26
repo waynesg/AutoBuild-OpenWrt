@@ -76,7 +76,7 @@ clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/wa
 #filebrowser
 #clone_or_update_git_repo https://github.com/Lienol/openwrt-package package/waynesg/luci-app-filebrowser "" luci-app-filebrowser
 #fileassistant
-clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-app-fileassistant "" luci-app-fileassistant
+#clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-app-fileassistant "" luci-app-fileassistant
 #timewol
 clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-timewol "" luci-app-control-timewol
 #weburl
