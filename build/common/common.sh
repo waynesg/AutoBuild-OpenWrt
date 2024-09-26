@@ -206,7 +206,7 @@ find . -name 'luci-app-wrtbwmon' -o -name 'wrtbwmon' -o -name 'pdnsd-alt' | xarg
 ################################################################################################################
 Diy_Immortalwrt() {
 
-find . -name 'luci-app-openclash' | xargs -i rm -rf {}
+find . -name 'luci-app-openclash' -o -name 'luci-app-openclash' | xargs -i rm -rf {}
 find . -name 'toml11' | xargs -i rm -rf {}
 find . -name 'rapidjson' -o -name 'quickjspp' | xargs -i rm -rf {}
 find . -name 'libcron' | xargs -i rm -rf {}
