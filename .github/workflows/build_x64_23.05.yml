@@ -68,7 +68,7 @@ jobs:
     - name: 源码版本
       run: |
         chmod -R +x "${GITHUB_WORKSPACE}/build/common"
-        if [[ "${REPO_BRANCH}" == "master" ]]; then
+        if [[ "${REPO_BRANCH}" == "openwrt-23.05" ]]; then
           echo "ZZZ=package/emortal/default-settings/files/99-default-settings" >> $GITHUB_ENV
           echo "CODE=Immortalwrt" >> $GITHUB_ENV
           echo "LUCI_EDITION=23.05" >> $GITHUB_ENV
