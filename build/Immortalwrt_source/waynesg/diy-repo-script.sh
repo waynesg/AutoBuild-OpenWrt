@@ -70,7 +70,7 @@ git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/waynes
 #poweroff
 #git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff package/waynesg/luci-app-poweroff
 #openappfilter
-#git clone --depth=1 https://github.com/destan19/OpenAppFilter package/waynesg/luci-app-oaf
+git clone --depth=1 https://github.com/destan19/OpenAppFilter package/waynesg/luci-app-oaf
 #advanced
 clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-app-advanced "" luci-app-advanced
 #filebrowser
