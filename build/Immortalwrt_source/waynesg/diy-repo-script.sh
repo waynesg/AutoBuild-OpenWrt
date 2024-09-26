@@ -45,9 +45,9 @@ git clone --depth=1 -b master https://github.com/jerrykuku/luci-theme-argon pack
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-advancedplus package/waynesg/luci-app-advancedplus
 #clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-theme-opentomcat "" luci-theme-opentomcat
 # argon-theme-config
-git clone --depth=1 -b master https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
+#git clone --depth=1 -b master https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
 #mosdns
-git clone --depth=1 -b v5 https://github.com/sbwml/luci-app-mosdns package/waynesg/luci-app-mosdns
+#git clone --depth=1 -b v5 https://github.com/sbwml/luci-app-mosdns package/waynesg/luci-app-mosdns
 #ssr-plus
 #clone_or_update_git_repo https://github.com/fw876/helloworld package/waynesg/luci-app-ssr-plus master luci-app-ssr-plus
 #passwall
