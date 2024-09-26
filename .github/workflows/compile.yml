@@ -6,8 +6,6 @@ on:
       - main
     paths:
       - 'build/Immortalwrt_source/relevance/start'
-      - 'build/Immortalwrt_source/relevance/start'
-
 
 env:
   Github: https://github.com/${{github.repository}}
