@@ -90,19 +90,13 @@ jobs:
       run: |
         chmod -R +x "${GITHUB_WORKSPACE}/build/common"
         if [[ "${REPO_BRANCH}" == "master" ]]; then
-          if [[ "${matrix_target}" == "Lede_source" ]]; then
           echo "ZZZ=package/lean/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
           echo "CODE=Lede" >> $GITHUB_ENV
           echo "LUCI_EDITION=18.06" >> $GITHUB_ENV
-          elif [[ "${matrix_target}" == "Immortalwrt_source" ]]; then
+        elif [[ "${REPO_BRANCH}" == "openwrt-23.05" ]]; then
           echo "ZZZ=package/emortal/default-settings/files/99-default-settings" >> $GITHUB_ENV
           echo "CODE=Immortalwrt" >> $GITHUB_ENV
           echo "LUCI_EDITION=23.05" >> $GITHUB_ENV
-          fi
-        elif [[ "${REPO_BRANCH}" == "openwrt-18.06" ]]; then
-          echo "ZZZ=package/emortal/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
-          echo "CODE=Mortal" >> $GITHUB_ENV
-          echo "LUCI_EDITION=18.06" >> $GITHUB_ENV
         fi
         echo "NETIP=package/base-files/files/etc/networkip" >> $GITHUB_ENV
         echo "DELETE=package/base-files/files/etc/deletefile" >> $GITHUB_ENV
@@ -173,26 +167,20 @@ jobs:
         source "${PATH1}/common.sh" && Diy_settings
         [[ "${{ github.event.inputs.ssh }}" == 'ssh' ]] && echo "SSHYC=true" >> $GITHUB_ENV
         cd openwrt
-        if [[ "${REPO_BRANCH}" == "master" ]]; then
-          if [[ "${FOLDER_NAME}" == "Lede_source" ]]; then
+        if [[ "${REPO_BRANCH}" == "master" ]]; then 
           ZZZ="package/lean/default-settings/files/zzz-default-settings"
           echo "DISTRIB_REVISION=$(cat $ZZZ|grep DISTRIB_REVISION= | sed 's/^.\{24\}//g' | sed 's/.\{26\}$//')" >> $GITHUB_ENV
           echo "KERNEL_PATCHVER=$(cat target/linux/x86/Makefile|grep KERNEL_PATCHVER | sed 's/^.\{17\}//g')" >> $GITHUB_ENV
           echo "	    当前编译版本：$(cat $ZZZ|grep DISTRIB_REVISION= | sed 's/^.\{24\}//g' | sed 's/.\{26\}$//')"
           echo "	    内核版本：$(cat target/linux/x86/Makefile|grep KERNEL_PATCHVER | sed 's/^.\{17\}//g')"
           source "${PATH1}/common.sh" && Diy_lede
-          elif [[ "${FOLDER_NAME}" == "Immortalwrt_source" ]]; then
+        elif [[ "${REPO_BRANCH}" == "openwrt-23.05" ]]; then
           ZZZ="package/emortal/default-settings/files/99-default-settings"
           echo "DISTRIB_REVISION=$(cat $ZZZ|grep DISTRIB_REVISION= | sed 's/^.\{24\}//g' | sed 's/.\{26\}$//')" >> $GITHUB_ENV
           echo "KERNEL_PATCHVER=$(cat target/linux/x86/Makefile|grep KERNEL_PATCHVER | sed 's/^.\{17\}//g')" >> $GITHUB_ENV
           echo "	    当前编译版本：$(cat $ZZZ|grep DISTRIB_REVISION= | sed 's/^.\{24\}//g' | sed 's/.\{26\}$//')"
           echo "	    内核版本：$(cat target/linux/x86/Makefile|grep KERNEL_PATCHVER | sed 's/^.\{17\}//g')"
           source "${PATH1}/common.sh" && Diy_Immortalwrt
-          fi
-        elif [[ "${REPO_BRANCH}" == "openwrt-18.06" ]]; then
-          source "${PATH1}/common.sh" && Diy_Tianling
-        elif [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
-          source "${PATH1}/common.sh" && Diy_mortal
         fi
         source "${PATH1}/common.sh" && Diy_all
         /bin/bash "${PATH1}/waynesg/diy-repo-script.sh"
@@ -201,10 +189,10 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a > /dev/null 2>&1
         ./scripts/feeds install -a
-        sleep 5
-        if [[ "${FOLDER_NAME}" == "Immortalwrt_source" ]]; then
-        sed -i 's/+libpcre \\$/+libpcre2 \\/g' "${Home}"/package/feeds/telephony/freeswitch/Makefile
-        fi
+        # sleep 5
+        # if [[ "${REPO_BRANCH}" == "openwrt-23.05" ]]; then
+        # sed -i 's/+libpcre \\$/+libpcre2 \\/g' "${Home}"/package/feeds/telephony/freeswitch/Makefile
+        # fi
         mv "$PATH1/$CONFIG_FILE" .config
         if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           source "${PATH1}/upgrade.sh" && Diy_Part1
