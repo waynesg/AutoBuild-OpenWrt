@@ -73,16 +73,6 @@ TIME y "添加upx"
 sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx\/host"/g' package/waynesg/luci-app-mosdns/mosdns/Makefile
 
 echo
-TIME y "替换curl修改版（无nghttp3、ngtcp2）"
-curl_ver=$(cat feeds/packages/net/curl/Makefile | grep -i "PKG_VERSION:=" | awk 'BEGIN{FS="="};{print $2}')
-[ $(check_ver "$curl_ver" "8.9.1") != 0 ] && {
-	echo "替换curl版本"
-	rm -rf feeds/packages/net/curl
-	cp -rf ${GITHUB_WORKSPACE}/patch/curl feeds/packages/net/curl
-}
-mirror=raw.githubusercontent.com/sbwml/r4s_build_script/master
-
-echo
 TIME y "防火墙4添加自定义nft命令支持"
 curl -s https://$mirror/openwrt/patch/firewall4/100-openwrt-firewall4-add-custom-nft-command-support.patch | patch -p1
 
@@ -162,9 +152,8 @@ sed -i 's/"Argon 主题设置"/"主题设置"/g' feeds/luci/applications/luci-ap
 
 echo "重命名服务菜单"
 #services menu
-sed -i 's/"AirConnect"/"隔空传送"/g' package/waynesg/luci-app-airconnect/luci-app-airconnect/luasrc/controller/airconnect.lua
 sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' feeds/luci/applications/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
-sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh-cn/upnp.po
+sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh_Hans/upnp.po
 
 echo "重命名网络菜单"
 #network
@@ -173,7 +162,7 @@ sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
 sed -i 's/"Socat"/"端口转发"/g'  feeds/luci/applications/luci-app-socat/po/zh_Hans/socat.po
 
 echo "重命名存储菜单"
-sed -i 's/"AList"/"Alist列表"/g' feeds/luci/applications/applications/luci-app-alist/po/zh_Hans/alist.po
+sed -i 's/"AList"/"Alist列表"/g' feeds/luci/applications/luci-app-alist/po/zh_Hans/alist.po
 sed -i 's/"USB 打印服务器"/"打印服务"/g' feeds/luci/applications/luci-app-usb-printer/po/zh_Hans/luci-app-usb-printer.po
 sed -i 's/"FTP 服务器"/"FTP 服务"/g' feeds/luci/applications/luci-app-vsftpd/po/zh_Hans/vsftpd.po
 
