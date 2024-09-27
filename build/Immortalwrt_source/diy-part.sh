@@ -122,14 +122,16 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 
 echo
 TIME b "菜单 调整..."
-sed -i 's/"services"/"control"/g' feeds/luci/applications/luci-app-wol/root/usr/share/luci/menu.d/luci-app-wol.json
+sed -i 's|/services/|/control/|' feeds/luci/applications/luci-app-wol/root/usr/share/luci/menu.d/luci-app-wol.json
 sed -i 's/\"services\"/\"control\"/g'  package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/appfilter.lua
 sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
-# sed -i 's/60/32/g' feeds/luci/applications/uci-app-smartdns/luasrc/controller/smartdns.lua
-# sed -i 's/30/40/g' feeds/luci/applications/luci-app-pushbot/luasrc/controller/pushbot.lua
-# sed -i 's/_("OpenClash"), 50/_("OpenClash"), -10/g' package/waynesg/luci-app-openclash/luci-app-openclash/luasrc/controller/openclash.lua
+sed -i 's|/services/|/nas/|' feeds/luci/applications/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
+sed -i '/"title": "SmartDNS",/a \        "order": 30,' feeds/luci/applications/luci-app-smartdns/root/usr/share/luci/menu.d/luci-app-smartdns.json
+sed -i '/"title": "MihomoTProxy",/a \        "order": 15,' package/waynesg/luci-app-mihomo/luci-app-mihomo/root/usr/share/luci/menu.d/luci-app-mihomo.json
+sed -i 's/_("OpenClash"), 50/_("OpenClash"), 20/g' package/waynesg/luci-app-openclash/luci-app-openclash/luasrc/controller/openclash.lua
 sed -i 's/services/network/g' feeds/luci/applications/luci-app-upnp/root/usr/share/luci/menu.d/luci-app-upnp.json
 sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
+sed -i 's/"软件包"/"软件管理"/g' `grep "软件包" -rl ./`
 
 echo             
 TIME b "插件 重命名..."
@@ -140,7 +142,7 @@ sed -i 's/"路由"/"路由映射"/g' feeds/luci/modules/luci-base/po/zh_Hans/bas
 sed -i 's/"防火墙"/"安全防护"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"在线用户"/"在线设备"/g' package/waynesg/luci-app-onliner/luasrc/controller/onliner.lua
 #system menu
-sed -i 's/"系统"/"系统设置"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+#sed -i 's/"系统"/"系统设置"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"管理权"/"权限管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"重启"/"立即重启"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"备份与升级"/"备份升级"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
@@ -154,21 +156,23 @@ echo "重命名服务菜单"
 #services menu
 sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' feeds/luci/applications/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh_Hans/upnp.po
+sed -i 's/"MihomoTProxy"/"MiHoMo"/g' package/waynesg/luci-app-mihomo/luci-app-mihomo/root/usr/share/luci/menu.d/luci-app-mihomo.json
 
 echo "重命名网络菜单"
 #network
 sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
 sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
-sed -i 's/"Socat"/"端口转发"/g'  feeds/luci/applications/luci-app-socat/po/zh_Hans/socat.po
+sed -i 's/"Socat"/"端口转发"/g'  feeds/luci/applications/luci-app-socat/luasrc/controller/socat.lua
+sed -i 's/"IP\/MAC 绑定"/"地址绑定"/g' feeds/luci/applications/luci-app-arpbind/po/zh_Hans/arpbind.po
 
 echo "重命名存储菜单"
-sed -i 's/"AList"/"Alist列表"/g' feeds/luci/applications/luci-app-alist/po/zh_Hans/alist.po
+sed -i 's/"AList"/"Alist列表"/g' feeds/luci/applications/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
 sed -i 's/"USB 打印服务器"/"打印服务"/g' feeds/luci/applications/luci-app-usb-printer/po/zh_Hans/luci-app-usb-printer.po
 sed -i 's/"FTP 服务器"/"FTP 服务"/g' feeds/luci/applications/luci-app-vsftpd/po/zh_Hans/vsftpd.po
 
 #vpn
-sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-zerotier/po/zh_Hans/zerotier.po
-sed -i 's/"OpenVPN"/"OpenVPN 客户端"/g' feeds/luci/applications/luci-app-openvpn/po/zh_Hans/openvpn.po
+sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
+sed -i 's/"OpenVPN"/"OpenVPN 客户端"/g' feeds/luci/applications/luci-app-openvpn/luasrc/controller/openvpn.lua
 TIME b "重命名 完成"
 
 echo
