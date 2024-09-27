@@ -195,7 +195,7 @@ jobs:
         token: ${{ secrets.REPO_TOKEN }}
         repository: ${{ github.repository }}
         retain_days: ${{ env.RETAIN_DAYS }}
-        keep_minimum_runs: 3
+        keep_minimum_runs: 10
     
     - name: 删除发布
       continue-on-error: true
