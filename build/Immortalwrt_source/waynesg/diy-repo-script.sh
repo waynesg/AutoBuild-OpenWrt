@@ -105,4 +105,6 @@ git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter package/wa
 git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo.git package/waynesg/luci-app-mihomo
 #cpu status
 git clone --depth=1 https://github.com/gSpotx2f/luci-app-cpu-status package/waynesg/luci-app-cpu-status
+#tn-netports
+git clone --depth=1 https://github.com/muink/luci-app-tn-netports package/waynesg/luci-app-tn-netports
 
