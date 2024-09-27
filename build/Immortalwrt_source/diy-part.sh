@@ -134,6 +134,8 @@ sed -i -e 's/^msgid "All CPUs"/msgid "All CPUs"\nmsgstr "所有处理器"/' \
        -e 's/^msgid "Load of each CPU"/msgid "Load of each CPU"\nmsgstr "每个处理器的负载"/' \
        -e 's/^msgid "Total load"/msgid "Total load"\nmsgstr "总负载"/' \
 package/waynesg/luci-app-cpu-status/po/zh_Hans/cpu-status.po
+#tn-netports调整
+sed -i "/E('a', { href: 'https:\/\/github.com\/tano-systems\/luci-app-tn-netports'/,/)\,/d" package/waynesg/luci-app-tn-netports/htdocs/luci-static/resources/netports.js
 
 echo
 TIME b "菜单 调整..."
