@@ -25,9 +25,9 @@ TIME() {
 
 
 
-# echo 
-# TIME y "自定义固件版本名字"
-# sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ
+echo 
+TIME y "自定义固件版本名字"
+sed -i "s/'%D %V %C' /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" package/base-files/files/etc/openwrt_release
 
 echo 
 TIME y "调整网络诊断地址到www.baidu.com"
@@ -42,20 +42,147 @@ EOF
 
 echo 
 TIME y ”关闭开机串口跑码“
-sed -i 's/console=tty0//g'  target/linux/x86/image/Makefile
-
-# ttyd设置空密码
-#sed -i 's/\/bin\/login/\/bin\/login -f root/' /etc/config/ttyd
-
-
-# echo
-# TIME y "添加upx"
-# sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host"/"PKG_BUILD_DEPENDS:=golang\/host homebox\/host upx\/host"/g' package/waynesg/luci-app-netspeedtest/homebox/Makefile
-# sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx\/host"/g' package/waynesg/luci-app-mosdns/mosdns/Makefile
-
+sed -i 's/GRUB_CONSOLE_CMDLINE += console=tty1/GRUB_CONSOLE_CMDLINE += console=tty0/' target/linux/x86/image/Makefile
 
 echo
-TIME b "自定义文件修复权限"
+TIME y "修改最大连接数修改为65535"
+sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=65535' package/base-files/files/etc/sysctl.conf
+
+echo
+TIME y "修复上移下移按钮翻译"
+sed -i 's/<%:Up%>/<%:Move up%>/g' feeds/luci/modules/luci-compat/luasrc/view/cbi/tblsection.htm
+sed -i 's/<%:Down%>/<%:Move down%>/g' feeds/luci/modules/luci-compat/luasrc/view/cbi/tblsection.htm
+
+echo
+TIME y "更换golang版本"
+rm -rf feeds/packages/lang/golang
+git clone --depth=1 https://github.com/sbwml/packages_lang_golang feeds/packages/lang/golang
+
+echo
+TIME y "修改dashboard password"
+sed -i '/uci -q set openclash.config.dashboard_password/d' package/waynesg/luci-app-openclash/luci-app-openclash/root/etc/uci-defaults/luci-openclash
+sed -i '/uci add openclash/,/^md5sum /d' package/waynesg/luci-app-openclash/luci-app-openclash/root/etc/uci-defaults/luci-openclash
+
+echo
+TIME y "ppp - 2.5.0"
+rm -rf package/network/services/ppp
+git clone https://github.com/sbwml/package_network_services_ppp package/network/services/ppp
+
+echo
+TIME y "添加upx"
+sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx\/host"/g' package/waynesg/luci-app-mosdns/mosdns/Makefile
+
+echo
+TIME y "替换curl修改版（无nghttp3、ngtcp2）"
+curl_ver=$(cat feeds/packages/net/curl/Makefile | grep -i "PKG_VERSION:=" | awk 'BEGIN{FS="="};{print $2}')
+[ $(check_ver "$curl_ver" "8.9.1") != 0 ] && {
+	echo "替换curl版本"
+	rm -rf feeds/packages/net/curl
+	cp -rf ${GITHUB_WORKSPACE}/patch/curl feeds/packages/net/curl
+}
+mirror=raw.githubusercontent.com/sbwml/r4s_build_script/master
+
+echo
+TIME y "防火墙4添加自定义nft命令支持"
+curl -s https://$mirror/openwrt/patch/firewall4/100-openwrt-firewall4-add-custom-nft-command-support.patch | patch -p1
+
+pushd feeds/luci
+	# 防火墙4添加自定义nft命令选项卡
+	curl -s https://$mirror/openwrt/patch/firewall4/0004-luci-add-firewall-add-custom-nft-rule-support.patch | patch -p1
+	# 状态-防火墙页面去掉iptables警告，并添加nftables、iptables标签页
+	curl -s https://$mirror/openwrt/patch/luci/0004-luci-mod-status-firewall-disable-legacy-firewall-rul.patch | patch -p1
+popd
+
+echo
+TIME y "补充 firewall4 luci 中文翻译"
+cat >> "feeds/luci/applications/luci-app-firewall/po/zh_Hans/firewall.po" <<-EOF
+	
+	msgid ""
+	"Custom rules allow you to execute arbitrary nft commands which are not "
+	"otherwise covered by the firewall framework. The rules are executed after "
+	"each firewall restart, right after the default ruleset has been loaded."
+	msgstr ""
+	"自定义规则允许您执行不属于防火墙框架的任意 nft 命令。每次重启防火墙时，"
+	"这些规则在默认的规则运行后立即执行。"
+	
+	msgid ""
+	"Applicable to internet environments where the router is not assigned an IPv6 prefix, "
+	"such as when using an upstream optical modem for dial-up."
+	msgstr ""
+	"适用于路由器未分配 IPv6 前缀的互联网环境，例如上游使用光猫拨号时。"
+
+	msgid "NFtables Firewall"
+	msgstr "NFtables 防火墙"
+
+	msgid "IPtables Firewall"
+	msgstr "IPtables 防火墙"
+EOF
+
+echo
+TIME y "rpcd - fix timeout"
+sed -i 's/option timeout 30/option timeout 60/g' package/system/rpcd/files/rpcd.config
+sed -i 's#20) \* 1000#60) \* 1000#g' feeds/luci/modules/luci-base/htdocs/luci-static/resources/rpc.js
+
+echo
+TIME y "修正部分从第三方仓库拉取的软件 Makefile 路径问题"
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/lang\/golang\/golang-package.mk/$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang-package.mk/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHREPO/PKG_SOURCE_URL:=https:\/\/github.com/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload.github.com/g' {}
+
+echo
+TIME b "菜单 调整..."
+sed -i 's/"services"/"control"/g' feeds/luci/applications/luci-app-wol/root/usr/share/luci/menu.d/luci-app-wol.json
+sed -i 's/\"services\"/\"control\"/g'  package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/appfilter.lua
+sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
+# sed -i 's/60/32/g' feeds/luci/applications/uci-app-smartdns/luasrc/controller/smartdns.lua
+# sed -i 's/30/40/g' feeds/luci/applications/luci-app-pushbot/luasrc/controller/pushbot.lua
+# sed -i 's/_("OpenClash"), 50/_("OpenClash"), -10/g' package/waynesg/luci-app-openclash/luci-app-openclash/luasrc/controller/openclash.lua
+sed -i 's/services/network/g' feeds/luci/applications/luci-app-upnp/root/usr/share/luci/menu.d/luci-app-upnp.json
+sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
+
+echo             
+TIME b "插件 重命名..."
+echo "重命名系统菜单"
+#status menu
+sed -i 's/"概览"/"系统概览"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"路由"/"路由映射"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"防火墙"/"安全防护"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"在线用户"/"在线设备"/g' package/waynesg/luci-app-onliner/luasrc/controller/onliner.lua
+#system menu
+sed -i 's/"系统"/"系统设置"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"管理权"/"权限管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"重启"/"立即重启"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"备份与升级"/"备份升级"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"挂载点"/"挂载路径"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"启动项"/"启动管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"软件包"/"软件管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"终端"/"命令终端"/g' feeds/luci/applications/luci-app-ttyd/po/zh_Hans/ttyd.po
+sed -i 's/"Argon 主题设置"/"主题设置"/g' feeds/luci/applications/luci-app-argon-config/po/zh_Hans/argon-config.po
+
+echo "重命名服务菜单"
+#services menu
+sed -i 's/"AirConnect"/"隔空传送"/g' package/waynesg/luci-app-airconnect/luci-app-airconnect/luasrc/controller/airconnect.lua
+sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' feeds/luci/applications/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
+sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh-cn/upnp.po
+
+echo "重命名网络菜单"
+#network
+sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
+sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
+sed -i 's/"Socat"/"端口转发"/g'  feeds/luci/applications/luci-app-socat/po/zh_Hans/socat.po
+
+echo "重命名存储菜单"
+sed -i 's/"AList"/"Alist列表"/g' feeds/luci/applications/applications/luci-app-alist/po/zh_Hans/alist.po
+sed -i 's/"USB 打印服务器"/"打印服务"/g' feeds/luci/applications/luci-app-usb-printer/po/zh_Hans/luci-app-usb-printer.po
+sed -i 's/"FTP 服务器"/"FTP 服务"/g' feeds/luci/applications/luci-app-vsftpd/po/zh_Hans/vsftpd.po
+
+#vpn
+sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-zerotier/po/zh_Hans/zerotier.po
+sed -i 's/"OpenVPN"/"OpenVPN 客户端"/g' feeds/luci/applications/luci-app-openvpn/po/zh_Hans/openvpn.po
+TIME b "重命名 完成"
+
+echo
 chmod -R 755 package/waynesg
 echo
 TIME g "配置更新完成"
