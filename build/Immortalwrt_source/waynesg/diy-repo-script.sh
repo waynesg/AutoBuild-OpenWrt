@@ -101,4 +101,8 @@ clone_or_update_git_repo https://github.com/sbwml/luci-app-airconnect package/wa
 git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/waynesg/luci-app-eqosplus
 #subconverter
 git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter package/waynesg/luci-app-subconverter
+#mihomo proxy
+git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo.git package/waynesg/luci-app-mihomo
+#cpu status
+git clone --depth=1 https://github.com/gSpotx2f/luci-app-cpu-status package/waynesg/luci-app-cpu-status
 
