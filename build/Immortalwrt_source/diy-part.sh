@@ -27,7 +27,7 @@ TIME() {
 
 echo 
 TIME y "自定义固件版本名字"
-sed -i "s/'%D %V %C' /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" package/base-files/files/etc/openwrt_release
+sed -i "s/'%D %V %C'/AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date '+%Y.%m.%d') @ OpenWrt/g" package/base-files/files/etc/openwrt_release
 
 echo 
 TIME y "调整网络诊断地址到www.baidu.com"
@@ -119,6 +119,21 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/lang\/golang\/golang-package.mk/$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang-package.mk/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHREPO/PKG_SOURCE_URL:=https:\/\/github.com/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload.github.com/g' {}
+############################################################################################################################################################
+############################################################################################################################################################
+echo
+TIME b "汉化 调整..."
+sed -i 's/CPU Load/处理器负载/g' package/waynesg/luci-app-cpu-status/htdocs/luci-static/resources/view/status/include/18_cpu.js
+sed -i -e 's/^msgid "All CPUs"/msgid "All CPUs"\nmsgstr "所有处理器"/' \
+       -e 's/^msgid "Calculating"/msgid "Calculating"\nmsgstr "计算中"/' \
+       -e 's/^msgid "CPU"/msgid "CPU"\nmsgstr "处理器"/' \
+       -e 's/^msgid "CPU Load"/msgid "CPU Load"\nmsgstr "处理器负载"/' \
+       -e 's/^msgid "Detailed load"/msgid "Detailed load"\nmsgstr "详细负载"/' \
+       -e 's/^msgid "Detailed load of each CPU"/msgid "Detailed load of each CPU"\nmsgstr "每个处理器的详细负载"/' \
+       -e 's/^msgid "Load"/msgid "Load"\nmsgstr "负荷"/' \
+       -e 's/^msgid "Load of each CPU"/msgid "Load of each CPU"\nmsgstr "每个处理器的负载"/' \
+       -e 's/^msgid "Total load"/msgid "Total load"\nmsgstr "总负载"/' \
+package/waynesg/luci-app-cpu-status/po/zh_Hans/cpu-status.po
 
 echo
 TIME b "菜单 调整..."
