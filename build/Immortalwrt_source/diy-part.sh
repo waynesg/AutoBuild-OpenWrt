@@ -41,9 +41,9 @@ uci commit luci
 exit 0
 EOF
 
-echo 
-TIME y ”关闭开机串口跑码“
-sed -i 's/GRUB_CONSOLE_CMDLINE += console=tty1/GRUB_CONSOLE_CMDLINE += console=tty0/' target/linux/x86/image/Makefile
+#echo 
+#TIME y ”关闭开机串口跑码“
+#sed -i 's/GRUB_CONSOLE_CMDLINE += console=tty1/GRUB_CONSOLE_CMDLINE += console=tty0/' target/linux/x86/image/Makefile
 
 echo
 TIME y "修改最大连接数修改为65535"
