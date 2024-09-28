@@ -27,7 +27,8 @@ TIME() {
 
 echo 
 TIME y "自定义固件版本名字"
-sed -i "s/'%D %V %C'/AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date '+%Y.%m.%d') @ OpenWrt/g" package/base-files/files/etc/openwrt_release
+#sed -i "s/'%D %V %C'/AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date '+%Y.%m.%d') @ OpenWrt/g" package/base-files/files/etc/openwrt_release
+sed -i "s/DISTRIB_DESCRIPTION='.*'/DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date '+%Y.%m.%d') @ OpenWrt'/g" package/base-files/files/etc/openwrt_release
 
 echo 
 TIME y "调整网络诊断地址到www.baidu.com"
@@ -172,8 +173,8 @@ echo "重命名网络菜单"
 sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
 sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
 sed -i 's/"Socat"/"端口转发"/g'  feeds/luci/applications/luci-app-socat/luasrc/controller/socat.lua
-#sed -i 's/"IP\/MAC绑定"/"地址绑定"/g' feeds/luci/applications/luci-app-arpbind/po/zh_Hans/arpbind.po
-sed -i 's/"IP\/MAC绑定"/"地址绑定"/g' `grep "IP\/MAC绑定" -rl ./`
+sed -i 's/"IP\/MAC绑定"/"地址绑定"/g' feeds/luci/applications/luci-app-arpbind/po/zh_Hans/arpbind.po
+#sed -i 's/"IP\/MAC绑定"/"地址绑定"/g' `grep "IP\/MAC绑定" -rl ./`
 
 
 echo "重命名存储菜单"
