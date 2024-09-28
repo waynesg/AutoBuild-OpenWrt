@@ -180,7 +180,9 @@ echo "重命名网络菜单"
 sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
 sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
 sed -i 's/"Socat"/"端口转发"/g'  feeds/luci/applications/luci-app-socat/luasrc/controller/socat.lua
-sed -i 's/"IP\/MAC绑定"/"地址绑定"/g' feeds/luci/applications/luci-app-arpbind/po/zh_Hans/arpbind.po
+#sed -i 's/"IP\/MAC绑定"/"地址绑定"/g' feeds/luci/applications/luci-app-arpbind/po/zh_Hans/arpbind.po
+sed -i 's/"IP\/MAC绑定"/"地址绑定"/g' `grep "IP\/MAC绑定" -rl ./`
+
 
 echo "重命名存储菜单"
 sed -i 's/"AList"/"Alist列表"/g' feeds/luci/applications/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
