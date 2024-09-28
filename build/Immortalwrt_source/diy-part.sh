@@ -128,7 +128,8 @@ sed -i 's/CPU Load/处理器负载/g' package/waynesg/luci-app-cpu-status/htdocs
 rm -rf package/waynesg/luci-app-cpu-status/po/zh_Hans/cpu-status.po
 wget -O package/waynesg/luci-app-cpu-status/po/zh_Hans/cpu-status.po https://raw.githubusercontent.com/waynesg/scripts/main/others/cpu-status.po
 #tn-netports调整
-sed -i "/E('a', { href: 'https:\/\/github.com\/tano-systems\/luci-app-tn-netports'/,/)\,/d" package/waynesg/luci-app-tn-netports/htdocs/luci-static/resources/netports.js
+#sed -i "/E('a', { href: 'https:\/\/github.com\/tano-systems\/luci-app-tn-netports'/,/)\,/d" package/waynesg/luci-app-tn-netports/htdocs/luci-static/resources/netports.js
+sed -i '/var title = E.*netports-title/,/);/c\var title = E('"'"'div'"'"', { class: '"'"'netports-title'"'"' }, [\n\t\t\t\tE('"'"'div'"'"', { class: '"'"'netports-buttons'"'"' }, buttons),\n\t\t\t\tE('"'"'div'"'"', { class: '"'"'netports-version'"'"' })\n\t\t\t]);' package/waynesg/luci-app-tn-netports/htdocs/luci-static/resources/netports.js
 
 echo
 TIME b "菜单 调整..."
