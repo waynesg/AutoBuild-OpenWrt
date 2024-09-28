@@ -124,16 +124,8 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 echo
 TIME b "汉化 调整..."
 sed -i 's/CPU Load/处理器负载/g' package/waynesg/luci-app-cpu-status/htdocs/luci-static/resources/view/status/include/18_cpu.js
-sed -i -e 's/^msgid "All CPUs"/msgid "All CPUs"\nmsgstr "所有处理器"/' \
-       -e 's/^msgid "Calculating"/msgid "Calculating"\nmsgstr "计算中"/' \
-       -e 's/^msgid "CPU"/msgid "CPU"\nmsgstr "处理器"/' \
-       -e 's/^msgid "CPU Load"/msgid "CPU Load"\nmsgstr "处理器负载"/' \
-       -e 's/^msgid "Detailed load"/msgid "Detailed load"\nmsgstr "详细负载"/' \
-       -e 's/^msgid "Detailed load of each CPU"/msgid "Detailed load of each CPU"\nmsgstr "每个处理器的详细负载"/' \
-       -e 's/^msgid "Load"/msgid "Load"\nmsgstr "负荷"/' \
-       -e 's/^msgid "Load of each CPU"/msgid "Load of each CPU"\nmsgstr "每个处理器的负载"/' \
-       -e 's/^msgid "Total load"/msgid "Total load"\nmsgstr "总负载"/' \
-package/waynesg/luci-app-cpu-status/po/zh_Hans/cpu-status.po
+rm -rf package/waynesg/luci-app-cpu-status/po/zh_Hans/cpu-status.po
+wget -O package/waynesg/luci-app-cpu-status/po/zh_Hans/cpu-status.po https://raw.githubusercontent.com/waynesg/scripts/main/others/cpu-status.po
 #tn-netports调整
 sed -i "/E('a', { href: 'https:\/\/github.com\/tano-systems\/luci-app-tn-netports'/,/)\,/d" package/waynesg/luci-app-tn-netports/htdocs/luci-static/resources/netports.js
 
