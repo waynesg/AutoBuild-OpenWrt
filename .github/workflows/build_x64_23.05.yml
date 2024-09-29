@@ -8,6 +8,9 @@ on:
         required: false
         default: 'ssh-actions'
 
+schedule:
+    - cron: 0 10 1 * *
+
 env:
   Github: https://github.com/${{github.repository}}
   Author: ${{github.actor}}
