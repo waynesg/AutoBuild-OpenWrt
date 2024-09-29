@@ -128,8 +128,9 @@ sed -i 's/CPU Load/处理器负载/g' package/waynesg/luci-app-cpu-status/htdocs
 rm -rf package/waynesg/luci-app-cpu-status/po/zh_Hans/cpu-status.po
 wget -O package/waynesg/luci-app-cpu-status/po/zh_Hans/cpu-status.po https://raw.githubusercontent.com/waynesg/scripts/main/others/cpu-status.po
 #tn-netports调整
-#sed -i "/E('a', { href: 'https:\/\/github.com\/tano-systems\/luci-app-tn-netports'/,/)\,/d" package/waynesg/luci-app-tn-netports/htdocs/luci-static/resources/netports.js
 sed -i '/var title = E.*netports-title/,/);/c\var title = E('"'"'div'"'"', { class: '"'"'netports-title'"'"' }, [\n\t\t\t\tE('"'"'div'"'"', { class: '"'"'netports-buttons'"'"' }, buttons),\n\t\t\t\tE('"'"'div'"'"', { class: '"'"'netports-version'"'"' })\n\t\t\t]);' package/waynesg/luci-app-tn-netports/htdocs/luci-static/resources/netports.js
+#删除首页端口状态
+mv feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/29_ports.js feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/29_ports.js.del
 
 echo
 TIME b "菜单 调整..."
@@ -171,10 +172,10 @@ sed -i 's/"MihomoTProxy"/"MiHoMo"/g' package/waynesg/luci-app-mihomo/luci-app-mi
 
 echo "重命名网络菜单"
 #network
-sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
+#sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
 sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
 sed -i 's/"Socat"/"端口转发"/g'  feeds/luci/applications/luci-app-socat/luasrc/controller/socat.lua
-sed -i 's/"IP\/MAC绑定"/"地址绑定"/g' feeds/luci/applications/luci-app-arpbind/po/zh_Hans/arpbind.po
+#sed -i 's/"IP\/MAC绑定"/"地址绑定"/g' feeds/luci/applications/luci-app-arpbind/po/zh_Hans/arpbind.po
 #sed -i 's/"IP\/MAC绑定"/"地址绑定"/g' `grep "IP\/MAC绑定" -rl ./`
 
 
