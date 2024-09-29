@@ -38,14 +38,14 @@ clone_or_update_git_repo() {
 }
 
 # theme
-#git clone --depth=1 -b master https://github.com/jerrykuku/luci-theme-argon package/waynesg/luci-theme-argon
+git clone --depth=1 -b master https://github.com/jerrykuku/luci-theme-argon package/waynesg/luci-theme-argon
 #git clone --depth=1 https://github.com/sirpdboy/luci-theme-opentopd package/waynesg/luci-theme-opentopd
 #git clone --depth=1 -b master https://github.com/kiddin9/luci-theme-edge package/waynesg/luci-theme-edge
 #git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/waynesg/luci-theme-neobird
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-advancedplus package/waynesg/luci-app-advancedplus
 #clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-theme-opentomcat "" luci-theme-opentomcat
 # argon-theme-config
-#git clone --depth=1 -b master https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
+git clone --depth=1 -b master https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
 #mosdns
 git clone --depth=1 -b v5 https://github.com/sbwml/luci-app-mosdns package/waynesg/luci-app-mosdns
 #ssr-plus
