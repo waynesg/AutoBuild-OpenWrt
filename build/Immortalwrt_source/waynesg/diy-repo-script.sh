@@ -60,40 +60,27 @@ git clone --depth=1 https://github.com/jerrykuku/node-request package/waynesg/lu
 #clone_or_update_git_repo https://github.com/fw876/helloworld package/waynesg/luci-app-dependence/shadow-tls master shadow-tls    
 #clone_or_update_git_repo https://github.com/kenzok8/small package/waynesg/luci-app-dependence/redsocks2 "" redsocks2
 #clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-dependence/wrtbwmon "" wrtbwmon
-#smartdns
-#git clone --depth=1 -b master https://github.com/pymumu/luci-app-smartdns package/waynesg/luci-app-smartdns
-#git clone --depth=1 https://github.com/pymumu/openwrt-smartdns package/waynesg//luci-app-smartdns/smartdns
+
 #openclash
 git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/waynesg/luci-app-openclash
-#serverchan
-#git clone --depth=1 -b master https://github.com/tty228/luci-app-wechatpush package/waynesg/luci-app-wechatpush
-#poweroff
-#git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff package/waynesg/luci-app-poweroff
+
 #openappfilter
 git clone --depth=1 https://github.com/destan19/OpenAppFilter package/waynesg/luci-app-oaf
-#advanced
-clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-app-advanced "" luci-app-advanced
-#filebrowser
-#clone_or_update_git_repo https://github.com/Lienol/openwrt-package package/waynesg/luci-app-filebrowser "" luci-app-filebrowser
-#fileassistant
-#clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-app-fileassistant "" luci-app-fileassistant
+
 #timewol
 #clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-timewol "" luci-app-control-timewol
 #weburl
 #clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-weburl "" luci-app-control-weburl
 #webrestriction
 #clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-webrestriction "" luci-app-control-webrestriction
-#unblockneteasemusic
-#git clone --depth=1 -b master https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic package/waynesg/luci-app-unblockneteasemusic
+
 #pushbot
 git clone --depth=1 https://github.com/zzsj0928/luci-app-pushbot package/waynesg/luci-app-pushbot
 #onliner
 clone_or_update_git_repo https://github.com/Hyy2001X/AutoBuild-Packages package/waynesg/luci-app-onliner "" luci-app-onliner
 #parents-control
 git clone --depth=1 https://github.com/sirpdboy/luci-app-parentcontrol package/waynesg/luci-app-parentcontrol
-#msd_lite
-#git clone --depth=1 https://github.com/ximiTech/luci-app-msd_lite package/waynesg/luci-app-msd_lite
-#git clone --depth=1 https://github.com/ximiTech/msd_lite package/waynesg/luci-app-msd_lite/msd_lite
+
 #airconnect
 git clone --depth=1 -b main https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect
 clone_or_update_git_repo https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect main airconnect
