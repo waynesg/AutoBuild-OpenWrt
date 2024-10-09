@@ -43,9 +43,9 @@ uci commit luci
 exit 0
 EOF
 
-#echo 
-#TIME y ”关闭开机串口跑码“
-#sed -i 's/GRUB_CONSOLE_CMDLINE += console=tty1/GRUB_CONSOLE_CMDLINE += console=tty0/' target/linux/x86/image/Makefile
+echo 
+TIME y "ttyd自动登录"
+sed -i "s?/bin/login?/usr/libexec/login.sh?g" feeds/packages/utils/ttyd/files/ttyd.config
 
 echo
 TIME y "修改最大连接数修改为65535"
@@ -153,7 +153,7 @@ echo "重命名系统菜单"
 #status menu
 sed -i 's/"概览"/"系统概览"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"路由"/"路由映射"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
-sed -i 's/"防火墙"/"安全防护"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"防火墙"/"*防火墙*"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"在线用户"/"在线设备"/g' package/waynesg/luci-app-onliner/luasrc/controller/onliner.lua
 #system menu
 #sed -i 's/"系统"/"系统设置"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
@@ -166,6 +166,9 @@ sed -i 's/"软件包"/"软件管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/
 sed -i 's/"终端"/"命令终端"/g' feeds/luci/applications/luci-app-ttyd/po/zh_Hans/ttyd.po
 sed -i 's/"Argon 主题设置"/"主题设置"/g' package/waynesg/luci-app-argon-config/po/zh_Hans/argon-config.po
 
+#Argon主题修改
+sed -i 's|<div>|<div>\n\t\t<a class="luci-link" href="https://github.com/openwrt/luci" target="_blank">Powered by <%= ver.luciname %></a> /\n\t\t<a href="https://github.com/jerrykuku/luci-theme-argon" target="_blank">ArgonTheme <%# vPKG_VERSION %></a> /\n\t\t<ul class="breadcrumb pull-right" id="modemenu" style="display:none"></ul>\n\t</div>|' package/waynesg/luci-theme-argon/luasrc/view/themes/argon/footer.htm
+
 echo "重命名服务菜单"
 #services menu
 sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' feeds/luci/applications/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
@@ -177,8 +180,11 @@ echo "重命名网络菜单"
 #sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
 sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
 sed -i 's/"Socat"/"端口转发"/g'  feeds/luci/applications/luci-app-socat/luasrc/controller/socat.lua
-#sed -i 's/"IP\/MAC绑定"/"地址绑定"/g' feeds/luci/applications/luci-app-arpbind/po/zh_Hans/arpbind.po
-#sed -i 's/"IP\/MAC绑定"/"地址绑定"/g' `grep "IP\/MAC绑定" -rl ./`
+sed -i 's/"DHCP/DNS"/"DNS设定"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+
+echo "重命名管控菜单"
+#Control
+sed -i '$a\msgid "Control"\nmsgstr "管控"' package/waynesg/luci-app-oaf/luci-app-oaf/po/zh_Hans/oaf.po
 
 
 echo "重命名存储菜单"
@@ -186,6 +192,7 @@ sed -i 's/"AList"/"Alist列表"/g' feeds/luci/applications/luci-app-alist/root/u
 sed -i 's/"USB 打印服务器"/"打印服务"/g' feeds/luci/applications/luci-app-usb-printer/po/zh_Hans/luci-app-usb-printer.po
 sed -i 's/"FTP 服务器"/"FTP 服务"/g' feeds/luci/applications/luci-app-vsftpd/po/zh_Hans/vsftpd.po
 
+echo "重命名VPN菜单"
 #vpn
 sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 sed -i 's/"OpenVPN"/"OpenVPN 客户端"/g' feeds/luci/applications/luci-app-openvpn/luasrc/controller/openvpn.lua
