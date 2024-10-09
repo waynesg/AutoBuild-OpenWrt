@@ -15,10 +15,11 @@ fgrep -sq '/ overlay ro,' /proc/mounts && {
 	echo 'Please try to remove files from /overlay/upper/... and reboot!'
 }
 
-export PATH="/usr/sbin:/usr/bin:/sbin:/bin"
+export PATH="%PATH%"
 export HOME=$(grep -e "^${USER:-root}:" /etc/passwd | cut -d ":" -f 6)
 export HOME=${HOME:-/root}
 export PS1='\u@\h:\w\$ '
+export ENV=/etc/shinit
 
 case "$TERM" in
 	xterm*|rxvt*)
@@ -26,10 +27,13 @@ case "$TERM" in
 		;;
 esac
 
-[ -x /bin/more ] || alias more=less
-[ -x /usr/bin/vim ] && alias vi=vim || alias vim=vi
+[ -x /bin/more ] || alias more='less'
+[ -x /usr/bin/vim ] && alias vi='vim' || alias vim='vi'
 
-alias ll='ls -alF --color=auto'
+alias l='ls -lF'
+alias la='ls -a'
+alias ll='ls -alF'
+alias ls='ls --color=auto'
 
 [ -z "$KSH_VERSION" -o \! -s /etc/mkshrc ] || . /etc/mkshrc
 
