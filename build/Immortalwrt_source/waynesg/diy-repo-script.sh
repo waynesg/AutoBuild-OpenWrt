@@ -93,5 +93,5 @@ git clone --depth=1 https://github.com/gSpotx2f/luci-app-cpu-status package/wayn
 #tn-netports
 git clone --depth=1 https://github.com/muink/luci-app-tn-netports package/waynesg/luci-app-tn-netports
 #turboacc
-git clone --depth=1 https://github.com/chenmozhijin/turboacc.git package/waynesg/luci-app-turboacc
+#git clone --depth=1 https://github.com/chenmozhijin/turboacc.git package/waynesg/luci-app-turboacc
 
