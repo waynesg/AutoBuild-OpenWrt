@@ -151,7 +151,7 @@ echo "重命名系统菜单"
 #status menu
 sed -i 's/"概览"/"系统概览"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"路由"/"路由映射"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
-sed -i 's/"防火墙"/"*防火墙*"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+#sed -i 's/"防火墙"/"*防火墙*"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"在线用户"/"在线设备"/g' package/waynesg/luci-app-onliner/luasrc/controller/onliner.lua
 #system menu
 #sed -i 's/"系统"/"系统设置"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
