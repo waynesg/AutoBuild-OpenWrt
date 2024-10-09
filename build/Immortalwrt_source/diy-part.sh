@@ -27,9 +27,7 @@ TIME() {
 
 echo 
 TIME y "自定义固件版本名字"
-#sed -i "s/'%D %V %C'/AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date '+%Y.%m.%d') @ OpenWrt/g" package/base-files/files/etc/openwrt_release
-#sed -i "s/DISTRIB_DESCRIPTION='.*'/DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date '+%Y.%m.%d') @ OpenWrt'/g" package/base-files/files/etc/openwrt_release
-sed -i "s/DISTRIB_DESCRIPTION='.*'/DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @Waynesg $(TZ=UTC-8 date '+%Y.%m.%d')'/g" package/base-files/files/etc/openwrt_release
+sed -i "s/DISTRIB_DESCRIPTION='.*'/DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt'/g" package/base-files/files/etc/openwrt_release
 
 
 echo 
