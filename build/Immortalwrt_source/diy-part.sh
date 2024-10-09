@@ -165,8 +165,8 @@ sed -i 's/"终端"/"命令终端"/g' feeds/luci/applications/luci-app-ttyd/po/zh
 sed -i 's/"Argon 主题设置"/"主题设置"/g' package/waynesg/luci-app-argon-config/po/zh_Hans/argon-config.po
 
 #Argon主题修改
-sed -i 's|<div>|<div>\n\t\t<a class="luci-link" href="https://github.com/openwrt/luci" target="_blank">Powered by <%= ver.luciname %></a> /\n\t\t<a href="https://github.com/jerrykuku/luci-theme-argon" target="_blank">ArgonTheme <%# vPKG_VERSION %></a> /\n\t\t<ul class="breadcrumb pull-right" id="modemenu" style="display:none"></ul>\n\t</div>|' package/waynesg/luci-theme-argon/luasrc/view/themes/argon/footer.htm
-
+sed -i 's/(<%= ver.luciversion %>)//g' package/waynesg/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
+sed -i 's/<%= ver.distversion %>/Compiled By @waynesg/g' package/waynesg/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
 echo "重命名服务菜单"
 #services menu
 sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' feeds/luci/applications/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
