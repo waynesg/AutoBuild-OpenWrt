@@ -180,6 +180,7 @@ sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
 sed -i 's/"Socat"/"端口转发"/g'  feeds/luci/applications/luci-app-socat/luasrc/controller/socat.lua
 sed -i 's/DHCP\/DNS/DNS设定/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 #sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' package/waynesg/luci-app-turboacc/luci-app-turboacc/po/zh-cn/turboacc.po
+sed -i "s/set network\.vpn0\.ifname='tun0'/set network.vpn0.device='tun0'/g" feeds/luci/applications/luci-app-openvpn-server/root/etc/uci-defaults/openvpn
 
 echo "重命名管控菜单"
 #Control
