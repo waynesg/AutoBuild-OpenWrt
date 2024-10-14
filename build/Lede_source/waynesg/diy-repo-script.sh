@@ -41,7 +41,6 @@ clone_or_update_git_repo() {
 git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon package/waynesg/luci-theme-argon
 #git clone --depth=1 -b main https://github.com/sirpdboy/luci-theme-kucat package/waynesg/luci-theme-kucat
 git clone --depth=1 https://github.com/sirpdboy/luci-theme-opentopd package/waynesg/luci-theme-opentopd
-git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/waynesg/luci-theme-edge
 git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/waynesg/luci-theme-neobird
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-advancedplus package/waynesg/luci-app-advancedplus
 clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-theme-opentomcat "" luci-theme-opentomcat
@@ -61,7 +60,7 @@ git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb package/waynesg/l
 clone_or_update_git_repo https://github.com/fw876/helloworld package/waynesg/luci-app-dependence/lua-neturl master lua-neturl
 clone_or_update_git_repo https://github.com/fw876/helloworld package/waynesg/luci-app-dependence/shadow-tls master shadow-tls    
 clone_or_update_git_repo https://github.com/kenzok8/small package/waynesg/luci-app-dependence/redsocks2 "" redsocks2
-clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-dependence/wrtbwmon "" wrtbwmon
+clone_or_update_git_repo https://github.com/kiddin9/kwrt-packages package/waynesg/luci-app-dependence/wrtbwmon "" wrtbwmon
 #smartdns
 git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns package/waynesg/luci-app-smartdns
 git clone --depth=1 https://github.com/pymumu/openwrt-smartdns package/waynesg//luci-app-smartdns/smartdns
@@ -80,11 +79,11 @@ clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/wa
 #fileassistant
 clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-app-fileassistant "" luci-app-fileassistant
 #timewol
-clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-timewol "" luci-app-control-timewol
+clone_or_update_git_repo https://github.com/kiddin9/kwrt-packages package/waynesg/luci-app-control-timewol "" luci-app-control-timewol
 #weburl
-clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-weburl "" luci-app-control-weburl
+clone_or_update_git_repo https://github.com/kiddin9/kwrt-packages package/waynesg/luci-app-control-weburl "" luci-app-control-weburl
 #webrestriction
-clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-webrestriction "" luci-app-control-webrestriction
+clone_or_update_git_repo https://github.com/kiddin9/kwrt-packages package/waynesg/luci-app-control-webrestriction "" luci-app-control-webrestriction
 #ikoolproxy
 #git clone --depth=1 https://github.com/iyaof/luci-app-ikoolproxy package/waynesg/luci-app-ikoolproxy
 #unblockneteasemusic
