@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [Immortalwrt_source]
+        target: [Lede_source]
 
     steps:
     - name: 优化空间
