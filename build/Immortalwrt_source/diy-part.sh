@@ -23,8 +23,8 @@ TIME() {
       }
 }
 
-cp -f feeds/scripts/other/default-settings package/emortal/default-settings/files/99-default-settings
-
+curl -o default-settings https://raw.githubusercontent.com/waynesg/scripts/main/others/default-settings
+cp -f default-settings package/emortal/default-settings/files/99-default-settings
 
 #echo 
 #TIME y "自定义固件版本名字"
