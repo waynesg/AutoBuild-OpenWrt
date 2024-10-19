@@ -23,11 +23,12 @@ TIME() {
       }
 }
 
+cp -f feeds/scripts/other/default-settings package/emortal/default-settings/files/99-default-settings
 
 
-echo 
-TIME y "自定义固件版本名字"
-sed -i "s/DISTRIB_DESCRIPTION='.*'/DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt'/g" package/base-files/files/etc/openwrt_release
+#echo 
+#TIME y "自定义固件版本名字"
+#sed -i "s/DISTRIB_DESCRIPTION='.*'/DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt'/g" package/base-files/files/etc/openwrt_release
 
 
 echo 
@@ -64,10 +65,10 @@ TIME y "修改dashboard password"
 sed -i '/uci -q set openclash.config.dashboard_password/d' package/waynesg/luci-app-openclash/luci-app-openclash/root/etc/uci-defaults/luci-openclash
 sed -i '/uci add openclash/,/^md5sum /d' package/waynesg/luci-app-openclash/luci-app-openclash/root/etc/uci-defaults/luci-openclash
 
-echo
-TIME y "ppp - 2.5.0"
-rm -rf package/network/services/ppp
-git clone https://github.com/sbwml/package_network_services_ppp package/network/services/ppp
+#echo
+#TIME y "ppp - 2.5.0"
+#rm -rf package/network/services/ppp
+#git clone https://github.com/sbwml/package_network_services_ppp package/network/services/ppp
 
 echo
 TIME y "添加upx"
@@ -75,13 +76,13 @@ sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx
 
 echo
 TIME y "防火墙4添加自定义nft命令支持"
-curl -s https://$mirror/openwrt/patch/firewall4/100-openwrt-firewall4-add-custom-nft-command-support.patch | patch -p1
+curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/firewall4/100-openwrt-firewall4-add-custom-nft-command-support.patch | patch -p1
 
 pushd feeds/luci
 	# 防火墙4添加自定义nft命令选项卡
-	curl -s https://$mirror/openwrt/patch/firewall4/0004-luci-add-firewall-add-custom-nft-rule-support.patch | patch -p1
+	curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/firewall4/0004-luci-add-firewall-add-custom-nft-rule-support.patch | patch -p1
 	# 状态-防火墙页面去掉iptables警告，并添加nftables、iptables标签页
-	curl -s https://$mirror/openwrt/patch/luci/0004-luci-mod-status-firewall-disable-legacy-firewall-rul.patch | patch -p1
+	curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/luci/0004-luci-mod-status-firewall-disable-legacy-firewall-rul.patch | patch -p1
 popd
 
 echo
