@@ -176,7 +176,7 @@ sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-
 #sed -i 's/"网页快捷菜单"/"快捷菜单"/g'  package/waynesg/luci-app-shortcutmenu/po/zh-cn/shortcutmenu.po
 #sed -i 's/Adblock Plus+/Adb Plus+/g'  package/waynesg/luci-app-adblock-plus/luasrc/controller/adblock.lua
 #sed -i 's/CPU占用率限制/CPU调节/g' package/waynesg/luci-app-cpulimit/po/zh_Hans/cpulimit.po
-sed -i 's/"KMS 服务器"/"KMS激活"/g' `grep "KMS 服务器" -rl ./`
+sed -i 's/"KMS 服务器"/"KMS服务"/g' `grep "KMS 服务器" -rl ./`
 #sed -i 's/"WebGuide"/"网页导航"/g' package/waynesg/luci-app-webguide/luasrc/controller/webguide.lua
 #sed -i 's/"iKoolProxy 滤广告"/"广告过滤"/g' package/waynesg/luci-app-ikoolproxy/luasrc/controller/koolproxy.lua
 #sed -i 's/"Nezha Agent"/"哪吒面板"/g'  package/waynesg/luci-app-nezha/luasrc/controller/nezha-agent.lua
