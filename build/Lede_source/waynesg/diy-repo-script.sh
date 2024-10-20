@@ -83,7 +83,7 @@ clone_or_update_git_repo https://github.com/kiddin9/kwrt-packages package/waynes
 #weburl
 clone_or_update_git_repo https://github.com/kiddin9/kwrt-packages package/waynesg/luci-app-control-weburl "" luci-app-control-weburl
 #webrestriction
-clone_or_update_git_repo https://github.com/kiddin9/kwrt-packages package/waynesg/luci-app-control-webrestriction "" luci-app-control-webrestriction
+#clone_or_update_git_repo https://github.com/kiddin9/kwrt-packages package/waynesg/luci-app-control-webrestriction "" luci-app-control-webrestriction
 #ikoolproxy
 #git clone --depth=1 https://github.com/iyaof/luci-app-ikoolproxy package/waynesg/luci-app-ikoolproxy
 #unblockneteasemusic
