@@ -120,7 +120,7 @@ sed -i 's/\"services\"/\"vpn\"/g' feeds/luci/applications/luci-app-openvpn/luasr
 sed -i 's/\"services\"/\"vpn\"/g' feeds/luci/applications/luci-app-openvpn/luasrc/model/cbi/openvpn.lua
 sed -i 's/\"services\"/\"vpn\"/g' feeds/luci/applications/luci-app-openvpn/luasrc/model/cbi/openvpn-advanced.lua
 sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-openvpn/luasrc/view/openvpn/pageswitch.htm
-#sed -i 's/_("PassWall 2"), -1/_("PassWall 2"), 2/g' package/waynesg/luci-app-passwall2/luasrc/controller/passwall2.lua
+sed -i 's/_("PassWall 2"), -1/_("PassWall 2"), 2/g' package/waynesg/luci-app-passwall2/luasrc/controller/passwall2.lua
 sed -i 's/60/32/g' package/waynesg/luci-app-smartdns/luasrc/controller/smartdns.lua
 sed -i 's/30/40/g' package/waynesg/luci-app-pushbot/luasrc/controller/pushbot.lua
 #sed -i 's/99/35/g' package/waynesg/luci-app-cloudflarespeedtest/luasrc/controller/cloudflarespeedtest.lua
