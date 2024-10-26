@@ -75,11 +75,8 @@ clone_or_update_git_repo https://github.com/Hyy2001X/AutoBuild-Packages package/
 #clone_or_update_git_repo https://github.com/sbwml/luci-app-alist package/waynesg/luci-app-alist master alist
 #parents-control
 git clone --depth=1 https://github.com/sirpdboy/luci-app-parentcontrol package/waynesg/luci-app-parentcontrol
-#msd_lite
-#git clone --depth=1 https://github.com/ximiTech/luci-app-msd_lite package/waynesg/luci-app-msd_lite
-#git clone --depth=1 https://github.com/ximiTech/msd_lite package/waynesg/luci-app-msd_lite/msd_lite
 #airconnect
-git clone --depth=1 -b lua https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect
+git clone --depth=1 -b main https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect
 clone_or_update_git_repo https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect main airconnect
 #homeproxy
 #git clone --depth=1 https://github.com/immortalwrt/homeproxy package/waynesg/luci-app-homeproxy
