@@ -91,8 +91,8 @@ jobs:
         chmod -R +x "${GITHUB_WORKSPACE}/build/common"
         if [[ "${REPO_BRANCH}" == "master" ]]; then
           echo "ZZZ=package/lean/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
-          echo "CODE=Lede" >> $GITHUB_ENV
-          echo "LUCI_EDITION=18.06" >> $GITHUB_ENV
+          echo "CODE=Lean" >> $GITHUB_ENV
+          echo "LUCI_EDITION=23.05" >> $GITHUB_ENV
         elif [[ "${REPO_BRANCH}" == "openwrt-23.05" ]]; then
           echo "ZZZ=package/emortal/default-settings/files/99-default-settings" >> $GITHUB_ENV
           echo "CODE=Immortalwrt" >> $GITHUB_ENV
@@ -189,10 +189,6 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a > /dev/null 2>&1
         ./scripts/feeds install -a
-        # sleep 5
-        # if [[ "${REPO_BRANCH}" == "openwrt-23.05" ]]; then
-        # sed -i 's/+libpcre \\$/+libpcre2 \\/g' "${Home}"/package/feeds/telephony/freeswitch/Makefile
-        # fi
         mv "$PATH1/$CONFIG_FILE" .config
         if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           source "${PATH1}/upgrade.sh" && Diy_Part1
