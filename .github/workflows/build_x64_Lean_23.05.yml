@@ -1,4 +1,4 @@
-name: lean
+name: Lean
 on:
   workflow_dispatch:
     inputs:
