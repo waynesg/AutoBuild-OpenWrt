@@ -62,7 +62,7 @@ git clone --depth=1 https://github.com/pymumu/openwrt-smartdns package/waynesg//
 #openclash
 git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/waynesg/luci-app-openclash
 #serverchan
-#git clone --depth=1 -b master https://github.com/tty228/luci-app-wechatpush package/waynesg/luci-app-wechatpush
+git clone --depth=1 -b master https://github.com/tty228/luci-app-wechatpush package/waynesg/luci-app-wechatpush
 #openappfilter
 git clone --depth=1 https://github.com/destan19/OpenAppFilter package/waynesg/luci-app-oaf
 #fileassistant
