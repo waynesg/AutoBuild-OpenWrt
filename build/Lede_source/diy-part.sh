@@ -155,7 +155,7 @@ echo "重命名网络菜单"
 #network
 #sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
 sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
-sed -i 's/"Socat"/"端口转发"/g'  `grep "Socat" -rl ./`
+sed -i 's/"Socat"/"端口转发"/g' $(grep "Socat" -rl ./)
 sed -i "s/set network\.vpn0\.ifname='tun0'/set network.vpn0.device='tun0'/g" feeds/luci/applications/luci-app-openvpn-server/root/etc/uci-defaults/openvpn
 
 echo "重命名管控菜单"
