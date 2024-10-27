@@ -149,15 +149,15 @@ sed -i 's/"Argon 主题设置"/"主题设置"/g' package/waynesg/luci-app-argon-
 echo "重命名控制菜单"
 #others
 sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
-sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' feeds/luci/applications/luci-app-turboacc/po/zh-cn/turboacc.po
+sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' feeds/luci/applications/luci-app-turboacc/po/zh_Hans/turboacc.po
 sed -i 's/"实时流量监测"/"流量"/g' `grep "实时流量监测" -rl ./`
 sed -i 's/"USB 打印服务器"/"打印服务"/g' `grep "USB 打印服务器" -rl ./`
 sed -i 's/"带宽监控"/"监控"/g' `grep "带宽监控" -rl ./`
 
 echo "重命名服务菜单"
 #services menu
-sed -i 's/"AirConnect"/"隔空传送"/g' package/waynesg/luci-app-airconnect/luci-app-airconnect/luasrc/controller/airconnect.lua
-sed -i 's/"PassWall 2"/"PassWall+"/g' package/waynesg/luci-app-passwall2/luasrc/controller/passwall2.lua
+sed -i 's/"AirConnect"/"隔空传送"/g' package/waynesg/luci-app-airconnect/luci-app-airconnect/root/usr/share/luci/menu.d/luci-app-airconnect.json
+sed -i 's/"PassWall 2"/"PassWall+"/g' feeds/luci/applications/luci-app-passwall2/po/zh-cn/passwall2.po
 sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' package/waynesg/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh_Hans/upnp.po
 sed -i 's/"KMS 服务器"/"KMS服务"/g' `grep "KMS 服务器" -rl ./`
@@ -167,7 +167,7 @@ echo "重命名网络菜单"
 #sed -i 's/"IP\/MAC 绑定"/"地址绑定"/g' feeds/luci/applications/luci-app-arpbind/po/zh-cn/arpbind.po
 #sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
 sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
-sed -i 's/"Socat"/"端口转发"/g'  package/waynesg/luci-app-socat/luci-app-socat/luasrc/controller/socat.lua
+sed -i 's/"Socat"/"端口转发"/g'  `grep "Socat" -rl ./`
 
 echo "重命名管控菜单"
 #Control
