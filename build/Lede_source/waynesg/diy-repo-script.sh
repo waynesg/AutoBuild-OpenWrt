@@ -55,8 +55,8 @@ git clone --depth=1 -b v5 https://github.com/sbwml/luci-app-mosdns package/wayne
 #clone_or_update_git_repo https://github.com/fw876/helloworld package/waynesg/luci-app-dependence/shadow-tls master shadow-tls    
 #clone_or_update_git_repo https://github.com/kenzok8/small package/waynesg/luci-app-dependence/redsocks2 "" redsocks2
 #smartdns
-git clone --depth=1 -b master https://github.com/pymumu/luci-app-smartdns package/waynesg/luci-app-smartdns
-git clone --depth=1 https://github.com/pymumu/openwrt-smartdns package/waynesg/luci-app-smartdns/smartdns
+#git clone --depth=1 -b master https://github.com/pymumu/luci-app-smartdns package/waynesg/luci-app-smartdns
+#git clone --depth=1 https://github.com/pymumu/openwrt-smartdns package/waynesg/luci-app-smartdns/smartdns
 #openclash
 git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/waynesg/luci-app-openclash
 #serverchan
