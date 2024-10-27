@@ -126,7 +126,7 @@ sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-nlbwmon/root/u
 #sed -i 's/\"services\"/\"vpn\"/g' feeds/luci/applications/luci-app-openvpn/luasrc/model/cbi/openvpn-advanced.lua
 #sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-openvpn/luasrc/view/openvpn/pageswitch.htm
 #sed -i 's/_("PassWall 2"), -1/_("PassWall 2"), 2/g' package/waynesg/luci-app-passwall2/luasrc/controller/passwall2.lua
-sed -i '/"title": "SmartDNS",/a \        "order": 22,' package/waynesg/luci-app-smartdns/luasrc/controller/smartdns.lua
+#sed -i '/"title": "SmartDNS",/a \        "order": 22,' package/waynesg/luci-app-smartdns/root/usr/share/luci/menu.d/luci-app-smartdns.json
 sed -i 's/_("OpenClash"), 50/_("OpenClash"), 20/g' package/waynesg/luci-app-openclash/luci-app-openclash/luasrc/controller/openclash.lua
 
 
