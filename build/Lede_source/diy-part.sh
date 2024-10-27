@@ -113,17 +113,16 @@ sed -i '/var title = E.*netports-title/,/);/c\var title = E('"'"'div'"'"', { cla
 ################################################################################################################
 echo
 TIME b "菜单 调整..."
+# 调整菜单路径
+echo "调整菜单路径..."
 sed -i 's|/services/|/system/|' feeds/luci/applications/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
 sed -i 's|/services/|/nas/|' feeds/luci/applications/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
 sed -i 's|/services/|/nas/|' feeds/luci/applications/luci-app-samba4/root/usr/share/luci/menu.d/luci-app-samba4.json
 sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
 sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-upnp/root/usr/share/luci/menu.d/luci-app-upnp.json
 
-
-echo             
-TIME b "插件 重命名..."
-echo "重命名系统菜单"
-#system menu
+# 重命名系统菜单
+echo "重命名系统菜单..."
 sed -i 's/"概览"/"系统概览"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"备份与升级"/"备份升级"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"路由"/"路由映射"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
@@ -131,47 +130,45 @@ sed -i 's/"管理权"/"权限管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/
 sed -i 's/"重启"/"立即重启"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"挂载点"/"挂载路径"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"启动项"/"启动管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
-sed -i 's/"软件包"/"软件管理"/g' grep "软件包" -rl ./`
+sed -i 's/"软件包"/"软件管理"/g' $(grep "软件包" -rl ./)
 sed -i 's/"终端"/"命令终端"/g' feeds/luci/applications/luci-app-ttyd/po/zh_Hans/ttyd.po
 sed -i 's/"在线用户"/"在线设备"/g' package/waynesg/luci-app-onliner/luasrc/controller/onliner.lua
 sed -i 's/"Argon 主题设置"/"主题设置"/g' package/waynesg/luci-app-argon-config/po/zh_Hans/argon-config.po
 
-echo "重命名控制菜单"
-#others
-sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
+# 重命名控制菜单
+echo "重命名控制菜单..."
+sed -i 's/"网络存储"/"存储"/g' $(grep "网络存储" -rl ./)
 sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' feeds/luci/applications/luci-app-turboacc/po/zh_Hans/turboacc.po
-sed -i 's/"实时流量监测"/"流量"/g' `grep "实时流量监测" -rl ./`
-sed -i 's/"USB 打印服务器"/"打印服务"/g' `grep "USB 打印服务器" -rl ./`
+sed -i 's/"实时流量监测"/"流量"/g' $(grep "实时流量监测" -rl ./)
+sed -i 's/"USB 打印服务器"/"打印服务"/g' $(grep "USB 打印服务器" -rl ./)
 
-echo "重命名服务菜单"
-#services menu
+# 重命名服务菜单
+echo "重命名服务菜单..."
 sed -i 's/"AirConnect"/"隔空传送"/g' package/waynesg/luci-app-airconnect/luci-app-airconnect/root/usr/share/luci/menu.d/luci-app-airconnect.json
 sed -i 's/"PassWall 2"/"PassWall+"/g' feeds/luci/applications/luci-app-passwall2/po/zh-cn/passwall2.po
 sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' package/waynesg/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh_Hans/upnp.po
-sed -i 's/"KMS 服务器"/"KMS服务"/g' `grep "KMS 服务器" -rl ./`
+sed -i 's/"KMS 服务器"/"KMS服务"/g' $(grep "KMS 服务器" -rl ./)
 
-echo "重命名网络菜单"
-#network
-#sed -i 's/"主机名"/"主机名称"/g' `grep "主机名" -rl ./`
-sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
+# 重命名网络菜单
+echo "重命名网络菜单..."
+sed -i 's/"接口"/"网络接口"/g' $(grep "接口" -rl ./)
 sed -i 's/"Socat"/"端口转发"/g' $(grep "Socat" -rl ./)
 sed -i "s/set network\.vpn0\.ifname='tun0'/set network.vpn0.device='tun0'/g" feeds/luci/applications/luci-app-openvpn-server/root/etc/uci-defaults/openvpn
 
-echo "重命名管控菜单"
-#Control
-sed -i '$a\msgid "Control"\nmsgstr "管控"' package/waynesg/luci-app-oaf/luci-app-oaf/po/zh_Hans/oaf.po
-sed -i 's/services/control/' feeds/luci/applications/luci-app-wol/root/usr/share/luci/menu.d/luci-app-wol.json
-sed -i 's/\"services\"/\"control\"/g'  package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/appfilter.lua
+# 重命名管控菜单
+echo "重命名管控菜单..."
+sed -i '$a msgid "Control"' package/waynesg/luci-app-oaf/luci-app-oaf/po/zh_Hans/oaf.po
+sed -i '$a msgstr "管控"' package/waynesg/luci-app-oaf/luci-app-oaf/po/zh_Hans/oaf.po
 
-echo "重命名存储菜单"
-#nas
+# 重命名存储菜单
+echo "重命名存储菜单..."
 sed -i 's/"USB 打印服务器"/"打印服务"/g' feeds/luci/applications/luci-app-usb-printer/po/zh_Hans/luci-app-usb-printer.po
 sed -i 's/"FTP 服务器"/"FTP 服务"/g' feeds/luci/applications/luci-app-vsftpd/po/zh_Hans/vsftpd.po
 sed -i 's/"AList"/"Alist列表"/g' feeds/luci/applications/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
 
-echo "重命名VPN菜单"
-#vpn
+# 重命名VPN菜单
+echo "重命名VPN菜单..."
 sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 sed -i 's/"OpenVPN"/"OpenVPN 客户端"/g' feeds/luci/applications/luci-app-openvpn/luasrc/controller/openvpn.lua
 TIME b "重命名 完成"
