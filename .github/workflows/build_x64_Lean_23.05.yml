@@ -1,4 +1,4 @@
-name: Lean
+name: lede
 on:
   workflow_dispatch:
     inputs:
