@@ -1,4 +1,4 @@
-name: 23.05
+name: immortal
 
 on:
   workflow_dispatch:
