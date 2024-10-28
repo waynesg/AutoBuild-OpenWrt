@@ -23,26 +23,15 @@ TIME() {
       }
 }
 
-# echo
-# TIME y "修改系统文件"
-# # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
-# # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/index.htm > ./package/lean/autocore/files/x86/index.htm
-# # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/ethinfo > ./package/lean/autocore/files/x86/sbin/ethinfo
-# # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/autocore > ./package/lean/autocore/files/x86/autocore
-# # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/tempinfo > ./package/lean/autocore/files/x86/sbin/tempinfo
-# # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/cntime > ./package/lean/autocore/files/x86/sbin/cntime
-# # curl -fsSL https://raw.githubusercontent.com/waynesg/OpenWrt-Software/main/openwrt-diy/cpuinfo > ./package/lean/autocore/files/x86/sbin/cpuinfo
-# # curl -fsSL https://raw.githubusercontent.com/immortalwrt/packages/master/net/dnsproxy/Makefile > feeds/packages/net/dnsproxy/Makefile
-# # rm -rf ./package/lean/autocore/files/x86/sbin/getcpu
-# #sed -i 's/iperf3-ssl[[:space:]]*//g' target/linux/x86/Makefile
+# echo 
+# TIME y "更新固件编译日期"
+# sed -i "s/2022.02.01/$(TZ=UTC-8 date "+%Y.%m.%d")/g" package/lean/autocore/files/x86/index.htm
 
 echo 
-TIME y "更新固件编译日期"
-sed -i "s/2022.02.01/$(TZ=UTC-8 date "+%Y.%m.%d")/g" package/lean/autocore/files/x86/index.htm
-
-# echo 
-# TIME y "自定义固件版本名字"
-# sed -i "s/OpenWrt /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ
+TIME y "自定义固件版本名字"
+# sed -i "s/'LEDE ' /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ
+sed -i "s/DISTRIB_DESCRIPTION='LEDE'/DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg'/" $ZZZ
+sed -i "s/DISTRIB_REVISION='R24.10.24'/DISTRIB_REVISION='build $(TZ=UTC-8 date "+%Y.%m.%d") @ LEDE'/" $ZZZ
 
 echo 
 TIME y "调整网络诊断地址到baidu.com"
