@@ -23,15 +23,11 @@ TIME() {
       }
 }
 
-# echo 
-# TIME y "更新固件编译日期"
-# sed -i "s/2022.02.01/$(TZ=UTC-8 date "+%Y.%m.%d")/g" package/lean/autocore/files/x86/index.htm
-
 echo 
 TIME y "自定义固件版本名字"
 # sed -i "s/'LEDE ' /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ
-sed -i "s/DISTRIB_DESCRIPTION=' *LEDE *'/DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg'/" $ZZZ
-sed -i "s/DISTRIB_REVISION='R24.10.24'/DISTRIB_REVISION='build $(TZ=UTC-8 date "+%Y.%m.%d") @ LEDE'/" $ZZZ
+sed -i "s/DISTRIB_DESCRIPTION=' *LEDE *'/DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg '/" $ZZZ
+sed -i "s/DISTRIB_REVISION='R24.10.24'/DISTRIB_REVISION='Build $(TZ=UTC-8 date "+%Y.%m.%d") '/" $ZZZ
 
 echo 
 TIME y "调整网络诊断地址到baidu.com"
@@ -123,6 +119,7 @@ sed -i 's/"软件包"/"软件管理"/g' $(grep "软件包" -rl ./)
 sed -i 's/"终端"/"命令终端"/g' feeds/luci/applications/luci-app-ttyd/po/zh_Hans/ttyd.po
 sed -i 's/"在线用户"/"在线设备"/g' package/waynesg/luci-app-onliner/luasrc/controller/onliner.lua
 sed -i 's/"Argon 主题设置"/"主题设置"/g' package/waynesg/luci-app-argon-config/po/zh_Hans/argon-config.po
+sed -i '/<%= ver.distversion %>/d' package/waynesg/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
 
 # 重命名控制菜单
 echo "重命名控制菜单..."
@@ -152,6 +149,7 @@ sed -i "s/set network\.vpn0\.ifname='tun0'/set network.vpn0.device='tun0'/g" fee
 echo "重命名管控菜单..."
 sed -i '$a msgid "Control"' package/waynesg/luci-app-oaf/luci-app-oaf/po/zh_Hans/oaf.po
 sed -i '$a msgstr "管控"' package/waynesg/luci-app-oaf/luci-app-oaf/po/zh_Hans/oaf.po
+sed -i '/local page/a\ \ \ \ entry({"admin", "control"}, firstchild(), "Control", 44).dependent = false' package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/appfilter.lua
 sed -i 's/"services"/"control"/g' package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/appfilter.lua
 sed -i 's|/services/|/control/|' feeds/luci/applications/luci-app-wol/root/usr/share/luci/menu.d/luci-app-wol.json
 
