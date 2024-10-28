@@ -74,7 +74,7 @@ clone_or_update_git_repo https://github.com/Hyy2001X/AutoBuild-Packages package/
 #git clone --depth=1 -b lua https://github.com/sbwml/luci-app-alist package/waynesg/luci-app-alist
 #clone_or_update_git_repo https://github.com/sbwml/luci-app-alist package/waynesg/luci-app-alist master alist
 #parents-control
-git clone --depth=1 https://github.com/sirpdboy/luci-app-parentcontrol package/waynesg/luci-app-parentcontrol
+#git clone --depth=1 https://github.com/sirpdboy/luci-app-parentcontrol package/waynesg/luci-app-parentcontrol
 #airconnect
 git clone --depth=1 -b main https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect
 clone_or_update_git_repo https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect main airconnect
@@ -91,6 +91,6 @@ git clone --depth=1 https://github.com/muink/luci-app-tn-netports package/waynes
 #socat
 clone_or_update_git_repo https://github.com/Lienol/openwrt-package package/waynesg/luci-app-socat main luci-app-socat
 #statistics
-clone_or_update_git_repo https://github.com/immortalwrt/luci package/waynesg/ openwrt-23.05 applications/luci-app-statistics
+#clone_or_update_git_repo https://github.com/immortalwrt/luci package/waynesg/ openwrt-23.05 applications/luci-app-statistics
 
 
