@@ -30,7 +30,7 @@ TIME() {
 echo 
 TIME y "自定义固件版本名字"
 # sed -i "s/'LEDE ' /AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ
-sed -i "s/DISTRIB_DESCRIPTION='LEDE'/DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg'/" $ZZZ
+sed -i "s/DISTRIB_DESCRIPTION=' *LEDE *'/DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg'/" $ZZZ
 sed -i "s/DISTRIB_REVISION='R24.10.24'/DISTRIB_REVISION='build $(TZ=UTC-8 date "+%Y.%m.%d") @ LEDE'/" $ZZZ
 
 echo 
@@ -152,7 +152,7 @@ echo "重命名管控菜单..."
 sed -i '$a msgid "Control"' package/waynesg/luci-app-oaf/luci-app-oaf/po/zh_Hans/oaf.po
 sed -i '$a msgstr "管控"' package/waynesg/luci-app-oaf/luci-app-oaf/po/zh_Hans/oaf.po
 sed -i 's/"services"/"control"/g' package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/appfilter.lua
-sed -i 's/"services"/"control"/g' feeds/luci/applications/luci-app-wol/root/usr/share/luci/menu.d/luci-app-wol.json
+sed -i 's|/services/|/control/|' feeds/luci/applications/luci-app-wol/root/usr/share/luci/menu.d/luci-app-wol.json
 
 # 重命名存储菜单
 echo "重命名存储菜单..."
