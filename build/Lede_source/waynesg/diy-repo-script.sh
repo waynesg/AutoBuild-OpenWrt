@@ -91,6 +91,6 @@ git clone --depth=1 https://github.com/muink/luci-app-tn-netports package/waynes
 #socat
 clone_or_update_git_repo https://github.com/Lienol/openwrt-package package/waynesg/luci-app-socat main luci-app-socat
 #eqosplus
-git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/waynesg/luci-app-eqosplus
+#git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/waynesg/luci-app-eqosplus
 
 
