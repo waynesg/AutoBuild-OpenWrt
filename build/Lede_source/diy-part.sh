@@ -109,8 +109,7 @@ sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-upnp/root/usr/
 sed -i 's/_("Pass Wall"), -1)/_("Pass Wall"), -9/g' feeds/luci/applications/luci-app-passwall/luasrc/controller/passwall.lua
 sed -i 's/_("Pass Wall"), 0)/_("Pass Wall"), -8/g' feeds/luci/applications/luci-app-passwall2/luasrc/controller/passwall2.lua
 sed -i '_("OpenClash"), 50))/_("OpenClash"), -10/g' package/waynesg/luci-app-openclash/luci-app-openclash/luasrc/controller/openclash.lua
-sed -i '/"title": "SmartDNS",/a\
-"order": -5,' feeds/luci/applications/luci-app-smartdns/root/usr/share/luci/menu.d/luci-app-smartdns.json
+sed -i 's/"title": "SmartDNS",/"title": "SmartDNS","order": -5,/' feeds/luci/applications/luci-app-smartdns/root/usr/share/luci/menu.d/luci-app-smartdns.json
 echo "重命名系统菜单..."
 sed -i 's/"概览"/"系统概览"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"备份与升级"/"备份升级"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
