@@ -133,8 +133,8 @@ sed -i 's/"USB 打印服务器"/"打印服务"/g' $(grep "USB 打印服务器" -
 # 重命名服务菜单
 echo "重命名服务菜单..."
 sed -i 's/"AirConnect"/"隔空传送"/g' package/waynesg/luci-app-airconnect/luci-app-airconnect/root/usr/share/luci/menu.d/luci-app-airconnect.json
-#sed -i '/"admin\/services\/smartdns": {/,/}/s/"depends": {/"order": 10,\n            "depends": {/' feeds/luci/applications/luci-app-smartdns/root/usr/share/luci/menu.d/luci-app-smartdns.json
-#sed -i 's/\(entry({\"admin\", \"services\", appname\}.*,\s*\)\([0-9-]\+\)\s*)/0)/' feeds/luci/applications/luci-app-passwall2/luasrc/controller/passwall2.lua
+sed -i '/"admin\/services\/smartdns": {/,/}/s/"depends": {/"order": 10,\n            "depends": {/' feeds/luci/applications/luci-app-smartdns/root/usr/share/luci/menu.d/luci-app-smartdns.json
+sed -i 's/\(entry({\"admin\", \"services\", appname\}.*,\s*\)\([0-9-]\+\)\s*)/0)/' feeds/luci/applications/luci-app-passwall2/luasrc/controller/passwall2.lua
 sed -i 's/"order": 30,/"order": 60,/' package/waynesg/luci-app-wechatpush/root/usr/share/luci/menu.d/luci-app-wechatpush.json
 sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' package/waynesg/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh_Hans/upnp.po
