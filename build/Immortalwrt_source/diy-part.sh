@@ -142,7 +142,6 @@ sed -i 's|/services/|/nas/|' feeds/luci/applications/luci-app-alist/root/usr/sha
 sed -i '/"title": "SmartDNS",/a \        "order": 22,' feeds/luci/applications/luci-app-smartdns/root/usr/share/luci/menu.d/luci-app-smartdns.json
 sed -i '/"title": "MihomoTProxy",/a \        "order": 15,' package/waynesg/luci-app-mihomo/luci-app-mihomo/root/usr/share/luci/menu.d/luci-app-mihomo.json
 sed -i 's/_("OpenClash"), 50/_("OpenClash"), 20/g' package/waynesg/luci-app-openclash/luci-app-openclash/luasrc/controller/openclash.lua
-sed -i 's/services/network/g' feeds/luci/applications/luci-app-upnp/root/usr/share/luci/menu.d/luci-app-upnp.json
 sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
 sed -i 's/"软件包"/"软件管理"/g' `grep "软件包" -rl ./`
 
@@ -170,7 +169,8 @@ sed -i 's/<%= ver.distversion %>/Compiled By @waynesg/g' package/waynesg/luci-th
 echo "重命名服务菜单"
 #services menu
 sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' feeds/luci/applications/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
-sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh_Hans/upnp.po
+#sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh_Hans/upnp.po
+#sed -i 's/services/network/g' feeds/luci/applications/luci-app-upnp/root/usr/share/luci/menu.d/luci-app-upnp.json
 sed -i 's/"MihomoTProxy"/"MiHoMo"/g' package/waynesg/luci-app-mihomo/luci-app-mihomo/root/usr/share/luci/menu.d/luci-app-mihomo.json
 sed -i 's/"KMS 服务器"/"KMS服务"/g' $(grep "KMS 服务器" -rl ./)
 
