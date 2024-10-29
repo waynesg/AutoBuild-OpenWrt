@@ -40,9 +40,9 @@ uci commit luci
 exit 0
 EOF
 
-echo 
-TIME y "已关闭开机串口跑码"
-sed -i 's/console=tty0//g'  target/linux/x86/image/Makefile
+# echo 
+# TIME y "已关闭开机串口跑码"
+# sed -i 's/console=tty0//g'  target/linux/x86/image/Makefile
 
 echo 
 TIME y "ttyd自动登录"
@@ -119,7 +119,9 @@ sed -i 's/"软件包"/"软件管理"/g' $(grep "软件包" -rl ./)
 sed -i 's/"终端"/"命令终端"/g' feeds/luci/applications/luci-app-ttyd/po/zh_Hans/ttyd.po
 sed -i 's/"在线用户"/"在线设备"/g' package/waynesg/luci-app-onliner/luasrc/controller/onliner.lua
 sed -i 's/"Argon 主题设置"/"主题设置"/g' package/waynesg/luci-app-argon-config/po/zh_Hans/argon-config.po
-sed -i '/<%= ver.distversion %>/d' package/waynesg/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
+#Argon主题修改
+sed -i 's/(<%= ver.luciversion %>)//g' package/waynesg/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
+sed -i 's/<%= ver.distversion %>/Compiled By @waynesg/g' package/waynesg/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
 
 # 重命名控制菜单
 echo "重命名控制菜单..."
