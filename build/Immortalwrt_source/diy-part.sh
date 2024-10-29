@@ -74,41 +74,41 @@ echo
 TIME y "添加upx"
 sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx\/host"/g' package/waynesg/luci-app-mosdns/mosdns/Makefile
 
-echo
-TIME y "防火墙4添加自定义nft命令支持"
-curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/firewall4/100-openwrt-firewall4-add-custom-nft-command-support.patch | patch -p1
+# echo
+# TIME y "防火墙4添加自定义nft命令支持"
+# curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/firewall4/100-openwrt-firewall4-add-custom-nft-command-support.patch | patch -p1
 
-pushd feeds/luci
-	# 防火墙4添加自定义nft命令选项卡
-	curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/firewall4/0004-luci-add-firewall-add-custom-nft-rule-support.patch | patch -p1
-	# 状态-防火墙页面去掉iptables警告，并添加nftables、iptables标签页
-	curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/luci/0004-luci-mod-status-firewall-disable-legacy-firewall-rul.patch | patch -p1
-popd
+# pushd feeds/luci
+# 	# 防火墙4添加自定义nft命令选项卡
+# 	curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/firewall4/0004-luci-add-firewall-add-custom-nft-rule-support.patch | patch -p1
+# 	# 状态-防火墙页面去掉iptables警告，并添加nftables、iptables标签页
+# 	curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/luci/0004-luci-mod-status-firewall-disable-legacy-firewall-rul.patch | patch -p1
+# popd
 
-echo
-TIME y "补充 firewall4 luci 中文翻译"
-cat >> "feeds/luci/applications/luci-app-firewall/po/zh_Hans/firewall.po" <<-EOF
+# echo
+# TIME y "补充 firewall4 luci 中文翻译"
+# cat >> "feeds/luci/applications/luci-app-firewall/po/zh_Hans/firewall.po" <<-EOF
 	
-	msgid ""
-	"Custom rules allow you to execute arbitrary nft commands which are not "
-	"otherwise covered by the firewall framework. The rules are executed after "
-	"each firewall restart, right after the default ruleset has been loaded."
-	msgstr ""
-	"自定义规则允许您执行不属于防火墙框架的任意 nft 命令。每次重启防火墙时，"
-	"这些规则在默认的规则运行后立即执行。"
+# 	msgid ""
+# 	"Custom rules allow you to execute arbitrary nft commands which are not "
+# 	"otherwise covered by the firewall framework. The rules are executed after "
+# 	"each firewall restart, right after the default ruleset has been loaded."
+# 	msgstr ""
+# 	"自定义规则允许您执行不属于防火墙框架的任意 nft 命令。每次重启防火墙时，"
+# 	"这些规则在默认的规则运行后立即执行。"
 	
-	msgid ""
-	"Applicable to internet environments where the router is not assigned an IPv6 prefix, "
-	"such as when using an upstream optical modem for dial-up."
-	msgstr ""
-	"适用于路由器未分配 IPv6 前缀的互联网环境，例如上游使用光猫拨号时。"
+# 	msgid ""
+# 	"Applicable to internet environments where the router is not assigned an IPv6 prefix, "
+# 	"such as when using an upstream optical modem for dial-up."
+# 	msgstr ""
+# 	"适用于路由器未分配 IPv6 前缀的互联网环境，例如上游使用光猫拨号时。"
 
-	msgid "NFtables Firewall"
-	msgstr "NFtables 防火墙"
+# 	msgid "NFtables Firewall"
+# 	msgstr "NFtables 防火墙"
 
-	msgid "IPtables Firewall"
-	msgstr "IPtables 防火墙"
-EOF
+# 	msgid "IPtables Firewall"
+# 	msgstr "IPtables 防火墙"
+# EOF
 
 echo
 TIME y "rpcd - fix timeout"
@@ -152,7 +152,6 @@ echo "重命名系统菜单"
 #status menu
 sed -i 's/"概览"/"系统概览"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"路由"/"路由映射"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
-#sed -i 's/"防火墙"/"*防火墙*"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"在线用户"/"在线设备"/g' package/waynesg/luci-app-onliner/luasrc/controller/onliner.lua
 #system menu
 #sed -i 's/"系统"/"系统设置"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
@@ -173,6 +172,7 @@ echo "重命名服务菜单"
 sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' feeds/luci/applications/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh_Hans/upnp.po
 sed -i 's/"MihomoTProxy"/"MiHoMo"/g' package/waynesg/luci-app-mihomo/luci-app-mihomo/root/usr/share/luci/menu.d/luci-app-mihomo.json
+sed -i 's/"KMS 服务器"/"KMS服务"/g' $(grep "KMS 服务器" -rl ./)
 
 echo "重命名网络菜单"
 #network
@@ -180,7 +180,7 @@ echo "重命名网络菜单"
 sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
 sed -i 's/"Socat"/"端口转发"/g'  feeds/luci/applications/luci-app-socat/luasrc/controller/socat.lua
 sed -i 's/DHCP\/DNS/DNS设定/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
-#sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' package/waynesg/luci-app-turboacc/luci-app-turboacc/po/zh-cn/turboacc.po
+sed -i 's/"USB 打印服务器"/"打印服务"/g' $(grep "USB 打印服务器" -rl ./)
 sed -i "s/set network\.vpn0\.ifname='tun0'/set network.vpn0.device='tun0'/g" feeds/luci/applications/luci-app-openvpn-server/root/etc/uci-defaults/openvpn
 
 echo "重命名管控菜单"
