@@ -90,7 +90,7 @@ git clone --depth=1 https://github.com/gSpotx2f/luci-app-cpu-status package/wayn
 git clone --depth=1 https://github.com/muink/luci-app-tn-netports package/waynesg/luci-app-tn-netports
 #socat
 clone_or_update_git_repo https://github.com/Lienol/openwrt-package package/waynesg/luci-app-socat main luci-app-socat
-#statistics
-#clone_or_update_git_repo https://github.com/immortalwrt/luci package/waynesg/ openwrt-23.05 applications/luci-app-statistics
+#eqosplus
+git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/waynesg/luci-app-eqosplus
 
 
