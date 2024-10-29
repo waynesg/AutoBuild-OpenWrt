@@ -65,50 +65,50 @@ TIME y "修改dashboard password"
 sed -i '/uci -q set openclash.config.dashboard_password/d' package/waynesg/luci-app-openclash/luci-app-openclash/root/etc/uci-defaults/luci-openclash
 sed -i '/uci add openclash/,/^md5sum /d' package/waynesg/luci-app-openclash/luci-app-openclash/root/etc/uci-defaults/luci-openclash
 
-#echo
-#TIME y "ppp - 2.5.0"
-#rm -rf package/network/services/ppp
-#git clone https://github.com/sbwml/package_network_services_ppp package/network/services/ppp
+echo
+TIME y "ppp - 2.5.0"
+rm -rf package/network/services/ppp
+git clone https://github.com/sbwml/package_network_services_ppp package/network/services/ppp
 
 echo
 TIME y "添加upx"
 sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx\/host"/g' package/waynesg/luci-app-mosdns/mosdns/Makefile
 
-# echo
-# TIME y "防火墙4添加自定义nft命令支持"
-# curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/firewall4/100-openwrt-firewall4-add-custom-nft-command-support.patch | patch -p1
+echo
+TIME y "防火墙4添加自定义nft命令支持"
+curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/firewall4/100-openwrt-firewall4-add-custom-nft-command-support.patch | patch -p1
 
-# pushd feeds/luci
-# 	# 防火墙4添加自定义nft命令选项卡
-# 	curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/firewall4/0004-luci-add-firewall-add-custom-nft-rule-support.patch | patch -p1
-# 	# 状态-防火墙页面去掉iptables警告，并添加nftables、iptables标签页
-# 	curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/luci/0004-luci-mod-status-firewall-disable-legacy-firewall-rul.patch | patch -p1
-# popd
+pushd feeds/luci
+	# 防火墙4添加自定义nft命令选项卡
+	curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/firewall4/0004-luci-add-firewall-add-custom-nft-rule-support.patch | patch -p1
+	# 状态-防火墙页面去掉iptables警告，并添加nftables、iptables标签页
+	curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/luci/0004-luci-mod-status-firewall-disable-legacy-firewall-rul.patch | patch -p1
+popd
 
-# echo
-# TIME y "补充 firewall4 luci 中文翻译"
-# cat >> "feeds/luci/applications/luci-app-firewall/po/zh_Hans/firewall.po" <<-EOF
+echo
+TIME y "补充 firewall4 luci 中文翻译"
+cat >> "feeds/luci/applications/luci-app-firewall/po/zh_Hans/firewall.po" <<-EOF
 	
-# 	msgid ""
-# 	"Custom rules allow you to execute arbitrary nft commands which are not "
-# 	"otherwise covered by the firewall framework. The rules are executed after "
-# 	"each firewall restart, right after the default ruleset has been loaded."
-# 	msgstr ""
-# 	"自定义规则允许您执行不属于防火墙框架的任意 nft 命令。每次重启防火墙时，"
-# 	"这些规则在默认的规则运行后立即执行。"
+	msgid ""
+	"Custom rules allow you to execute arbitrary nft commands which are not "
+	"otherwise covered by the firewall framework. The rules are executed after "
+	"each firewall restart, right after the default ruleset has been loaded."
+	msgstr ""
+	"自定义规则允许您执行不属于防火墙框架的任意 nft 命令。每次重启防火墙时，"
+	"这些规则在默认的规则运行后立即执行。"
 	
-# 	msgid ""
-# 	"Applicable to internet environments where the router is not assigned an IPv6 prefix, "
-# 	"such as when using an upstream optical modem for dial-up."
-# 	msgstr ""
-# 	"适用于路由器未分配 IPv6 前缀的互联网环境，例如上游使用光猫拨号时。"
+	msgid ""
+	"Applicable to internet environments where the router is not assigned an IPv6 prefix, "
+	"such as when using an upstream optical modem for dial-up."
+	msgstr ""
+	"适用于路由器未分配 IPv6 前缀的互联网环境，例如上游使用光猫拨号时。"
 
-# 	msgid "NFtables Firewall"
-# 	msgstr "NFtables 防火墙"
+	msgid "NFtables Firewall"
+	msgstr "NFtables 防火墙"
 
-# 	msgid "IPtables Firewall"
-# 	msgstr "IPtables 防火墙"
-# EOF
+	msgid "IPtables Firewall"
+	msgstr "IPtables 防火墙"
+EOF
 
 echo
 TIME y "rpcd - fix timeout"
