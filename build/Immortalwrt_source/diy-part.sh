@@ -26,10 +26,15 @@ TIME() {
 curl -o default-settings https://raw.githubusercontent.com/waynesg/scripts/main/others/default-settings
 cp -f default-settings package/emortal/default-settings/files/99-default-settings
 
+#替换autocore
+rm -rf package/emortal/autocore
+git clone --depth=1 https://github.com/coolsnowwolf/lede.git temp_lede
+mv temp_lede/package/lean/autocore package/emortal/autocore
+rm -rf temp_lede
+
 #echo 
 #TIME y "自定义固件版本名字"
 #sed -i "s/DISTRIB_DESCRIPTION='.*'/DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt'/g" package/base-files/files/etc/openwrt_release
-
 
 echo 
 TIME y "调整网络诊断地址到www.baidu.com"
@@ -167,6 +172,7 @@ sed -i 's/"Argon 主题设置"/"主题设置"/g' package/waynesg/luci-app-argon-
 sed -i 's/(<%= ver.luciversion %>)//g' package/waynesg/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
 sed -i 's/<%= ver.distversion %>/Compiled By @waynesg/g' package/waynesg/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
 echo "重命名服务菜单"
+
 #services menu
 sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' feeds/luci/applications/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 #sed -i 's/msgstr "UPnP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh_Hans/upnp.po
