@@ -79,18 +79,18 @@ echo
 TIME y "添加upx"
 sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx\/host"/g' package/waynesg/luci-app-mosdns/mosdns/Makefile
 
-echo
-TIME y "防火墙4添加自定义nft命令支持"
-curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/firewall4/100-openwrt-firewall4-add-custom-nft-command-support.patch | patch -p1
+# echo
+# TIME y "防火墙4添加自定义nft命令支持"
+# curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/firewall4/100-openwrt-firewall4-add-custom-nft-command-support.patch | patch -p1
 
-pushd feeds/luci
-	# 防火墙4添加自定义nft命令选项卡
-	curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/firewall4/0004-luci-add-firewall-add-custom-nft-rule-support.patch | patch -p1
-	# 状态-防火墙页面去掉iptables警告，并添加nftables、iptables标签页
-	curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/luci/0004-luci-mod-status-firewall-disable-legacy-firewall-rul.patch | patch -p1
-popd
+# pushd feeds/luci
+# 	# 防火墙4添加自定义nft命令选项卡
+# 	curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/firewall4/0004-luci-add-firewall-add-custom-nft-rule-support.patch | patch -p1
+# 	# 状态-防火墙页面去掉iptables警告，并添加nftables、iptables标签页
+# 	curl -s https://github.com/sbwml/r4s_build_script/openwrt/patch/luci/0004-luci-mod-status-firewall-disable-legacy-firewall-rul.patch | patch -p1
+# popd
 
-echo
+# echo
 TIME y "补充 firewall4 luci 中文翻译"
 cat >> "feeds/luci/applications/luci-app-firewall/po/zh_Hans/firewall.po" <<-EOF
 	
