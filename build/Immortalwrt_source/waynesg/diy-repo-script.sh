@@ -39,17 +39,10 @@ clone_or_update_git_repo() {
 
 # theme
 git clone --depth=1 -b master https://github.com/jerrykuku/luci-theme-argon package/waynesg/luci-theme-argon
-#git clone --depth=1 https://github.com/sirpdboy/luci-theme-opentopd package/waynesg/luci-theme-opentopd
-#git clone --depth=1 -b master https://github.com/kiddin9/luci-theme-edge package/waynesg/luci-theme-edge
-#git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/waynesg/luci-theme-neobird
-#git clone --depth=1 https://github.com/sirpdboy/luci-app-advancedplus package/waynesg/luci-app-advancedplus
-#clone_or_update_git_repo https://github.com/sirpdboy/sirpdboy-package package/waynesg/luci-theme-opentomcat "" luci-theme-opentomcat
 # argon-theme-config
 git clone --depth=1 -b master https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
 #mosdns
 git clone --depth=1 -b v5 https://github.com/sbwml/luci-app-mosdns package/waynesg/luci-app-mosdns
-#ssr-plus
-#clone_or_update_git_repo https://github.com/fw876/helloworld package/waynesg/luci-app-ssr-plus master luci-app-ssr-plus
 #passwall
 clone_or_update_git_repo https://github.com/xiaorouji/openwrt-passwall package/waynesg/luci-app-passwall luci-smartdns-dev luci-app-passwall
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2 package/waynesg/luci-app-passwall2
@@ -78,7 +71,6 @@ git clone --depth=1 https://github.com/destan19/OpenAppFilter package/waynesg/lu
 git clone --depth=1 https://github.com/zzsj0928/luci-app-pushbot package/waynesg/luci-app-pushbot
 #onliner
 clone_or_update_git_repo https://github.com/Hyy2001X/AutoBuild-Packages package/waynesg/luci-app-onliner "" luci-app-onliner
-
 #airconnect
 git clone --depth=1 -b main https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect
 clone_or_update_git_repo https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect main airconnect
