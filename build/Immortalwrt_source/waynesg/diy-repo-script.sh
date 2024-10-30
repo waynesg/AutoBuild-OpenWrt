@@ -65,8 +65,8 @@ git clone --depth=1 https://github.com/destan19/OpenAppFilter package/waynesg/lu
 #weburl
 #clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-weburl "" luci-app-control-weburl
 #serverchan
-#git clone --depth=1 -b master https://github.com/tty228/luci-app-wechatpush package/waynesg/luci-app-wechatpush
-#clone_or_update_git_repo https://github.com/kiddin9/kwrt-packages package/waynesg/ "" wrtbwmon
+git clone --depth=1 -b master https://github.com/tty228/luci-app-wechatpush package/waynesg/luci-app-wechatpush
+clone_or_update_git_repo https://github.com/kiddin9/kwrt-packages package/waynesg/ "" wrtbwmon
 #pushbot
 #git clone --depth=1 https://github.com/zzsj0928/luci-app-pushbot package/waynesg/luci-app-pushbot
 #onliner
