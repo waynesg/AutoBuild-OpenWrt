@@ -26,11 +26,11 @@ TIME() {
 curl -o default-settings https://raw.githubusercontent.com/waynesg/scripts/main/others/default-settings
 cp -f default-settings package/emortal/default-settings/files/99-default-settings
 
-# #替换autocore
-# rm -rf package/emortal/autocore
-# git clone --depth=1 https://github.com/coolsnowwolf/lede.git temp_lede
-# mv temp_lede/package/lean/autocore package/emortal/autocore
-# rm -rf temp_lede
+#替换autocore
+rm -rf package/emortal/autocore
+git clone --depth=1 https://github.com/coolsnowwolf/lede.git temp_lede
+mv temp_lede/package/lean/autocore package/emortal/autocore
+rm -rf temp_lede
 
 #echo 
 #TIME y "自定义固件版本名字"
