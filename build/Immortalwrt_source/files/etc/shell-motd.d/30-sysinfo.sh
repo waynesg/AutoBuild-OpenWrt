@@ -137,7 +137,7 @@ swap_total=$(awk '{print $(2)}' <<<${swap_info})
 #cpu_temp=$(cpuinfo | grep 'MHz' | awk '{print $1, $2, $3}')
 #sys_temp=$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c)
 #sys_tempx=`echo $sys_temp | sed 's/ / /g'`
-cpu_temp=$(cpuinfo | grep -v '.sh')
+cpu_temp=$(cpuinfo | grep 'MHz' | awk '{print $1, $2, $3}')
 cpuinfox=$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c)
 cpuinfo=`echo $cpuinfox | sed 's/.*G*./& 核心x/g' | sed -r 's/^(..)(.*)/\2\1/'`
 
