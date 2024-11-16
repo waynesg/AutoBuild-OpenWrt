@@ -213,6 +213,7 @@ echo "重命名VPN菜单"
 #vpn
 sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 sed -i 's/"OpenVPN"/"OpenVPN 客户端"/g' feeds/luci/applications/luci-app-openvpn/luasrc/controller/openvpn.lua
+sed -i 's/"IPSec VPN Server"/"IPSec VPN 服务器"/g' feeds/luci/applications/luci-app-ipsec-vpnserver-manyusers/luasrc/controller/ipsec-server.lua
 TIME b "重命名 完成"
 
 echo
