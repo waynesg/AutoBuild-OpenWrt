@@ -86,4 +86,5 @@ git clone --depth=1 https://github.com/gSpotx2f/luci-app-cpu-status package/wayn
 git clone --depth=1 https://github.com/muink/luci-app-tn-netports package/waynesg/luci-app-tn-netports
 #lucky
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-lucky package/waynesg/luci-app-lucky
-
+#yt-dlp
+git clone --depth=1 https://github.com/liudf0716/luci-app-yt-dlp package/waynesg/luci-app-yt-dlp
