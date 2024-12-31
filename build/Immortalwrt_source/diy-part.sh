@@ -155,7 +155,7 @@ sed -i 's|/services/|/nas/|' feeds/luci/applications/luci-app-alist/root/usr/sha
 sed -i '/"title": "SmartDNS",/a \        "order": 22,' feeds/luci/applications/luci-app-smartdns/root/usr/share/luci/menu.d/luci-app-smartdns.json
 sed -i '/"title": "MihomoTProxy",/a \        "order": 15,' package/waynesg/luci-app-mihomo/luci-app-mihomo/root/usr/share/luci/menu.d/luci-app-mihomo.json
 sed -i 's/("OpenClash"), 50)/("OpenClash"), -10)/g' package/waynesg/luci-app-openclash/luci-app-openclash/luasrc/controller/openclash.lua
-sed -i 's/("Pass Wall"), -1)/("Pass Wall"), -9)/g' package/waynesg/luci-app-passwall/luasrc/controller/passwall.lua
+#sed -i 's/("Pass Wall"), -1)/("Pass Wall"), -9)/g' package/waynesg/luci-app-passwall/luasrc/controller/passwall.lua
 sed -i 's/("PassWall 2"), 0)/("PassWall 2"), -8)/g' package/waynesg/luci-app-passwall2/luci-app-passwall2/luasrc/controller/passwall2.lua
 sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
 sed -i 's/"软件包"/"软件管理"/g' `grep "软件包" -rl ./`
