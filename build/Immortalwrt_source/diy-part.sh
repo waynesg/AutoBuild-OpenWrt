@@ -153,7 +153,7 @@ sed -i 's/\"services\"/\"control\"/g'  package/waynesg/luci-app-oaf/luci-app-oaf
 #sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
 sed -i 's|/services/|/nas/|' feeds/luci/applications/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
 sed -i '/"title": "SmartDNS",/a \        "order": 22,' feeds/luci/applications/luci-app-smartdns/root/usr/share/luci/menu.d/luci-app-smartdns.json
-sed -i '/"title": "MihomoTProxy",/a \        "order": 15,' package/waynesg/luci-app-mihomo/luci-app-mihomo/root/usr/share/luci/menu.d/luci-app-mihomo.json
+#sed -i '/"title": "Nikki",/a \        "order": 15,' package/waynesg/luci-app-mihomo/luci-app-nikki/root/usr/share/luci/menu.d/luci-app-nikki.json
 sed -i 's/("OpenClash"), 50)/("OpenClash"), -10)/g' package/waynesg/luci-app-openclash/luci-app-openclash/luasrc/controller/openclash.lua
 #sed -i 's/("Pass Wall"), -1)/("Pass Wall"), -9)/g' package/waynesg/luci-app-passwall/luasrc/controller/passwall.lua
 sed -i 's/("PassWall 2"), 0)/("PassWall 2"), -8)/g' package/waynesg/luci-app-passwall2/luci-app-passwall2/luasrc/controller/passwall2.lua
@@ -185,9 +185,10 @@ echo "重命名服务菜单"
 
 #services menu
 sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' feeds/luci/applications/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
-sed -i 's/"MihomoTProxy"/"MiHoMo"/g' package/waynesg/luci-app-mihomo/luci-app-mihomo/root/usr/share/luci/menu.d/luci-app-mihomo.json
+sed -i 's/"subconverter"/"订阅转换"/g' package/waynesg/luci-app-subconverter/root/usr/share/luci/menu.d/luci-app-subconverter.json
 sed -i 's/"KMS 服务器"/"KMS服务"/g' $(grep "KMS 服务器" -rl ./)
 #sed -i 's/"短视频下载"/"视频下载"/g' package/waynesg/luci-app-yt-dlp/po/zh_Hans/yt-dlp.po
+
 
 echo "重命名网络菜单"
 #network
