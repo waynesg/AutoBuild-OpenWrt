@@ -91,3 +91,4 @@ git clone --depth=1 https://github.com/muink/luci-app-tn-netports package/waynes
 git clone --depth=1 https://github.com/liudf0716/luci-app-yt-dlp package/waynesg/luci-app-yt-dlp
 #uugame
 git clone --depth=1 https://github.com/kiddin9/luci-app-uugamebooster package/waynesg/luci-app-uugamebooster
+clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/uugamebooster "" uugamebooster
