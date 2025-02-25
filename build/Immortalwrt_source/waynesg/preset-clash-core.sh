@@ -13,6 +13,8 @@ mkdir -p files/etc/openclash/core
 mkdir -p files/usr/share/openclash/ui/yacd
 mkdir -p files/usr/share/openclash/ui/dashboard
 mkdir -p files/usr/share/openclash/ui/metacubexd
+mkdir -p files/usr/share/openclash/ui/zashboard
+
 
 CORE_VER="https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version"
 CORE_TYPE=$(echo $WRT_TARGET | grep -Eiq "64|86" && echo "amd64" || echo "arm64")
@@ -27,7 +29,7 @@ GEOSITE_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/dow
 GEO_MMDB="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-only-cn-private.mmdb"
 
 YACD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/Yacd-meta.tar.gz"
-RAZORD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/Razord-meta.tar.gz"
+YACD_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/yacd.tar.gz"
 METACUBEXD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/metacubexd.tar.gz"
 ZASHBOARD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/zashboard.tar.gz"
 
@@ -40,7 +42,7 @@ wget -qO- $GEOIP_URL > files/etc/openclash/GeoIP.dat
 wget -qO- $GEOSITE_URL > files/etc/openclash/GeoSite.dat
 wget -qO- $GEO_MMDB > files/etc/openclash/Country-only-cn-private.mmdb
 wget -qO- $YACD_META_URL | tar xvz -C files/usr/share/openclash/ui/yacd
-wget -qO- $RAZORD_META_URL | tar xvz -C files/usr/share/openclash/ui/dashboard
+wget -qO- $YACD_URL | tar xvz -C files/usr/share/openclash/ui/dashboard
 wget -qO- $METACUBEXD_META_URL | tar xvz -C files/usr/share/openclash/ui/metacubexd
 wget -qO- $ZASHBOARD_META_URL | tar xvz -C files/usr/share/openclash/ui/zashboard
 
