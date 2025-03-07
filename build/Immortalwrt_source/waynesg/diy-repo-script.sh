@@ -85,6 +85,8 @@ git clone --depth=1 https://github.com/nikkinikki-org/OpenWrt-nikki package/wayn
 git clone --depth=1 https://github.com/gSpotx2f/luci-app-cpu-status package/waynesg/luci-app-cpu-status
 #tn-netports
 git clone --depth=1 https://github.com/muink/luci-app-tn-netports package/waynesg/luci-app-tn-netports
+#tailscale
+git clone --depth=1 https://github.com/BootLoopLover/luci-app-tailscale package/waynesg/luci-app-tailscale
 #lucky
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-lucky package/waynesg/luci-app-lucky
 #yt-dlp
