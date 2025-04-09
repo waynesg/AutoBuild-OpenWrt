@@ -90,7 +90,7 @@ git clone --depth=1 https://github.com/BootLoopLover/luci-app-tailscale package/
 #yt-dlp
 git clone --depth=1 https://github.com/liudf0716/luci-app-yt-dlp package/waynesg/luci-app-yt-dlp
 #Nikki
-git clone --depth=1 https://github.com/nikkinikki-org/OpenWrt-nikki package/waynesg/luci-app-nikki
+#git clone --depth=1 https://github.com/nikkinikki-org/OpenWrt-nikki package/waynesg/luci-app-nikki
 #socat
 clone_or_update_git_repo https://github.com/Lienol/openwrt-package package/waynesg/luci-app-socat "" luci-app-socat
 
