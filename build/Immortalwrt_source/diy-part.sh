@@ -207,7 +207,7 @@ sed -i '$a\msgid "Control"\nmsgstr "管控"' package/waynesg/luci-app-oaf/luci-a
 
 
 echo "重命名存储菜单"
-sed -i 's/"AList"/"Alist列表"/g' package/waynesg/luci-app-alist/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
+sed -i 's/"Alist 文件列表"/"Alist列表"/g' package/waynesg/luci-app-alist/luci-app-alist/po/zh_Hans/alist.po
 sed -i 's/"USB 打印服务器"/"打印服务"/g' feeds/luci/applications/luci-app-usb-printer/po/zh_Hans/luci-app-usb-printer.po
 sed -i 's/"FTP 服务器"/"FTP 服务"/g' feeds/luci/applications/luci-app-vsftpd/po/zh_Hans/vsftpd.po
 
