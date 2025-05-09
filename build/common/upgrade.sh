@@ -48,6 +48,22 @@ GET_TARGET_INFO() {
 			Firmware_sfx="bin"
 		fi
 	;;
+        "openwrt-24。10")
+		LUCI_Name="24。10"
+		REPO_Name="Immortalwrt"
+		ZUOZHE="Immortalwrt's"
+		if [[ "${TARGET_PROFILE}" == "x86-64" ]]; then
+			Legacy_Firmware="immortalwrt-x86-64-generic-squashfs-combined.${Firmware_sfxo}"
+			UEFI_Firmware="immortalwrt-x86-64-generic-squashfs-combined-efi.${Firmware_sfxo}"				
+                        Firmware_sfx="${Firmware_sfxo}"
+		elif [[ "${TARGET_PROFILE}" == "phicomm-k3" ]]; then
+			Up_Firmware="immortalwrt-bcm53xx-${TARGET_PROFILE}-squashfs.trx"
+			Firmware_sfx="trx"
+		else
+			Up_Firmware="immortalwrt-${TARGET_BOARD}-${TARGET_SUBTARGET}-${TARGET_PROFILE}-squashfs-sysupgrade.bin"
+			Firmware_sfx="bin"
+		fi
+	;;
 	"openwrt-21.02")
 		LUCI_Name="immortalwrt-21.02"
 		REPO_Name="immortalwrt"
