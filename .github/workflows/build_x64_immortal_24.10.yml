@@ -1,4 +1,4 @@
-name: immortal
+name: Immortal_2410
 on:
   workflow_dispatch:
     inputs:
