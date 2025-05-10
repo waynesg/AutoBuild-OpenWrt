@@ -55,10 +55,10 @@ echo
 TIME y "修改最大连接数修改为65535"
 sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=65535' package/base-files/files/etc/sysctl.conf
 
-echo
-TIME y "修复上移下移按钮翻译"
-sed -i 's/<%:Up%>/<%:Move up%>/g' feeds/luci/modules/luci-compat/luasrc/view/cbi/tblsection.htm
-sed -i 's/<%:Down%>/<%:Move down%>/g' feeds/luci/modules/luci-compat/luasrc/view/cbi/tblsection.htm
+# echo
+# TIME y "修复上移下移按钮翻译"
+# sed -i 's/<%:Up%>/<%:Move up%>/g' feeds/luci/modules/luci-compat/luasrc/view/cbi/tblsection.htm
+# sed -i 's/<%:Down%>/<%:Move down%>/g' feeds/luci/modules/luci-compat/luasrc/view/cbi/tblsection.htm
 
 echo
 TIME y "更换golang版本"
@@ -70,10 +70,10 @@ TIME y "修改dashboard password"
 sed -i '/uci -q set openclash.config.dashboard_password/d' package/waynesg/luci-app-openclash/luci-app-openclash/root/etc/uci-defaults/luci-openclash
 sed -i '/uci add openclash/,/^md5sum /d' package/waynesg/luci-app-openclash/luci-app-openclash/root/etc/uci-defaults/luci-openclash
 
-echo
-TIME y "ppp - 2.5.0"
-rm -rf package/network/services/ppp
-git clone https://github.com/sbwml/package_network_services_ppp package/network/services/ppp
+# echo
+# TIME y "ppp - 2.5.0"
+# rm -rf package/network/services/ppp
+# git clone https://github.com/sbwml/package_network_services_ppp package/network/services/ppp
 
 echo
 TIME y "添加upx"
@@ -91,29 +91,29 @@ sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx
 # popd
 
 # echo
-TIME y "补充 firewall4 luci 中文翻译"
-cat >> "feeds/luci/applications/luci-app-firewall/po/zh_Hans/firewall.po" <<-EOF
+# TIME y "补充 firewall4 luci 中文翻译"
+# cat >> "feeds/luci/applications/luci-app-firewall/po/zh_Hans/firewall.po" <<-EOF
 	
-	msgid ""
-	"Custom rules allow you to execute arbitrary nft commands which are not "
-	"otherwise covered by the firewall framework. The rules are executed after "
-	"each firewall restart, right after the default ruleset has been loaded."
-	msgstr ""
-	"自定义规则允许您执行不属于防火墙框架的任意 nft 命令。每次重启防火墙时，"
-	"这些规则在默认的规则运行后立即执行。"
+# 	msgid ""
+# 	"Custom rules allow you to execute arbitrary nft commands which are not "
+# 	"otherwise covered by the firewall framework. The rules are executed after "
+# 	"each firewall restart, right after the default ruleset has been loaded."
+# 	msgstr ""
+# 	"自定义规则允许您执行不属于防火墙框架的任意 nft 命令。每次重启防火墙时，"
+# 	"这些规则在默认的规则运行后立即执行。"
 	
-	msgid ""
-	"Applicable to internet environments where the router is not assigned an IPv6 prefix, "
-	"such as when using an upstream optical modem for dial-up."
-	msgstr ""
-	"适用于路由器未分配 IPv6 前缀的互联网环境，例如上游使用光猫拨号时。"
+# 	msgid ""
+# 	"Applicable to internet environments where the router is not assigned an IPv6 prefix, "
+# 	"such as when using an upstream optical modem for dial-up."
+# 	msgstr ""
+# 	"适用于路由器未分配 IPv6 前缀的互联网环境，例如上游使用光猫拨号时。"
 
-	msgid "NFtables Firewall"
-	msgstr "NFtables 防火墙"
+# 	msgid "NFtables Firewall"
+# 	msgstr "NFtables 防火墙"
 
-	msgid "IPtables Firewall"
-	msgstr "IPtables 防火墙"
-EOF
+# 	msgid "IPtables Firewall"
+# 	msgstr "IPtables 防火墙"
+# EOF
 
 echo
 TIME y "rpcd - fix timeout"
