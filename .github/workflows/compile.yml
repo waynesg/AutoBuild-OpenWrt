@@ -43,26 +43,26 @@ jobs:
         df -hT
         echo "=============================================================================="
 
-    - name: 优化空间
-      uses: "hugoalh/disk-space-optimizer-ghaction@v0.8.1"
-      with:
-        operate_sudo: "True"
-        general_include: ".+"
-        general_exclude: |-
-          ^GCC$
-          ^G\+\+$
-          Clang
-          LLVM
-        docker_include: ".+"
-        docker_prune: "True"
-        docker_clean: "True"
-        apt_prune: "True"
-        apt_clean: "True"
-        homebrew_prune: "True"
-        homebrew_clean: "True"
-        npm_prune: "True"
-        npm_clean: "True"
-        os_swap: "True"
+    # - name: 优化空间
+    #   uses: "hugoalh/disk-space-optimizer-ghaction@v0.8.1"
+    #   with:
+    #     operate_sudo: "True"
+    #     general_include: ".+"
+    #     general_exclude: |-
+    #       ^GCC$
+    #       ^G\+\+$
+    #       Clang
+    #       LLVM
+    #     docker_include: ".+"
+    #     docker_prune: "True"
+    #     docker_clean: "True"
+    #     apt_prune: "True"
+    #     apt_clean: "True"
+    #     homebrew_prune: "True"
+    #     homebrew_clean: "True"
+    #     npm_prune: "True"
+    #     npm_clean: "True"
+    #     os_swap: "True"
 
     - name: 释放空间
       uses: easimon/maximize-build-space@master
@@ -134,17 +134,17 @@ jobs:
           source build/common/common.sh && Diy_gonggao
         fi
 
-    - name: CPU检测
-      run: |
-        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git config --global user.name "github-actions[bot]"
-        if [[ -n "${{ github.event.workflow }}" ]]; then
-          export CPU_SELECTIOY="$(source "${GITHUB_WORKSPACE}/build/${FOLDER_NAME}/settings.ini" && echo "${CPU_SELECTION}")"
-        else
-          export CPU_PASSWORD="1746970720"
-          export CPU_OPTIMIZATION="E5"
-        fi
-        source build/${FOLDER_NAME}/common.sh && CPU_Priority
+    # - name: CPU检测
+    #   run: |
+    #     git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+    #     git config --global user.name "github-actions[bot]"
+    #     if [[ -n "${{ github.event.workflow }}" ]]; then
+    #       export CPU_SELECTIOY="$(source "${GITHUB_WORKSPACE}/build/${FOLDER_NAME}/settings.ini" && echo "${CPU_SELECTION}")"
+    #     else
+    #       export CPU_PASSWORD="1746970720"
+    #       export CPU_OPTIMIZATION="E5"
+    #     fi
+    #     source build/${FOLDER_NAME}/common.sh && CPU_Priority
 
     # - name: 释放空间
     #   uses: jlumbroso/free-disk-space@main
@@ -162,6 +162,10 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       if: env.WORKFLOW_TOKEN
       run: |
+        # bash <(curl -fsSL https://raw.githubusercontent.com/waynesg/AutoBuild-OpenWrt/main/build/common/Custom/ubuntu.sh)
+        # echo "================================================="
+        # echo "文件系统        类型   容量  已用  可用 使用% 挂载点"
+        # df -hT $PWD
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \
         bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \
