@@ -162,10 +162,6 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       if: env.WORKFLOW_TOKEN
       run: |
-        # bash <(curl -fsSL https://raw.githubusercontent.com/waynesg/AutoBuild-OpenWrt/main/build/common/Custom/ubuntu.sh)
-        # echo "================================================="
-        # echo "文件系统        类型   容量  已用  可用 使用% 挂载点"
-        # df -hT $PWD
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \
         bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \
