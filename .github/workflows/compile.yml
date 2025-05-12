@@ -234,7 +234,7 @@ jobs:
         /bin/bash "${PATH1}/$DIY_PART_SH"
         /bin/bash "${PATH1}/waynesg/preset-clash-core.sh" amd64
         ./scripts/feeds update -a
-        #./scripts/feeds install -a > /dev/null 2>&1
+        ./scripts/feeds install -a > /dev/null 2>&1
         ./scripts/feeds install -a
         mv "$PATH1/$CONFIG_FILE" .config
         if [[ "${REGULAR_UPDATE}" == "true" ]]; then
