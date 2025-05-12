@@ -48,7 +48,7 @@ GET_TARGET_INFO() {
 			Firmware_sfx="bin"
 		fi
 	;;
-        "openwrt-24。10")
+        "openwrt-24.10")
 		LUCI_Name="24.10"
 		REPO_Name="Immortalwrt"
 		ZUOZHE="Immortalwrt's"
