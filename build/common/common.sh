@@ -215,7 +215,7 @@ find . -name 'libcron' -o -name 'subconverter' -o -name 'luci-app-wechatpush' | 
 Diy_Immortalwrt_24.10() {
 
 find . -name 'luci-app-openclash' -o -name 'open-app-filter' -o -name 'luci-app-argon-config' -o -name 'luci-theme-argon' | xargs -i rm -rf {}
-find . -name 'luci-app-wechatpush' -o -name 'mosdns' -name 'sub-web' | xargs -i rm -rf {}
+find . -name 'luci-app-wechatpush' -o -name 'mosdns' -o -name 'sub-web' | xargs -i rm -rf {}
 }
 
 
