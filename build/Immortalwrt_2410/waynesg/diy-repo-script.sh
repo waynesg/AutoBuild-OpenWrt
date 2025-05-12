@@ -81,8 +81,9 @@ git clone --depth=1 -b main https://github.com/sbwml/luci-app-alist package/wayn
 #eqosplus
 git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/waynesg/luci-app-eqosplus
 #subconverter
-#git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter package/waynesg/subconverter
-git clone --depth=1 https://github.com/0x2196f3/luci-app-subconverter package/waynesg/luci-app-subconverter
+# git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter package/waynesg/subconverter
+# git clone --depth=1 https://github.com/0x2196f3/luci-app-subconverter package/waynesg/luci-app-subconverter
+git clone --depth=1 https://github.com/kiddin9/openwrt-subconverter package/waynesg/luci-app-subconverter
 #cpu status
 git clone --depth=1 https://github.com/gSpotx2f/luci-app-cpu-status package/waynesg/luci-app-cpu-status
 #tn-netports
