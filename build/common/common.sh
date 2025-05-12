@@ -209,6 +209,17 @@ find . -name 'rapidjson' -o -name 'quickjspp' | xargs -i rm -rf {}
 find . -name 'libcron' -o -name 'subconverter' -o -name 'luci-app-wechatpush' | xargs -i rm -rf {}
 }
 
+################################################################################################################
+# Immortalwrt_24.10 diy.sh文件
+################################################################################################################
+Diy_Immortalwrt_24.10() {
+
+find . -name 'luci-app-openclash' -o -name 'open-app-filter' -o -name 'luci-app-argon-config' -o -name 'luci-theme-argon' | xargs -i rm -rf {}
+find . -name 'luci-app-wechatpush' -o -name 'mosdns' | xargs -i rm -rf {}
+}
+
+
+
 function CPU_Priority() {
 export TARGET_BOARD="$(awk -F '[="]+' '/TARGET_BOARD/{print $2}' build/${FOLDER_NAME}/${CONFIG_FILE})"
 export TARGET_SUBTARGET="$(awk -F '[="]+' '/TARGET_SUBTARGET/{print $2}' build/${FOLDER_NAME}/${CONFIG_FILE})"
