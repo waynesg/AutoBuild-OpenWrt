@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'build/Immortalwrt_2410/relevance/start'
+      - 'build/Immortalwrt_24.10/relevance/start'
 
 env:
   Github: https://github.com/${{github.repository}}
@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [Immortalwrt_2410]
+        target: [Immortalwrt_24.10]
 
     steps:
     # - name: 查询空间
