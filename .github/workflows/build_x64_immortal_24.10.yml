@@ -1,4 +1,4 @@
-name: Immortal_2410
+name: build_x64_immortal_24.10
 on:
   workflow_dispatch:
     inputs:
