@@ -36,24 +36,24 @@ jobs:
         target: [Immortalwrt_24.10]
 
     steps:
-    # - name: 查询空间
-    #   run: |
-    #     echo "查询空间"
-    #     echo "=============================================================================="
-    #     df -hT
-    #     echo "=============================================================================="
+    - name: 查询空间
+      run: |
+        echo "查询空间"
+        echo "=============================================================================="
+        df -hT
+        echo "=============================================================================="
 
-    # - name: 优化空间
-    #   uses: "hugoalh/disk-space-optimizer-ghaction@v0.8.1"
-    #   with:
-    #     operate_sudo: "True"
-    #     general_include: ".+"
-    #     general_exclude: |-
-    #       ^GCC$
-    #       ^G\+\+$
-    #       Clang
-    #       LLVM
-    #     docker_include: ".+"
+    - name: 优化空间
+      uses: "hugoalh/disk-space-optimizer-ghaction@v0.8.1"
+      with:
+        operate_sudo: "True"
+        general_include: ".+"
+        general_exclude: |-
+          ^GCC$
+          ^G\+\+$
+          Clang
+          LLVM
+        docker_include: ".+"
         docker_prune: "True"
         docker_clean: "True"
         apt_prune: "True"
