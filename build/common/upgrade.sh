@@ -49,7 +49,7 @@ GET_TARGET_INFO() {
 		fi
 	;;
         "openwrt-24。10")
-		LUCI_Name="24。10"
+		LUCI_Name="24.10"
 		REPO_Name="Immortalwrt"
 		ZUOZHE="Immortalwrt's"
 		if [[ "${TARGET_PROFILE}" == "x86-64" ]]; then
