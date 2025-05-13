@@ -210,7 +210,7 @@ echo "重命名存储菜单"
 sed -i 's/"Alist 文件列表"/"Alist列表"/g' package/waynesg/luci-app-alist/luci-app-alist/po/zh_Hans/alist.po
 sed -i 's/"USB 打印服务器"/"打印服务"/g' feeds/luci/applications/luci-app-usb-printer/po/zh_Hans/luci-app-usb-printer.po
 sed -i 's/"FTP 服务器"/"FTP 服务"/g' feeds/luci/applications/luci-app-vsftpd/po/zh_Hans/vsftpd.po
-sed -i 's/"文件浏览器"/"文件管理"/g' feeds/luci/applications/luci-app-filebrowser/po/zh_Hans/filebrowser.po
+sed -i 's/"文件浏览器"/"文件管理"/g' feeds/luci/applications/luci-app-filemanager/po/zh_Hans/filemanager.po
 
 echo "重命名VPN菜单"
 #vpn
