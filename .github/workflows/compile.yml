@@ -191,7 +191,7 @@ jobs:
     - name: 加载设置
       run: |
         echo "Compile_Date=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
-        cp -Rf `find ./ -maxdepth 1 -type d ! -path './openwrt' ! -path './'` $GITHUB_WORKSPACE/openwrt
+        #cp -Rf `find ./ -maxdepth 1 -type d ! -path './openwrt' ! -path './'` openwrt
         mv -f "${Home}"/build/common/*.sh "${PATH1}"
         source "${PATH1}/common.sh" && Diy_settings
         [[ "${{ github.event.inputs.ssh }}" == 'ssh' ]] && echo "SSHYC=true" >> $GITHUB_ENV
