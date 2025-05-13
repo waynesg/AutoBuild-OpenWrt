@@ -74,51 +74,23 @@ jobs:
         remove-haskell: 'true'
         remove-codeql: 'true'
         remove-docker-images: 'true'
-        
-    - name: 部署环境
-      env:
-        DEBIAN_FRONTEND: noninteractive
-      if: env.WORKFLOW_TOKEN
-      run: |
-        sudo apt clean
-        sudo rm -rf /usr/local/lib/android
-        sudo rm -rf /opt/ghc
-        sudo rm -rf /opt/hostedtoolcache
-        sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-        bash <(curl -fsSL https://raw.githubusercontent.com/waynesg/AutoBuild-OpenWrt/main/build/common/Custom/ubuntu.sh)
-        echo "================================================="
-        echo "文件系统        类型   容量  已用  可用 使用% 挂载点"
-        df -hT $PWD
-        sudo timedatectl set-timezone "$TZ"
-        echo "FILE_TIME=$(date +"%m-%d %H.%M")" >> $GITHUB_ENV
-        echo "FILE_TIME1=$(date "+%Y年%m月%d日-%H点%M分")" >> $GITHUB_ENV
-        echo "FILE_TIME2=$(date "+%Y%m%d-%H%M")" >> $GITHUB_ENV
-        echo "编译开始时间..."
-        START_TIME=`date +'%Y-%m-%d %H:%M:%S'`
-        echo "START_SECONDS=$(date --date="$START_TIME" +%s)" >> $GITHUB_ENV
-        sudo mkdir -p /${{matrix.target}}
-        sudo chown $USER:$GROUPS /${{matrix.target}}
-        echo "WORKDIR=/home/runner/work/AutoBuild-OpenWrt/AutoBuild-OpenWrt" >> $GITHUB_ENV
-        echo "Home=${WORKDIR}/openwrt" >> $GITHUB_ENV
-        echo "PATH1=${WORKDIR}/openwrt/build/${{matrix.target}}" >> $GITHUB_ENV
-        
+
     - name: 释放结束
       run: |
         echo "Free up disk space complete"
         echo "=============================================================================="
         df -hT
         echo "=============================================================================="
-
         
     - name: 准备开始
       uses: actions/checkout@main
 
     - name: 读取脚本
       run: |
-        cd ${WORKDIR}
+        cd ${GITHUB_WORKSPACE}
         cp -f build/common/*.sh build/${{matrix.target}}/
         sudo chmod -R +x build
-        source "${WORKDIR}/build/${{matrix.target}}/settings.ini"
+        source "${GITHUB_WORKSPACE}/build/${{matrix.target}}/settings.ini"
         echo "REPO_URL=${REPO_URL}" >> $GITHUB_ENV
         echo "REPO_BRANCH=${REPO_BRANCH}" >> $GITHUB_ENV
         echo "CONFIG_FILE=${CONFIG_FILE}" >> $GITHUB_ENV
@@ -141,7 +113,7 @@ jobs:
         
     - name: 源码版本
       run: |
-        chmod -R +x "${WORKDIR}/build/common"
+        chmod -R +x "${GITHUB_WORKSPACE}/build/common"
         if [[ "${REPO_BRANCH}" == "master" ]]; then
           echo "ZZZ=package/lean/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
           echo "CODE=Lean" >> $GITHUB_ENV
@@ -162,7 +134,6 @@ jobs:
           source build/common/common.sh && Diy_gonggao
         fi
 
-    
     # - name: CPU检测
     #   run: |
     #     git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -175,16 +146,37 @@ jobs:
     #     fi
     #     source build/${FOLDER_NAME}/common.sh && CPU_Priority
 
-    # - name: 释放空间
-    #   uses: jlumbroso/free-disk-space@main
-    #   with:
-    #     tool-cache: true
-    #     android: true
-    #     dotnet: true
-    #     haskell: true
-    #     large-packages: true
-    #     docker-images: true
-    #     swap-storage: true
+    - name: 释放空间
+      uses: jlumbroso/free-disk-space@main
+      with:
+        tool-cache: true
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        docker-images: true
+        swap-storage: true
+        
+    - name: 部署环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      if: env.WORKFLOW_TOKEN
+      run: |
+        bash <(curl -fsSL https://raw.githubusercontent.com/GWen124/AutoBuild-OpenWrt/main/build/common/Custom/ubuntu.sh)
+        echo "================================================="
+        echo "文件系统        类型   容量  已用  可用 使用% 挂载点"
+        df -hT $PWD
+        sudo timedatectl set-timezone "$TZ"
+        echo "FILE_TIME=$(date +"%m-%d %H.%M")" >> $GITHUB_ENV
+        echo "FILE_TIME1=$(date "+%Y年%m月%d日-%H点%M分")" >> $GITHUB_ENV
+        echo "FILE_TIME2=$(date "+%Y%m%d-%H%M")" >> $GITHUB_ENV
+        echo "编译开始时间..."
+        START_TIME=`date +'%Y-%m-%d %H:%M:%S'`
+        echo "START_SECONDS=$(date --date="$START_TIME" +%s)" >> $GITHUB_ENV
+        sudo mkdir -p /${{matrix.target}}
+        sudo chown $USER:$GROUPS /${{matrix.target}}
+        echo "Home=${GITHUB_WORKSPACE}/openwrt" >> $GITHUB_ENV
+        echo "PATH1=${GITHUB_WORKSPACE}/openwrt/build/${{matrix.target}}" >> $GITHUB_ENV
 
     - name: 下载源码
       working-directory: /${{matrix.target}}
@@ -192,7 +184,7 @@ jobs:
         git clone -b "$REPO_BRANCH" --single-branch "$REPO_URL" openwrt
         cd openwrt
         ./scripts/feeds update -a > /dev/null 2>&1
-        ln -sf /${{matrix.target}}/openwrt $WORKDIR/openwrt
+        ln -sf /${{matrix.target}}/openwrt $GITHUB_WORKSPACE/openwrt
  
     - name: 加载设置
       run: |
@@ -248,7 +240,7 @@ jobs:
         cd openwrt
         source "${PATH1}/common.sh" && Diy_chajian > /dev/null 2>&1
         make defconfig > /dev/null 2>&1
-        ./scripts/diffconfig.sh > ${WORKDIR}/config.txt
+        ./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/config.txt
         echo "TARGET_BOARD=$(awk -F '[="]+' '/TARGET_BOARD/{print $2}' .config)" >> $GITHUB_ENV
         echo "TARGET_SUBTARGET=$(awk -F '[="]+' '/TARGET_SUBTARGET/{print $2}' .config)" >> $GITHUB_ENV
         if [ `grep -c "CONFIG_TARGET_x86_64=y" .config` -eq '1' ]; then
