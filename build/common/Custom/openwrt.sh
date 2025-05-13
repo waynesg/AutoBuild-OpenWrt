@@ -1,0 +1,6 @@
+sudo sh -c 'echo "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-17 main" >> /etc/apt/sources.list'
+sudo sh -c 'echo "deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal-17 main" >> /etc/apt/sources.list'
+wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+sudo apt-get update
+sudo apt-get install -y ack,antlr3,aria2,asciidoc,autoconf,automake,autopoint,binutils,bison,build-essential,bzip2,ccache,clang,cmake,cpio,curl,device-tree-compiler,dos2unix,ecj,fakeroot,fastjar,flex,g++-multilib,gawk,gcc-multilib,genisoimage,gettext,git,gnutls-dev,gperf,haveged,help2man,intltool,irqbalance,jq,lib32gcc-s1,libc6-dev-i386,libelf-dev,libfuse-dev,libglib2.0-dev,libgmp3-dev,libltdl-dev,libmpc-dev,libmpfr-dev,libncurses-dev,libncurses5-dev,libncursesw5,libncursesw5-dev,libpython3-dev,libreadline-dev,libssl-dev,libtool,libyaml-dev,libz-dev,lld,llvm,lrzsz,mkisofs,msmtp,nano,ninja-build,p7zip,p7zip-full,patch,pigz,pkgconf,python2,python2.7,python3,python3-cryptography,python3-docutils,python3-pip,python3-ply,python3-pyelftools,python3-requests,qemu-utils,quilt,re2c,rename,rsync,scons,sharutils,squashfs-tools,subversion,swig,texinfo,uglyjs,unzip,upx,upx-ucl,vim,wget,xmlto,xxd,zlib1g-dev,zstd
+sudo apt-get clean
