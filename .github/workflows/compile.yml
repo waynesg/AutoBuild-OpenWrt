@@ -80,6 +80,11 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       if: env.WORKFLOW_TOKEN
       run: |
+        sudo apt clean
+        sudo rm -rf /usr/local/lib/android
+        sudo rm -rf /opt/ghc
+        sudo rm -rf /opt/hostedtoolcache
+        sudo rm -rf "$AGENT_TOOLSDIRECTORY"
         bash <(curl -fsSL https://raw.githubusercontent.com/waynesg/AutoBuild-OpenWrt/main/build/common/Custom/ubuntu.sh)
         echo "================================================="
         echo "文件系统        类型   容量  已用  可用 使用% 挂载点"
