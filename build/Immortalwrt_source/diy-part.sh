@@ -188,6 +188,8 @@ echo "重命名服务菜单"
 sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' feeds/luci/applications/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 sed -i 's/"Vlmcsd KMS 服务器"/"KMS服务"/g' $(grep "KMS 服务器" -rl ./)
 #sed -i 's/"短视频下载"/"视频下载"/g' package/waynesg/luci-app-yt-dlp/po/zh_Hans/yt-dlp.po
+sed -i 's/"title": "subconverter"/"title": "节点订阅"/g'  package/waynesg/luci-app-subconverter/luci-app-subconverter/root/usr/share/luci/menu.d/luci-app-subconverter.json
+
 
 
 echo "重命名网络菜单"
