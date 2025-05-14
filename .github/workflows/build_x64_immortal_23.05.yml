@@ -1,4 +1,4 @@
-name: immortal
+name: build_x64_immortal_23.05
 on:
   workflow_dispatch:
     inputs:
