@@ -23,8 +23,8 @@ TIME() {
       }
 }
 
-curl -o default-settings https://raw.githubusercontent.com/waynesg/scripts/main/others/default-settings
-cp -f default-settings package/emortal/default-settings/files/99-default-settings
+# curl -o default-settings https://raw.githubusercontent.com/waynesg/scripts/main/others/default-settings
+# cp -f default-settings package/emortal/default-settings/files/99-default-settings
 
 #替换autocore
 # rm -rf package/emortal/autocore
