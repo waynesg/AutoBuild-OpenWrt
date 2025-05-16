@@ -134,12 +134,31 @@ swap_total=$(awk '{print $(2)}' <<<${swap_info})
 
 
 # cpu info
-#cpu_temp=$(cpuinfo | grep 'MHz' | awk '{print $1, $2, $3}')
-#sys_temp=$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c)
-#sys_tempx=`echo $sys_temp | sed 's/ / /g'`
-cpu_temp=$(cpuinfo | grep 'MHz' | awk '{print $1, $2, $3}')
-cpuinfox=$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c)
-cpuinfo=`echo $cpuinfox | sed 's/.*G*./& 核心x/g' | sed -r 's/^(..)(.*)/\2\1/'`
+# cpu_temp=$(cpuinfo | grep 'MHz' | awk '{print $1, $2, $3}')
+# cpuinfox=$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c)
+# cpuinfo=`echo $cpuinfox | sed 's/.*G*./& 核心x/g' | sed -r 's/^(..)(.*)/\2\1/'`
+# CPU 型号和核心数
+cpuinfox=$(grep 'model name' /proc/cpuinfo | cut -d: -f2 | uniq -c)
+cpuinfo=$(echo "$cpuinfox" | sed -r 's/^[[:space:]]*([0-9]+)[[:space:]]*(.*)/\2 核心x\1/')
+
+# 主频
+cpu_freq=$(awk -F: '/cpu MHz/ {printf "%.3f MHz", $2; exit}' /proc/cpuinfo)
+
+# 温度
+if [ -f /sys/class/thermal/thermal_zone0/temp ]; then
+    temp_raw=$(cat /sys/class/thermal/thermal_zone0/temp)
+    if [ "$temp_raw" -gt 1000 ]; then
+        cpu_temp=$(awk "BEGIN {printf \"+%.1f°C\", $temp_raw / 1000}")
+    else
+        cpu_temp=$(awk "BEGIN {printf \"+%.1f°C\", $temp_raw}")
+    fi
+else
+    cpu_temp="+N/A"
+fi
+
+# 输出
+printf "处 理 器:  \x1B[91m%s\x1B[0m\n" "$cpuinfo"
+printf "CPU 信息:  \x1B[92m%s %s\x1B[0m\n" "$cpu_freq" "$cpu_temp"
 
 # chassis vendor
 bios_vendor=`cat /sys/class/dmi/id/bios_vendor`
@@ -158,7 +177,7 @@ echo ""
 printf "处 理 器:  \x1B[91m%s\x1B[0m" "$cpuinfo"
 echo ""
 
-printf "CPU 信息:  \x1B[92m%s\x1B[0m" "$cpu_temp"
+printf "CPU 信息:  \x1B[92m%s %s\x1B[0m" "$cpu_freq" "$cpu_temp"
 echo ""
 
 display "系统负载" "${load%% *}" "${critical_load}" "0" "" "${load#* }"
