@@ -132,33 +132,15 @@ swap_info=$(LC_ALL=C free -m | grep "^Swap")
 swap_usage=$( (awk '/Swap/ { printf("%3.0f", $3/$2*100) }' <<<${swap_info} 2>/dev/null || echo 0) | tr -c -d '[:digit:]')
 swap_total=$(awk '{print $(2)}' <<<${swap_info})
 
-
-# cpu info
-# cpu_temp=$(cpuinfo | grep 'MHz' | awk '{print $1, $2, $3}')
-# cpuinfox=$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c)
-# cpuinfo=`echo $cpuinfox | sed 's/.*G*./& 核心x/g' | sed -r 's/^(..)(.*)/\2\1/'`
-# CPU 型号和核心数
-cpuinfox=$(grep 'model name' /proc/cpuinfo | cut -d: -f2 | uniq -c)
-cpuinfo=$(echo "$cpuinfox" | sed -r 's/^[[:space:]]*([0-9]+)[[:space:]]*(.*)/\2 核心x\1/')
-
-# 主频
-cpu_freq=$(awk -F: '/cpu MHz/ {printf "%.3f MHz", $2; exit}' /proc/cpuinfo)
-
-# 温度
-if [ -f /sys/class/thermal/thermal_zone0/temp ]; then
-    temp_raw=$(cat /sys/class/thermal/thermal_zone0/temp)
-    if [ "$temp_raw" -gt 1000 ]; then
-        cpu_temp=$(awk "BEGIN {printf \"+%.1f°C\", $temp_raw / 1000}")
-    else
-        cpu_temp=$(awk "BEGIN {printf \"+%.1f°C\", $temp_raw}")
-    fi
-else
-    cpu_temp="+N/A"
-fi
-
-# 输出
-printf "处 理 器:  \x1B[91m%s\x1B[0m\n" "$cpuinfo"
-printf "CPU 信息:  \x1B[92m%s %s\x1B[0m\n" "$cpu_freq" "$cpu_temp"
+#cpuinfo
+cpuinfo_raw=$(ubus call luci getCPUInfo 2>/dev/null | jsonfilter -e '@.cpuinfo')
+# 去掉括号内的内容，比如 "(1800.008MHz, 45.0°C)"
+cpuinfo_no_paren=$(echo "$cpuinfo_raw" | sed -E 's/ *\([^)]*\)//g')
+# 去掉类似 "x 2C 2T" 这种核心线程信息
+cpu_model=$(echo "$cpuinfo_no_paren" | sed -E 's/ x [0-9]+C [0-9]+T//g')
+# 获取物理核心数（不重复 core id）
+core_count=$(grep '^core id' /proc/cpuinfo 2>/dev/null | sort -u | wc -l)
+[ "$core_count" -eq 0 ] && core_count=$(grep -c '^processor' /proc/cpuinfo)
 
 # chassis vendor
 bios_vendor=`cat /sys/class/dmi/id/bios_vendor`
@@ -174,11 +156,10 @@ echo ""
 printf "内核版本:  \x1B[33m%s\x1B[39m" "$(uname -rs)" 
 echo ""
 
-printf "处 理 器:  \x1B[91m%s\x1B[0m" "$cpuinfo"
-echo ""
+printf "处 理 器:  \x1B[91m%s 核心x%d\x1B[0m\n" "$cpu_model" "$core_count"
 
-printf "CPU 信息:  \x1B[92m%s %s\x1B[0m" "$cpu_freq" "$cpu_temp"
-echo ""
+cpu_extra=$(echo "$cpuinfo_raw" | sed -nE 's/.*\(([^)]*)\).*/\1/p')
+printf "CPU 信息:  \x1B[92m%s\x1B[0m\n" "$cpu_extra"
 
 display "系统负载" "${load%% *}" "${critical_load}" "0" "" "${load#* }"
 printf "运行时间:  \x1B[92m%s\x1B[0m\t\t" "$time"
