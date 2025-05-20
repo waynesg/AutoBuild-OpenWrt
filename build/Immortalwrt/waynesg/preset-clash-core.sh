@@ -18,11 +18,11 @@ mkdir -p files/usr/share/openclash/ui/zashboard
 set -e
 ARCH="amd64"
 OUT_PATH="files/etc/openclash/core/clash_meta"
-CLASH_META_URL="https://github.com/vernesong/OpenClash/releases/download/Meta/clash-linux-${ARCH}.tar.gz"
+CLASH_META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/meta/clash-linux-${ARCH}.tar.gz"
 echo ">>> 下载 Clash Meta 内核：$CLASH_META_URL"
 curl -sL "$CLASH_META_URL" | tar xOvz > "$OUT_PATH"
 chmod +x "$OUT_PATH"
-echo -n ">>> 当前核心版本："
+echo -n ">>> 当前 Clash Meta 核心版本："
 "$OUT_PATH" -v
 
 GEOIP_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
