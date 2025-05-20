@@ -18,9 +18,12 @@ mkdir -p files/usr/share/openclash/ui/zashboard
 set -e
 ARCH="amd64"
 OUT_PATH="files/etc/openclash/core/clash_meta"
-CLASH_META_URL="https://github.com/vernesong/OpenClash/releases/download/Meta/clash-linux-${ARCH}.tar.gz"
+CORE_VERSION_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version"
+CLASH_META_VER=$(curl -sL $CORE_VERSION_URL | sed -n '3p')
+echo ">>> 当前 Clash Meta 核心版本：$CLASH_META_VER"
+CLASH_META_URL="https://github.com/vernesong/OpenClash/releases/download/Meta/clash-meta-linux-${ARCH}-${CLASH_META_VER}.gz"
 echo ">>> 下载 Clash Meta 内核：$CLASH_META_URL"
-curl -Lo "$OUT_PATH" "$CLASH_META_URL"
+curl -L "$CLASH_META_URL" | gzip -d > "$OUT_PATH"
 chmod +x "$OUT_PATH"
 echo -n ">>> 当前核心版本："
 "$OUT_PATH" -v
