@@ -15,14 +15,15 @@ mkdir -p files/usr/share/openclash/ui/dashboard
 mkdir -p files/usr/share/openclash/ui/metacubexd
 mkdir -p files/usr/share/openclash/ui/zashboard
 
-
-CORE_VERSION_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version"
-CLASH_META_VER=$(curl -sL $CORE_VERSION_URL | sed -n '3p')
-echo ">>> 当前 Meta 核心版本：$CLASH_META_VER"
-#CLASH_DEV_URL="https://github.com/vernesong/OpenClash/raw/core/dev/dev/clash-linux-$CORE_TYPE.tar.gz"
-#CLASH_TUN_URL="https://github.com/vernesong/OpenClash/raw/core/dev/premium/clash-linux-$CORE_TYPE-$CORE_TUN_VER.gz"
-
-CLASH_META_URL="https://github.com/vernesong/OpenClash/releases/download/mihomo/clash-linux-amd64.tar.gz"
+set -e
+ARCH="amd64"
+OUT_PATH="files/etc/openclash/core/clash_meta"
+CLASH_META_URL="https://github.com/vernesong/OpenClash/releases/download/Meta/clash-linux-${ARCH}.tar.gz"
+echo ">>> 下载 Clash Meta 内核：$CLASH_META_URL"
+curl -L "$CLASH_META_URL" | tar xOvz > "$OUT_PATH"
+chmod +x "$OUT_PATH"
+echo -n ">>> 当前核心版本："
+"$OUT_PATH" -v
 
 GEOIP_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
 GEOSITE_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
@@ -37,7 +38,7 @@ ZASHBOARD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/D
 
 #wget -qO- $CLASH_DEV_URL | tar xOvz > files/etc/openclash/core/clash
 #wget -qO- $CLASH_TUN_URL | gunzip -c > files/etc/openclash/core/clash_tun
-wget -qO- $CLASH_META_URL | tar xOvz > files/etc/openclash/core/clash_meta
+#wget -qO- $CLASH_META_URL | tar xOvz > files/etc/openclash/core/clash_meta
 wget -qO- $GEOIP_URL > files/etc/openclash/GeoIP.dat
 wget -qO- $GEOSITE_URL > files/etc/openclash/GeoSite.dat
 wget -qO- $GEO_MMDB > files/etc/openclash/Country-only-cn-private.mmdb
