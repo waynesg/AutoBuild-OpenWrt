@@ -20,7 +20,7 @@ ARCH="amd64"
 OUT_PATH="files/etc/openclash/core/clash_meta"
 CLASH_META_URL="https://github.com/vernesong/OpenClash/releases/download/Meta/clash-linux-${ARCH}.tar.gz"
 echo ">>> 下载 Clash Meta 内核：$CLASH_META_URL"
-curl -L "$CLASH_META_URL" | tar xOvz > "$OUT_PATH"
+curl -Lo "$OUT_PATH" "$CLASH_META_URL"
 chmod +x "$OUT_PATH"
 echo -n ">>> 当前核心版本："
 "$OUT_PATH" -v
