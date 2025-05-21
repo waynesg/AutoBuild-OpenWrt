@@ -344,8 +344,12 @@ fi
 if [ -n "$(ls -A "${PATH1}/diy" 2>/dev/null)" ]; then
 	cp -Rf "${PATH1}"/diy/* "${Home}"
 fi
-if [ -n "$(ls -A "${PATH1}/files" 2>/dev/null)" ]; then
-	cp -Rf "${PATH1}/files" "${Home}" && chmod -R +x ${Home}/files
+# if [ -n "$(ls -A "${PATH1}/files" 2>/dev/null)" ]; then
+# 	cp -Rf "${PATH1}/files" "${Home}" && chmod -R +x ${Home}/files
+# fi
+if [ -d "${PATH1}/files" ]; then
+	rsync -a "${PATH1}/files/" "${Home}/files/"
+	chmod -R +x "${Home}/files"
 fi
 if [ -n "$(ls -A "${PATH1}/patches" 2>/dev/null)" ]; then
 	find "${PATH1}/patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d './' -p1 --forward --no-backup-if-mismatch"
