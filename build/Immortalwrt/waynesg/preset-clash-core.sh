@@ -10,7 +10,7 @@
 #=================================================
 set -e
 # 设置架构和路径
-ARCH="arm64"
+ARCH="amd64"
 TMP_DIR="/tmp/openclash"
 CORE_DIR="package/waynesg/luci-app-openclash/luci-app-openclash/root/etc/openclash/core"
 DATA_DIR="package/waynesg/luci-app-openclash/luci-app-openclash/root/etc/openclash"
