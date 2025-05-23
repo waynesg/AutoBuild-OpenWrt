@@ -56,7 +56,9 @@ git clone --depth=1 https://github.com/jerrykuku/node-request package/waynesg/lu
 #clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-dependence/wrtbwmon "" wrtbwmon
 
 #openclash
-git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/waynesg/luci-app-openclash
+git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/waynesg/OpenClash
+rm -rf feeds/luci/applications/luci-app-openclash
+mv package/waynesg/OpenClash/luci-app-openclash feeds/luci/applications/luci-app-openclash
 
 #openappfilter
 git clone --depth=1 https://github.com/destan19/OpenAppFilter package/waynesg/luci-app-oaf
