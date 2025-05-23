@@ -8,12 +8,30 @@
 # Author: SuLingGG
 # Blog: https://mlapp.cn
 #=================================================
+# ##------------- meta core ---------------------------------
+curl -sL -m 30 --retry 2 https://github.com/MetaCubeX/mihomo/releases/download/v1.19.2/mihomo-linux-arm64-v1.19.2.gz -o /tmp/clash.gz
+gzip -d /tmp/clash.gz /tmp >/dev/null 2>&1
+chmod +x /tmp/mihomo-linux-arm64 >/dev/null 2>&1
+mv /tmp/mihomo-linux-arm64 feeds/luci/applications/luci-app-openclash/root/etc/openclash/core/clash_meta >/dev/null 2>&1
+# ##---------------------------------------------------------
+
+# ##-------------- GeoIP 数据库 -----------------------------
+curl -sL -m 30 --retry 2 https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat -o /tmp/GeoIP.dat
+mv /tmp/GeoIP.dat feeds/luci/applications/luci-app-openclash/root/etc/openclash/GeoIP.dat >/dev/null 2>&1
+# ##---------------------------------------------------------
+
+# ##-------------- GeoSite 数据库 ---------------------------
+curl -sL -m 30 --retry 2 https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -o /tmp/GeoSite.dat
+mv -f /tmp/GeoSite.dat feeds/luci/applications/luci-app-openclash/root/etc/openclash/GeoSite.dat >/dev/null 2>&1
+# ##---------------------------------------------------------
+
+
 set -e
 # 设置架构和路径
 ARCH="amd64"
 TMP_DIR="/tmp/openclash"
-CORE_DIR="package/waynesg/luci-app-openclash/luci-app-openclash/root/etc/openclash/core"
-DATA_DIR="package/waynesg/luci-app-openclash/luci-app-openclash/root/etc/openclash"
+CORE_DIR="feeds/luci/applications/luci-app-openclash/root/etc/openclash/core"
+DATA_DIR="feeds/luci/applications/luci-app-openclash/root/etc/openclash"
 
 # 核心下载链接
 CLASH_META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/meta/clash-linux-${ARCH}.tar.gz"
