@@ -54,6 +54,17 @@ files/etc/openclash/core/clash_meta -v || echo "执行失败"
 
 echo "✅ 所有文件已准备完毕，将打入固件。"
 
+mkdir -p files/lib/upgrade/keep.d
+
+cat > files/lib/upgrade/keep.d/99-custom-openclash <<'EOF'
+/etc/openclash/
+-/etc/openclash/core/clash_meta
+-/etc/openclash/GeoIP.dat
+-/etc/openclash/GeoSite.dat
+-/etc/openclash/Country.mmdb
+-/etc/openclash/Country-only-cn-private.mmdb
+EOF
+
 # mkdir -p files/etc/openclash/core
 # mkdir -p files/usr/share/openclash/ui/yacd
 # mkdir -p files/usr/share/openclash/ui/dashboard
