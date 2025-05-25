@@ -30,8 +30,8 @@ set -e
 # 设置架构和路径
 ARCH="amd64"
 TMP_DIR="/tmp/openclash"
-CORE_DIR="package/feeds/luci/applications/luci-app-openclash/root/etc/openclash/core"
-DATA_DIR="package/feeds/luci/applications/luci-app-openclash/root/etc/openclash"
+CORE_DIR="feeds/luci/applications/luci-app-openclash/root/etc/openclash/core"
+DATA_DIR="feeds/luci/applications/luci-app-openclash/root/etc/openclash"
 
 # 核心下载链接
 CLASH_META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/meta/clash-linux-${ARCH}.tar.gz"
