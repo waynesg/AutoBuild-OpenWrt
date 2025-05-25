@@ -8,81 +8,75 @@
 # Author: SuLingGG
 # Blog: https://mlapp.cn
 #=================================================
-# ##------------- meta core ---------------------------------
-curl -sL -m 30 --retry 2 https://github.com/MetaCubeX/mihomo/releases/download/v1.19.2/mihomo-linux-arm64-v1.19.2.gz -o /tmp/clash.gz
-gzip -d /tmp/clash.gz /tmp >/dev/null 2>&1
-chmod +x /tmp/mihomo-linux-arm64 >/dev/null 2>&1
-mv /tmp/mihomo-linux-arm64 feeds/luci/applications/luci-app-openclash/root/etc/openclash/core/clash_meta >/dev/null 2>&1
-# ##---------------------------------------------------------
-
-# ##-------------- GeoIP 数据库 -----------------------------
-curl -sL -m 30 --retry 2 https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat -o /tmp/GeoIP.dat
-mv /tmp/GeoIP.dat feeds/luci/applications/luci-app-openclash/root/etc/openclash/GeoIP.dat >/dev/null 2>&1
-# ##---------------------------------------------------------
-
-# ##-------------- GeoSite 数据库 ---------------------------
-curl -sL -m 30 --retry 2 https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -o /tmp/GeoSite.dat
-mv -f /tmp/GeoSite.dat feeds/luci/applications/luci-app-openclash/root/etc/openclash/GeoSite.dat >/dev/null 2>&1
-# ##---------------------------------------------------------
-
-
+#!/bin/bash
 set -e
-# 设置架构和路径
-ARCH="amd64"
-TMP_DIR="/tmp/openclash"
-CORE_DIR="feeds/luci/applications/luci-app-openclash/root/etc/openclash/core"
-DATA_DIR="feeds/luci/applications/luci-app-openclash/root/etc/openclash"
 
-# 核心下载链接
-CLASH_META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/meta/clash-linux-${ARCH}.tar.gz"
+ARCH="${1:-amd64}"  # 默认为 amd64，可传参
+echo ">>> 正在使用架构: $ARCH"
 
-# GEO 数据文件
+# 创建目录结构
+mkdir -p files/etc/openclash/core
+mkdir -p files/etc/openclash
+mkdir -p files/usr/share/openclash/ui/{yacd,dashboard,metacubexd,zashboard}
+
+# 核心及面板下载链接
+CLASH_META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/master/core-lateset/meta/clash-linux-${ARCH}.tar.gz"
 GEOIP_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
 GEOSITE_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
 GEO_MMDB_URL="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-only-cn-private.mmdb"
-
-# 创建临时目录
-mkdir -p "$TMP_DIR"
-mkdir -p "$CORE_DIR"
-mkdir -p "$DATA_DIR"
-
-# 下载 Clash Meta 核心
-echo ">>> 下载 Clash Meta 内核..."
-curl -sL --retry 3 -m 30 "$CLASH_META_URL" -o "$TMP_DIR/clash.tar.gz"
-tar -xOzf "$TMP_DIR/clash.tar.gz" > "$CORE_DIR/clash_meta"
-chmod +x "$CORE_DIR/clash_meta"
-
-# 下载 GEO 文件
-echo ">>> 下载 geoip.dat..."
-curl -sL --retry 3 -m 30 "$GEOIP_URL" -o "$DATA_DIR/geoip.dat"
-
-echo ">>> 下载 geosite.dat..."
-curl -sL --retry 3 -m 30 "$GEOSITE_URL" -o "$DATA_DIR/geosite.dat"
-
-echo ">>> 下载 Country.mmdb..."
-curl -sL --retry 3 -m 30 "$GEO_MMDB_URL" -o "$DATA_DIR/Country.mmdb"
-
-# 清理
-rm -rf "$TMP_DIR"
-
-# 显示版本
-echo -n ">>> Clash Meta 核心版本："
-"$CORE_DIR/clash_meta" -v || echo "执行失败"
-
-echo "✅ 所有文件已成功下载并准备就绪。"
-
-
-mkdir -p files/usr/share/openclash/ui/yacd
-mkdir -p files/usr/share/openclash/ui/dashboard
-mkdir -p files/usr/share/openclash/ui/metacubexd
-mkdir -p files/usr/share/openclash/ui/zashboard
 
 YACD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/Yacd-meta.tar.gz"
 YACD_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/yacd.tar.gz"
 METACUBEXD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/metacubexd.tar.gz"
 ZASHBOARD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/zashboard.tar.gz"
 
-wget -qO- $YACD_META_URL | tar xvz -C files/usr/share/openclash/ui/yacd
-wget -qO- $YACD_URL | tar xvz -C files/usr/share/openclash/ui/dashboard
-wget -qO- $METACUBEXD_META_URL | tar xvz -C files/usr/share/openclash/ui/metacubexd
-wget -qO- $ZASHBOARD_META_URL | tar xvz -C files/usr/share/openclash/ui/zashboard
+# 下载并解压 Clash Meta 核心
+echo ">>> 下载 Clash Meta 核心..."
+wget -qO- "$CLASH_META_URL" | tar -xOvz > files/etc/openclash/core/clash_meta
+chmod +x files/etc/openclash/core/clash_meta
+
+# 下载 UI 面板
+echo ">>> 下载 UI 面板..."
+wget -qO- "$YACD_META_URL" | tar -xz -C files/usr/share/openclash/ui/yacd
+wget -qO- "$YACD_URL" | tar -xz -C files/usr/share/openclash/ui/dashboard
+wget -qO- "$METACUBEXD_META_URL" | tar -xz -C files/usr/share/openclash/ui/metacubexd
+wget -qO- "$ZASHBOARD_META_URL" | tar -xz -C files/usr/share/openclash/ui/zashboard
+
+# 下载 GEO 数据库
+echo ">>> 下载 GEO 数据库..."
+wget -qO files/etc/openclash/GeoIP.dat "$GEOIP_URL"
+wget -qO files/etc/openclash/GeoSite.dat "$GEOSITE_URL"
+wget -qO files/etc/openclash/Country-only-cn-private.mmdb "$GEO_MMDB_URL"
+
+# 显示最终版本信息
+echo -n ">>> 核心版本: "
+files/etc/openclash/core/clash_meta -v || echo "执行失败"
+
+echo "✅ 所有文件已准备完毕，将打入固件。"
+
+# mkdir -p files/etc/openclash/core
+# mkdir -p files/usr/share/openclash/ui/yacd
+# mkdir -p files/usr/share/openclash/ui/dashboard
+# mkdir -p files/usr/share/openclash/ui/metacubexd
+# mkdir -p files/usr/share/openclash/ui/zashboard
+
+# CLASH_META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/master/core-lateset/meta/clash-linux-${1}.tar.gz"
+# GEOIP_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
+# GEOSITE_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
+# GEO_MMDB_URL="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-only-cn-private.mmdb"
+
+# YACD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/Yacd-meta.tar.gz"
+# YACD_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/yacd.tar.gz"
+# METACUBEXD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/metacubexd.tar.gz"
+# ZASHBOARD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/zashboard.tar.gz"
+
+# wget -qO- $CLASH_META_URL | tar xOvz > files/etc/openclash/core/clash_meta
+# wget -qO- $YACD_META_URL | tar xvz -C files/usr/share/openclash/ui/yacd
+# wget -qO- $YACD_URL | tar xvz -C files/usr/share/openclash/ui/dashboard
+# wget -qO- $METACUBEXD_META_URL | tar xvz -C files/usr/share/openclash/ui/metacubexd
+# wget -qO- $ZASHBOARD_META_URL | tar xvz -C files/usr/share/openclash/ui/zashboard
+# wget -qO- $GEOIP_URL > files/etc/openclash/GeoIP.dat
+# wget -qO- $GEOSITE_URL > files/etc/openclash/GeoSite.dat
+# wget -qO- $GEO_MMDB_URL > files/etc/openclash/Country-only-cn-private.mmdb
+
+# chmod +x files/etc/openclash/core/clash*
