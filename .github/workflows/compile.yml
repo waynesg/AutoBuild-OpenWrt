@@ -122,7 +122,6 @@ jobs:
       if: env.WORKFLOW_TOKEN
       run: |
         # bash <(curl -fsSL https://raw.githubusercontent.com/waynesg/AutoBuild-OpenWrt/main/build/common/Custom/ubuntu.sh)
-        # bash <(curl -fsSL https://raw.githubusercontent.com/waynesg/AutoBuild-OpenWrt/main/build/common/Custom/openwrt.sh)
         sudo sh -c 'echo "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-17 main" >> /etc/apt/sources.list'
         sudo sh -c 'echo "deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal-17 main" >> /etc/apt/sources.list'
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
@@ -185,7 +184,7 @@ jobs:
         source "${PATH1}/common.sh" && Diy_all
         /bin/bash "${PATH1}/waynesg/diy-repo-script.sh"
         /bin/bash "${PATH1}/$DIY_PART_SH"
-        /bin/bash "${PATH1}/waynesg/preset-clash-core.sh" amd64        
+        /bin/bash "${PATH1}/waynesg/preset-clash-core.sh"
         ./scripts/feeds update -a
         ./scripts/feeds install -a > /dev/null 2>&1
         ./scripts/feeds install -a
