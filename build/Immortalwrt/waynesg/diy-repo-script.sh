@@ -39,7 +39,8 @@ clone_or_update_git_repo() {
 
 # theme
 git clone --depth=1 -b master https://github.com/jerrykuku/luci-theme-argon package/waynesg/luci-theme-argon
-git clone --depth=1 -b master https://github.com/thinktip/luci-theme-neobird.git  
+git clone --depth=1 -b master https://github.com/thinktip/luci-theme-neobird.git
+git clone --depth=1 -b master https://github.com/emxiong/luci-theme-design
 # argon-theme-config
 git clone --depth=1 -b master https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
 #git clone --depth=1 -b openwrt-24.10 https://github.com/sbwml/luci-theme-argon package/waynesg/luci-theme-argon
