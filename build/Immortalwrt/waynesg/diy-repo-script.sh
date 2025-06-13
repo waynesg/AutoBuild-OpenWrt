@@ -78,9 +78,9 @@ clone_or_update_git_repo https://github.com/Hyy2001X/AutoBuild-Packages package/
 git clone --depth=1 -b main https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect
 clone_or_update_git_repo https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect main airconnect
 #alist
-rm -rf feeds/luci/applications/luci-app-alist
-rm -rf feeds/packages/net/alist
-git clone --depth=1 -b main https://github.com/sbwml/luci-app-alist package/waynesg/luci-app-alist
+#rm -rf feeds/luci/applications/luci-app-alist
+#rm -rf feeds/packages/net/alist
+#git clone --depth=1 -b main https://github.com/sbwml/luci-app-alist package/waynesg/luci-app-alist
 #eqosplus
 git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/waynesg/luci-app-eqosplus
 #subconverter
