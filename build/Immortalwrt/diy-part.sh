@@ -66,10 +66,10 @@ echo
 TIME y "修改最大连接数修改为65535"
 sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=65535' package/base-files/files/etc/sysctl.conf
 
-echo
-TIME y "更换golang版本"
-rm -rf feeds/packages/lang/node
-git clone https://github.com/sbwml/feeds_packages_lang_node-prebuilt -b packages-24.10 feeds/packages/lang/node
+# echo
+# TIME y "更换golang版本"
+# rm -rf feeds/packages/lang/node
+# git clone https://github.com/sbwml/feeds_packages_lang_node-prebuilt -b packages-24.10 feeds/packages/lang/node
 
 echo
 TIME y "修改dashboard password"
@@ -175,7 +175,7 @@ sed -i '$a\msgid "Control"\nmsgstr "管控"' package/waynesg/luci-app-oaf/luci-a
 
 
 echo "重命名存储菜单"
-sed -i 's/"Alist 文件列表"/"Alist列表"/g' package/waynesg/luci-app-alist/luci-app-alist/po/zh_Hans/alist.po
+#sed -i 's/"Alist 文件列表"/"Alist列表"/g' package/waynesg/luci-app-alist/luci-app-alist/po/zh_Hans/alist.po
 sed -i 's/"USB 打印服务器"/"打印服务"/g' feeds/luci/applications/luci-app-usb-printer/po/zh_Hans/luci-app-usb-printer.po
 sed -i 's/"FTP 服务器"/"FTP 服务"/g' feeds/luci/applications/luci-app-vsftpd/po/zh_Hans/vsftpd.po
 sed -i 's/"文件管理器"/"文件管理"/g' feeds/luci/applications/luci-app-filemanager/po/zh_Hans/filemanager.po
