@@ -66,10 +66,10 @@ echo
 TIME y "修改最大连接数修改为65535"
 sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=65535' package/base-files/files/etc/sysctl.conf
 
-# echo
-# TIME y "更换golang版本"
-# rm -rf feeds/packages/lang/node
-# git clone https://github.com/sbwml/feeds_packages_lang_node-prebuilt -b packages-24.10 feeds/packages/lang/node
+echo
+TIME y "更换golang版本"
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
 
 echo
 TIME y "修改dashboard password"
@@ -77,9 +77,9 @@ sed -i '/uci -q set openclash.config.dashboard_password/d' feeds/luci/applicatio
 sed -i '/uci add openclash/,/^md5sum /d' feeds/luci/applications/luci-app-openclash/root/etc/uci-defaults/luci-openclash
 
 
-echo
-TIME y "添加upx"
-sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx\/host"/g' package/waynesg/luci-app-mosdns/mosdns/Makefile
+# echo
+# TIME y "添加upx"
+# sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx\/host"/g' package/waynesg/luci-app-mosdns/mosdns/Makefile
 
 
 echo
