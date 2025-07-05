@@ -27,15 +27,16 @@ TIME y "自定义固件版本名字"
 # curl -o default-settings https://raw.githubusercontent.com/waynesg/scripts/main/others/default-settings
 # cp -f default-settings package/emortal/default-settings/files/99-default-settings
 
-# sed -i "/^\. \/etc\/openwrt_release/a\\
-# sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release\n\
-# echo \"DISTRIB_REVISION='v\$(date +'%Y.%m.%d')'\" >> /etc/openwrt_release\n\
-# sed -i '/DISTRIB_RELEASE/d' /etc/openwrt_release\n\
-# echo \"DISTRIB_RELEASE='v\$(date +'%Y.%m.%d')'\" >> /etc/openwrt_release\n\
- sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release
- echo "DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg Build $(TZ=UTC-8 date +'%Y.%m.%d') @ OpenWrt'" >> /etc/openwrt_release
+sed -i "/^\. \/etc\/openwrt_release/a\\
+sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release\n\
+echo \"DISTRIB_REVISION='v\$(date +'%Y.%m.%d')'\" >> /etc/openwrt_release\n\
+sed -i '/DISTRIB_RELEASE/d' /etc/openwrt_release\n\
+echo \"DISTRIB_RELEASE='v\$(date +'%Y.%m.%d')'\" >> /etc/openwrt_release\n\
+ sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release\n\
+ echo \"DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg Build \$(TZ=UTC-8 date \"+%Y.%m.%d\") @ OpenWrt '\" >> /etc/openwrt_release
+" package/emortal/default-settings/files/99-default-settings
 
-# curl -fsSL "https://raw.githubusercontent.com/waynesg/scripts/refs/heads/main/others/01_sysinfo" -o "target/linux/x86/base-files/lib/preinit/01_sysinfo"
+ curl -fsSL "https://raw.githubusercontent.com/waynesg/scripts/refs/heads/main/others/01_sysinfo" -o "target/linux/x86/base-files/lib/preinit/01_sysinfo"
 
 #替换autocore
 # rm -rf package/emortal/autocore
