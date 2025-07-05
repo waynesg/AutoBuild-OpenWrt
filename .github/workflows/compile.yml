@@ -194,11 +194,11 @@ jobs:
         fi
  
     - name: 加载缓存
-     if: env.USE_CACHEWRTBUILD == 'true'
-     uses: stupidloud/cachewrtbuild@main
-     with:
-       ccache: 'true'
-       prefix: ${{ github.workspace }}/openwrt
+      if: env.USE_CACHEWRTBUILD == 'true'
+      uses: stupidloud/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        prefix: ${{ github.workspace }}/openwrt
 
     - name: 生成配置
       run: |
