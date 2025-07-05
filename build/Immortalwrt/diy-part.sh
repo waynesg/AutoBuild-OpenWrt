@@ -22,20 +22,20 @@ TIME() {
 	 }
       }
 }
-
+echo 
+TIME y "自定义固件版本名字"
 # curl -o default-settings https://raw.githubusercontent.com/waynesg/scripts/main/others/default-settings
 # cp -f default-settings package/emortal/default-settings/files/99-default-settings
 
-sed -i "/^\. \/etc\/openwrt_release/a\\
-sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release\n\
-echo \"DISTRIB_REVISION='v\$(date +'%Y.%m.%d')'\" >> /etc/openwrt_release\n\
-sed -i '/DISTRIB_RELEASE/d' /etc/openwrt_release\n\
-echo \"DISTRIB_RELEASE='v\$(date +'%Y.%m.%d')'\" >> /etc/openwrt_release\n\
-sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release\n\
-echo \"DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg Build \$(TZ=UTC-8 date \"+%Y.%m.%d\") @ OpenWrt '\" >> /etc/openwrt_release
-" package/emortal/default-settings/files/99-default-settings
+# sed -i "/^\. \/etc\/openwrt_release/a\\
+# sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release\n\
+# echo \"DISTRIB_REVISION='v\$(date +'%Y.%m.%d')'\" >> /etc/openwrt_release\n\
+# sed -i '/DISTRIB_RELEASE/d' /etc/openwrt_release\n\
+# echo \"DISTRIB_RELEASE='v\$(date +'%Y.%m.%d')'\" >> /etc/openwrt_release\n\
+ sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release
+ echo "DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg Build $(TZ=UTC-8 date +'%Y.%m.%d') @ OpenWrt'" >> /etc/openwrt_release
 
-curl -fsSL "https://raw.githubusercontent.com/waynesg/scripts/refs/heads/main/others/01_sysinfo" -o "target/linux/x86/base-files/lib/preinit/01_sysinfo"
+# curl -fsSL "https://raw.githubusercontent.com/waynesg/scripts/refs/heads/main/others/01_sysinfo" -o "target/linux/x86/base-files/lib/preinit/01_sysinfo"
 
 #替换autocore
 # rm -rf package/emortal/autocore
@@ -43,8 +43,7 @@ curl -fsSL "https://raw.githubusercontent.com/waynesg/scripts/refs/heads/main/ot
 # mv temp_lede/package/lean/autocore package/emortal/autocore
 # rm -rf temp_lede
 
-#echo 
-#TIME y "自定义固件版本名字"
+
 #sed -i "s/DISTRIB_DESCRIPTION='.*'/DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt'/g" package/base-files/files/etc/openwrt_release
 
 echo 
@@ -71,31 +70,27 @@ TIME y "更换golang版本"
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
 
-echo
-TIME y "修改dashboard password"
-sed -i '/uci -q set openclash.config.dashboard_password/d' feeds/luci/applications/luci-app-openclash/root/etc/uci-defaults/luci-openclash
-sed -i '/uci add openclash/,/^md5sum /d' feeds/luci/applications/luci-app-openclash/root/etc/uci-defaults/luci-openclash
+# echo
+# TIME y "修改dashboard password"
+# sed -i '/uci -q set openclash.config.dashboard_password/d' feeds/luci/applications/luci-app-openclash/root/etc/uci-defaults/luci-openclash
+# sed -i '/uci add openclash/,/^md5sum /d' feeds/luci/applications/luci-app-openclash/root/etc/uci-defaults/luci-openclash
+
 
 
 # echo
-# TIME y "添加upx"
-# sed -i 's/"PKG_BUILD_DEPENDS:=golang\/host"/"PKG_BUILD_DEPENDS:=golang\/host upx\/host"/g' package/waynesg/luci-app-mosdns/mosdns/Makefile
+# TIME y "rpcd - fix timeout"
+# sed -i 's/option timeout 30/option timeout 60/g' package/system/rpcd/files/rpcd.config
+# sed -i 's#20) \* 1000#60) \* 1000#g' feeds/luci/modules/luci-base/htdocs/luci-static/resources/rpc.js
 
-
-echo
-TIME y "rpcd - fix timeout"
-sed -i 's/option timeout 30/option timeout 60/g' package/system/rpcd/files/rpcd.config
-sed -i 's#20) \* 1000#60) \* 1000#g' feeds/luci/modules/luci-base/htdocs/luci-static/resources/rpc.js
-
-echo
-TIME y "修正部分从第三方仓库拉取的软件 Makefile 路径问题"
-find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' {}
-find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/lang\/golang\/golang-package.mk/$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang-package.mk/g' {}
-find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHREPO/PKG_SOURCE_URL:=https:\/\/github.com/g' {}
-find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload.github.com/g' {}
-############################################################################################################################################################
-############################################################################################################################################################
-echo
+# echo
+# TIME y "修正部分从第三方仓库拉取的软件 Makefile 路径问题"
+# find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' {}
+# find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/lang\/golang\/golang-package.mk/$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang-package.mk/g' {}
+# find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHREPO/PKG_SOURCE_URL:=https:\/\/github.com/g' {}
+# find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload.github.com/g' {}
+# ############################################################################################################################################################
+# ############################################################################################################################################################
+# echo
 TIME b "汉化 调整..."
 sed -i 's/CPU Load/处理器负载/g' package/waynesg/luci-app-cpu-status/htdocs/luci-static/resources/view/status/include/18_cpu.js
 rm -rf package/waynesg/luci-app-cpu-status/po/zh_Hans/cpu-status.po
