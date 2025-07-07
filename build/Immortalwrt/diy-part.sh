@@ -44,6 +44,13 @@ echo \"DISTRIB_RELEASE='v\$(date +'%Y.%m.%d')'\" >> /etc/openwrt_release\n\
 # mv temp_lede/package/lean/autocore package/emortal/autocore
 # rm -rf temp_lede
 
+cat << 'EOF' > package/base-files/files/etc/uci-defaults/99-restore-shadow
+#!/bin/sh
+# Auto restore /etc/shadow from backup if present
+[ -f /etc/.shadow.backup ] && cp -f /etc/.shadow.backup /etc/shadow && chmod 600 /etc/shadow
+EOF
+
+chmod +x files/etc/uci-defaults/99-restore-shadow
 
 #sed -i "s/DISTRIB_DESCRIPTION='.*'/DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt'/g" package/base-files/files/etc/openwrt_release
 
