@@ -52,6 +52,19 @@ wget -qO files/etc/openclash/Country-only-cn-private.mmdb "$GEO_MMDB_URL"
 echo -n ">>> 核心版本: "
 files/etc/openclash/core/clash_meta -v || echo "执行失败"
 
+mkdir -p files/etc/uci-defaults
+
+cat << 'EOF' > files/etc/uci-defaults/99-restore-shadow
+#!/bin/sh
+
+# 如果有备份的 shadow 文件，覆盖当前 shadow
+[ -f /etc/.shadow.backup ] && cp -f /etc/.shadow.backup /etc/shadow && chmod 600 /etc/shadow
+
+exit 0
+EOF
+
+chmod +x files/etc/uci-defaults/99-restore-shadow
+
 echo "✅ 所有文件已准备完毕，将打入固件。"
 
 
