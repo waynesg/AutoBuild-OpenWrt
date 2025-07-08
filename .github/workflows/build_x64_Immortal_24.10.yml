@@ -70,11 +70,9 @@ jobs:
     - name: 源码版本
       run: |
         chmod -R +x "${GITHUB_WORKSPACE}/build/common"
-        if [[ "${REPO_BRANCH}" == "openwrt-24.10" ]]; then
-          echo "ZZZ=package/emortal/default-settings/files/99-default-settings" >> $GITHUB_ENV
-          echo "CODE=Immortalwrt" >> $GITHUB_ENV
-          echo "LUCI_EDITION=24.10" >> $GITHUB_ENV
-        fi
+        echo "ZZZ=package/emortal/default-settings/files/99-default-settings" >> $GITHUB_ENV
+        echo "CODE=Immortalwrt" >> $GITHUB_ENV
+        echo "LUCI_EDITION=24.10" >> $GITHUB_ENV
         source build/${{matrix.target}}/common.sh && settings_variable
         
     - name: 编译环境
@@ -110,8 +108,8 @@ jobs:
         source "${PATH1}/common.sh" && Diy_Immortalwrt_24.10
         source "${PATH1}/common.sh" && Diy_all
         /bin/bash "${PATH1}/waynesg/diy-repo-script.sh"
-        /bin/bash "${PATH1}/$DIY_PART_SH"
         /bin/bash "${PATH1}/waynesg/preset-clash-core.sh"
+        /bin/bash "${PATH1}/$DIY_PART_SH"
         ./scripts/feeds update -a
         ./scripts/feeds install -a > /dev/null 2>&1
         ./scripts/feeds install -a
