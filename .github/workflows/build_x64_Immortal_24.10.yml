@@ -65,7 +65,6 @@ jobs:
         echo "BY_INFORMATION=${BY_INFORMATION}" >> $GITHUB_ENV
         echo "CangKu=${Apidz##*/}" >> $GITHUB_ENV
         echo "Modelfile=${{matrix.target}}" >> $GITHUB_ENV
-        echo "CPU_SELECTION=${CPU_SELECTION}" >> $GITHUB_ENV
         echo "{name}={value}" >> $GITHUB_OUTPUT
         
     - name: 源码版本
@@ -76,12 +75,7 @@ jobs:
           echo "CODE=Immortalwrt" >> $GITHUB_ENV
           echo "LUCI_EDITION=24.10" >> $GITHUB_ENV
         fi
-        echo "NETIP=package/base-files/files/etc/networkip" >> $GITHUB_ENV
-        echo "DELETE=package/base-files/files/etc/deletefile" >> $GITHUB_ENV
         source build/${{matrix.target}}/common.sh && settings_variable
-        if [ -n "$(ls -A build/common/1022gg 2>/dev/null)" ]; then
-          source build/common/common.sh && Diy_gonggao
-        fi
         
     - name: 编译环境
       env:
