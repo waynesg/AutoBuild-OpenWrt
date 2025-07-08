@@ -1,0 +1,143 @@
+name: Immortalwrt-天灵
+on:
+  workflow_dispatch:
+    inputs:
+      REPO_BRANCH:
+        description: '天灵源码-请选择分支'
+        required: true
+        default: 'openwrt-24.10'
+        type: choice
+        options:
+          - 'openwrt-24.10'
+          - 'openwrt-23.05'
+          - 'master'
+      CONFIG_FILE:
+        description: '请选择[seed文件夹内]的配置文件'
+        required: true
+        default: 'x86_64'
+        type: choice
+        options:
+          - 'x86_64'
+          - 'armsr_rootfs_tar_gz'
+      INFORMATION_NOTICE:
+        description: 'Telegram或pushplus信息通知'
+        required: true
+        default: '关闭'
+        type: choice
+        options:
+          - '关闭'
+          - 'Telegram'
+          - 'Pushplus'
+      KEEP_WORKFLOWS:
+        description: '清理workflows,保留[X]个runs不被清理'
+        required: true
+        default: '50'
+      KEEP_RELEASES:
+        description: '清理Releases,保留[X]个Releases不被清理'
+        required: true
+        default: '30'
+      SSH_ACTION:
+        description: 'SSH远程配置固件'
+        required: false
+        default: 'false'
+        type: boolean
+      UPLOAD_FIRMWARE:
+        description: '上传固件到 Github Artifacts'
+        required: false
+        default: 'true'
+        type: boolean
+      UPLOAD_RELEASE:
+        description: '发布固件到 Github Releases'
+        required: false
+        default: 'false'
+        type: boolean
+      CACHEWRTBUILD_SWITCH:
+        description: '缓存加速编译'
+        required: false
+        default: 'true'
+        type: boolean
+      UPDATE_FIRMWARE_ONLINE:
+        description: '在线更新固/打包aarch64系列为img固件'
+        required: false
+        default: 'true'
+        type: boolean
+
+
+# 如若启动定时编译的话,配置文件是设置对应文件夹内的settings.ini文件
+# 定时触发开启开始编译(把下面两个#去掉开启,时间设置请看定时开启编译说明)
+#  schedule:
+#   - cron: 35 18 * * *
+
+env:
+  GIT_REPOSITORY: ${{github.repository}}
+  REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+  PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    name: 启动"${{ matrix.target }}-${{ github.event.inputs.REPO_BRANCH }}"触发编译
+    runs-on: ubuntu-22.04
+    if: ${{ github.event.repository.owner.id }} == ${{ github.event.sender.id }}
+    
+    env:
+      FOLDER_NAME: ${{ matrix.target }}
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [Immortalwrt]
+        
+        # 请勿对 target: [Immortalwrt] 做任何修改
+        
+    steps:
+    - name: 准备结束
+      uses: actions/checkout@v4
+
+    - name: 部署编译环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo -E apt-get -qq update -y
+        sudo -E apt-get -qq install -y gawk git gettext libssl-dev xsltproc zip git-core wget curl grep python2.7 python3 python3-pip libpython3-dev
+        sudo timedatectl set-timezone "$TZ"
+        sudo mkdir -p /${{ env.DIY_WORK }}
+        sudo chown $USER:$GROUPS /${{ env.DIY_WORK }}
+    
+    - name: 下载"${{ matrix.target }}-${{ inputs.REPO_BRANCH }}"源码
+      working-directory: /${{ env.DIY_WORK }}
+      run: |
+        git clone -q -b "${REPO_BRANCH}" --single-branch "${REPO_URL}" openwrt
+        ln -sf /${{ env.DIY_WORK }}/openwrt ${GITHUB_WORKSPACE}/openwrt
+        bash ${{ env.COMMON_SH }} Diy_feedsconf
+        echo "SHANG_CHUAN=true" >> ${GITHUB_ENV}
+ 
+    - name: 运行其他和SSH远程(make menuconfig)
+      id: info
+      uses: waynesg/AutoBuild-OpenWrt@ssh
+        
+    - name: 编译信息
+      continue-on-error: true
+      if: env.COMPILATION_INFORMATION == 'true'
+      uses: waynesg/AutoBuild-OpenWrt@message
+    
+    - name: 清理releases和workflows
+      continue-on-error: true
+      uses: danshui-git/delete-releases-workflows@main
+      with:
+        delete_releases: true
+        prerelease_option: all
+        releases_keep_keyword: targz/Update
+        releases_keep_latest: ${{ env.KEEP_RELEASES }}
+        delete_tags: true
+        max_releases_fetch: 300
+        delete_workflows: true
+        workflows_keep_latest: ${{ env.KEEP_WORKFLOWS }}
+        max_workflows_fetch: 300
+        repo: ${{ github.repository }}
+        gh_token: ${{ secrets.REPO_TOKEN }}
+        
+    - name: 触发启动"${{ matrix.target }}"开始编译
+      if: steps.info.outcome == 'success'
+      uses: waynesg/AutoBuild-OpenWrt@trigger
