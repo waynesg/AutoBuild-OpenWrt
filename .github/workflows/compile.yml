@@ -61,7 +61,6 @@ jobs:
         echo "BY_INFORMATION=${BY_INFORMATION}" >> $GITHUB_ENV
         echo "CangKu=${Apidz##*/}" >> $GITHUB_ENV
         echo "Modelfile=${{matrix.target}}" >> $GITHUB_ENV
-        echo "CPU_SELECTION=${CPU_SELECTION}" >> $GITHUB_ENV
         source build/${{matrix.target}}/common.sh && settings_variable
         echo "{name}={value}" >> $GITHUB_OUTPUT
         
@@ -81,24 +80,8 @@ jobs:
           echo "CODE=Immortalwrt" >> $GITHUB_ENV
           echo "LUCI_EDITION=24.10" >> $GITHUB_ENV
         fi
-        echo "NETIP=package/base-files/files/etc/networkip" >> $GITHUB_ENV
-        echo "DELETE=package/base-files/files/etc/deletefile" >> $GITHUB_ENV
         source build/${{matrix.target}}/common.sh && Diy_variable
-        if [ -n "$(ls -A build/common/1022gg 2>/dev/null)" ]; then
-          source build/common/common.sh && Diy_gonggao
-        fi
 
-    # - name: CPU检测
-    #   run: |
-    #     git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-    #     git config --global user.name "github-actions[bot]"
-    #     if [[ -n "${{ github.event.workflow }}" ]]; then
-    #       export CPU_SELECTIOY="$(source "${GITHUB_WORKSPACE}/build/${FOLDER_NAME}/settings.ini" && echo "${CPU_SELECTION}")"
-    #     else
-    #       export CPU_PASSWORD="1751898547"
-    #       export CPU_OPTIMIZATION="E5"
-    #     fi
-    #     source build/${FOLDER_NAME}/common.sh && CPU_Priority
     - name: 释放空间
       run: |
         sudo rm -rf /etc/apt/sources.list.d
@@ -183,8 +166,8 @@ jobs:
         fi
         source "${PATH1}/common.sh" && Diy_all
         /bin/bash "${PATH1}/waynesg/diy-repo-script.sh"
-        /bin/bash "${PATH1}/$DIY_PART_SH"
         /bin/bash "${PATH1}/waynesg/preset-clash-core.sh"
+        /bin/bash "${PATH1}/$DIY_PART_SH"
         ./scripts/feeds update -a
         ./scripts/feeds install -a > /dev/null 2>&1
         ./scripts/feeds install -a
