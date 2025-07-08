@@ -19,8 +19,12 @@ mkdir -p files/etc/openclash/core
 mkdir -p files/etc/openclash
 mkdir -p files/usr/share/openclash/ui/{yacd,dashboard,metacubexd,zashboard}
 
-# 核心及面板下载链接
-CLASH_META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/meta/clash-linux-${ARCH}.tar.gz"
+# SMART核心
+MIHOMO_PAGE="https://github.com/vernesong/mihomo/releases/expanded_assets/Prerelease-Alpha"
+MIHOMO_URL=$(wget -qO- "$MIHOMO_PAGE" | grep -oE "/vernesong/mihomo/releases/download/[^\"']*mihomo-linux-${ARCH}-alpha-smart[^\"']*.gz" | head -n1)
+MIHOMO_URL="https://github.com${MIHOMO_URL}"
+echo ">>> 下载地址: $MIHOMO_URL"
+# 面板下载链接
 GEOIP_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
 GEOSITE_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
 GEO_MMDB_URL="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-only-cn-private.mmdb"
@@ -30,9 +34,9 @@ YACD_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/y
 METACUBEXD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/metacubexd.tar.gz"
 ZASHBOARD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/zashboard.tar.gz"
 
-# 下载并解压 Clash Meta 核心
+# 下载并解压 Mihomo 核心
 echo ">>> 下载 Clash Meta 核心..."
-wget -qO- "$CLASH_META_URL" | tar -xOvz > files/etc/openclash/core/clash_meta
+wget -qO- "$MIHOMO_URL" | tar -xOvz > files/etc/openclash/core/clash_meta
 chmod +x files/etc/openclash/core/clash_meta
 
 # 下载 UI 面板
@@ -51,19 +55,6 @@ wget -qO files/etc/openclash/Country-only-cn-private.mmdb "$GEO_MMDB_URL"
 # 显示最终版本信息
 echo -n ">>> 核心版本: "
 files/etc/openclash/core/clash_meta -v || echo "执行失败"
-
-mkdir -p files/etc/uci-defaults
-
-cat << 'EOF' > files/etc/uci-defaults/99-restore-shadow
-#!/bin/sh
-
-# 如果有备份的 shadow 文件，覆盖当前 shadow
-[ -f /etc/.shadow.backup ] && cp -f /etc/.shadow.backup /etc/shadow && chmod 600 /etc/shadow
-
-exit 0
-EOF
-
-chmod +x files/etc/uci-defaults/99-restore-shadow
 
 echo "✅ 所有文件已准备完毕，将打入固件。"
 
