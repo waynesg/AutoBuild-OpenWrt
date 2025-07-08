@@ -35,8 +35,8 @@ METACUBEXD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/
 ZASHBOARD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/zashboard.tar.gz"
 
 # 下载并解压 Mihomo 核心
-echo ">>> 下载 Clash Meta 核心..."
-wget -qO- "$MIHOMO_URL" | tar -xOvz > files/etc/openclash/core/clash_meta
+echo ">>> 下载 Mihomo 核心..."
+wget -qO- "$MIHOMO_URL" | gunzip -c > files/etc/openclash/core/clash_meta
 chmod +x files/etc/openclash/core/clash_meta
 
 # 下载 UI 面板
