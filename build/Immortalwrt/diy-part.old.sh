@@ -69,13 +69,6 @@ rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
 
 # echo
-# TIME y "修改dashboard password"
-# sed -i '/uci -q set openclash.config.dashboard_password/d' feeds/luci/applications/luci-app-openclash/root/etc/uci-defaults/luci-openclash
-# sed -i '/uci add openclash/,/^md5sum /d' feeds/luci/applications/luci-app-openclash/root/etc/uci-defaults/luci-openclash
-
-
-
-# echo
 # TIME y "rpcd - fix timeout"
 # sed -i 's/option timeout 30/option timeout 60/g' package/system/rpcd/files/rpcd.config
 # sed -i 's#20) \* 1000#60) \* 1000#g' feeds/luci/modules/luci-base/htdocs/luci-static/resources/rpc.js
