@@ -118,7 +118,7 @@ fi
 
 cd ${FOLDER_NAME}
 git add .
-git commit -m "${kaisbianyixx}-${FOLDER_NAME}-${LUCI_EDITION}-${TARGET_PROFILE}"
+git commit -m "Compile-${FOLDER_NAME}-${LUCI_EDITION}-${TARGET_PROFILE}"
 git push --force "https://${REPO_TOKEN}@github.com/${Apidz}" HEAD:main
 }
 ################################################################################################################
