@@ -39,12 +39,12 @@ clone_or_update_git_repo() {
 
 # theme
 git clone --depth=1 -b master https://github.com/jerrykuku/luci-theme-argon package/waynesg/luci-theme-argon
-git clone --depth=1 -b js https://github.com/sirpdboy/luci-theme-kucat package/waynesg/luci-theme-kucat
-git clone --depth=1 -b js https://github.com/0x676e67/luci-theme-design package/waynesg/luci-theme-design
+# git clone --depth=1 -b js https://github.com/sirpdboy/luci-theme-kucat package/waynesg/luci-theme-kucat
+# git clone --depth=1 -b js https://github.com/0x676e67/luci-theme-design package/waynesg/luci-theme-design
 # argon-theme-config
-#git clone --depth=1 -b master https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
+git clone --depth=1 -b master https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
 #theme-config
-git clone --depth=1 https://github.com/sirpdboy/luci-app-advancedplus package/waynesg/luci-app-advancedplus
+# git clone --depth=1 https://github.com/sirpdboy/luci-app-advancedplus package/waynesg/luci-app-advancedplus
 #mosdns
 git clone --depth=1 -b v5 https://github.com/sbwml/luci-app-mosdns package/waynesg/luci-app-mosdns
 #passwall
