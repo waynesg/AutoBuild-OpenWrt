@@ -101,6 +101,7 @@ mv feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/i
 
 echo
 TIME b "菜单 调整..."
+sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-3cat/root/usr/share/luci/menu.d/luci-app-3cat.json
 sed -i 's|/system/|/nas/|' feeds/luci/applications/luci-app-filemanager/root/usr/share/luci/menu.d/luci-app-filemanager.json
 sed -i 's|/services/|/vpn/|' package/waynesg/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
 sed -i 's|/services/|/control/|' feeds/luci/applications/luci-app-wol/root/usr/share/luci/menu.d/luci-app-wol.json
@@ -154,6 +155,7 @@ sed -i 's/"USB 打印服务器"/"打印服务"/g' $(grep "USB 打印服务器" -
 sed -i "s/set network\.vpn0\.ifname='tun0'/set network.vpn0.device='tun0'/g" feeds/luci/applications/luci-app-openvpn-server/root/etc/uci-defaults/openvpn
 sed -i 's/msgstr "UPnP IGD 和 PCP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh_Hans/upnp.po
 sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-upnp/root/usr/share/luci/menu.d/luci-app-upnp.json
+sed -i 's/"title": "3cat"/"title": "端口转发"/g' feeds/luci/applications/luci-app-3cat/root/usr/share/luci/menu.d/luci-app-3cat.json
 
 echo "重命名管控菜单"
 #Control
