@@ -85,7 +85,9 @@ clone_or_update_git_repo https://github.com/sbwml/luci-app-airconnect package/wa
 #rm -rf feeds/packages/net/alist
 #git clone --depth=1 -b main https://github.com/sbwml/luci-app-alist package/waynesg/luci-app-alist
 #eqosplus
-git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/waynesg/luci-app-eqosplus
+#git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/waynesg/luci-app-eqosplus
+#timecontrol
+git clone --depth=1 -b main https://github.com/sirpdboy/luci-app-timecontrol
 #subconverter
 git clone --depth=1 https://github.com/kiddin9/openwrt-subconverter package/waynesg/luci-app-subconverter
 #cpu status
