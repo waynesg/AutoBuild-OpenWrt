@@ -157,9 +157,9 @@ sed -i 's/msgstr "UPnP IGD 和 PCP"/msgstr "UPnP服务"/g' feeds/luci/applicatio
 sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-upnp/root/usr/share/luci/menu.d/luci-app-upnp.json
 sed -i 's/"title": "3cat"/"title": "端口转发"/g' feeds/luci/applications/luci-app-3cat/root/usr/share/luci/menu.d/luci-app-3cat.json
 
-echo "重命名管控菜单"
+#echo "重命名管控菜单"
 #Control
-sed -i '$a\msgid "Control"\nmsgstr "管控"' package/waynesg/luci-app-oaf/luci-app-oaf/po/zh_Hans/oaf.po
+#sed -i '$a\msgid "Control"\nmsgstr "管控"' package/waynesg/luci-app-oaf/luci-app-oaf/po/zh_Hans/oaf.po
 
 echo "重命名存储菜单"
 #sed -i 's/"Alist 文件列表"/"Alist列表"/g' package/waynesg/luci-app-alist/luci-app-alist/po/zh_Hans/alist.po
