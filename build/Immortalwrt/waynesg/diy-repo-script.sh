@@ -108,4 +108,6 @@ git clone --depth=1 https://github.com/liudf0716/luci-app-yt-dlp package/waynesg
 # clone_or_update_git_repo https://github.com/Lienol/openwrt-package package/waynesg/luci-app-socat "" luci-app-socat
 #insomclash
 #git clone --depth=1 https://github.com/bobbyunknown/luci-app-insomclash package/waynesg/luci-app-insomclash
+#bandix
 git clone --depth=1 https://github.com/timsaya/luci-app-bandix package/waynesg/luci-app-bandix
+git clone --depth=1 https://github.com/timsaya/openwrt-bandix package/waynesg/openwrt-bandix
