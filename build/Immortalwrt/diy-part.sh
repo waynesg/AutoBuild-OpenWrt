@@ -156,7 +156,7 @@ sed -i "s/set network\.vpn0\.ifname='tun0'/set network.vpn0.device='tun0'/g" fee
 sed -i 's/msgstr "UPnP IGD 和 PCP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh_Hans/upnp.po
 sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-upnp/root/usr/share/luci/menu.d/luci-app-upnp.json
 sed -i 's/"title": "3cat"/"title": "端口转发"/g' feeds/luci/applications/luci-app-3cat/root/usr/share/luci/menu.d/luci-app-3cat.json
-sed -i 's/"Bandix流量监控"/"流量监控"/g' package/waynesg/luci-app-bandix/po/zh_Hans/bandix.po
+sed -i 's/"Bandix 流量监控"/"流量监控"/g' package/waynesg/luci-app-bandix/po/zh_Hans/bandix.po
 
 #echo "重命名管控菜单"
 #Control
