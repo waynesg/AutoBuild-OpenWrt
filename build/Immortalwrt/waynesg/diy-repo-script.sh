@@ -93,9 +93,9 @@ git clone --depth=1 -b main https://github.com/sirpdboy/luci-app-timecontrol pac
 #subconverter
 git clone --depth=1 https://github.com/kiddin9/openwrt-subconverter package/waynesg/luci-app-subconverter
 #cpu status
-git clone --depth=1 https://github.com/gSpotx2f/luci-app-cpu-status package/waynesg/luci-app-cpu-status
+#git clone --depth=1 https://github.com/gSpotx2f/luci-app-cpu-status package/waynesg/luci-app-cpu-status
 #tn-netports
-git clone --depth=1 https://github.com/muink/luci-app-tn-netports package/waynesg/luci-app-tn-netports
+#git clone --depth=1 https://github.com/muink/luci-app-tn-netports package/waynesg/luci-app-tn-netports
 #tailscale
 git clone --depth=1 https://github.com/asvow/luci-app-tailscale package/waynesg/luci-app-tailscale
 #lucky
@@ -104,7 +104,7 @@ git clone --depth=1 https://github.com/asvow/luci-app-tailscale package/waynesg/
 git clone --depth=1 https://github.com/liudf0716/luci-app-yt-dlp package/waynesg/luci-app-yt-dlp
 #Nikki
 #git clone --depth=1 https://github.com/nikkinikki-org/OpenWrt-nikki package/waynesg/luci-app-nikki
-# #socat
+#socat
 # clone_or_update_git_repo https://github.com/Lienol/openwrt-package package/waynesg/luci-app-socat "" luci-app-socat
 #insomclash
 #git clone --depth=1 https://github.com/bobbyunknown/luci-app-insomclash package/waynesg/luci-app-insomclash
