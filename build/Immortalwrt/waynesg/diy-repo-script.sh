@@ -87,7 +87,7 @@ clone_or_update_git_repo https://github.com/sbwml/luci-app-airconnect package/wa
 #eqosplus
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/waynesg/luci-app-eqosplus
 #timecontrol
-git clone --depth=1 -b main https://github.com/sirpdboy/luci-app-timecontrol package/waynesg/luci-app-timecontrol
+#git clone --depth=1 -b main https://github.com/sirpdboy/luci-app-timecontrol package/waynesg/luci-app-timecontrol
 #taskplan
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-taskplan package/waynesg/luci-app-taskplan
 #subconverter
