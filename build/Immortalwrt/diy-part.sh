@@ -108,7 +108,7 @@ sed -i 's|/services/|/control/|' feeds/luci/applications/luci-app-wol/root/usr/s
 sed -i 's/\"services\"/\"control\"/g'  package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/appfilter.lua
 #sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
 #sed -i 's|/services/|/nas/|' feeds/luci/applications/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
-#sed -i '/"title": "SmartDNS",/a \        "order": 22,' feeds/luci/applications/luci-app-smartdns/root/usr/share/luci/menu.d/luci-app-smartdns.json
+sed -i '/"title": "SmartDNS",/a \        "order": 22,' feeds/luci/applications/luci-app-smartdns/root/usr/share/luci/menu.d/luci-app-smartdns.json
 #sed -i '/"title": "Nikki",/a \        "order": -9,' package/waynesg/luci-app-nikki/luci-app-nikki/root/usr/share/luci/menu.d/luci-app-nikki.json
 sed -i 's/("OpenClash"), 50)/("OpenClash"), -10)/g' feeds/luci/applications/luci-app-openclash/luasrc/controller/openclash.lua
 #sed -i 's/("Pass Wall"), -1)/("Pass Wall"), -9)/g' package/waynesg/luci-app-passwall/luasrc/controller/passwall.lua
@@ -170,7 +170,7 @@ sed -i 's/"文件管理器"/"文件管理"/g' feeds/luci/applications/luci-app-f
 echo "重命名VPN菜单"
 #vpn
 sed -i 's/"Cloudflare 零信任隧道"/"Cloudflare 云隧道"/g' feeds/luci/applications/luci-app-cloudflared/po/zh_Hans/cloudflared.po
-#sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
+sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 sed -i 's/"OpenVPN"/"OpenVPN 客户端"/g' feeds/luci/applications/luci-app-openvpn/luasrc/controller/openvpn.lua
 #sed -i 's/"IPSec VPN Server"/"IPSec VPN 服务器"/g' feeds/luci/applications/luci-app-ipsec-vpnd/root/usr/share/luci/menu.d/luci-app-ipsec-vpnd.json
 sed -i 's/"Tailscale"/"TailScale虚拟网络"/g' package/waynesg/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
