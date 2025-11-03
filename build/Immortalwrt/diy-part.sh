@@ -171,7 +171,7 @@ sed -i 's/"文件管理器"/"文件管理"/g' feeds/luci/applications/luci-app-f
 echo "重命名VPN菜单"
 #vpn
 sed -i 's/"Cloudflare 零信任隧道"/"Cloudflare 云隧道"/g' feeds/luci/applications/luci-app-cloudflared/po/zh_Hans/cloudflared.po
-sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
+#sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 sed -i 's/"OpenVPN"/"OpenVPN 客户端"/g' feeds/luci/applications/luci-app-openvpn/luasrc/controller/openvpn.lua
 #sed -i 's/"IPSec VPN Server"/"IPSec VPN 服务器"/g' feeds/luci/applications/luci-app-ipsec-vpnd/root/usr/share/luci/menu.d/luci-app-ipsec-vpnd.json
 sed -i 's/"Tailscale"/"TailScale虚拟网络"/g' package/waynesg/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
