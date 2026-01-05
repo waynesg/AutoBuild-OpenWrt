@@ -111,3 +111,4 @@ git clone --depth=1 https://github.com/liudf0716/luci-app-yt-dlp package/waynesg
 #bandix
 git clone --depth=1 https://github.com/timsaya/luci-app-bandix package/waynesg/luci-app-bandix
 git clone --depth=1 https://github.com/timsaya/openwrt-bandix package/waynesg/openwrt-bandix
+rm -f "package/waynesg/openwrt-bandix/.github/workflows/Auto compile with openwrt sdk.yml"
