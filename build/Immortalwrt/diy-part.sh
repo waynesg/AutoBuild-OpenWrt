@@ -176,6 +176,10 @@ sed -i 's/"OpenVPN"/"OpenVPN 客户端"/g' feeds/luci/applications/luci-app-open
 sed -i 's/"Tailscale"/"TailScale虚拟网络"/g' package/waynesg/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
 TIME b "重命名 完成"
 
+rm -rf package/feeds/packages/exim
+rm -rf package/feeds/luci/luci-app-radicale
+rm -rf package/feeds/packages/onionshare-cli
+
 echo
 chmod -R 755 package/waynesg
 echo
