@@ -84,20 +84,35 @@ jobs:
 
     - name: 释放空间
       run: |
-        uses: jlumbroso/free-disk-space@main
-      with:
-        # this might remove tools that are actually needed,
-        # if set to "true" but frees about 6 GB
-        tool-cache: false
-        
-        # all of these default to true, but feel free to set to
-        # "false" if necessary for your workflow
-        android: true
-        dotnet: true
-        haskell: true
-        large-packages: true
-        docker-images: true
-        swap-storage: true
+        echo "===== 清理前磁盘状态 ====="
+        df -hT
+
+        echo "===== 停止并清理 Docker（最占空间） ====="
+        sudo systemctl stop docker || true
+        sudo rm -rf /var/lib/docker || true
+
+        echo "===== 清理 GitHub Runner 预装工具 ====="
+        sudo rm -rf /opt/hostedtoolcache || true
+        sudo rm -rf /usr/share/dotnet || true
+        sudo rm -rf /usr/local/lib/android || true
+        sudo rm -rf /opt/ghc || true
+        sudo rm -rf /usr/local/share/powershell || true
+
+        echo "===== 清理 Snap（非常吃空间） ====="
+        sudo rm -rf /var/lib/snapd || true
+        sudo rm -rf /snap || true
+
+        echo "===== 清理 apt 缓存（放后面，避免 exit 28） ====="
+        sudo apt-get clean || true
+        sudo apt-get autoremove -y || true
+
+        echo "===== 清理临时目录 ====="
+        sudo rm -rf /tmp/* || true
+        sudo rm -rf /var/tmp/* || true
+
+        echo "===== 清理后磁盘状态 ====="
+        df -hT
+
         # sudo systemctl stop docker
         # sudo rm -rf /var/lib/docker
         # sudo rm -rf /etc/apt/sources.list.d
@@ -112,7 +127,7 @@ jobs:
         # sudo rm -rf /etc/mysql /etc/php /usr/lib/jvm /usr/libexec/docker /usr/local /usr/src/* /var/lib/docker /var/lib/gems /var/lib/mysql /var/lib/snapd /etc/skel /opt/{microsoft,az,hostedtoolcache,cni,mssql-tools,pipx} /usr/share/{az*,dotnet,swift,miniconda,gradle*,java,kotlinc,ri,sbt} /root/{.sbt,.local,.npm}
         # sudo sed -i '/NVM_DIR/d;/skel/d' /root/{.bashrc,.profile}
         # rm -rf ~/{.cargo,.dotnet,.rustup}
-        df -Th
+        # df -Th
         
     - name: 部署环境
       env:
