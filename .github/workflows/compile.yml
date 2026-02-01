@@ -84,34 +84,18 @@ jobs:
 
     - name: 释放空间
       run: |
-        echo "===== 清理前磁盘状态 ====="
-        df -hT
-
-        echo "===== 停止并清理 Docker（最占空间） ====="
-        sudo systemctl stop docker || true
-        sudo rm -rf /var/lib/docker || true
-
-        echo "===== 清理 GitHub Runner 预装工具 ====="
-        sudo rm -rf /opt/hostedtoolcache || true
-        sudo rm -rf /usr/share/dotnet || true
-        sudo rm -rf /usr/local/lib/android || true
-        sudo rm -rf /opt/ghc || true
-        sudo rm -rf /usr/local/share/powershell || true
-
-        echo "===== 清理 Snap（非常吃空间） ====="
-        sudo rm -rf /var/lib/snapd || true
-        sudo rm -rf /snap || true
-
-        echo "===== 清理 apt 缓存（放后面，避免 exit 28） ====="
-        sudo apt-get clean || true
-        sudo apt-get autoremove -y || true
-
-        echo "===== 清理临时目录 ====="
-        sudo rm -rf /tmp/* || true
-        sudo rm -rf /var/tmp/* || true
-
-        echo "===== 清理后磁盘状态 ====="
-        df -hT
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: true
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          swap-storage: true
 
         # sudo systemctl stop docker
         # sudo rm -rf /var/lib/docker
@@ -258,36 +242,11 @@ jobs:
       continue-on-error: true
       run: |
         cd openwrt
-
-        echo "=== CPU ==="
-        nproc
-
-        echo "=== Memory ==="
-        free -h || true
-
-        echo "=== Create swap ==="
-        sudo fallocate -l 4G /swapfile
-        sudo chmod 600 /swapfile
-        sudo mkswap /swapfile
-        sudo swapon /swapfile
-        free -h
-
-        echo "=== Rust safe env ==="
-        export CARGO_BUILD_JOBS=1
-        export RUSTFLAGS="-C codegen-units=1"
-
-        echo "=== Start build ==="
-        make -j1 V=s
-
+        echo -e "$(nproc) thread compile"
+        make -j$(nproc) || make -j1 V=s
         echo "COMPILESTATUS=success" >> $GITHUB_ENV
         echo "date=$(date "+%Y%m%d%H%M%S")" >> $GITHUB_ENV
         echo "date1=$(date +'%m-%d')" >> $GITHUB_ENV
-        # cd openwrt
-        # echo -e "$(nproc) thread compile"
-        # make -j$(nproc) || make -j1 V=s
-        # echo "COMPILESTATUS=success" >> $GITHUB_ENV
-        # echo "date=$(date "+%Y%m%d%H%M%S")" >> $GITHUB_ENV
-        # echo "date1=$(date +'%m-%d')" >> $GITHUB_ENV
 
     - name: 整理固件
       id: organizer
