@@ -84,20 +84,34 @@ jobs:
 
     - name: 释放空间
       run: |
-        sudo systemctl stop docker
-        sudo rm -rf /var/lib/docker
-        sudo rm -rf /etc/apt/sources.list.d
-        sudo bash -c "curl -s https://us.cooluc.com/ubuntu-apt/sources-22.04.list > /etc/apt/sources.list"
-        sudo swapoff -a
-        sudo rm -f /swapfile /mnt/swapfile
-        sudo docker image prune -a -f     
-        sudo snap set system refresh.retain=2
-        sudo apt-get -y purge firefox clang* ghc* google* llvm* mono* mongo* mysql* php*
-        sudo apt-get -y autoremove --purge
-        sudo apt-get clean
-        sudo rm -rf /etc/mysql /etc/php /usr/lib/jvm /usr/libexec/docker /usr/local /usr/src/* /var/lib/docker /var/lib/gems /var/lib/mysql /var/lib/snapd /etc/skel /opt/{microsoft,az,hostedtoolcache,cni,mssql-tools,pipx} /usr/share/{az*,dotnet,swift,miniconda,gradle*,java,kotlinc,ri,sbt} /root/{.sbt,.local,.npm}
-        sudo sed -i '/NVM_DIR/d;/skel/d' /root/{.bashrc,.profile}
-        rm -rf ~/{.cargo,.dotnet,.rustup}
+        uses: jlumbroso/free-disk-space@main
+      with:
+        # this might remove tools that are actually needed,
+        # if set to "true" but frees about 6 GB
+        tool-cache: false
+        
+        # all of these default to true, but feel free to set to
+        # "false" if necessary for your workflow
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        docker-images: true
+        swap-storage: true
+        # sudo systemctl stop docker
+        # sudo rm -rf /var/lib/docker
+        # sudo rm -rf /etc/apt/sources.list.d
+        # sudo bash -c "curl -s https://us.cooluc.com/ubuntu-apt/sources-22.04.list > /etc/apt/sources.list"
+        # sudo swapoff -a
+        # sudo rm -f /swapfile /mnt/swapfile
+        # sudo docker image prune -a -f     
+        # sudo snap set system refresh.retain=2
+        # sudo apt-get -y purge firefox clang* ghc* google* llvm* mono* mongo* mysql* php*
+        # sudo apt-get -y autoremove --purge
+        # sudo apt-get clean
+        # sudo rm -rf /etc/mysql /etc/php /usr/lib/jvm /usr/libexec/docker /usr/local /usr/src/* /var/lib/docker /var/lib/gems /var/lib/mysql /var/lib/snapd /etc/skel /opt/{microsoft,az,hostedtoolcache,cni,mssql-tools,pipx} /usr/share/{az*,dotnet,swift,miniconda,gradle*,java,kotlinc,ri,sbt} /root/{.sbt,.local,.npm}
+        # sudo sed -i '/NVM_DIR/d;/skel/d' /root/{.bashrc,.profile}
+        # rm -rf ~/{.cargo,.dotnet,.rustup}
         df -Th
         
     - name: 部署环境
