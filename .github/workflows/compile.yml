@@ -83,16 +83,9 @@ jobs:
         source build/${{matrix.target}}/common.sh && Diy_variable
 
     - name: 释放空间
-      # run: |
-      uses: jlumbroso/free-disk-space@main
+      uses: sirpdboy/actions@free-disk
       with:
-        tool-cache: false
-        android: true
-        dotnet: true
-        haskell: true
-        large-packages: true
-        docker-images: true
-        swap-storage: true
+        build-workdir: /builder
 
         # sudo systemctl stop docker
         # sudo rm -rf /var/lib/docker
