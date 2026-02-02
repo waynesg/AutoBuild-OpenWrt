@@ -99,6 +99,8 @@ git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/l
 #删除首页端口状态
 # mv feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/29_ports.js feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/29_ports.js.del
 
+sed -i 's/--set=llvm.download-ci-llvm=true/--set=llvm.download-ci-llvm=false/' feeds/packages/lang/rust/Makefile
+
 echo
 TIME b "菜单 调整..."
 sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-3cat/root/usr/share/luci/menu.d/luci-app-3cat.json
