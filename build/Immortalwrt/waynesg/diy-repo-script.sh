@@ -43,8 +43,11 @@ git clone --depth=1 -b master https://github.com/jerrykuku/luci-theme-argon pack
 # git clone --depth=1 -b js https://github.com/0x676e67/luci-theme-design package/waynesg/luci-theme-design
 # argon-theme-config
 git clone --depth=1 -b master https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
+# aurora
+git clone --depth=1 https://github.com/eamonxg/luci-theme-aurora package/waynesg/luci-theme-aurora
 #theme-config
 # git clone --depth=1 https://github.com/sirpdboy/luci-app-advancedplus package/waynesg/luci-app-advancedplus
+git clone --depth=1 https://github.com/eamonxg/luci-app-aurora-config package/waynesg/luci-app-aurora-config
 #mosdns
 git clone --depth=1 -b v5 https://github.com/sbwml/luci-app-mosdns package/waynesg/luci-app-mosdns
 #passwall
@@ -109,6 +112,6 @@ git clone --depth=1 https://github.com/liudf0716/luci-app-yt-dlp package/waynesg
 #insomclash
 #git clone --depth=1 https://github.com/bobbyunknown/luci-app-insomclash package/waynesg/luci-app-insomclash
 #bandix
-git clone --depth=1 https://github.com/timsaya/luci-app-bandix package/waynesg/luci-app-bandix
-git clone --depth=1 https://github.com/timsaya/openwrt-bandix package/waynesg/openwrt-bandix
-rm -f "package/waynesg/openwrt-bandix/.github/workflows/Auto compile with openwrt sdk.yml"
+#git clone --depth=1 https://github.com/timsaya/luci-app-bandix package/waynesg/luci-app-bandix
+#git clone --depth=1 https://github.com/timsaya/openwrt-bandix package/waynesg/openwrt-bandix
+#rm -f "package/waynesg/openwrt-bandix/.github/workflows/Auto compile with openwrt sdk.yml"
