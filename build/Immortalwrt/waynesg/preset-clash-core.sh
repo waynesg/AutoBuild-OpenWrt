@@ -30,7 +30,6 @@ GEOSITE_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/dow
 GEO_MMDB_URL="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-only-cn-private.mmdb"
 
 YACD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/Yacd-meta.tar.gz"
-YACD_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/yacd.tar.gz"
 METACUBEXD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/metacubexd.tar.gz"
 ZASHBOARD_META_URL="https://github.com/DustinWin/proxy-tools/releases/download/Dashboard/zashboard.tar.gz"
 
@@ -42,7 +41,6 @@ chmod +x files/etc/openclash/core/clash_meta
 # 下载 UI 面板
 echo ">>> 下载 UI 面板..."
 wget -qO- "$YACD_META_URL" | tar -xz -C files/usr/share/openclash/ui/yacd
-wget -qO- "$YACD_URL" | tar -xz -C files/usr/share/openclash/ui/dashboard
 wget -qO- "$METACUBEXD_META_URL" | tar -xz -C files/usr/share/openclash/ui/metacubexd
 wget -qO- "$ZASHBOARD_META_URL" | tar -xz -C files/usr/share/openclash/ui/zashboard
 
