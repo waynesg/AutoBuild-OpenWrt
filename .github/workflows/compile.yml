@@ -21,10 +21,6 @@ env:
   WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
   TZ: Asia/Shanghai
 
-  #优化
-  CCACHE_DIR: /tmp/ccache
-  CCACHE_MAXSIZE: 5G
-
 
 jobs:
   build:
@@ -41,7 +37,7 @@ jobs:
 
     steps:    
     - name: 准备开始
-      uses: actions/checkout@main
+      uses: actions/checkout@v4
 
     - name: 读取脚本
       run: |
@@ -147,22 +143,6 @@ jobs:
         cd openwrt
         ./scripts/feeds update -a > /dev/null 2>&1
         ln -sf /${{matrix.target}}/openwrt $GITHUB_WORKSPACE/openwrt
-
-    - name: Cache dl
-      uses: actions/cache@v4
-      with:
-        path: openwrt/dl
-        key: ${{ runner.os }}-openwrt-dl-${{ env.REPO_BRANCH }}-${{ hashFiles('build/**/settings.ini', 'build/**/.config', '**/diy-*.sh') }}
-        restore-keys: |
-          ${{ runner.os }}-openwrt-dl-${{ env.REPO_BRANCH }}-
-
-    - name: Cache ccache
-      uses: actions/cache@v4
-      with:
-        path: ${{ env.CCACHE_DIR }}
-        key: ${{ runner.os }}-openwrt-ccache-${{ env.REPO_BRANCH }}-${{ hashFiles('build/**/settings.ini', 'build/**/.config') }}
-        restore-keys: |
-          ${{ runner.os }}-openwrt-ccache-${{ env.REPO_BRANCH }}-
  
     - name: 加载设置
       run: |
@@ -171,7 +151,8 @@ jobs:
         mv -f "${Home}"/build/common/*.sh "${PATH1}"
         source "${PATH1}/common.sh" && Diy_settings
         [[ "${{ github.event.inputs.ssh }}" == 'ssh' ]] && echo "SSHYC=true" >> $GITHUB_ENV
-        cd openwrt
+        cd "$Home"
+        #cd openwrt
         if [[ "${REPO_BRANCH}" == "master" ]]; then 
           ZZZ="package/lean/default-settings/files/zzz-default-settings"
           echo "DISTRIB_REVISION=$(cat $ZZZ|grep DISTRIB_REVISION= | sed 's/^.\{24\}//g' | sed 's/.\{26\}$//')" >> $GITHUB_ENV
@@ -205,15 +186,14 @@ jobs:
         if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           source "${PATH1}/upgrade.sh" && Diy_Part1
         fi
-        # ✅ 强制启用 ccache（优化点）
-        echo "CONFIG_CCACHE=y" >> .config
  
     - name: 加载缓存
       if: env.USE_CACHEWRTBUILD == 'true'
       uses: stupidloud/cachewrtbuild@main
       with:
         ccache: 'true'
-        prefix: ${{ github.workspace }}/openwrt
+        #prefix: ${{ github.workspace }}/openwrt
+        prefix: /${{ matrix.target }}/openwrt
 
     - name: 生成配置
       run: |
@@ -252,17 +232,17 @@ jobs:
       run: |
         cd openwrt
         make download -j$(($(nproc)+1))
-        find dl -size -1024c -exec rm -f {} \; || true
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
 
     
     - name: 编译固件
       id: compile
-      continue-on-error: true
+      #continue-on-error: true
       run: |
-        export CCACHE_DIR="${CCACHE_DIR}"
-        ccache -M "${CCACHE_MAXSIZE}" || true
+        cd openwrt
         echo -e "$(nproc) thread compile"
-        make -j"$(nproc)" V=sc
+        make -j$(nproc)
         echo "COMPILESTATUS=success" >> $GITHUB_ENV
         echo "date=$(date "+%Y%m%d%H%M%S")" >> $GITHUB_ENV
         echo "date1=$(date +'%m-%d')" >> $GITHUB_ENV
