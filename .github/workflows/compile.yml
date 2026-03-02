@@ -27,7 +27,7 @@ jobs:
     name: 编译 "${{matrix.target}}"
     runs-on: ubuntu-22.04
     if: ${{ github.event.repository.owner.id == github.event.sender.id }}
-
+    
     env:
       FOLDER_NAME: ${{ matrix.target }}
     strategy:
@@ -83,10 +83,8 @@ jobs:
         source build/${{matrix.target}}/common.sh && Diy_variable
 
     - name: 释放空间
-      uses: sirpdboy/actions@free-disk
       uses: coder-xiaomo/free-disk-space@main
       with:
-        build-workdir: /builder
         tool-cache: false
         android: true
         dotnet: true
@@ -110,7 +108,7 @@ jobs:
         # sudo sed -i '/NVM_DIR/d;/skel/d' /root/{.bashrc,.profile}
         # rm -rf ~/{.cargo,.dotnet,.rustup}
         # df -Th
-
+        
     - name: 部署环境
       env:
         DEBIAN_FRONTEND: noninteractive
@@ -280,7 +278,7 @@ jobs:
       with:
         name: ${{ env.LUCI_EDITION }}-${{ env.CODE }}-${{ env.TARGET_PROFILE }}-firmware-${{ env.Compile_Date }}
         path: ${{ env.FIRMWARE }}
-
+          
     - name: 发布信息
       if: env.ORGANIZERSTATUS == 'success' && env.UPLOAD_RELEASE == 'true'
       run: |
@@ -295,7 +293,7 @@ jobs:
         token: ${{ secrets.REPO_TOKEN }}
         bodyFile: "update_log.txt"
         artifacts: "${{ env.FIRMWARE }}/*"
-
+        
     - name: 更新Step 1
       if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
       run: |
@@ -341,7 +339,7 @@ jobs:
         tag: AutoUpdate
         overwrite: true
         file_glob: true
-
+        
     - name: 完成通知
       if: env.COMPILESTATUS == 'success' && env.PUSH_PLUS_TOKEN && env.SERVERCHAN_SCKEY == 'PUSH' || env.COMPILESTATUS == 'success' && env.TELEGRAM_BOT_TOKEN && env.SERVERCHAN_SCKEY == 'TELE'
       run: |
