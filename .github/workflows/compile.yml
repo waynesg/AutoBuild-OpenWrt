@@ -37,7 +37,7 @@ jobs:
 
     steps:    
     - name: 准备开始
-      uses: actions/checkout@v4
+      uses: actions/checkout@main
 
     - name: 读取脚本
       run: |
@@ -151,8 +151,7 @@ jobs:
         mv -f "${Home}"/build/common/*.sh "${PATH1}"
         source "${PATH1}/common.sh" && Diy_settings
         [[ "${{ github.event.inputs.ssh }}" == 'ssh' ]] && echo "SSHYC=true" >> $GITHUB_ENV
-        cd "$Home"
-        #cd openwrt
+        cd openwrt
         if [[ "${REPO_BRANCH}" == "master" ]]; then 
           ZZZ="package/lean/default-settings/files/zzz-default-settings"
           echo "DISTRIB_REVISION=$(cat $ZZZ|grep DISTRIB_REVISION= | sed 's/^.\{24\}//g' | sed 's/.\{26\}$//')" >> $GITHUB_ENV
@@ -192,8 +191,7 @@ jobs:
       uses: stupidloud/cachewrtbuild@main
       with:
         ccache: 'true'
-        #prefix: ${{ github.workspace }}/openwrt
-        prefix: /${{ matrix.target }}/openwrt
+        prefix: ${{ github.workspace }}/openwrt
 
     - name: 生成配置
       run: |
@@ -234,11 +232,10 @@ jobs:
         make download -j$(($(nproc)+1))
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-
     
     - name: 编译固件
       id: compile
-      #continue-on-error: true
+      continue-on-error: true
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
@@ -246,7 +243,7 @@ jobs:
         echo "COMPILESTATUS=success" >> $GITHUB_ENV
         echo "date=$(date "+%Y%m%d%H%M%S")" >> $GITHUB_ENV
         echo "date1=$(date +'%m-%d')" >> $GITHUB_ENV
-        
+
     - name: 整理固件
       id: organizer
       run: |
