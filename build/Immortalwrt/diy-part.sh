@@ -124,9 +124,7 @@ echo "重命名系统菜单"
 #status menu
 sed -i 's/"概况"/"系统概览"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"路由"/"路由映射"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
-sed -i 's/"进程"/"系统进程"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po  
 sed -i 's/“进程”/“系统进程”/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
-sed -i 's/"在线用户"/"在线设备"/g' package/waynesg/luci-app-onliner/luasrc/controller/onliner.lua  
 sed -i 's/“在线用户”/“在线设备”/g' package/waynesg/luci-app-onliner/luasrc/controller/onliner.lua
 #system menu
 #sed -i 's/"系统"/"系统设置"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
@@ -162,9 +160,9 @@ sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-upnp/root/usr/
 sed -i 's/"title": "3cat"/"title": "端口转发"/g' feeds/luci/applications/luci-app-3cat/root/usr/share/luci/menu.d/luci-app-3cat.json
 #sed -i 's/"Bandix 流量监控"/"流量监控"/g' package/waynesg/luci-app-bandix/luci-app-bandix/po/zh_Hans/bandix.po
 
-echo "重命名管控菜单"
+#echo "重命名管控菜单"
 #Control
-sed -i '$a\msgid "Control"\nmsgstr "管控"' package/waynesg/luci-app-oaf/luci-app-oaf/po/zh_Hans/oaf.po
+#sed -i '$a\msgid "Control"\nmsgstr "管控"' package/waynesg/luci-app-oaf/luci-app-oaf/po/zh_Hans/oaf.po
 
 echo "重命名存储菜单"
 #sed -i 's/"Alist 文件列表"/"Alist列表"/g' package/waynesg/luci-app-alist/luci-app-alist/po/zh_Hans/alist.po
