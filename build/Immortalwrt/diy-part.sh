@@ -115,7 +115,7 @@ sed -i 's/"Argon 主题设置"/"主题设置"/g' package/waynesg/luci-app-argon-
 #services menu
 sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' feeds/luci/applications/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 sed -i 's/"Vlmcsd KMS 服务器"/"KMS服务"/g' $(grep "KMS 服务器" -rl ./)
-sed -i 's/"title": "subconverter"/"title": "节点订阅"/g'  package/waynesg/luci-app-subconverter/luci-app-subconverter/root/usr/share/luci/menu.d/luci-app-subconverter.json
+#sed -i 's/"title": "subconverter"/"title": "节点订阅"/g'  package/waynesg/luci-app-subconverter/luci-app-subconverter/root/usr/share/luci/menu.d/luci-app-subconverter.json
 
 echo "重命名网络菜单"
 #network
