@@ -38,11 +38,6 @@ echo \"DISTRIB_RELEASE='v\$(date +'%Y.%m.%d')'\" >> /etc/openwrt_release\n\
 
  curl -fsSL "https://raw.githubusercontent.com/waynesg/scripts/refs/heads/main/others/01_sysinfo" -o "target/linux/x86/base-files/lib/preinit/01_sysinfo"
 
-#替换autocore
-# rm -rf package/emortal/autocore
-# git clone --depth=1 https://github.com/coolsnowwolf/lede.git temp_lede
-# mv temp_lede/package/lean/autocore package/emortal/autocore
-# rm -rf temp_lede
 
 echo 
 TIME y "调整网络诊断地址到www.baidu.com"
@@ -68,31 +63,6 @@ TIME y "更换golang版本"
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
 
-# echo
-# TIME y "rpcd - fix timeout"
-# sed -i 's/option timeout 30/option timeout 60/g' package/system/rpcd/files/rpcd.config
-# sed -i 's#20) \* 1000#60) \* 1000#g' feeds/luci/modules/luci-base/htdocs/luci-static/resources/rpc.js
-
-# echo
-# TIME y "修正部分从第三方仓库拉取的软件 Makefile 路径问题"
-# find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' {}
-# find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/lang\/golang\/golang-package.mk/$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang-package.mk/g' {}
-# find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHREPO/PKG_SOURCE_URL:=https:\/\/github.com/g' {}
-# find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload.github.com/g' {}
-# ############################################################################################################################################################
-# ############################################################################################################################################################
-# echo
-# TIME b "汉化 调整..."
-# sed -i 's/CPU Load/处理器负载/g' package/waynesg/luci-app-cpu-status/htdocs/luci-static/resources/view/status/include/18_cpu.js
-# rm -rf package/waynesg/luci-app-cpu-status/po/zh_Hans/cpu-status.po
-# wget -O package/waynesg/luci-app-cpu-status/po/zh_Hans/cpu-status.po https://raw.githubusercontent.com/waynesg/scripts/main/others/cpu-status.po
-# sed -i "s/'user %'/'用户 %'/g" package/waynesg/luci-app-cpu-status/htdocs/luci-static/resources/view/status/include/18_cpu.js
-# sed -i "s/'nice %'/'调整优先级 %'/g" package/waynesg/luci-app-cpu-status/htdocs/luci-static/resources/view/status/include/18_cpu.js
-# sed -i "s/'system %'/'系统 %'/g" package/waynesg/luci-app-cpu-status/htdocs/luci-static/resources/view/status/include/18_cpu.js
-# sed -i "s/'idle %'/'空闲 %'/g" package/waynesg/luci-app-cpu-status/htdocs/luci-static/resources/view/status/include/18_cpu.js
-# sed -i "s/'iowait %'/'IO 等待 %'/g" package/waynesg/luci-app-cpu-status/htdocs/luci-static/resources/view/status/include/18_cpu.js
-# sed -i "s/'irq %'/'硬件中断 %'/g" package/waynesg/luci-app-cpu-status/htdocs/luci-static/resources/view/status/include/18_cpu.js
-# sed -i "s/'softirq %'/'软中断 %'/g" package/waynesg/luci-app-cpu-status/htdocs/luci-static/resources/view/status/include/18_cpu.js
 
 #tn-netports调整
 # sed -i '/var title = E.*netports-title/,/);/c\var title = E('"'"'div'"'"', { class: '"'"'netports-title'"'"' }, [\n\t\t\t\tE('"'"'div'"'"', { class: '"'"'netports-buttons'"'"' }, buttons),\n\t\t\t\tE('"'"'div'"'"', { class: '"'"'netports-version'"'"' })\n\t\t\t]);' package/waynesg/luci-app-tn-netports/htdocs/luci-static/resources/netports.js
