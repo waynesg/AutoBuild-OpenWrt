@@ -44,10 +44,10 @@ git clone --depth=1 -b master https://github.com/jerrykuku/luci-theme-argon pack
 # argon-theme-config
 git clone --depth=1 -b master https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
 # aurora
-git clone --depth=1 https://github.com/eamonxg/luci-theme-aurora package/waynesg/luci-theme-aurora
+#git clone --depth=1 https://github.com/eamonxg/luci-theme-aurora package/waynesg/luci-theme-aurora
 #theme-config
 # git clone --depth=1 https://github.com/sirpdboy/luci-app-advancedplus package/waynesg/luci-app-advancedplus
-git clone --depth=1 https://github.com/eamonxg/luci-app-aurora-config package/waynesg/luci-app-aurora-config
+#git clone --depth=1 https://github.com/eamonxg/luci-app-aurora-config package/waynesg/luci-app-aurora-config
 #mosdns
 git clone --depth=1 -b v5 https://github.com/sbwml/luci-app-mosdns package/waynesg/luci-app-mosdns
 #passwall
@@ -75,7 +75,7 @@ git clone --depth=1 https://github.com/destan19/OpenAppFilter package/waynesg/lu
 #clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-weburl "" luci-app-control-weburl
 #serverchan
 git clone --depth=1 -b master https://github.com/tty228/luci-app-wechatpush package/waynesg/luci-app-wechatpush
-clone_or_update_git_repo https://github.com/kiddin9/kwrt-packages package/waynesg/ "" wrtbwmon
+clone_or_update_git_repo https://github.com/kiddin9/op-packages package/waynesg/ "" wrtbwmon
 #pushbot
 #git clone --depth=1 https://github.com/zzsj0928/luci-app-pushbot package/waynesg/luci-app-pushbot
 #onliner
@@ -94,7 +94,7 @@ git clone --depth=1 -b main https://github.com/sirpdboy/luci-app-timecontrol pac
 #taskplan
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-taskplan package/waynesg/luci-app-taskplan
 #subconverter
-git clone --depth=1 https://github.com/kiddin9/openwrt-subconverter package/waynesg/luci-app-subconverter
+#git clone --depth=1 https://github.com/kiddin9/openwrt-subconverter package/waynesg/luci-app-subconverter
 #cpu status
 #git clone --depth=1 https://github.com/gSpotx2f/luci-app-cpu-status package/waynesg/luci-app-cpu-status
 #tn-netports
@@ -104,7 +104,7 @@ git clone --depth=1 https://github.com/asvow/luci-app-tailscale package/waynesg/
 #lucky
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-lucky package/waynesg/luci-app-lucky
 #yt-dlp
-git clone --depth=1 https://github.com/liudf0716/luci-app-yt-dlp package/waynesg/luci-app-yt-dlp
+#git clone --depth=1 https://github.com/liudf0716/luci-app-yt-dlp package/waynesg/luci-app-yt-dlp
 #Nikki
 #git clone --depth=1 https://github.com/nikkinikki-org/OpenWrt-nikki package/waynesg/luci-app-nikki
 #socat
