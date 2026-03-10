@@ -192,7 +192,7 @@ jobs:
       uses: stupidloud/cachewrtbuild@main
       with:
         ccache: 'true'
-        prefix: $GITHUB_WORKSPACE/openwrt
+        prefix: ${{ github.workspace }}/openwrt
         toolchain: 'false'
         clean: 'false'
         mixkey: '${{ matrix.target }}'
