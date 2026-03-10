@@ -134,6 +134,7 @@ sed -i 's/"title": "3cat"/"title": "端口转发"/g' feeds/luci/applications/luc
 #echo "重命名管控菜单"
 #Control
 #sed -i '$a\msgid "Control"\nmsgstr "管控"' package/waynesg/luci-app-oaf/luci-app-oaf/po/zh_Hans/oaf.po
+sed -i '1a\  "admin/control": {\n    "title": "Control",\n    "order": 50,\n    "action": {\n      "type": "firstchild"\n    },\n    "acl": [ "read" ]\n  },' package/waynesg/luci-app-timecontrol/luci-app-timecontrol/root/usr/share/luci/menu.d/luci-app-timecontrol.json
 
 echo "重命名存储菜单"
 #sed -i 's/"Alist 文件列表"/"Alist列表"/g' package/waynesg/luci-app-alist/luci-app-alist/po/zh_Hans/alist.po
