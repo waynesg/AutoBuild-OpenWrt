@@ -187,15 +187,24 @@ jobs:
           source "${PATH1}/upgrade.sh" && Diy_Part1
         fi
  
+    # - name: 加载缓存
+    #   if: env.USE_CACHEWRTBUILD == 'true'
+    #   uses: stupidloud/cachewrtbuild@main
+    #   with:
+    #     ccache: 'true'
+    #     prefix: ${{ github.workspace }}/openwrt
+    #     toolchain: 'false'
+    #     clean: 'false'
+    #     mixkey: '${{ matrix.target }}'
+
     - name: 加载缓存
-      if: env.USE_CACHEWRTBUILD == 'true'
-      uses: stupidloud/cachewrtbuild@main
+      uses: actions/cache@v4
       with:
-        ccache: 'true'
-        prefix: ${{ github.workspace }}/openwrt
-        toolchain: 'false'
-        clean: 'false'
-        mixkey: '${{ matrix.target }}'
+        path: |
+          ${{ github.workspace }}/openwrt
+        key: ${{ runner.os }}-openwrt-${{ hashFiles('**/openwrt/Makefile') }}
+        restore-keys: |
+          ${{ runner.os }}-openwrt-
 
     - name: 生成配置
       run: |
