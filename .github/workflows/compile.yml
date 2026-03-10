@@ -193,9 +193,10 @@ jobs:
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
-        toolchain: 'false'
-        clean: 'false'
-        mixkey: ${{ matrix.target }}
+
+        # toolchain: 'false'
+        # clean: 'false'
+        # mixkey: ${{ matrix.target }}
 
     - name: 生成配置
       run: |
