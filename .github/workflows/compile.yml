@@ -188,23 +188,14 @@ jobs:
         fi
  
     # - name: 加载缓存
-    #   if: env.USE_CACHEWRTBUILD == 'true'
-    #   uses: stupidloud/cachewrtbuild@main
-    #   with:
-    #     ccache: 'true'
-    #     prefix: ${{ github.workspace }}/openwrt
-    #     toolchain: 'false'
-    #     clean: 'false'
-    #     mixkey: '${{ matrix.target }}'
-
-    - name: 加载缓存
-      uses: actions/cache@v4
+      if: env.USE_CACHEWRTBUILD == 'true'
+      uses: stupidloud/cachewrtbuild@main
       with:
-        path: |
-          ${{ github.workspace }}/openwrt
-        key: ${{ runner.os }}-openwrt-${{ hashFiles('**/openwrt/Makefile') }}
-        restore-keys: |
-          ${{ runner.os }}-openwrt-
+        ccache: 'true'
+        prefix: ${{ github.workspace }}/openwrt
+        toolchain: 'false'
+        clean: 'false'
+        mixkey: ${{ matrix.target }}
 
     - name: 生成配置
       run: |
