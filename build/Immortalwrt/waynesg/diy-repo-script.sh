@@ -44,7 +44,7 @@ git clone --depth=1 -b master https://github.com/jerrykuku/luci-theme-argon pack
 # argon-theme-config
 git clone --depth=1 -b master https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
 # aurora
-#git clone --depth=1 https://github.com/eamonxg/luci-theme-aurora package/waynesg/luci-theme-aurora
+git clone --depth=1 https://github.com/eamonxg/luci-theme-aurora package/waynesg/luci-theme-aurora
 #theme-config
 # git clone --depth=1 https://github.com/sirpdboy/luci-app-advancedplus package/waynesg/luci-app-advancedplus
 #git clone --depth=1 https://github.com/eamonxg/luci-app-aurora-config package/waynesg/luci-app-aurora-config
