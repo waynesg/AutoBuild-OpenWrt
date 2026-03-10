@@ -167,8 +167,7 @@ find . -name 'luci-app-wechatpush' -o -name 'mosdns' -o -name 'sub-web' | xargs 
 Diy_all() {
 
 if [[ ${REGULAR_UPDATE} == "true" ]]; then
-        #git clone https://github.com/waynesg/luci-app-autoupdate feeds/luci/applications/luci-app-autoupdate
-		git clone -b 2.0 https://github.com/waynesg/luci-app-autoupdate feeds/luci/applications/luci-app-autoupdate
+        git clone https://github.com/waynesg/luci-app-autoupdate feeds/luci/applications/luci-app-autoupdate
 	cp -Rf "${PATH1}"/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh,tv.sh} package/base-files/files/bin
 	sed -i 's/"定时更新"/"在线更新"/g' feeds/luci/applications/luci-app-autoupdate/po/zh_Hans/autoupdate.po
 	sed -i 's/定时更新 LUCI/固件更新 LUCI/g' feeds/luci/applications/luci-app-autoupdate/po/zh_Hans/autoupdate.po
