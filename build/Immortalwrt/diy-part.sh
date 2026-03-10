@@ -87,6 +87,7 @@ sed -i 's/("OpenClash"), 50)/("OpenClash"), -10)/g' feeds/luci/applications/luci
 sed -i 's/("PassWall 2"), 0)/("PassWall 2"), -8)/g' package/waynesg/luci-app-passwall2/luci-app-passwall2/luasrc/controller/passwall2.lua
 sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
 sed -i 's/"软件包"/"软件管理"/g' `grep "软件包" -rl ./`
+sed -i 's/"进程"/"进程管理"/g' `grep "进程" -rl ./`
 
 echo             
 TIME b "插件 重命名..."
