@@ -1,14 +1,5 @@
 #!/bin/bash
 
-echo 
-TIME y "设置默认主题为Argon"
-sed -i "/^set luci.themes.Bootstrap/d" package/emortal/default-settings/files/99-default-settings
-sed -i "/^set luci.themes.Argon/d" package/emortal/default-settings/files/99-default-settings
-cat << 'THEMEEOF' >> package/emortal/default-settings/files/99-default-settings
-sed -i 's|option mediaurlbase.*|option mediaurlbase "/luci-static/argon"|g' /etc/luci-uikit.conf
-sed -i 's|local theme =.*|local theme = "argon"|g' /etc/config/luci
-exit 0
-THEMEEOF
 
 # Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
 # DIY扩展二合一了，在此处可以增加插件
