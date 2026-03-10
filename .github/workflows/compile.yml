@@ -57,7 +57,7 @@ jobs:
         echo "UPLOAD_RELEASE=${UPLOAD_RELEASE}" >> $GITHUB_ENV
         echo "SERVERCHAN_SCKEY=${SERVERCHAN_SCKEY}" >> $GITHUB_ENV
         echo "REGULAR_UPDATE=${REGULAR_UPDATE}" >> $GITHUB_ENV
-        echo "USE_CACHEWRTBUILD=${USE_CACHEWRTBUILD}" >> $GITHUB_ENV
+        echo "USE_CACHEWRTBUILD_DISABLED=${USE_CACHEWRTBUILD}" >> $GITHUB_ENV
         echo "CLEAN_AFTER_CACHE=${CLEAN_AFTER_CACHE}"
         echo "BY_INFORMATION=${BY_INFORMATION}" >> $GITHUB_ENV
         echo "CangKu=${Apidz##*/}" >> $GITHUB_ENV
@@ -188,7 +188,7 @@ jobs:
         fi
  
     # - name: 加载缓存
-      if: env.USE_CACHEWRTBUILD == 'true'
+      if: env.USE_CACHEWRTBUILD_DISABLED == 'true'
       uses: stupidloud/cachewrtbuild@main
       with:
         ccache: 'true'
