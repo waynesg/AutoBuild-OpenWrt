@@ -1,0 +1,4 @@
+#!/bin/sh
+# Create symlink for custom CSS
+ln -sf /etc/custom.css /www/luci-static/custom.css 2>/dev/null
+exit 0
