@@ -1,23 +1,23 @@
-/* Custom font size override */
-:root {
-    --font-size: 15px;
+/* Custom font size override - safer selectors */
+body {
+    font-size: 15px !important;
 }
-body, .container-fluid, td, th, p, div, span, a, li, ul, ol {
+td, th, p, div, li, ul, ol, a, span {
     font-size: 15px !important;
 }
 h1 { font-size: 28px !important; }
-h2 { font-size: 28px !important; } 
+h2 { font-size: 24px !important; } 
 h3 { font-size: 17px !important; }
 
 /* Header hostname */
-.brand, .brand-name, .header .brand {
+.brand, .brand-name, .header .brand, .header .brand-name {
     font-size: 28px !important;
     font-weight: bold !important;
 }
 
 /* Mobile header fix */
 @media (max-width: 768px) {
-    .brand, .brand-name, .header .brand {
+    .brand, .brand-name, .header .brand, .header .brand-name {
         font-size: 16px !important;
     }
 }
