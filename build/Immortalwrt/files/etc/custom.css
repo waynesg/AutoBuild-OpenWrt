@@ -13,3 +13,17 @@ h3 { font-size: 17px !important; }
         font-size: 16px !important;
     }
 }
+
+/* Desktop only: enlarge Argon left sidebar menu font size (keep mobile unchanged) */
+@media screen and (min-width: 769px) {
+  .main-left .nav > li > a:first-child,
+  .main > .main-left > .nav > li,
+  .main > .main-left > .nav > li > a,
+  .main > .main-left > .nav > .slide > .menu,
+  .main > .main-left > .nav > li > [data-title="Log_out"] {
+    font-size: 1.10rem !important;
+  }
+  .main-left .nav > .slide > .slide-menu > li > a {
+    font-size: 1.00rem !important;
+  }
+}
