@@ -75,6 +75,8 @@ sed -i '/var title = E.*netports-title/,/);/c\var title = E('"'"'div'"'"', { cla
 INC_LUCI_STATUS="feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include"
 [ -f "$INC_LUCI_STATUS/29_ports.js" ] && mv -f "$INC_LUCI_STATUS/29_ports.js" "$INC_LUCI_STATUS/29_ports.js.disabled" || true
 [ -f "$INC_LUCI_STATUS/25_netports.js" ] && mv -f "$INC_LUCI_STATUS/25_netports.js" "$INC_LUCI_STATUS/15_netports.js" || true
+# Move Network section above Memory
+[ -f "$INC_LUCI_STATUS/30_network.js" ] && mv -f "$INC_LUCI_STATUS/30_network.js" "$INC_LUCI_STATUS/18_network.js" || true
 
 sed -i 's/--set=llvm.download-ci-llvm=true/--set=llvm.download-ci-llvm=false/' feeds/packages/lang/rust/Makefile
 
