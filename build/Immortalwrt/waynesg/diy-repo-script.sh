@@ -98,7 +98,7 @@ git clone --depth=1 -b main https://github.com/sirpdboy/luci-app-timecontrol pac
 #cpu status
 #git clone --depth=1 https://github.com/gSpotx2f/luci-app-cpu-status package/waynesg/luci-app-cpu-status
 #tn-netports
-#git clone --depth=1 https://github.com/muink/luci-app-tn-netports package/waynesg/luci-app-tn-netports
+git clone --depth=1 https://github.com/muink/luci-app-tn-netports package/waynesg/luci-app-tn-netports
 #tailscale
 git clone --depth=1 https://github.com/asvow/luci-app-tailscale package/waynesg/luci-app-tailscale
 #lucky
