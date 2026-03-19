@@ -74,7 +74,9 @@ sed -i '/var title = E.*netports-title/,/);/c\var title = E('"'"'div'"'"', { cla
 # LuCI 概览页调整：隐藏端口状态 + 提前 netports 到内存上方
 INC_LUCI_STATUS="feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include"
 [ -f "$INC_LUCI_STATUS/29_ports.js" ] && mv -f "$INC_LUCI_STATUS/29_ports.js" "$INC_LUCI_STATUS/29_ports.js.disabled" || true
+# tn-netports 的 include 文件名可能是 25_netports.js 或 28_netports.js（不同版本）
 [ -f "$INC_LUCI_STATUS/25_netports.js" ] && mv -f "$INC_LUCI_STATUS/25_netports.js" "$INC_LUCI_STATUS/15_netports.js" || true
+[ -f "$INC_LUCI_STATUS/28_netports.js" ] && mv -f "$INC_LUCI_STATUS/28_netports.js" "$INC_LUCI_STATUS/15_netports.js" || true
 # Move Network section above Memory
 [ -f "$INC_LUCI_STATUS/30_network.js" ] && mv -f "$INC_LUCI_STATUS/30_network.js" "$INC_LUCI_STATUS/18_network.js" || true
 
