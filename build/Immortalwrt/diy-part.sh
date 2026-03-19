@@ -71,6 +71,11 @@ sed -i '/var title = E.*netports-title/,/);/c\var title = E('"'"'div'"'"', { cla
 #删除首页端口状态
 # mv feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/29_ports.js feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/29_ports.js.del
 
+# LuCI 概览页调整：隐藏端口状态 + 提前 netports 到内存上方
+INC_LUCI_STATUS="feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include"
+[ -f "$INC_LUCI_STATUS/29_ports.js" ] && mv -f "$INC_LUCI_STATUS/29_ports.js" "$INC_LUCI_STATUS/29_ports.js.disabled" || true
+[ -f "$INC_LUCI_STATUS/25_netports.js" ] && mv -f "$INC_LUCI_STATUS/25_netports.js" "$INC_LUCI_STATUS/15_netports.js" || true
+
 sed -i 's/--set=llvm.download-ci-llvm=true/--set=llvm.download-ci-llvm=false/' feeds/packages/lang/rust/Makefile
 
 echo
