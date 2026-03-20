@@ -66,8 +66,11 @@ rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
 
 
-# LuCI 概览页调整：Move Network section above Memory
+# LuCI 概览页调整：ports 放到 system 下面、network 上面；同时把 network 提前到 memory 上面
 INC_LUCI_STATUS="feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include"
+# Port status: after 10_system.js, before 18_network.js
+[ -f "$INC_LUCI_STATUS/29_ports.js" ] && mv -f "$INC_LUCI_STATUS/29_ports.js" "$INC_LUCI_STATUS/17_ports.js" || true
+# Move Network section above Memory
 [ -f "$INC_LUCI_STATUS/30_network.js" ] && mv -f "$INC_LUCI_STATUS/30_network.js" "$INC_LUCI_STATUS/18_network.js" || true
 
 sed -i 's/--set=llvm.download-ci-llvm=true/--set=llvm.download-ci-llvm=false/' feeds/packages/lang/rust/Makefile
