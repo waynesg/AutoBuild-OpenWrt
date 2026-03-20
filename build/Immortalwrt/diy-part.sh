@@ -73,19 +73,6 @@ git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/l
 INC_LUCI_STATUS="feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include"
 # Port status: after 10_system.js, before 18_network.js
 [ -f "$INC_LUCI_STATUS/29_ports.js" ] && mv -f "$INC_LUCI_STATUS/29_ports.js" "$INC_LUCI_STATUS/17_ports.js" || true
-
-# Cache-busting for ports icons to avoid browser stale SVG cache after upgrade
-# (adds a fixed query string based on build date)
-PORTS_JS=""
-[ -f "$INC_LUCI_STATUS/17_ports.js" ] && PORTS_JS="$INC_LUCI_STATUS/17_ports.js"
-[ -z "$PORTS_JS" ] && [ -f "$INC_LUCI_STATUS/29_ports.js" ] && PORTS_JS="$INC_LUCI_STATUS/29_ports.js"
-if [ -n "$PORTS_JS" ]; then
-  CACHE_BUST="v$(date +%Y%m%d)"
-  # only patch if not already patched
-  grep -q "port_%s.svg?v=" "$PORTS_JS" || \
-    sed -i "s|L.resource('icons/port_%s.svg')|L.resource('icons/port_%s.svg?${CACHE_BUST}')|g" "$PORTS_JS"
-fi
-
 # Move Network section above Memory
 [ -f "$INC_LUCI_STATUS/30_network.js" ] && mv -f "$INC_LUCI_STATUS/30_network.js" "$INC_LUCI_STATUS/18_network.js" || true
 
