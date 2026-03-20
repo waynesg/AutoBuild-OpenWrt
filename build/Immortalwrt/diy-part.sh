@@ -66,17 +66,8 @@ rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
 
 
-#tn-netports调整
-sed -i '/var title = E.*netports-title/,/);/c\var title = E('"'"'div'"'"', { class: '"'"'netports-title'"'"' }, [\n\t\t\t\tE('"'"'div'"'"', { class: '"'"'netports-buttons'"'"' }, buttons),\n\t\t\t\tE('"'"'div'"'"', { class: '"'"'netports-version'"'"' })\n\t\t\t]);' package/waynesg/luci-app-tn-netports/htdocs/luci-static/resources/netports.js
-#删除首页端口状态
-# mv feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/29_ports.js feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/29_ports.js.del
-
-# LuCI 概览页调整：禁用 netports + 保留端口状态（ports）
+# LuCI 概览页调整：Move Network section above Memory
 INC_LUCI_STATUS="feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include"
-# tn-netports 的 include 文件名可能是 25_netports.js 或 28_netports.js（不同版本）
-[ -f "$INC_LUCI_STATUS/25_netports.js" ] && mv -f "$INC_LUCI_STATUS/25_netports.js" "$INC_LUCI_STATUS/25_netports.js.disabled" || true
-[ -f "$INC_LUCI_STATUS/28_netports.js" ] && mv -f "$INC_LUCI_STATUS/28_netports.js" "$INC_LUCI_STATUS/28_netports.js.disabled" || true
-# Move Network section above Memory
 [ -f "$INC_LUCI_STATUS/30_network.js" ] && mv -f "$INC_LUCI_STATUS/30_network.js" "$INC_LUCI_STATUS/18_network.js" || true
 
 sed -i 's/--set=llvm.download-ci-llvm=true/--set=llvm.download-ci-llvm=false/' feeds/packages/lang/rust/Makefile
