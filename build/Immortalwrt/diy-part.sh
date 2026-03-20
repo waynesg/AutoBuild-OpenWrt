@@ -118,7 +118,7 @@ sed -i 's/"Argon 主题设置"/"主题设置"/g' package/waynesg/luci-app-argon-
 
 #services menu
 sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' feeds/luci/applications/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
-sed -i 's/"Vlmcsd KMS 服务器"/"KMS服务"/g' $(grep "KMS 服务器" -rl ./)
+#sed -i 's/"Vlmcsd KMS 服务器"/"KMS服务"/g' $(grep "KMS 服务器" -rl ./)
 #sed -i 's/"title": "subconverter"/"title": "节点订阅"/g'  package/waynesg/luci-app-subconverter/luci-app-subconverter/root/usr/share/luci/menu.d/luci-app-subconverter.json
 
 echo "重命名网络菜单"
@@ -147,7 +147,7 @@ sed -i 's/"文件管理器"/"文件管理"/g' feeds/luci/applications/luci-app-f
 
 echo "重命名VPN菜单"
 #vpn
-sed -i 's/"Cloudflare 零信任隧道"/"Cloudflare 云隧道"/g' feeds/luci/applications/luci-app-cloudflared/po/zh_Hans/cloudflared.po
+#sed -i 's/"Cloudflare 零信任隧道"/"Cloudflare 云隧道"/g' feeds/luci/applications/luci-app-cloudflared/po/zh_Hans/cloudflared.po
 sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 sed -i 's/"OpenVPN"/"OpenVPN 客户端"/g' feeds/luci/applications/luci-app-openvpn/luasrc/controller/openvpn.lua
 #sed -i 's/"IPSec VPN Server"/"IPSec VPN 服务器"/g' feeds/luci/applications/luci-app-ipsec-vpnd/root/usr/share/luci/menu.d/luci-app-ipsec-vpnd.json
