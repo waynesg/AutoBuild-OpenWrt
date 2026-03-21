@@ -78,19 +78,6 @@ INC_LUCI_STATUS="feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources
 # Move Network section above Memory
 [ -f "$INC_LUCI_STATUS/30_network.js" ] && mv -f "$INC_LUCI_STATUS/30_network.js" "$INC_LUCI_STATUS/18_network.js" || true
 
-# Tailscale: avoid occasional logout after sysupgrade.
-# The init script runs `tailscaled --cleanup` unconditionally on start; make it conditional:
-# only cleanup when state_file is missing/empty.
-TS_FEEDS_DIR="feeds/packages"
-if [ -d "$TS_FEEDS_DIR" ]; then
-  TS_INIT_FILES=$(find "$TS_FEEDS_DIR" -type f -maxdepth 6 \( -name 'tailscale.init' -o -name '*tailscale*.init' -o -path '*tailscale*/files/*' \) 2>/dev/null | head -50)
-  for f in $TS_INIT_FILES; do
-    grep -q "tailscaled --cleanup" "$f" || continue
-    grep -q "only cleanup when state_file" "$f" && continue
-    sed -i 's|^[[:space:]]*/usr/sbin/tailscaled --cleanup|\t# only cleanup when state_file is missing/empty (prevents occasional NeedsLogin after upgrade)\n\tif [ ! -s "$state_file" ]; then\n\t\t/usr/sbin/tailscaled --cleanup\n\tfi|g' "$f" || true
-  done
-fi
-
 sed -i 's/--set=llvm.download-ci-llvm=true/--set=llvm.download-ci-llvm=false/' feeds/packages/lang/rust/Makefile
 
 echo
