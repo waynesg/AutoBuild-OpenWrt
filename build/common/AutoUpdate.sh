@@ -360,16 +360,33 @@ sleep 2
 TIME g "正在更新固件,请耐心等待 ..."
 [[ "$(cat ${PKG_List})" =~ gzip ]] && opkg remove gzip > /dev/null 2>&1
 if [[ "${AutoUpdate_Mode}" == 1 ]] || [[ "${Update_Mode}" == 1 ]]; then
-	cp -Rf /etc/config/network /mnt/network
+	# Prefer /tmp for backup to avoid /mnt mount quirks; fallback to /mnt if /tmp is too small
+	BACKDIR="/tmp"
+	BACKTAR="${BACKDIR}/back.tar.gz"
+	MIN_KB=65536
+	TMP_KB="$(df -k /tmp 2>/dev/null | awk 'NR==2{print $4}')"
+	[ -n "$TMP_KB" ] && [ "$TMP_KB" -lt "$MIN_KB" ] && BACKDIR="/mnt"
+	BACKTAR="${BACKDIR}/back.tar.gz"
+
+	# Legacy compatibility: keep a copy of network config in BACKDIR
+	cp -Rf /etc/config/network "${BACKDIR}/network" 2>/dev/null || true
+
 	mv -f /etc/config/luci /etc/config/luci-
-	sysupgrade -b /mnt/back.tar.gz
-	[[ $? == 0 ]] && {
-		mv -f /etc/config/luci- /etc/config/luci
-		export Upgrade_Options="sysupgrade -f /mnt/back.tar.gz"
-	} || {
+	sysupgrade -b "${BACKTAR}"
+	if [ $? -eq 0 ] && [ -s "${BACKTAR}" ]; then
+		# Ensure critical auth files are present in backup (prevents empty-password surprises)
+		if tar -tzf "${BACKTAR}" 2>/dev/null | grep -qx 'etc/shadow'; then
+			mv -f /etc/config/luci- /etc/config/luci
+			export Upgrade_Options="sysupgrade -f ${BACKTAR}"
+		else
+			mv -f /etc/config/luci- /etc/config/luci
+			TIME r "备份包缺少 /etc/shadow，回退为 sysupgrade -q（保留配置）"
+			export Upgrade_Options="sysupgrade -q"
+		fi
+	else
 		mv -f /etc/config/luci- /etc/config/luci
 		export Upgrade_Options="sysupgrade -q"
-	}
+	fi
 fi
 
 ${Upgrade_Options} ${Firmware}
