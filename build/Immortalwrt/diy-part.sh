@@ -84,7 +84,7 @@ echo
 TIME b "菜单 调整..."
 sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-3cat/root/usr/share/luci/menu.d/luci-app-3cat.json
 sed -i 's|/system/|/nas/|' feeds/luci/applications/luci-app-filemanager/root/usr/share/luci/menu.d/luci-app-filemanager.json
-sed -i 's|/services/|/vpn/|' package/waynesg/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
+sed -i 's|/services/|/vpn/|' package/waynesg/luci-app-tailscale-community/luci-app-tailscale-community/root/usr/share/luci/menu.d/luci-app-tailscale-community.json
 sed -i 's|/services/|/control/|' feeds/luci/applications/luci-app-wol/root/usr/share/luci/menu.d/luci-app-wol.json
 sed -i 's/\"services\"/\"control\"/g'  package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/appfilter.lua
 #sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
@@ -93,7 +93,7 @@ sed -i '/"title": "SmartDNS",/a \        "order": 22,' feeds/luci/applications/l
 #sed -i '/"title": "Nikki",/a \        "order": -9,' package/waynesg/luci-app-nikki/luci-app-nikki/root/usr/share/luci/menu.d/luci-app-nikki.json
 sed -i 's/("OpenClash"), 50)/("OpenClash"), -10)/g' feeds/luci/applications/luci-app-openclash/luasrc/controller/openclash.lua
 #sed -i 's/("Pass Wall"), -1)/("Pass Wall"), -9)/g' package/waynesg/luci-app-passwall/luasrc/controller/passwall.lua
-sed -i 's/("PassWall 2"), 0)/("PassWall 2"), -8)/g' package/waynesg/luci-app-passwall2/luci-app-passwall2/luasrc/controller/passwall2.lua
+#sed -i 's/("PassWall 2"), 0)/("PassWall 2"), -8)/g' package/waynesg/luci-app-passwall2/luci-app-passwall2/luasrc/controller/passwall2.lua
 sed -i 's/"网络存储"/"存储"/g' `grep "网络存储" -rl ./`
 sed -i 's/"软件包"/"软件管理"/g' `grep "软件包" -rl ./`
 sed -i 's/"进程"/"进程管理"/g' `grep "进程" -rl ./`
@@ -157,8 +157,7 @@ sed -i 's/"ZeroTier"/"ZeroTier虚拟网络"/g' feeds/luci/applications/luci-app-
 sed -i 's/"OpenVPN"/"OpenVPN 客户端"/g' feeds/luci/applications/luci-app-openvpn/luasrc/controller/openvpn.lua
 #sed -i 's/"IPSec VPN Server"/"IPSec VPN 服务器"/g' feeds/luci/applications/luci-app-ipsec-vpnd/root/usr/share/luci/menu.d/luci-app-ipsec-vpnd.json
 #sed -i 's/"Tailscale"/"TailScale虚拟网络"/g' package/waynesg/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
-sed -i 's/"Tailscale"/"TailScale虚拟网络"/g' package/waynesg/luci-app-tailscale-community/luci-app-tailscale-community/root/usr/share/luci/menu.d/luci-app-tailscale.json
-sed -i 's|/services/|/vpn/|' package/waynesg/luci-app-tailscale-community/luci-app-tailscale-community/root/usr/share/luci/menu.d/luci-app-tailscale.json
+sed -i 's/"Tailscale"/"TailScale虚拟网络"/g' package/waynesg/luci-app-tailscale-community/luci-app-tailscale-community/root/usr/share/luci/menu.d/luci-app-tailscale-community.json
 TIME b "重命名 完成"
 
 rm -rf package/feeds/packages/exim
