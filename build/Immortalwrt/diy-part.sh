@@ -90,15 +90,16 @@ sed -i 's|/services/|/control/|' feeds/luci/applications/luci-app-wol/root/usr/s
 # Tailscale init: avoid occasional logout by making `tailscaled --cleanup` conditional
 # Only cleanup when state_file is missing/empty (patch start_instance() only).
 TIME b "Tailscale init patch..."
-TS_INIT_FILES=$(find feeds package -type f \( -path '*/net/tailscale/files/*' -o -path '*/etc/init.d/tailscale*' -o -name 'tailscale.init' \) 2>/dev/null | head -200)
+# Previous version relied on guessed paths; it may miss the real init file when upstream layout changes.
+# New approach: search by content (cleanup + start_instance), patch first match inside start_instance(), then verify.
+TS_INIT_FILES=$(grep -RIl "/usr/sbin/tailscaled --cleanup" feeds package 2>/dev/null | head -400)
 TS_PATCHED=0
+
 for f in $TS_INIT_FILES; do
   grep -q '^start_instance()' "$f" || continue
-  grep -q '/usr/sbin/tailscaled --cleanup' "$f" || continue
 
   cp -f "$f" "$f.bak.prepatch" 2>/dev/null || true
 
-  # Patch the first cleanup inside start_instance()
   awk '
     BEGIN{in_start=0; patched=0}
     /^start_instance\(\)\s*\{/ {in_start=1}
@@ -114,12 +115,14 @@ for f in $TS_INIT_FILES; do
   if grep -q '\[ -s "\$state_file" \ ] || /usr/sbin/tailscaled --cleanup' "$f"; then
     TS_PATCHED=1
     echo "Patched: $f"
+    break
   fi
 
 done
 
 [ "$TS_PATCHED" -eq 1 ] || {
-  echo "ERROR: tailscale init patch failed (no file patched). Upstream path/content likely changed." >&2
+  echo "ERROR: tailscale init patch failed (no file patched)." >&2
+  echo "Hint: grep -RIn '/usr/sbin/tailscaled --cleanup' feeds package" >&2
   exit 1
 }
 sed -i 's/\"services\"/\"control\"/g'  package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/appfilter.lua
