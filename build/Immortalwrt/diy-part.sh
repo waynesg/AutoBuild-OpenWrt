@@ -86,6 +86,42 @@ sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-3cat/root/usr/
 sed -i 's|/system/|/nas/|' feeds/luci/applications/luci-app-filemanager/root/usr/share/luci/menu.d/luci-app-filemanager.json
 sed -i 's|/services/|/vpn/|' package/waynesg/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
 sed -i 's|/services/|/control/|' feeds/luci/applications/luci-app-wol/root/usr/share/luci/menu.d/luci-app-wol.json
+
+# Tailscale init: avoid occasional logout by making `tailscaled --cleanup` conditional
+# Only cleanup when state_file is missing/empty (patch start_instance() only).
+TIME b "Tailscale init patch..."
+TS_INIT_FILES=$(find feeds package -type f \( -path '*/net/tailscale/files/*' -o -path '*/etc/init.d/tailscale*' -o -name 'tailscale.init' \) 2>/dev/null | head -200)
+TS_PATCHED=0
+for f in $TS_INIT_FILES; do
+  grep -q '^start_instance()' "$f" || continue
+  grep -q '/usr/sbin/tailscaled --cleanup' "$f" || continue
+
+  cp -f "$f" "$f.bak.prepatch" 2>/dev/null || true
+
+  # Patch the first cleanup inside start_instance()
+  awk '
+    BEGIN{in_start=0; patched=0}
+    /^start_instance\(\)\s*\{/ {in_start=1}
+    in_start && patched==0 && $0 ~ /^[[:space:]]*\/usr\/sbin\/tailscaled --cleanup[[:space:]]*$/ {
+      print "\t[ -s \"$state_file\" ] || /usr/sbin/tailscaled --cleanup"
+      patched=1
+      next
+    }
+    in_start && /^\}/ {in_start=0}
+    {print}
+  ' "$f" > "$f.new" && mv "$f.new" "$f"
+
+  if grep -q '\[ -s "\$state_file" \ ] || /usr/sbin/tailscaled --cleanup' "$f"; then
+    TS_PATCHED=1
+    echo "Patched: $f"
+  fi
+
+done
+
+[ "$TS_PATCHED" -eq 1 ] || {
+  echo "ERROR: tailscale init patch failed (no file patched). Upstream path/content likely changed." >&2
+  exit 1
+}
 sed -i 's/\"services\"/\"control\"/g'  package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/appfilter.lua
 #sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
 #sed -i 's|/services/|/nas/|' feeds/luci/applications/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
