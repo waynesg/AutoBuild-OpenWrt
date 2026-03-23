@@ -80,6 +80,9 @@ rm -rf "${Download_Path}" && export TMP_Available="$(df -m | grep "/tmp" | awk '
 opkg list | awk '{print $1}' > ${Download_Path}/Installed_PKG_List
 export PKG_List="${Download_Path}/Installed_PKG_List"
 export AutoUpdate_Log_Path="/tmp"
+export BACKDIR="/tmp"
+[ -d /mnt ] && grep -qs " /mnt " /proc/mounts && export BACKDIR="/mnt"
+[ ! -d "${BACKDIR}" ] && mkdir -p "${BACKDIR}"
 GET_PID() {
 	local Result
 	while [[ $1 ]];do
@@ -360,12 +363,12 @@ sleep 2
 TIME g "正在更新固件,请耐心等待 ..."
 [[ "$(cat ${PKG_List})" =~ gzip ]] && opkg remove gzip > /dev/null 2>&1
 if [[ "${AutoUpdate_Mode}" == 1 ]] || [[ "${Update_Mode}" == 1 ]]; then
-	cp -Rf /etc/config/network /mnt/network
+	cp -Rf /etc/config/network ${BACKDIR}/network
 	mv -f /etc/config/luci /etc/config/luci-
-	sysupgrade -b /mnt/back.tar.gz
+	sysupgrade -b ${BACKDIR}/back.tar.gz
 	[[ $? == 0 ]] && {
 		mv -f /etc/config/luci- /etc/config/luci
-		export Upgrade_Options="sysupgrade -f /mnt/back.tar.gz"
+		export Upgrade_Options="sysupgrade -f ${BACKDIR}/back.tar.gz"
 	} || {
 		mv -f /etc/config/luci- /etc/config/luci
 		export Upgrade_Options="sysupgrade -q"
