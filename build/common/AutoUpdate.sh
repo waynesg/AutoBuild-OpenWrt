@@ -81,7 +81,11 @@ opkg list | awk '{print $1}' > ${Download_Path}/Installed_PKG_List
 export PKG_List="${Download_Path}/Installed_PKG_List"
 export AutoUpdate_Log_Path="/tmp"
 export BACKDIR="/tmp"
-[ -d /mnt ] && grep -qs " /mnt " /proc/mounts && export BACKDIR="/mnt"
+if [ -d /mnt/sda1 ] && grep -qs " /mnt/sda1 " /proc/mounts; then
+	export BACKDIR="/mnt/sda1"
+elif [ -d /mnt ] && grep -qs " /mnt " /proc/mounts; then
+	export BACKDIR="/mnt"
+fi
 [ ! -d "${BACKDIR}" ] && mkdir -p "${BACKDIR}"
 GET_PID() {
 	local Result
