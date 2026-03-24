@@ -159,6 +159,18 @@ sed -i 's/"OpenVPN"/"OpenVPN 客户端"/g' feeds/luci/applications/luci-app-open
 sed -i 's/"Tailscale"/"TailScale虚拟网络"/g' package/waynesg/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
 sed -i 's/"Tailscale"/"TailScale虚拟网络"/g' package/waynesg/luci-app-tailscale-community/luci-app-tailscale-community/root/usr/share/luci/menu.d/luci-app-tailscale-community.json
 
+TIME y "调整 VPN 菜单顺序"
+[ -f feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json ] && \
+  sed -i 's/"order": 90/"order": 10/g' feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
+[ -f package/waynesg/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json ] && \
+  sed -i '/"title": "TailScale虚拟网络",/a \\t\t"order": 20,' package/waynesg/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
+[ -f package/waynesg/luci-app-tailscale-community/luci-app-tailscale-community/root/usr/share/luci/menu.d/luci-app-tailscale-community.json ] && \
+  sed -i '/"title": "TailScale虚拟网络",/a \\t\t"order": 20,' package/waynesg/luci-app-tailscale-community/luci-app-tailscale-community/root/usr/share/luci/menu.d/luci-app-tailscale-community.json
+[ -f feeds/luci/applications/luci-app-openvpn-server/root/usr/share/luci/menu.d/luci-app-openvpn-server.json ] && \
+  sed -i '/"title": "OpenVPN Server",/a \\t\t"order": 30,' feeds/luci/applications/luci-app-openvpn-server/root/usr/share/luci/menu.d/luci-app-openvpn-server.json
+[ -f feeds/luci/applications/luci-app-openvpn/luasrc/controller/openvpn.lua ] && \
+  sed -i 's/entry( {"admin", "vpn", "openvpn"}, cbi("openvpn"), _("OpenVPN 客户端") )/entry( {"admin", "vpn", "openvpn"}, cbi("openvpn"), _("OpenVPN 客户端"), 40 )/' feeds/luci/applications/luci-app-openvpn/luasrc/controller/openvpn.lua
+
 TIME y "ZeroTier 启动延迟 10 秒"
 ZT_INIT_PATH="$(find feeds package -path '*/etc/init.d/zerotier' 2>/dev/null | head -n 1)"
 if [ -n "$ZT_INIT_PATH" ] && [ -f "$ZT_INIT_PATH" ]; then
