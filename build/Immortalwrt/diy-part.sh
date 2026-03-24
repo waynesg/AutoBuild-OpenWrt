@@ -158,6 +158,13 @@ sed -i 's/"OpenVPN"/"OpenVPN 客户端"/g' feeds/luci/applications/luci-app-open
 #sed -i 's/"IPSec VPN Server"/"IPSec VPN 服务器"/g' feeds/luci/applications/luci-app-ipsec-vpnd/root/usr/share/luci/menu.d/luci-app-ipsec-vpnd.json
 sed -i 's/"Tailscale"/"TailScale虚拟网络"/g' package/waynesg/luci-app-tailscale/root/usr/share/luci/menu.d/luci-app-tailscale.json
 sed -i 's/"Tailscale"/"TailScale虚拟网络"/g' package/waynesg/luci-app-tailscale-community/luci-app-tailscale-community/root/usr/share/luci/menu.d/luci-app-tailscale-community.json
+
+TIME y "ZeroTier 启动延迟 10 秒"
+ZT_INIT_PATH="$(find feeds package -path '*/etc/init.d/zerotier' 2>/dev/null | head -n 1)"
+if [ -n "$ZT_INIT_PATH" ] && [ -f "$ZT_INIT_PATH" ]; then
+sed -i '/^start_service() {/a\
+	sleep 10' "$ZT_INIT_PATH"
+fi
 TIME b "重命名 完成"
 
 rm -rf package/feeds/packages/exim
