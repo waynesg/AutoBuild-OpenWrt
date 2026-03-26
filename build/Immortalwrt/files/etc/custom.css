@@ -27,3 +27,21 @@ h3 { font-size: 17px !important; }
     font-size: 1.00rem !important;
   }
 }
+
+/* Tighten Argon overview/table spacing */
+tr > td,
+tr > th,
+.tr > .td,
+.tr > .th,
+.cbi-section-table-row::before,
+#cbi-wireless > #wifi_assoclist_table > .tr:nth-child(2) {
+  padding: 0.9em 0.9rem !important;
+}
+
+#cbi-wireless .td,
+.table[width="100%"] > .tr:first-child > .td,
+[data-page="admin-network-diagnostics"] .tr > .td,
+.tr.table-titles > .th,
+.tr.cbi-section-table-titles > .th {
+  padding: 0.9em 0.9rem !important;
+}
