@@ -91,9 +91,8 @@ clone_or_update_git_repo https://github.com/sbwml/luci-app-airconnect package/wa
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/waynesg/luci-app-eqosplus
 #timecontrol
 #git clone --depth=1 -b main https://github.com/sirpdboy/luci-app-timecontrol package/waynesg/luci-app-timecontrol
-git clone --depth=1 -b main https://github.com/sirpdboy/luci-app-timecontrol package/waynesg/luci-app-timecontrol && \
+git clone --branch main --single-branch --depth=30 https://github.com/sirpdboy/luci-app-timecontrol package/waynesg/luci-app-timecontrol && \
 cd package/waynesg/luci-app-timecontrol && \
-git fetch --depth=1 origin 9e433a2 && \
 git checkout 9e433a2
 #subconverter
 #git clone --depth=1 https://github.com/kiddin9/openwrt-subconverter package/waynesg/luci-app-subconverter
@@ -101,7 +100,7 @@ git checkout 9e433a2
 #git clone --depth=1 https://github.com/muink/luci-app-tn-netports package/waynesg/luci-app-tn-netports
 #tailscale
 #git clone --depth=1 https://github.com/asvow/luci-app-tailscale package/waynesg/luci-app-tailscale
-git clone --depth=1 https://github.com/Tokisaki-Galaxy/luci-app-tailscale-community package/waynesg/luci-app-tailscale-community
+#git clone --depth=1 https://github.com/Tokisaki-Galaxy/luci-app-tailscale-community package/waynesg/luci-app-tailscale-community
 #yt-dlp
 #git clone --depth=1 https://github.com/liudf0716/luci-app-yt-dlp package/waynesg/luci-app-yt-dlp
 #socat
