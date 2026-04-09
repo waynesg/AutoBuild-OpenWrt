@@ -90,7 +90,11 @@ clone_or_update_git_repo https://github.com/sbwml/luci-app-airconnect package/wa
 #eqosplus
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/waynesg/luci-app-eqosplus
 #timecontrol
-git clone --depth=1 -b main https://github.com/sirpdboy/luci-app-timecontrol package/waynesg/luci-app-timecontrol
+#git clone --depth=1 -b main https://github.com/sirpdboy/luci-app-timecontrol package/waynesg/luci-app-timecontrol
+git clone --depth=1 -b main https://github.com/sirpdboy/luci-app-timecontrol package/waynesg/luci-app-timecontrol && \
+cd package/waynesg/luci-app-timecontrol && \
+git fetch --depth=1 origin 9e433a2 && \
+git checkout 9e433a2
 #subconverter
 #git clone --depth=1 https://github.com/kiddin9/openwrt-subconverter package/waynesg/luci-app-subconverter
 #tn-netports
