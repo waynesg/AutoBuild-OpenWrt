@@ -81,6 +81,13 @@ INC_LUCI_STATUS="feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources
 sed -i 's/--set=llvm.download-ci-llvm=true/--set=llvm.download-ci-llvm=false/' feeds/packages/lang/rust/Makefile
 
 echo
+TIME y "修复 OpenClash 停用时 WAN6 DNS 覆盖 IPv4 DNS"
+OPENCLASH_INIT="feeds/luci/applications/luci-app-openclash/root/etc/init.d/openclash"
+if [ -f "$OPENCLASH_INIT" ]; then
+sed -i 's|echo "# Interface LAN6" > "\$resolv_file"|echo "# Interface LAN6" >> "\$resolv_file"|' "$OPENCLASH_INIT"
+fi
+
+echo
 TIME b "菜单 调整..."
 sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-3cat/root/usr/share/luci/menu.d/luci-app-3cat.json
 sed -i 's|/system/|/nas/|' feeds/luci/applications/luci-app-filemanager/root/usr/share/luci/menu.d/luci-app-filemanager.json

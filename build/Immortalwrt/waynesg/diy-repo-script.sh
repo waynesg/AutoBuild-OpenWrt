@@ -66,12 +66,6 @@ git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/waynes
 rm -rf feeds/luci/applications/luci-app-openclash
 mv package/waynesg/OpenClash/luci-app-openclash feeds/luci/applications/luci-app-openclash
 
-# fix OpenClash stop path overwriting IPv4 DNS when WAN6 fallback is appended
-OPENCLASH_INIT="feeds/luci/applications/luci-app-openclash/root/etc/init.d/openclash"
-if [ -f "$OPENCLASH_INIT" ]; then
-  sed -i 's|echo "# Interface LAN6" > "\$resolv_file"|echo "# Interface LAN6" >> "\$resolv_file"|' "$OPENCLASH_INIT"
-fi
-
 #openappfilter
 git clone --depth=1 https://github.com/destan19/OpenAppFilter package/waynesg/luci-app-oaf
 
