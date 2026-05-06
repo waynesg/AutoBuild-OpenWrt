@@ -111,3 +111,4 @@ git checkout 9e433a2
 #git clone --depth=1 https://github.com/timsaya/luci-app-bandix package/waynesg/luci-app-bandix
 #git clone --depth=1 https://github.com/timsaya/openwrt-bandix package/waynesg/openwrt-bandix
 #rm -f "package/waynesg/openwrt-bandix/.github/workflows/Auto compile with openwrt sdk.yml"
+git clone --depth=1 https://github.com/waynesg/luci-app-cups-web package/waynesg/luci-app-cups-web
