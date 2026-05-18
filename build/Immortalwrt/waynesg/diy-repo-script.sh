@@ -111,13 +111,3 @@ git checkout 9e433a2
 #git clone --depth=1 https://github.com/timsaya/luci-app-bandix package/waynesg/luci-app-bandix
 #git clone --depth=1 https://github.com/timsaya/openwrt-bandix package/waynesg/openwrt-bandix
 #rm -f "package/waynesg/openwrt-bandix/.github/workflows/Auto compile with openwrt sdk.yml"
-# cups-web
-for i in {1..3}; do
-    clone_or_update_git_repo https://github.com/waynesg/luci-app-cups-web package/waynesg/luci-app-cups-web && break
-    echo "Attempt $i failed, retrying..."
-    sleep 5
-done
-[ -d "package/waynesg/luci-app-cups-web" ] || {
-    echo "Failed to clone luci-app-cups-web after 3 attempts"
-    exit 1
-}
