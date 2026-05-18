@@ -90,6 +90,7 @@ clone_or_update_git_repo https://github.com/sbwml/luci-app-airconnect package/wa
 #eqosplus
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/waynesg/luci-app-eqosplus
 #timecontrol
+#git clone --depth=1 -b main https://github.com/sirpdboy/luci-app-timecontrol package/waynesg/luci-app-timecontrol
 git clone --branch main --single-branch --depth=30 https://github.com/sirpdboy/luci-app-timecontrol package/waynesg/luci-app-timecontrol && \
 cd package/waynesg/luci-app-timecontrol && \
 git checkout 9e433a2
@@ -100,6 +101,18 @@ git checkout 9e433a2
 #tailscale
 #git clone --depth=1 https://github.com/asvow/luci-app-tailscale package/waynesg/luci-app-tailscale
 #git clone --depth=1 https://github.com/Tokisaki-Galaxy/luci-app-tailscale-community package/waynesg/luci-app-tailscale-community
-
+#yt-dlp
+#git clone --depth=1 https://github.com/liudf0716/luci-app-yt-dlp package/waynesg/luci-app-yt-dlp
+#socat
+# clone_or_update_git_repo https://github.com/Lienol/openwrt-package package/waynesg/luci-app-socat "" luci-app-socat
+#insomclash
+#git clone --depth=1 https://github.com/bobbyunknown/luci-app-insomclash package/waynesg/luci-app-insomclash
+#bandix
+#git clone --depth=1 https://github.com/timsaya/luci-app-bandix package/waynesg/luci-app-bandix
+#git clone --depth=1 https://github.com/timsaya/openwrt-bandix package/waynesg/openwrt-bandix
+#rm -f "package/waynesg/openwrt-bandix/.github/workflows/Auto compile with openwrt sdk.yml"
 # cups-web
-git clone https://github.com/waynesg/luci-app-cups-web package/waynesg/luci-app-cups-web
+clone_or_update_git_repo https://github.com/waynesg/luci-app-cups-web package/waynesg/luci-app-cups-web || {
+    echo "Failed to clone/update luci-app-cups-web"
+    exit 1
+}
