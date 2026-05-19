@@ -185,8 +185,3 @@ echo
 chmod -R 755 package/waynesg
 echo
 TIME g "配置更新完成"
-
-# 确保 cups-web 被选中
-if [ -f .config ]; then
-    echo "CONFIG_PACKAGE_luci-app-cups-web=y" >> .config
-fi
