@@ -61,6 +61,9 @@ git clone --depth=1 https://github.com/jerrykuku/node-request package/waynesg/lu
 #clone_or_update_git_repo https://github.com/kenzok8/small package/waynesg/luci-app-dependence/redsocks2 "" redsocks2
 #clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-dependence/wrtbwmon "" wrtbwmon
 
+#quickfile
+git clone --depth=1 -b main https://github.com/sbwml/luci-app-quickfile package/waynesg/luci-app-quickfile
+
 #openclash
 git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/waynesg/OpenClash
 rm -rf feeds/luci/applications/luci-app-openclash
@@ -69,33 +72,21 @@ mv package/waynesg/OpenClash/luci-app-openclash feeds/luci/applications/luci-app
 #openappfilter
 git clone --depth=1 https://github.com/destan19/OpenAppFilter package/waynesg/luci-app-oaf
 
-#timewol
-#clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-timewol "" luci-app-control-timewol
-#weburl
-#clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-control-weburl "" luci-app-control-weburl
 #serverchan
 git clone --depth=1 -b master https://github.com/tty228/luci-app-wechatpush package/waynesg/luci-app-wechatpush
 clone_or_update_git_repo https://github.com/kiddin9/op-packages package/waynesg/ "" wrtbwmon
-#pushbot
-#git clone --depth=1 https://github.com/zzsj0928/luci-app-pushbot package/waynesg/luci-app-pushbot
+
 #onliner
 clone_or_update_git_repo https://github.com/Hyy2001X/AutoBuild-Packages package/waynesg/luci-app-onliner "" luci-app-onliner
 #airconnect
 git clone --depth=1 -b main https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect
 clone_or_update_git_repo https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect main airconnect
-#alist
-#rm -rf feeds/luci/applications/luci-app-alist
-#rm -rf feeds/packages/net/alist
-#git clone --depth=1 -b main https://github.com/sbwml/luci-app-alist package/waynesg/luci-app-alist
-#eqosplus
-#git clone --depth=1 https://github.com/sirpdboy/luci-app-eqosplus package/waynesg/luci-app-eqosplus
+
 #timecontrol
 #git clone --depth=1 -b main https://github.com/sirpdboy/luci-app-timecontrol package/waynesg/luci-app-timecontrol
 git clone --branch main --single-branch --depth=30 https://github.com/sirpdboy/luci-app-timecontrol package/waynesg/luci-app-timecontrol && \
 cd package/waynesg/luci-app-timecontrol && \
 git checkout 9e433a2
-#quickfile
-git clone --depth=1 -b main https://github.com/sbwml/luci-app-quickfile package/waynesg/luci-app-quickfile
 #subconverter
 #git clone --depth=1 https://github.com/kiddin9/openwrt-subconverter package/waynesg/luci-app-subconverter
 #tn-netports
