@@ -94,6 +94,8 @@ clone_or_update_git_repo https://github.com/sbwml/luci-app-airconnect package/wa
 git clone --branch main --single-branch --depth=30 https://github.com/sirpdboy/luci-app-timecontrol package/waynesg/luci-app-timecontrol && \
 cd package/waynesg/luci-app-timecontrol && \
 git checkout 9e433a2
+#quickfile
+git clone --depth=1 -b main https://github.com/sbwml/luci-app-quickfile package/waynesg/luci-app-quickfile
 #subconverter
 #git clone --depth=1 https://github.com/kiddin9/openwrt-subconverter package/waynesg/luci-app-subconverter
 #tn-netports
@@ -111,4 +113,3 @@ git checkout 9e433a2
 #git clone --depth=1 https://github.com/timsaya/luci-app-bandix package/waynesg/luci-app-bandix
 #git clone --depth=1 https://github.com/timsaya/openwrt-bandix package/waynesg/openwrt-bandix
 #rm -f "package/waynesg/openwrt-bandix/.github/workflows/Auto compile with openwrt sdk.yml"
-git clone --depth=1  https://github.com/sbwml/luci-app-quickfile package/waynesg/luci-app-quickfile
