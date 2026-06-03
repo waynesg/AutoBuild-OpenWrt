@@ -62,7 +62,7 @@ git clone --depth=1 https://github.com/jerrykuku/node-request package/waynesg/lu
 #clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-dependence/wrtbwmon "" wrtbwmon
 
 #quickfile
-git clone --depth=1 -b main https://github.com/sbwml/luci-app-quickfile package/waynesg/luci-app-quickfile
+git clone --depth=1 -b main https://github.com/home16668/luci-app-quickfile-go package/waynesg/luci-app-quickfile-go
 
 #openclash
 git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/waynesg/OpenClash
