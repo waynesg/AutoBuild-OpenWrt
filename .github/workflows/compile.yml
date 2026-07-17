@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'build/Immortalwrt/relevance/start'
+      - 'build/Immortalwrt-25.12/relevance/start'
 
 env:
   Github: https://github.com/${{github.repository}}
@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [Immortalwrt]
+        target: [Immortalwrt-25.12]
 
     steps:    
     - name: 准备开始
