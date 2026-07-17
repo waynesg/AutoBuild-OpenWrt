@@ -1,0 +1,16 @@
+#!/bin/sh
+# Append custom CSS to argon theme cascade.css
+
+# Get custom CSS content
+CUSTOM_CSS=$(cat /etc/custom.css 2>/dev/null)
+
+if [ -n "$CUSTOM_CSS" ] && [ -f /www/luci-static/argon/css/cascade.css ]; then
+    # Check if already added
+    if ! grep -q "Custom font size override" /www/luci-static/argon/css/cascade.css 2>/dev/null; then
+        echo "" >> /www/luci-static/argon/css/cascade.css
+        echo "/* Custom font size override */" >> /www/luci-static/argon/css/cascade.css
+        cat /etc/custom.css >> /www/luci-static/argon/css/cascade.css
+    fi
+fi
+
+exit 0
