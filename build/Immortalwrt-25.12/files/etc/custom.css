@@ -1,0 +1,47 @@
+/* Custom font size override */
+body { font-size: 15px !important; }
+td, th, p, div, li, ul, ol, a, span { font-size: 15px !important; }
+h1 { font-size: 28px !important; }
+h2 { font-size: 24px !important; } 
+h3 { font-size: 17px !important; }
+.brand, .brand-name, .header .brand, .header .brand-name {
+    font-size: 28px !important;
+    font-weight: bold !important;
+}
+@media (max-width: 768px) {
+    .brand, .brand-name, .header .brand, .header .brand-name {
+        font-size: 16px !important;
+    }
+}
+
+/* Desktop only: enlarge Argon left sidebar menu font size (keep mobile unchanged) */
+@media screen and (min-width: 769px) {
+  .main-left .nav > li > a:first-child,
+  .main > .main-left > .nav > li,
+  .main > .main-left > .nav > li > a,
+  .main > .main-left > .nav > .slide > .menu,
+  .main > .main-left > .nav > li > [data-title="Log_out"] {
+    font-size: 1.10rem !important;
+  }
+  .main-left .nav > .slide > .slide-menu > li > a {
+    font-size: 1.00rem !important;
+  }
+}
+
+/* Tighten Argon overview/table spacing */
+tr > td,
+tr > th,
+.tr > .td,
+.tr > .th,
+.cbi-section-table-row::before,
+#cbi-wireless > #wifi_assoclist_table > .tr:nth-child(2) {
+  padding: 0.9em 0.9rem !important;
+}
+
+#cbi-wireless .td,
+.table[width="100%"] > .tr:first-child > .td,
+[data-page="admin-network-diagnostics"] .tr > .td,
+.tr.table-titles > .th,
+.tr.cbi-section-table-titles > .th {
+  padding: 0.9em 0.9rem !important;
+}

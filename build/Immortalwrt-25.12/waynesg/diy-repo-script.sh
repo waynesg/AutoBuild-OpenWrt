@@ -1,0 +1,106 @@
+#!/bin/bash
+
+CURRENT_PATH=$(pwd)
+
+clone_or_update_git_repo() {
+  # 参数检查
+  if [ "$#" -lt 2 ]; then
+    echo "Usage: clone_or_update_git_repo <git_url> <target_directory> [branch] [subdirectory]"
+    return 1
+  fi
+
+  local git_url="$1"
+  local source_target_directory="$2"
+  local target_directory="$2"
+  local branch="$3"
+  local subdirectory="$4"
+
+  if [ -n "$subdirectory" ]; then
+    target_directory=$CURRENT_PATH/repos/$(echo "$git_url" | awk -F'/' '{print $(NF-1)"-"$NF}')
+  fi
+
+  # 检查目标目录是否存在
+  if [ -d "$target_directory" ]; then
+    pushd "$target_directory" || return 1
+    git pull
+    popd
+  else
+    if [ -n "$branch" ]; then
+      git clone --depth=1 -b "$branch" "$git_url" "$target_directory"
+    else
+      git clone --depth=1 "$git_url" "$target_directory"
+    fi
+  fi
+
+  if [ -n "$subdirectory" ]; then
+    cp -a $target_directory/$subdirectory $source_target_directory
+  fi
+}
+
+# theme
+git clone --depth=1 -b master https://github.com/jerrykuku/luci-theme-argon package/waynesg/luci-theme-argon
+# git clone --depth=1 -b js https://github.com/sirpdboy/luci-theme-kucat package/waynesg/luci-theme-kucat
+# git clone --depth=1 -b js https://github.com/0x676e67/luci-theme-design package/waynesg/luci-theme-design
+# argon-theme-config
+git clone --depth=1 -b master https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
+# aurora
+git clone --depth=1 https://github.com/eamonxg/luci-theme-aurora package/waynesg/luci-theme-aurora
+#theme-config
+# git clone --depth=1 https://github.com/sirpdboy/luci-app-advancedplus package/waynesg/luci-app-advancedplus
+#git clone --depth=1 https://github.com/eamonxg/luci-app-aurora-config package/waynesg/luci-app-aurora-config
+#mosdns
+git clone --depth=1 -b v5 https://github.com/sbwml/luci-app-mosdns package/waynesg/luci-app-mosdns
+#passwall
+#clone_or_update_git_repo https://github.com/Openwrt-Passwall/openwrt-passwall package/waynesg/luci-app-passwall main luci-app-passwall
+git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall2 package/waynesg/luci-app-passwall2
+#git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall-packages package/waynesg/luci-app-dependence
+git clone --depth=1 https://github.com/jerrykuku/node-request package/waynesg/luci-app-dependence/node-request
+#git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb package/waynesg/luci-app-dependence/lua-maxminddb
+#clone_or_update_git_repo https://github.com/fw876/helloworld package/waynesg/luci-app-dependence/lua-neturl master lua-neturl
+#clone_or_update_git_repo https://github.com/fw876/helloworld package/waynesg/luci-app-dependence/shadow-tls master shadow-tls    
+#clone_or_update_git_repo https://github.com/kenzok8/small package/waynesg/luci-app-dependence/redsocks2 "" redsocks2
+#clone_or_update_git_repo https://github.com/kiddin9/openwrt-packages package/waynesg/luci-app-dependence/wrtbwmon "" wrtbwmon
+
+#quickfile
+git clone --depth=1 -b main https://github.com/home16668/luci-app-quickfile-go package/waynesg/luci-app-quickfile-go
+
+#openclash
+git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/waynesg/OpenClash
+rm -rf feeds/luci/applications/luci-app-openclash
+mv package/waynesg/OpenClash/luci-app-openclash feeds/luci/applications/luci-app-openclash
+
+#openappfilter
+git clone --depth=1 https://github.com/destan19/OpenAppFilter package/waynesg/luci-app-oaf
+
+#serverchan
+git clone --depth=1 -b master https://github.com/tty228/luci-app-wechatpush package/waynesg/luci-app-wechatpush
+clone_or_update_git_repo https://github.com/kiddin9/op-packages package/waynesg/ "" wrtbwmon
+
+#onliner
+clone_or_update_git_repo https://github.com/Hyy2001X/AutoBuild-Packages package/waynesg/luci-app-onliner "" luci-app-onliner
+#airconnect
+git clone --depth=1 -b main https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect
+clone_or_update_git_repo https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect main airconnect
+
+#timecontrol
+#git clone --depth=1 -b main https://github.com/sirpdboy/luci-app-timecontrol package/waynesg/luci-app-timecontrol
+git clone --branch main --single-branch --depth=30 https://github.com/sirpdboy/luci-app-timecontrol package/waynesg/luci-app-timecontrol && \
+cd package/waynesg/luci-app-timecontrol && \
+git checkout 9e433a2
+#subconverter
+#git clone --depth=1 https://github.com/kiddin9/openwrt-subconverter package/waynesg/luci-app-subconverter
+#tn-netports
+#git clone --depth=1 https://github.com/muink/luci-app-tn-netports package/waynesg/luci-app-tn-netports
+#tailscale
+#git clone --depth=1 https://github.com/asvow/luci-app-tailscale package/waynesg/luci-app-tailscale
+#git clone --depth=1 https://github.com/Tokisaki-Galaxy/luci-app-tailscale-community package/waynesg/luci-app-tailscale-community
+#yt-dlp
+#git clone --depth=1 https://github.com/liudf0716/luci-app-yt-dlp package/waynesg/luci-app-yt-dlp
+#socat
+# clone_or_update_git_repo https://github.com/Lienol/openwrt-package package/waynesg/luci-app-socat "" luci-app-socat
+#insomclash
+#git clone --depth=1 https://github.com/bobbyunknown/luci-app-insomclash package/waynesg/luci-app-insomclash
+#bandix
+#git clone --depth=1 https://github.com/timsaya/luci-app-bandix package/waynesg/luci-app-bandix
+#git clone --depth=1 https://github.com/timsaya/openwrt-bandix package/waynesg/openwrt-bandix
+#rm -f "package/waynesg/openwrt-bandix/.github/workflows/Auto compile with openwrt sdk.yml"

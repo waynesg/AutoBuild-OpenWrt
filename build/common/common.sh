@@ -160,6 +160,15 @@ find . -name 'luci-app-openclash' -o -name 'open-app-filter' -o -name 'luci-app-
 find . -name 'luci-app-wechatpush' -o -name 'mosdns' -o -name 'sub-web' | xargs -i rm -rf {}
 }
 
+################################################################################################################
+# Immortalwrt_25.12 diy.sh文件
+################################################################################################################
+Diy_Immortalwrt_25.12() {
+
+find . -name 'luci-app-openclash' -o -name 'open-app-filter' -o -name 'luci-app-argon-config' -o -name 'luci-theme-argon' | xargs -i rm -rf {}
+find . -name 'luci-app-wechatpush' -o -name 'mosdns' -o -name 'sub-web' | xargs -i rm -rf {}
+}
+
 
 ################################################################################################################
 # 全部作者源码公共diy.sh文件

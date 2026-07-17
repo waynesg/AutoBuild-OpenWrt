@@ -48,8 +48,8 @@ GET_TARGET_INFO() {
 			Firmware_sfx="bin"
 		fi
 	;;
-        "openwrt-24.10")
-		LUCI_Name="24.10"
+	"openwrt-24.10"|"openwrt-25.12")
+		LUCI_Name="${REPO_BRANCH#openwrt-}"
 		REPO_Name="Immortalwrt"
 		ZUOZHE="Immortalwrt's"
 		if [[ "${TARGET_PROFILE}" == "x86-64" ]]; then
