@@ -204,10 +204,7 @@ jobs:
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
-
-        # toolchain: 'false'
-        # clean: 'false'
-        # mixkey: ${{ matrix.target }}
+        mixkey: ${{ matrix.target }}-${{ env.REPO_BRANCH }}
 
     - name: 生成配置
       run: |
@@ -251,7 +248,6 @@ jobs:
     
     - name: 编译固件
       id: compile
-      continue-on-error: true
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
