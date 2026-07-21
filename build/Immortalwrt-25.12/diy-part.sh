@@ -61,6 +61,14 @@ TIME y "修改最大连接数修改为65535"
 sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=65535' package/base-files/files/etc/sysctl.conf
 
 echo
+TIME y "适配 OpenVPN 服务端"
+OPENVPN_SERVER_DIR="feeds/luci/applications/luci-app-openvpn-server"
+if [[ -d "${OPENVPN_SERVER_DIR}" ]]; then
+	rm -f "${OPENVPN_SERVER_DIR}/root/etc/config/openvpn"
+	install -m 0755 "${PATH1}/openvpn-server-defaults.sh" "${OPENVPN_SERVER_DIR}/root/etc/uci-defaults/99-openvpn-server-config"
+fi
+
+echo
 TIME y "更换golang版本"
 # rm -rf feeds/packages/lang/golang
 # git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
