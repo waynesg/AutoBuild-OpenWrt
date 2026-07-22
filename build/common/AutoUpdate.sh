@@ -12,6 +12,7 @@ echo
 echo -e "${Yellow}命令用途：
 
 bash /bin/AutoUpdate.sh				[保留配置更新]
+bash /bin/AutoUpdate.sh	-F			[强制下载云端最新固件并保留配置更新]
 bash /bin/AutoUpdate.sh	-n			[不保留配置更新]
 bash /bin/AutoUpdate.sh	-g			[把固件更改成其他作者固件,前提是你编译了有附带定时更新插件的其他作者的固件]
 bash /bin/AutoUpdate.sh	-c			[更换Github地址]
@@ -78,7 +79,13 @@ export Kernel="$(egrep -o "[0-9]+\.[0-9]+\.[0-9]+" /usr/lib/opkg/info/kernel.con
 export Overlay_Available="$(df -h | grep ":/overlay" | awk '{print $4}' | awk 'NR==1')"
 rm -rf "${Download_Path}" && export TMP_Available="$(df -m | grep "/tmp" | awk '{print $4}' | awk 'NR==1' | awk -F. '{print $1}')"
 [ ! -d "${Download_Path}" ] && mkdir -p ${Download_Path}
-opkg list | awk '{print $1}' > ${Download_Path}/Installed_PKG_List
+if command -v opkg >/dev/null 2>&1; then
+	opkg list-installed 2>/dev/null | awk '{print $1}' > ${Download_Path}/Installed_PKG_List
+elif command -v apk >/dev/null 2>&1; then
+	apk list --installed 2>/dev/null | sed -E 's/-[0-9][^-]*.*$//' > ${Download_Path}/Installed_PKG_List
+else
+	: > ${Download_Path}/Installed_PKG_List
+fi
 export PKG_List="${Download_Path}/Installed_PKG_List"
 export AutoUpdate_Log_Path="/tmp"
 GET_PID() {
@@ -152,12 +159,18 @@ if [[ -z "${Input_Option}" ]];then
 	TIME h "执行: 保留配置更新固件[静默模式]"
 else
 	case ${Input_Option} in
-	-t | -n | -f | -u | -N | -s | -w)
+	-t | -F | -n | -f | -u | -N | -s | -w)
 		case ${Input_Option} in
 		-t)
 			export Input_Other="-t"
 			TIME h "执行: 测试模式"
 			TIME z "测试模式(只运行,不安装,查看更新固件操作流程是否正确)"
+		;;
+		-F)
+			export Force_Update=1
+			export Update_Mode=1
+			export Upgrade_Options="sysupgrade -q"
+			TIME h "执行: 强制下载云端最新固件并保留配置更新"
 		;;
 		-w)
 			export Input_Other="-w"
@@ -302,7 +315,7 @@ echo "固件名称：${Firmware}"
 echo "下载保存：${Download_Path}"
 echo "固件体积：${CLOUD_Firmware_Size}M"
 cd ${Download_Path}
-[[ "$(cat ${Download_Path}/Installed_PKG_List)" =~ curl ]] && {
+if command -v curl >/dev/null 2>&1; then
 	export Google_Check=$(curl -I -s --connect-timeout 8 google.com -w %{http_code} | tail -n1)
 	if [ ! "$Google_Check" == 301 ];then
 		TIME g "正在下载云端固件,请耐心等待..."
@@ -335,7 +348,22 @@ cd ${Download_Path}
 			TIME y "下载云端固件成功!"
 		fi
 	fi
-}
+else
+	TIME g "正在下载云端固件,请耐心等待..."
+	wget -q "https://ghproxy.com/${Github_Release}/${Firmware}" -O ${Firmware}
+	if [[ $? -ne 0 ]];then
+		wget -q "https://pd.zwc365.com/${Github_Release}/${Firmware}" -O ${Firmware}
+		if [[ $? -ne 0 ]];then
+			TIME r "下载云端固件失败,请尝试手动安装!"
+			echo
+			exit 1
+		else
+			TIME y "下载云端固件成功!"
+		fi
+	else
+		TIME y "下载云端固件成功!"
+	fi
+fi
 export CLOUD_MD5=$(md5sum ${Firmware} | cut -c1-3)
 export CLOUD_256=$(sha256sum ${Firmware} | cut -c1-3)
 export MD5_256=$(echo ${Firmware} | egrep -o "[a-zA-Z0-9]+${Firmware_SFX}" | sed -r "s/(.*)${Firmware_SFX}/\1/")
@@ -359,7 +387,13 @@ TIME g "准备更新固件,更新期间请不要断开电源或重启设备 ..."
 }
 sleep 2
 TIME g "正在更新固件,请耐心等待 ..."
-[[ "$(cat ${PKG_List})" =~ gzip ]] && opkg remove gzip > /dev/null 2>&1
+if grep -qx "gzip" "${PKG_List}"; then
+	if command -v opkg >/dev/null 2>&1; then
+		opkg remove gzip > /dev/null 2>&1
+	elif command -v apk >/dev/null 2>&1; then
+		apk del gzip > /dev/null 2>&1
+	fi
+fi
 if [[ "${AutoUpdate_Mode}" == 1 ]] || [[ "${Update_Mode}" == 1 ]]; then
 	cp -Rf /etc/config/network /mnt/network
 	mv -f /etc/config/luci /etc/config/luci-
