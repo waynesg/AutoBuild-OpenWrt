@@ -364,6 +364,11 @@ else
 		TIME y "下载云端固件成功!"
 	fi
 fi
+if [[ ! -s "${Firmware}" ]]; then
+	TIME r "固件下载失败,未找到文件: ${Firmware}"
+	echo
+	exit 1
+fi
 export CLOUD_MD5=$(md5sum ${Firmware} | cut -c1-3)
 export CLOUD_256=$(sha256sum ${Firmware} | cut -c1-3)
 export MD5_256=$(echo ${Firmware} | egrep -o "[a-zA-Z0-9]+${Firmware_SFX}" | sed -r "s/(.*)${Firmware_SFX}/\1/")
