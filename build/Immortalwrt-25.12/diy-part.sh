@@ -69,6 +69,14 @@ if [[ -d "${OPENVPN_SERVER_DIR}" ]]; then
 fi
 
 echo
+TIME y "适配 Subconverter 服务"
+SUBCONVERTER_LUCI_DIR="package/waynesg/luci-app-subconverter/luci-app-subconverter"
+if [[ -d "${SUBCONVERTER_LUCI_DIR}" ]]; then
+	rm -f "${SUBCONVERTER_LUCI_DIR}/root/etc/init.d/subconverter"
+	install -m 0755 "${PATH1}/subconverter.init" "feeds/packages/net/subconverter/files/subconverter.init"
+fi
+
+echo
 TIME y "更换golang版本"
 # rm -rf feeds/packages/lang/golang
 # git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
