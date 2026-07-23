@@ -177,9 +177,13 @@ Diy_all() {
 
 if [[ ${REGULAR_UPDATE} == "true" ]]; then
         git clone https://github.com/waynesg/luci-app-autoupdate feeds/luci/applications/luci-app-autoupdate
+	AUTOUPDATE_ASSET_DIR="${PATH1}"
+	if [[ ! -f "${AUTOUPDATE_ASSET_DIR}/autoupdate-cbi.lua" ]]; then
+		AUTOUPDATE_ASSET_DIR="${Home}/build/common"
+	fi
 	cp -Rf "${PATH1}"/{AutoUpdate.sh,AutoBuild_Tools.sh,replace.sh,tv.sh} package/base-files/files/bin
-	cp -f "${PATH1}/autoupdate-cbi.lua" feeds/luci/applications/luci-app-autoupdate/luasrc/model/cbi/autoupdate.lua
-	cp -f "${PATH1}/autoupdate-controller.lua" feeds/luci/applications/luci-app-autoupdate/luasrc/controller/autoupdate.lua
+	cp -f "${AUTOUPDATE_ASSET_DIR}/autoupdate-cbi.lua" feeds/luci/applications/luci-app-autoupdate/luasrc/model/cbi/autoupdate.lua
+	cp -f "${AUTOUPDATE_ASSET_DIR}/autoupdate-controller.lua" feeds/luci/applications/luci-app-autoupdate/luasrc/controller/autoupdate.lua
 	sed -i 's/"定时更新"/"在线更新"/g' feeds/luci/applications/luci-app-autoupdate/po/zh_Hans/autoupdate.po
 	sed -i 's/定时更新 LUCI/固件更新 LUCI/g' feeds/luci/applications/luci-app-autoupdate/po/zh_Hans/autoupdate.po
 fi
