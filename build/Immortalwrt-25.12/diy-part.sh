@@ -77,6 +77,13 @@ if [[ -d "${SUBCONVERTER_LUCI_DIR}" ]]; then
 fi
 
 echo
+TIME y "兼容 DDNS RPC ucode 语法"
+DDNS_RPC_UC="feeds/luci/applications/luci-app-ddns/root/usr/share/rpcd/ucode/ddns.uc"
+if [[ -f "${DDNS_RPC_UC}" ]] && grep -q '??=' "${DDNS_RPC_UC}"; then
+	patch -p1 < "${PATH1}/ddns-ucode-compat.patch"
+fi
+
+echo
 TIME y "更换golang版本"
 # rm -rf feeds/packages/lang/golang
 # git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
@@ -156,6 +163,7 @@ echo "重命名网络菜单"
 sed -i 's/"接口"/"网络接口"/g' `grep "接口" -rl ./`
 #sed -i 's/"Socat"/"端口转发"/g'  package/waynesg/luci-app-socat/luasrc/controller/socat.lua
 sed -i 's/DHCP\/DNS/DNS设定/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+sed -i 's/"title": "DNS"/"title": "DNS设定"/g' feeds/luci/modules/luci-mod-network/root/usr/share/luci/menu.d/luci-mod-network.json
 sed -i 's/"USB 打印服务器"/"打印服务"/g' $(grep "USB 打印服务器" -rl ./)
 sed -i 's/msgstr "UPnP IGD 和 PCP"/msgstr "UPnP服务"/g' feeds/luci/applications/luci-app-upnp/po/zh_Hans/upnp.po
 sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-upnp/root/usr/share/luci/menu.d/luci-app-upnp.json
