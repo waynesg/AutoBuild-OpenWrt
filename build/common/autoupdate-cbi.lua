@@ -43,7 +43,7 @@ local luci_edition = luci.sys.exec("grep NEI_Luci= /etc/openwrt_ver | cut -c10-1
 local upgrade_status = luci.sys.exec("cat /tmp/autoupdate_status 2>/dev/null")
 local status_url = luci.dispatcher.build_url("admin", "system", "autoupdate", "status")
 
-status = s:option(DummyValue, "_upgrade_status", translate("Upgrade Status"))
+status = s:option(DummyValue, "_upgrade_status", translate("升级状态"))
 status.rawhtml = true
 status.cfgvalue = function()
 	local initial_status = upgrade_status
