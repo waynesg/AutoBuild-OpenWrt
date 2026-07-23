@@ -52,7 +52,7 @@ git clone --depth=1 https://github.com/eamonxg/luci-theme-aurora package/waynesg
 git clone --depth=1 -b v5 https://github.com/sbwml/luci-app-mosdns package/waynesg/luci-app-mosdns
 #passwall
 #clone_or_update_git_repo https://github.com/Openwrt-Passwall/openwrt-passwall package/waynesg/luci-app-passwall main luci-app-passwall
-git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall2 package/waynesg/luci-app-passwall2
+#git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall2 package/waynesg/luci-app-passwall2
 #git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall-packages package/waynesg/luci-app-dependence
 git clone --depth=1 https://github.com/jerrykuku/node-request package/waynesg/luci-app-dependence/node-request
 #git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb package/waynesg/luci-app-dependence/lua-maxminddb
