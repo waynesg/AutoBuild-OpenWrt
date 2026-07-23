@@ -88,6 +88,9 @@ else
 fi
 export PKG_List="${Download_Path}/Installed_PKG_List"
 export AutoUpdate_Log_Path="/tmp"
+export AutoUpdate_Status_File="/tmp/autoupdate_status"
+export AutoUpdate_Status_Enable=0
+[[ -n "${Input_Option}" ]] && [[ "${Input_Option}" != "-w" ]] && [[ "${Input_Option}" != "-h" ]] && [[ "${Input_Option}" != "-H" ]] && [[ "${Input_Option}" != "-l" ]] && [[ "${Input_Option}" != "-L" ]] && export AutoUpdate_Status_Enable=1
 GET_PID() {
 	local Result
 	while [[ $1 ]];do
@@ -125,6 +128,10 @@ LOGGER() {
 	[[ ! -d ${AutoUpdate_Log_Path} ]] && mkdir -p ${AutoUpdate_Log_Path}
 	[[ ! -f ${AutoUpdate_Log_Path}/AutoUpdate.log ]] && touch ${AutoUpdate_Log_Path}/AutoUpdate.log
 	echo "[$(date "+%Y-%m-%d-%H:%M:%S")] [$(GET_PID AutoUpdate.sh)] $*" >> ${AutoUpdate_Log_Path}/AutoUpdate.log
+}
+UPDATE_STATUS() {
+	[[ "${AutoUpdate_Status_Enable}" == 1 ]] || return 0
+	echo "[$(date "+%H:%M:%S")] $*" > "${AutoUpdate_Status_File}"
 }
 case ${DEFAULT_Device} in
 x86-64)
@@ -170,6 +177,7 @@ else
 			export Force_Update=1
 			export Update_Mode=1
 			export Upgrade_Options="sysupgrade -q"
+			UPDATE_STATUS "已开始后台升级，正在准备运行环境"
 			TIME h "执行: 强制下载云端最新固件并保留配置更新"
 		;;
 		-w)
@@ -232,8 +240,9 @@ else
 	;;
 	esac
 fi
-[[ -z ${CURRENT_Version} ]] && TIME r "本地固件版本获取失败,请检查/bin/openwrt_info文件的值!" && exit 1
-[[ -z ${Github} ]] && TIME r "Github地址获取失败,请检查/bin/openwrt_info文件的值!" && exit 1
+[[ -z ${CURRENT_Version} ]] && UPDATE_STATUS "升级失败: 本地固件版本获取失败" && TIME r "本地固件版本获取失败,请检查/bin/openwrt_info文件的值!" && exit 1
+[[ -z ${Github} ]] && UPDATE_STATUS "升级失败: Github地址获取失败" && TIME r "Github地址获取失败,请检查/bin/openwrt_info文件的值!" && exit 1
+UPDATE_STATUS "正在获取云端固件版本信息"
 TIME g "正在获取云端固件版本信息..."
 [ ! -d ${Download_Path} ] && mkdir -p ${Download_Path}
 wget -q ${Github_Tags} -O ${Download_Tags} > /dev/null 2>&1
@@ -243,6 +252,7 @@ if [[ $? -ne 0 ]];then
 		wget -q -P ${Download_Path} https://ghproxy.com/${Github_Tagstwo} -O ${Download_Path}/Github_Tags > /dev/null 2>&1
 	fi
 	if [[ $? -ne 0 ]];then
+		UPDATE_STATUS "升级失败: 获取云端固件版本信息失败"
 		TIME r "获取固件版本信息失败,请检测网络,或者您更改的Github地址为无效地址,或者您的仓库是私库,或者发布已被删除!"
 		echo
 		exit 1
@@ -250,11 +260,13 @@ if [[ $? -ne 0 ]];then
 fi
 export CLOUD_Name="$(egrep -o "${LUCI_Name}-${CURRENT_Version}${BOOT_Type}-[a-zA-Z0-9]+${Firmware_SFX}" ${Download_Tags} | awk 'END {print}')"
 [[ ! -f /etc/CLOUD_Name ]] && echo "${CLOUD_Name}" > /etc/CLOUD_Name
+UPDATE_STATUS "正在比对云端固件和本地固件版本"
 TIME g "正在比对云端固件和本地安装固件版本..."
 export CLOUD_Firmware="$(egrep -o "${Egrep_Firmware}-[0-9]+${BOOT_Type}-[a-zA-Z0-9]+${Firmware_SFX}" ${Download_Tags} | awk 'END {print}')"
 export CLOUD_sion="$(echo ${CLOUD_Firmware} | egrep -o "${REPO_Name}-${DEFAULT_Device}-[0-9]+")"
 export CLOUD_Version="$(echo ${CLOUD_Firmware} | egrep -o "${REPO_Name}-${DEFAULT_Device}-[0-9]+${BOOT_Type}")"
 [[ -z "${CLOUD_Version}" ]] && {
+	UPDATE_STATUS "升级失败: 比对固件版本失败"
 	TIME r "比对固件版本失败!"
 	exit 1
 }
@@ -272,6 +284,7 @@ echo -e "\n本地版本：${CURRENT_Ver}"
 echo "云端版本：${CLOUD_Version}"	
 [[ "${TMP_Available}" -lt "${CLOUD_Firmware_Size}" ]] && {
 	TIME g "tmp 剩余空间: ${TMP_Available}M"
+	UPDATE_STATUS "升级失败: tmp空间不足,需要${CLOUD_Firmware_Size}M"
 	TIME r "tmp空间不足[${CLOUD_Firmware_Size}M],不够下载固件所需,请清理tmp空间或者增加运行内存!"
 	echo
 	exit 1
@@ -286,6 +299,7 @@ if [[ ! "${Force_Update}" == 1 ]];then
 		[[ "${Choose}" == Y ]] || [[ "${Choose}" == y ]] && {
 			TIME z "正在开始重新安装固件..."
 		} || {
+			UPDATE_STATUS "升级已取消"
 			TIME r "已取消重新安装固件,即将退出程序..."
 			sleep 2
 			exit 0
@@ -297,6 +311,7 @@ if [[ ! "${Force_Update}" == 1 ]];then
 		[[ "${Choose}" == Y ]] || [[ "${Choose}" == y ]] && {
 			TIME z "正在开始使用云端版本覆盖现有固件..."
 		} || {
+			UPDATE_STATUS "升级已取消"
 			TIME r "已取消覆盖固件,退出程序..."
 			sleep 2
 			exit 0
@@ -315,6 +330,7 @@ echo "固件名称：${Firmware}"
 echo "下载保存：${Download_Path}"
 echo "固件体积：${CLOUD_Firmware_Size}M"
 cd ${Download_Path}
+UPDATE_STATUS "正在下载固件: ${Firmware}"
 if command -v curl >/dev/null 2>&1; then
 	export Google_Check=$(curl -I -s --connect-timeout 8 google.com -w %{http_code} | tail -n1)
 	if [ ! "$Google_Check" == 301 ];then
@@ -323,6 +339,7 @@ if command -v curl >/dev/null 2>&1; then
 		if [[ $? -ne 0 ]];then
 			wget -q "https://pd.zwc365.com/${Github_Release}/${Firmware}" -O ${Firmware}
 			if [[ $? -ne 0 ]];then
+				UPDATE_STATUS "升级失败: 下载云端固件失败"
 				TIME r "下载云端固件失败,请尝试手动安装!"
 				echo
 				exit 1
@@ -338,6 +355,7 @@ if command -v curl >/dev/null 2>&1; then
 		if [[ $? -ne 0 ]];then
 			wget -q "https://ghproxy.com/${Github_Release}/${Firmware}" -O ${Firmware}
 			if [[ $? -ne 0 ]];then
+				UPDATE_STATUS "升级失败: 下载云端固件失败"
 				TIME r "下载云端固件失败,请尝试手动安装!"
 				echo
 				exit 1
@@ -354,6 +372,7 @@ else
 	if [[ $? -ne 0 ]];then
 		wget -q "https://pd.zwc365.com/${Github_Release}/${Firmware}" -O ${Firmware}
 		if [[ $? -ne 0 ]];then
+			UPDATE_STATUS "升级失败: 下载云端固件失败"
 			TIME r "下载云端固件失败,请尝试手动安装!"
 			echo
 			exit 1
@@ -365,26 +384,32 @@ else
 	fi
 fi
 if [[ ! -s "${Firmware}" ]]; then
+	UPDATE_STATUS "升级失败: 未找到下载后的固件文件"
 	TIME r "固件下载失败,未找到文件: ${Firmware}"
 	echo
 	exit 1
 fi
+UPDATE_STATUS "固件下载完成，正在校验文件"
 export CLOUD_MD5=$(md5sum ${Firmware} | cut -c1-3)
 export CLOUD_256=$(sha256sum ${Firmware} | cut -c1-3)
 export MD5_256=$(echo ${Firmware} | egrep -o "[a-zA-Z0-9]+${Firmware_SFX}" | sed -r "s/(.*)${Firmware_SFX}/\1/")
 export CURRENT_MD5="$(echo "${MD5_256}" | cut -c1-3)"
 export CURRENT_256="$(echo "${MD5_256}" | cut -c 4-)"
 [[ ${CURRENT_MD5} != ${CLOUD_MD5} ]] && {
+	UPDATE_STATUS "升级失败: MD5校验失败"
 	TIME r "MD5对比失败,固件可能在下载时损坏,请检查网络后重试!"
 	exit 1
 }
 [[ ${CURRENT_256} != ${CLOUD_256} ]] && {
+	UPDATE_STATUS "升级失败: SHA256校验失败"
 	TIME r "SHA256对比失败,固件可能在下载时损坏,请检查网络后重试!"
 	exit 1
 }
 chmod 777 ${Firmware}
+UPDATE_STATUS "固件校验通过，准备升级"
 TIME g "准备更新固件,更新期间请不要断开电源或重启设备 ..."
 [[ "${Input_Other}" == "-t" ]] && {
+	UPDATE_STATUS "测试模式运行完毕"
 	TIME z "测试模式运行完毕!"
 	rm -rf "${Download_Path}"
 	echo
@@ -400,6 +425,7 @@ if grep -qx "gzip" "${PKG_List}"; then
 	fi
 fi
 if [[ "${AutoUpdate_Mode}" == 1 ]] || [[ "${Update_Mode}" == 1 ]]; then
+	UPDATE_STATUS "正在备份配置"
 	cp -Rf /etc/config/network /mnt/network
 	mv -f /etc/config/luci /etc/config/luci-
 	sysupgrade -b /mnt/back.tar.gz
@@ -412,6 +438,7 @@ if [[ "${AutoUpdate_Mode}" == 1 ]] || [[ "${Update_Mode}" == 1 ]]; then
 	}
 fi
 
+UPDATE_STATUS "正在写入固件，路由器即将重启"
 ${Upgrade_Options} ${Firmware}
 
 exit 0
