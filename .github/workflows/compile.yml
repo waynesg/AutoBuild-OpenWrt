@@ -173,17 +173,21 @@ jobs:
           source "${PATH1}/common.sh" && Diy_Immortalwrt
         elif [[ "${REPO_BRANCH}" == "openwrt-24.10" ]]; then
           ZZZ="package/emortal/default-settings/files/99-default-settings"
-          echo "DISTRIB_REVISION=$(cat $ZZZ|grep DISTRIB_REVISION= | sed 's/^.\{24\}//g' | sed 's/.\{26\}$//')" >> $GITHUB_ENV
-          echo "KERNEL_PATCHVER=$(cat target/linux/x86/Makefile|grep KERNEL_PATCHVER | sed 's/^.\{17\}//g')" >> $GITHUB_ENV
-          echo "	    当前编译版本：$(cat $ZZZ|grep DISTRIB_REVISION= | sed 's/^.\{24\}//g' | sed 's/.\{26\}$//')"
-          echo "	    内核版本：$(cat target/linux/x86/Makefile|grep KERNEL_PATCHVER | sed 's/^.\{17\}//g')"
+          DISTRIB_REVISION="$(awk -F"'" '/DISTRIB_REVISION=/{print $2; exit}' "$ZZZ")"
+          KERNEL_PATCHVER="$(awk '/^KERNEL_PATCHVER/{gsub(/[ \t]/, ""); sub(/^KERNEL_PATCHVER:?=/, ""); print; exit}' target/linux/x86/Makefile)"
+          echo "DISTRIB_REVISION=${DISTRIB_REVISION:-${LUCI_EDITION}}" >> $GITHUB_ENV
+          echo "KERNEL_PATCHVER=${KERNEL_PATCHVER}" >> $GITHUB_ENV
+          echo "	    当前编译版本：${DISTRIB_REVISION:-${LUCI_EDITION}}"
+          echo "	    内核版本：${KERNEL_PATCHVER}"
           source "${PATH1}/common.sh" && Diy_Immortalwrt_24.10
         elif [[ "${REPO_BRANCH}" == "openwrt-25.12" ]]; then
           ZZZ="package/emortal/default-settings/files/99-default-settings"
-          echo "DISTRIB_REVISION=$(cat $ZZZ|grep DISTRIB_REVISION= | sed 's/^.\{24\}//g' | sed 's/.\{26\}$//')" >> $GITHUB_ENV
-          echo "KERNEL_PATCHVER=$(cat target/linux/x86/Makefile|grep KERNEL_PATCHVER | sed 's/^.\{17\}//g')" >> $GITHUB_ENV
-          echo "\t    当前编译版本：$(cat $ZZZ|grep DISTRIB_REVISION= | sed 's/^.\{24\}//g' | sed 's/.\{26\}$//')"
-          echo "\t    内核版本：$(cat target/linux/x86/Makefile|grep KERNEL_PATCHVER | sed 's/^.\{17\}//g')"
+          DISTRIB_REVISION="$(awk -F"'" '/DISTRIB_REVISION=/{print $2; exit}' "$ZZZ")"
+          KERNEL_PATCHVER="$(awk '/^KERNEL_PATCHVER/{gsub(/[ \t]/, ""); sub(/^KERNEL_PATCHVER:?=/, ""); print; exit}' target/linux/x86/Makefile)"
+          echo "DISTRIB_REVISION=${DISTRIB_REVISION:-${LUCI_EDITION}}" >> $GITHUB_ENV
+          echo "KERNEL_PATCHVER=${KERNEL_PATCHVER}" >> $GITHUB_ENV
+          echo "\t    当前编译版本：${DISTRIB_REVISION:-${LUCI_EDITION}}"
+          echo "\t    内核版本：${KERNEL_PATCHVER}"
           source "${PATH1}/common.sh" && Diy_Immortalwrt_25.12
         fi
         source "${PATH1}/common.sh" && Diy_all
