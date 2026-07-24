@@ -11,7 +11,7 @@ h3 { font-size: 17px !important; }
 }
 .login-page .login-container .login-form .brand,
 .login-page .login-container .login-form .brand .brand-text {
-    font-size: 36px !important;
+    font-size: 40px !important;
 }
 @media (max-width: 768px) {
     .brand, .brand-name, .header .brand, .header .brand-name {
@@ -19,7 +19,7 @@ h3 { font-size: 17px !important; }
     }
     .login-page .login-container .login-form .brand,
     .login-page .login-container .login-form .brand .brand-text {
-        font-size: 24px !important;
+        font-size: 26px !important;
     }
 }
 
