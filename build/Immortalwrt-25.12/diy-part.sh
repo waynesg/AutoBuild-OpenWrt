@@ -77,6 +77,13 @@ if [[ -d "${SUBCONVERTER_LUCI_DIR}" ]]; then
 fi
 
 echo
+TIME y "兼容 DDNS RPC ucode 语法"
+DDNS_RPC_UC="feeds/luci/applications/luci-app-ddns/root/usr/share/rpcd/ucode/ddns.uc"
+if [[ -f "${DDNS_RPC_UC}" ]] && grep -q '??=' "${DDNS_RPC_UC}"; then
+	patch -p1 < "${PATH1}/ddns-ucode-compat.patch"
+fi
+
+echo
 TIME y "更换golang版本"
 # rm -rf feeds/packages/lang/golang
 # git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
