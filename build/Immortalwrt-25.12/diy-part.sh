@@ -66,6 +66,7 @@ OPENVPN_SERVER_DIR="feeds/luci/applications/luci-app-openvpn-server"
 if [[ -d "${OPENVPN_SERVER_DIR}" ]]; then
 	rm -f "${OPENVPN_SERVER_DIR}/root/etc/config/openvpn"
 	install -m 0755 "${PATH1}/openvpn-server-defaults.sh" "${OPENVPN_SERVER_DIR}/root/etc/uci-defaults/99-openvpn-server-config"
+	[ -f "${OPENVPN_SERVER_DIR}/root/etc/uci-defaults/openvpn" ] && sed -i "s/set network\\.vpn0\\.ifname='tun0'/set network.vpn0.device='tun0'/g" "${OPENVPN_SERVER_DIR}/root/etc/uci-defaults/openvpn"
 fi
 
 echo

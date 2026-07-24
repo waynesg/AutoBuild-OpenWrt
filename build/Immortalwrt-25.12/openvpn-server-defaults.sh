@@ -34,4 +34,10 @@ if ! uci -q get openvpn.myvpn >/dev/null; then
 	EOF
 fi
 
+if [ "$(uci -q get network.vpn0.ifname)" = "tun0" ]; then
+	uci set network.vpn0.device='tun0'
+	uci delete network.vpn0.ifname
+	uci commit network
+fi
+
 exit 0
