@@ -1,0 +1,23 @@
+#!/bin/sh
+
+IFNAME_LIST="/tmp/network-ifname-migrate.$$"
+
+uci -q show network | sed -n "s/^\(network\.[^.]*\)\.ifname='\(.*\)'$/\1 \2/p" > "$IFNAME_LIST"
+
+[ -s "$IFNAME_LIST" ] || {
+	rm -f "$IFNAME_LIST"
+	exit 0
+}
+
+while read -r section ifname; do
+	[ -n "$section" ] || continue
+	[ -n "$ifname" ] || continue
+
+	uci -q get "${section}.device" >/dev/null || uci set "${section}.device=${ifname}"
+	uci delete "${section}.ifname"
+done < "$IFNAME_LIST"
+
+uci commit network
+rm -f "$IFNAME_LIST"
+
+exit 0
