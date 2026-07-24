@@ -149,6 +149,8 @@ sed -i 's/"QuickFile-Go"/"文件管理"/g' package/waynesg/luci-app-quickfile-go
 sed -i 's/"解除网易云音乐播放限制"/"网易音乐"/g' feeds/luci/applications/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 #sed -i 's/"Vlmcsd KMS 服务器"/"KMS服务"/g' $(grep "KMS 服务器" -rl ./)
 sed -i 's/"title": "subconverter"/"title": "节点订阅"/g'  package/waynesg/luci-app-subconverter/luci-app-subconverter/root/usr/share/luci/menu.d/luci-app-subconverter.json
+sed -i 's/"title": "AdBlock Fast"/"title": "广告拦截"/g' feeds/luci/applications/luci-app-adblock-fast/root/usr/share/luci/menu.d/luci-app-adblock-fast.json
+sed -i 's/msgstr "AdBlock Fast"/msgstr "广告拦截"/g' feeds/luci/applications/luci-app-adblock-fast/po/zh_Hans/adblock-fast.po
 
 echo "重命名网络菜单"
 #network
