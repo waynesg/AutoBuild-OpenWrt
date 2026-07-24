@@ -1,6 +1,6 @@
 # AutoBuild-OpenWrt
 
-> **当前仅维护：ImmortalWrt 24.10 (x86_64)**
+> **当前维护：ImmortalWrt 25.12 / 24.10 (x86_64)**
 
 ---
 
@@ -8,7 +8,8 @@
 
 |   序号    |     X86设备  |   X86设备编译状态及下载链接 |   插件配置   | 备注说明   |
 | :-----------------: | :-------------: |:-----------------: | :-----------------: |  :-----------------: | 
-| 1 |   [![](https://img.shields.io/badge/WayneSG%40OpenWrt-X86__64(Immortalwrt)-lightgrey)](https://github.com/waynesg/AutoBuild-OpenWrt/blob/main/.github/workflows/build_x64_Immortal_24.10.yml)    | [![](https://github.com/waynesg/AutoBuild-OpenWrt/actions/workflows/build_x64_Immortal_24.10.yml/badge.svg)](https://github.com/waynesg/AutoBuild-OpenWrt/actions/workflows/build_x64_Immortal_24.10.yml) |[![](https://img.shields.io/badge/编译-配置-orange.svg)](https://github.com/waynesg/AutoBuild-OpenWrt/blob/main/build/Immortalwrt/.config) | ![](https://img.shields.io/github/last-commit/waynesg/AutoBuild-OpenWrt.svg)
+| 1 | [![](https://img.shields.io/badge/WayneSG%40OpenWrt-X86__64(ImmortalWrt_25.12)-lightgrey)](https://github.com/waynesg/AutoBuild-OpenWrt/blob/main/.github/workflows/build_x64_Immortal_25.12.yml) | [![](https://github.com/waynesg/AutoBuild-OpenWrt/actions/workflows/build_x64_Immortal_25.12.yml/badge.svg)](https://github.com/waynesg/AutoBuild-OpenWrt/actions/workflows/build_x64_Immortal_25.12.yml) | [![](https://img.shields.io/badge/编译-配置-orange.svg)](https://github.com/waynesg/AutoBuild-OpenWrt/blob/main/build/Immortalwrt-25.12/.config) | ![](https://img.shields.io/github/last-commit/waynesg/AutoBuild-OpenWrt.svg) |
+| 2 | [![](https://img.shields.io/badge/WayneSG%40OpenWrt-X86__64(ImmortalWrt_24.10)-lightgrey)](https://github.com/waynesg/AutoBuild-OpenWrt/blob/main/.github/workflows/build_x64_Immortal_24.10.yml) | [![](https://github.com/waynesg/AutoBuild-OpenWrt/actions/workflows/build_x64_Immortal_24.10.yml/badge.svg)](https://github.com/waynesg/AutoBuild-OpenWrt/actions/workflows/build_x64_Immortal_24.10.yml) | [![](https://img.shields.io/badge/编译-配置-orange.svg)](https://github.com/waynesg/AutoBuild-OpenWrt/blob/main/build/Immortalwrt/.config) | ![](https://img.shields.io/github/last-commit/waynesg/AutoBuild-OpenWrt.svg) |
 
 ---
 
