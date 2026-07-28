@@ -61,6 +61,14 @@ TIME y "修改最大连接数修改为65535"
 sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=65535' package/base-files/files/etc/sysctl.conf
 
 echo
+TIME y "删除 apk 包管理器登录提示"
+if [[ -d package/base-files/files/etc/profile.d ]]; then
+	grep -rl 'OpenWrt recently switched to the "apk" package manager' package/base-files/files/etc/profile.d 2>/dev/null | while IFS= read -r file; do
+		rm -f "$file"
+	done
+fi
+
+echo
 TIME y "适配 OpenVPN 服务端"
 OPENVPN_SERVER_DIR="feeds/luci/applications/luci-app-openvpn-server"
 if [[ -d "${OPENVPN_SERVER_DIR}" ]]; then
