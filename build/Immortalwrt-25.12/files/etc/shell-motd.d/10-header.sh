@@ -24,13 +24,7 @@ KERNELID=$(uname -r)
 	# TERM=linux toilet -f standard -F metal S905
 # fi
 
-ACCENT='\e[38;5;45m'
-MUTED='\e[38;5;244m'
-RESET='\e[0m'
-
 printf '\n'
-printf "${ACCENT}+----------------------------------------------------------------+${RESET}\n"
-printf "${ACCENT}|${RESET} %-62s ${ACCENT}|${RESET}\n" "WayNe OpenWrt :: ${VERSION}"
-printf "${ACCENT}|${RESET} %-62s ${ACCENT}|${RESET}\n" "KERNEL ${KERNELID} :: ASCII By @waynesg"
-printf "${ACCENT}+----------------------------------------------------------------+${RESET}\n"
-printf "${MUTED} boot console initialized / luci shell profile loaded${RESET}\n\n"
+printf '+----------------------------------------------------------------+\n'
+printf '| Welcome to \e[0;91mOpenWrt\e[0m %-14s 内核：%-10s ASCII By @waynesg |\n' "$VERSION" "$KERNELID"
+printf '+----------------------------------------------------------------+\n'
