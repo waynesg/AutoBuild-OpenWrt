@@ -147,25 +147,32 @@ bios_vendor=`cat /sys/class/dmi/id/bios_vendor`
 product_version=`cat /sys/class/dmi/id/product_version`
 
 # display info
-vendor=$(echo "$bios_vendor $product_version" | sed 's/[[:space:]]*$//')
-[ -n "$vendor" ] || vendor="Unknown"
-cpu_extra=$(echo "$cpuinfo_raw" | sed -nE 's/.*\(([^)]*)\).*/\1/p')
-[ -n "$cpu_extra" ] || cpu_extra="n/a"
+printf "设备信息： 软路由迷你电脑工控机"
+echo ""
 
-printf '| %-8s | %s |\n' "设备信息" "软路由迷你电脑工控机"
-printf '| %-8s | \x1B[94m%s\x1B[0m |\n' "制 造 商" "$vendor"
-printf '| %-8s | \x1B[33m%s\x1B[39m |\n' "内核版本" "$(uname -rs)"
-printf '| %-8s | \x1B[91m%s 核心x%d\x1B[0m |\n' "处 理 器" "$cpu_model" "$core_count"
-printf '| %-8s | \x1B[92m%s\x1B[0m |\n' "CPU 信息" "$cpu_extra"
-printf '+----------------------------------------------------------------+\n'
-printf '| %-8s | ' "系统状态"
+printf "制 造 商:  \x1B[94m%s\x1B[0m" "$bios_vendor $product_version"
+echo ""
+
+printf "内核版本:  \x1B[33m%s\x1B[39m" "$(uname -rs)"
+echo ""
+
+printf "处 理 器:  \x1B[91m%s 核心x%d\x1B[0m\n" "$cpu_model" "$core_count"
+
+cpu_extra=$(echo "$cpuinfo_raw" | sed -nE 's/.*\(([^)]*)\).*/\1/p')
+printf "CPU 信息:  \x1B[92m%s\x1B[0m\n" "$cpu_extra"
+
 display "系统负载" "${load%% *}" "${critical_load}" "0" "" "${load#* }"
-printf '运行时间:  \x1B[92m%s\x1B[0m |\n' "$time"
-printf '| %-8s | ' "网络内存"
+printf "运行时间:  \x1B[92m%s\x1B[0m\t\t" "$time"
+echo "" # fixed newline
+
 display "内存已用" "$memory_usage" "70" "0" "%" " of ${memory_total}MB"
-printf 'IP  地址:  \x1B[92m%s\x1B[0m |\n' "$ip_address"
-printf '| %-8s | ' "存储空间"
+display "交换内存" "$swap_usage" "10" "0" "%" " of $swap_total""Mb"
+printf "IP  地址:  \x1B[92m%s\x1B[0m" "$ip_address"
+echo "" # fixed newline
+
 display "启动存储" "$boot_usage" "90" "1" "%" " of $boot_total"
 display "系统存储" "$root_usage" "90" "1" "%" " of $root_total"
-printf '|\n'
-printf '+----------------------------------------------------------------+\n\n'
+echo ""
+
+
+echo ""
