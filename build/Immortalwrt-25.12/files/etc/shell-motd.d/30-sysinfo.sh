@@ -147,46 +147,25 @@ bios_vendor=`cat /sys/class/dmi/id/bios_vendor`
 product_version=`cat /sys/class/dmi/id/product_version`
 
 # display info
-ACCENT='\e[38;5;45m'
-GREEN='\e[38;5;82m'
-YELLOW='\e[38;5;220m'
-RED='\e[38;5;203m'
-MUTED='\e[38;5;244m'
-RESET='\e[0m'
-
-metric_color()
-{
-	local value="$1"
-	local limit="$2"
-	if [[ -n "$value" && "$value" =~ ^[0-9]+$ && "$value" -ge "$limit" ]]; then
-		printf "%b" "$RED"
-	else
-		printf "%b" "$GREEN"
-	fi
-}
-
-info_line()
-{
-	printf "${MUTED}[${ACCENT}%-7s${MUTED}]${RESET} %s\n" "$1" "$2"
-}
-
 vendor=$(echo "$bios_vendor $product_version" | sed 's/[[:space:]]*$//')
 [ -n "$vendor" ] || vendor="Unknown"
 cpu_extra=$(echo "$cpuinfo_raw" | sed -nE 's/.*\(([^)]*)\).*/\1/p')
 [ -n "$cpu_extra" ] || cpu_extra="n/a"
 
-mem_color=$(metric_color "$memory_usage" 70)
-boot_color=$(metric_color "$boot_usage" 90)
-root_color=$(metric_color "$root_usage" 90)
-load_color=$(metric_color "${load%% *}" "$critical_load")
-
-printf "${ACCENT}+-- SYSTEM SNAPSHOT ---------------------------------------------+${RESET}\n"
-info_line "DEVICE" "软路由迷你电脑工控机"
-info_line "VENDOR" "$vendor"
-info_line "KERNEL" "$(uname -rs)"
-info_line "CPU" "${cpu_model}  x${core_count}"
-info_line "SENSOR" "$cpu_extra"
-printf "${MUTED}[${ACCENT}LOAD   ${MUTED}]${RESET} ${load_color}%s${RESET}    ${MUTED}UPTIME${RESET} %s\n" "$load" "$time"
-printf "${MUTED}[${ACCENT}MEMORY ${MUTED}]${RESET} ${mem_color}%s%%${RESET} of %sMB    ${MUTED}LAN${RESET} ${GREEN}%s${RESET}\n" "$memory_usage" "$memory_total" "$ip_address"
-printf "${MUTED}[${ACCENT}DISK   ${MUTED}]${RESET} BOOT ${boot_color}%s%%${RESET} of %s    ROOT ${root_color}%s%%${RESET} of %s\n" "$boot_usage" "$boot_total" "$root_usage" "$root_total"
-printf "${ACCENT}+----------------------------------------------------------------+${RESET}\n\n"
+printf '| %-8s | %s |\n' "设备信息" "软路由迷你电脑工控机"
+printf '| %-8s | \x1B[94m%s\x1B[0m |\n' "制 造 商" "$vendor"
+printf '| %-8s | \x1B[33m%s\x1B[39m |\n' "内核版本" "$(uname -rs)"
+printf '| %-8s | \x1B[91m%s 核心x%d\x1B[0m |\n' "处 理 器" "$cpu_model" "$core_count"
+printf '| %-8s | \x1B[92m%s\x1B[0m |\n' "CPU 信息" "$cpu_extra"
+printf '+----------------------------------------------------------------+\n'
+printf '| %-8s | ' "系统状态"
+display "系统负载" "${load%% *}" "${critical_load}" "0" "" "${load#* }"
+printf '运行时间:  \x1B[92m%s\x1B[0m |\n' "$time"
+printf '| %-8s | ' "网络内存"
+display "内存已用" "$memory_usage" "70" "0" "%" " of ${memory_total}MB"
+printf 'IP  地址:  \x1B[92m%s\x1B[0m |\n' "$ip_address"
+printf '| %-8s | ' "存储空间"
+display "启动存储" "$boot_usage" "90" "1" "%" " of $boot_total"
+display "系统存储" "$root_usage" "90" "1" "%" " of $root_total"
+printf '|\n'
+printf '+----------------------------------------------------------------+\n\n'
