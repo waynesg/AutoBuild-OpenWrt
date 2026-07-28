@@ -63,6 +63,7 @@ sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=65535' package
 echo
 TIME y "删除 apk 包管理器登录提示"
 if [[ -d package/base-files/files/etc/profile.d ]]; then
+	rm -f package/base-files/files/etc/profile.d/apk-cheatsheet.sh
 	grep -rl 'OpenWrt recently switched to the "apk" package manager' package/base-files/files/etc/profile.d 2>/dev/null | while IFS= read -r file; do
 		rm -f "$file"
 	done
