@@ -24,7 +24,5 @@ KERNELID=$(uname -r)
 	# TERM=linux toilet -f standard -F metal S905
 # fi
 
-printf '\n'
-printf '+----------------------------------------------------------------+\n'
-printf '| Welcome to \e[0;91mOpenWrt\e[0m %-14s 内核：%-10s ASCII By @waynesg |\n' "$VERSION" "$KERNELID"
-printf '+----------------------------------------------------------------+\n'
+printf '\nWelcome to \e[0;91mOpenWrt\x1B[0m %s %s %sASCII By @waynesg\n'  "$VERSION  内核：$KERNELID"
+echo ""
