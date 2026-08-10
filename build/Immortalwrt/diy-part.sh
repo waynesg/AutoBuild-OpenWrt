@@ -122,6 +122,9 @@ sed -i 's/"启动项"/"启动管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/
 sed -i 's/"软件包"/"软件管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"终端"/"命令终端"/g' feeds/luci/applications/luci-app-ttyd/po/zh_Hans/ttyd.po
 sed -i 's/"Argon 主题设置"/"主题设置"/g' package/waynesg/luci-app-argon-config/po/zh_Hans/argon-config.po
+if [[ -f package/waynesg/luci-theme-argon/Makefile ]]; then
+	sed -i 's/wget-any/wget-ssl/g' package/waynesg/luci-theme-argon/Makefile
+fi
 sed -i 's/"QuickFile-Go"/"文件管理"/g' package/waynesg/luci-app-quickfile-go/luci-app-quickfile-go/root/usr/share/luci/menu.d/luci-app-quickfile-go.json
 echo "修复 QuickFile-Go 深浅模式跟随"
 python3 - <<'PY'
