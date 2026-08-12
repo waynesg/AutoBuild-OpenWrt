@@ -87,6 +87,14 @@ if [[ -d "${SUBCONVERTER_LUCI_DIR}" ]]; then
 fi
 
 echo
+TIME y "添加 CUPS Web 打印管理"
+if [[ -d "${PATH1}/packages/cups-web" ]]; then
+	mkdir -p package/waynesg
+	cp -a "${PATH1}/packages/cups-web" package/waynesg/
+	cp -a "${PATH1}/packages/luci-app-cups-web" package/waynesg/
+fi
+
+echo
 TIME y "兼容 DDNS RPC ucode 语法"
 DDNS_RPC_UC="feeds/luci/applications/luci-app-ddns/root/usr/share/rpcd/ucode/ddns.uc"
 if [[ -f "${DDNS_RPC_UC}" ]] && grep -q '??=' "${DDNS_RPC_UC}"; then
