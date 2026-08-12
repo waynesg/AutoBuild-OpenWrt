@@ -1,7 +1,0 @@
-{
-	"luci-app-cups-web": {
-		"description": "Grant access to CUPS Web configuration",
-		"read": { "uci": [ "cups-web" ] },
-		"write": { "uci": [ "cups-web" ] }
-	}
-}
