@@ -74,7 +74,7 @@ TIME y "适配 OpenVPN 服务端"
 OPENVPN_SERVER_DIR="feeds/luci/applications/luci-app-openvpn-server"
 if [[ -d "${OPENVPN_SERVER_DIR}" ]]; then
 	rm -f "${OPENVPN_SERVER_DIR}/root/etc/config/openvpn"
-	install -m 0755 "${PATH1}/openvpn-server-defaults.sh" "${OPENVPN_SERVER_DIR}/root/etc/uci-defaults/99-openvpn-server-config"
+	install -m 0755 "${PATH1}/resources/openvpn-server-defaults.sh" "${OPENVPN_SERVER_DIR}/root/etc/uci-defaults/99-openvpn-server-config"
 	[ -f "${OPENVPN_SERVER_DIR}/root/etc/uci-defaults/openvpn" ] && sed -i "s/set network\\.vpn0\\.ifname='tun0'/set network.vpn0.device='tun0'/g" "${OPENVPN_SERVER_DIR}/root/etc/uci-defaults/openvpn"
 fi
 
@@ -83,14 +83,7 @@ TIME y "适配 Subconverter 服务"
 SUBCONVERTER_LUCI_DIR="package/waynesg/luci-app-subconverter/luci-app-subconverter"
 if [[ -d "${SUBCONVERTER_LUCI_DIR}" ]]; then
 	rm -f "${SUBCONVERTER_LUCI_DIR}/root/etc/init.d/subconverter"
-	install -m 0755 "${PATH1}/subconverter.init" "feeds/packages/net/subconverter/files/subconverter.init"
-fi
-
-echo
-TIME y "兼容 DDNS RPC ucode 语法"
-DDNS_RPC_UC="feeds/luci/applications/luci-app-ddns/root/usr/share/rpcd/ucode/ddns.uc"
-if [[ -f "${DDNS_RPC_UC}" ]] && grep -q '??=' "${DDNS_RPC_UC}"; then
-	patch -p1 < "${PATH1}/ddns-ucode-compat.patch"
+	install -m 0755 "${PATH1}/resources/subconverter.init" "feeds/packages/net/subconverter/files/subconverter.init"
 fi
 
 echo
@@ -154,11 +147,6 @@ sed -i 's/"软件包"/"软件管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/
 sed -i 's/"终端"/"命令终端"/g' feeds/luci/applications/luci-app-ttyd/po/zh_Hans/ttyd.po
 sed -i 's/"Argon 主题设置"/"主题设置"/g' package/waynesg/luci-app-argon-config/po/zh_Hans/argon-config.po
 sed -i 's/"QuickFile-Go"/"文件管理"/g' package/waynesg/luci-app-quickfile-go/luci-app-quickfile-go/root/usr/share/luci/menu.d/luci-app-quickfile-go.json
-echo "修复 QuickFile-Go 深浅模式跟随"
-QUICKFILE_GO_JS="package/waynesg/luci-app-quickfile-go/luci-app-quickfile-go/htdocs/luci-static/resources/view/quickfile-go.js"
-if [[ -f "${QUICKFILE_GO_JS}" ]] && grep -q "theme: 'dark'" "${QUICKFILE_GO_JS}"; then
-	patch -p1 < "${PATH1}/patches/quickfile-go-theme-sync.patch"
-fi
 
 # #Argon主题修改
 # sed -i 's/(<%= ver.luciversion %>)//g' package/waynesg/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm

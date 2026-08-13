@@ -392,6 +392,18 @@ source build/${firmware}/common.sh && Diy_all
 	echo
 	exit 1
 }
+if [[ -f "${PATH1}/resources/diy-repo-script.sh" ]]; then
+	/bin/bash "${PATH1}/resources/diy-repo-script.sh"
+fi
+if [[ -f "${PATH1}/resources/preset-clash-core.sh" ]]; then
+	/bin/bash "${PATH1}/resources/preset-clash-core.sh"
+fi
+if [[ -n "${DIY_PART_SH}" ]] && [[ -f "${PATH1}/${DIY_PART_SH}" ]]; then
+	/bin/bash "${PATH1}/${DIY_PART_SH}"
+fi
+if [[ -f "${PATH1}/resources/apply-patches.sh" ]]; then
+	/bin/bash "${PATH1}/resources/apply-patches.sh"
+fi
 if [[ $firmware == "openwrt_amlogic" ]]; then
 	packages=" \
 	brcmfmac-firmware-43430-sdio brcmfmac-firmware-43455-sdio kmod-brcmfmac wpad \
@@ -415,8 +427,8 @@ fi
 if [ -n "$(ls -A "build/$firmware/files" 2>/dev/null)" ]; then
           cp -Rf build/$firmware/files ./ && chmod -R +x files
 fi
-if [ -n "$(ls -A "build/$firmware/patches" 2>/dev/null)" ]; then
-          find "build/$firmware/patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d './' -p1 --forward"
+if [[ ! -f "${PATH1}/resources/apply-patches.sh" ]] && [ -n "$(ls -A "build/$firmware/patches" 2>/dev/null)" ]; then
+          find "build/$firmware/patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%' | patch -d './' -p1 --forward"
 fi
 echo
 TIME g "正在加载源和安装源,请耐心等候~~~"
