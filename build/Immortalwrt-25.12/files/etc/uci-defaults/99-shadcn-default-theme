@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Make Shadcn the default LuCI theme when it is installed.
+if [ -d /www/luci-static/shadcn ]; then
+	uci -q set luci.main.mediaurlbase='/luci-static/shadcn'
+	uci -q commit luci
+fi
+
+exit 0
