@@ -126,11 +126,6 @@ if [[ -f package/waynesg/luci-theme-argon/Makefile ]]; then
 	sed -i 's/wget-any/wget-ssl/g' package/waynesg/luci-theme-argon/Makefile
 fi
 sed -i 's/"QuickFile-Go"/"文件管理"/g' package/waynesg/luci-app-quickfile-go/luci-app-quickfile-go/root/usr/share/luci/menu.d/luci-app-quickfile-go.json
-echo "修复 QuickFile-Go 深浅模式跟随"
-QUICKFILE_GO_JS="package/waynesg/luci-app-quickfile-go/luci-app-quickfile-go/htdocs/luci-static/resources/view/quickfile-go.js"
-if [[ -f "${QUICKFILE_GO_JS}" ]] && grep -q "theme: 'dark'" "${QUICKFILE_GO_JS}"; then
-	patch -p1 < "${PATH1}/patches/quickfile-go-theme-sync.patch"
-fi
 
 # #Argon主题修改
 # sed -i 's/(<%= ver.luciversion %>)//g' package/waynesg/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm

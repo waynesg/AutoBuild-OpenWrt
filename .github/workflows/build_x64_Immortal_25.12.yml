@@ -111,6 +111,7 @@ jobs:
         /bin/bash "${PATH1}/resources/diy-repo-script.sh"
         /bin/bash "${PATH1}/resources/preset-clash-core.sh"
         /bin/bash "${PATH1}/$DIY_PART_SH"
+        /bin/bash "${PATH1}/resources/apply-patches.sh"
         ./scripts/feeds update -a
         ./scripts/feeds install -a > /dev/null 2>&1
         ./scripts/feeds install -a
