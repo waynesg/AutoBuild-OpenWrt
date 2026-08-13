@@ -143,7 +143,6 @@ echo "重命名系统菜单"
 #status menu
 sed -i 's/"概况"/"系统概览"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"路由"/"路由映射"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
-sed -i 's/“在线用户”/“在线设备”/g' package/waynesg/luci-app-onliner/luasrc/controller/onliner.lua
 #system menu
 #sed -i 's/"系统"/"系统设置"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"管理权"/"权限管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
@@ -153,7 +152,6 @@ sed -i 's/"挂载点"/"挂载路径"/g' feeds/luci/modules/luci-base/po/zh_Hans/
 sed -i 's/"启动项"/"启动管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"软件包"/"软件管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"终端"/"命令终端"/g' feeds/luci/applications/luci-app-ttyd/po/zh_Hans/ttyd.po
-sed -i 's/"Argon 主题设置"/"主题设置"/g' package/waynesg/luci-app-argon-config/po/zh_Hans/argon-config.po
 sed -i 's/"QuickFile-Go"/"文件管理"/g' package/waynesg/luci-app-quickfile-go/luci-app-quickfile-go/root/usr/share/luci/menu.d/luci-app-quickfile-go.json
 echo "修复 QuickFile-Go 深浅模式跟随"
 python3 - <<'PY'
@@ -241,8 +239,6 @@ path.write_text(text)
 PY
 
 # #Argon主题修改
-# sed -i 's/(<%= ver.luciversion %>)//g' package/waynesg/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
-# sed -i 's/<%= ver.distversion %>/Compiled By @waynesg/g' package/waynesg/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
 # echo "重命名服务菜单"
 
 #services menu

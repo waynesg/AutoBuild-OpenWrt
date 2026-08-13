@@ -38,11 +38,9 @@ clone_or_update_git_repo() {
 }
 
 # theme
-git clone --depth=1 -b master https://github.com/jerrykuku/luci-theme-argon package/waynesg/luci-theme-argon
+git clone --depth=1 https://github.com/waynesg/luci-theme-shadcn package/waynesg/luci-theme-shadcn
 # git clone --depth=1 -b js https://github.com/sirpdboy/luci-theme-kucat package/waynesg/luci-theme-kucat
 # git clone --depth=1 -b js https://github.com/0x676e67/luci-theme-design package/waynesg/luci-theme-design
-# argon-theme-config
-git clone --depth=1 -b master https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
 # aurora
 git clone --depth=1 https://github.com/eamonxg/luci-theme-aurora package/waynesg/luci-theme-aurora
 #theme-config
@@ -77,7 +75,6 @@ git clone --depth=1 -b master https://github.com/tty228/luci-app-wechatpush pack
 clone_or_update_git_repo https://github.com/kiddin9/op-packages package/waynesg/ "" wrtbwmon
 
 #onliner
-clone_or_update_git_repo https://github.com/Hyy2001X/AutoBuild-Packages package/waynesg/luci-app-onliner "" luci-app-onliner
 #airconnect
 git clone --depth=1 -b main https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect
 clone_or_update_git_repo https://github.com/sbwml/luci-app-airconnect package/waynesg/luci-app-airconnect main airconnect
