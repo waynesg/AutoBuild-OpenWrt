@@ -127,89 +127,10 @@ if [[ -f package/waynesg/luci-theme-argon/Makefile ]]; then
 fi
 sed -i 's/"QuickFile-Go"/"文件管理"/g' package/waynesg/luci-app-quickfile-go/luci-app-quickfile-go/root/usr/share/luci/menu.d/luci-app-quickfile-go.json
 echo "修复 QuickFile-Go 深浅模式跟随"
-python3 - <<'PY'
-from pathlib import Path
-
-path = Path("package/waynesg/luci-app-quickfile-go/luci-app-quickfile-go/htdocs/luci-static/resources/view/quickfile-go.js")
-text = path.read_text()
-text = text.replace("    theme: 'dark',\n", "    theme: null,\n    themeMediaQuery: null,\n    themeObserver: null,\n")
-
-theme_methods = r'''    detectTheme: function() {
-        const readTheme = value => {
-            value = String(value || '').toLowerCase();
-            if (value.includes('dark') || value.includes('深色')) return 'dark';
-            if (value.includes('light') || value.includes('浅色')) return 'light';
-            return '';
-        };
-        const doc = document.documentElement;
-        const body = document.body;
-        const cleanClassName = node => Array.from(node.classList || []).filter(cls => !cls.startsWith('qf-')).join(' ');
-        const explicit = readTheme(doc.getAttribute('data-theme')) ||
-            readTheme(doc.getAttribute('data-bs-theme')) ||
-            readTheme(body.getAttribute('data-theme')) ||
-            readTheme(body.getAttribute('data-bs-theme')) ||
-            readTheme(cleanClassName(doc)) ||
-            readTheme(cleanClassName(body));
-        if (explicit) return explicit;
-        const parseBg = value => {
-            const m = String(value || '').match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i);
-            if (!m) return '';
-            const yiq = (Number(m[1]) * 299 + Number(m[2]) * 587 + Number(m[3]) * 114) / 1000;
-            return yiq < 128 ? 'dark' : 'light';
-        };
-        const computed = parseBg(getComputedStyle(body).backgroundColor) ||
-            parseBg(getComputedStyle(doc).backgroundColor);
-        if (computed) return computed;
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
-        return 'light';
-    },
-
-    applyTheme: function() {
-        const theme = this.detectTheme();
-        this.theme = theme;
-        const isLight = theme === 'light';
-        document.body.classList.toggle('qf-quickfile-light', isLight);
-        document.body.classList.toggle('qf-quickfile-dark', !isLight);
-        document.querySelectorAll('.qf-app').forEach(app => app.classList.toggle('qf-light', isLight));
-        if (window.monaco && window.monaco.editor) {
-            try { window.monaco.editor.setTheme(isLight ? 'vs' : 'vs-dark'); } catch (e) {}
-        }
-        return theme;
-    },
-
-    bindThemeSync: function() {
-        if (this.themeObserver) {
-            this.applyTheme();
-            return;
-        }
-        const sync = () => this.applyTheme();
-        if (window.matchMedia) {
-            this.themeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-            if (this.themeMediaQuery.addEventListener) this.themeMediaQuery.addEventListener('change', sync);
-            else if (this.themeMediaQuery.addListener) this.themeMediaQuery.addListener(sync);
-        }
-        this.themeObserver = new MutationObserver(sync);
-        this.themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'style', 'data-theme', 'data-bs-theme'] });
-        this.themeObserver.observe(document.body, { attributes: true, attributeFilter: ['class', 'style', 'data-theme', 'data-bs-theme'] });
-        sync();
-    },
-
-'''
-text = text.replace("    injectCSS: function() {\n", theme_methods + "    injectCSS: function() {\n")
-text = text.replace(
-    "        document.body.classList.toggle('qf-quickfile-light', this.theme === 'light');\n        document.body.classList.toggle('qf-quickfile-dark', this.theme !== 'light');\n",
-    "        this.bindThemeSync();\n        const theme = this.applyTheme();\n",
-)
-text = text.replace(
-    "        const btnTheme = E('span', { click: () => { this.theme = this.theme === 'dark' ? 'light' : 'dark'; this.refresh(this.currentPath); } }, this.theme === 'light' ? '🌙 深色模式' : '☀ 浅色模式');\n",
-    "        const btnTheme = E('span', { click: () => this.applyTheme() }, theme === 'light' ? '☀ 浅色模式' : '🌙 深色模式');\n",
-)
-text = text.replace(
-    "        const appWrapper = E('div', { class: 'qf-app' + (this.theme === 'light' ? ' qf-light' : '') }, [this.fileInput, header, breadcrumbCard, mainCard]);\n",
-    "        const appWrapper = E('div', { class: 'qf-app' + (theme === 'light' ? ' qf-light' : '') }, [this.fileInput, header, breadcrumbCard, mainCard]);\n",
-)
-path.write_text(text)
-PY
+QUICKFILE_GO_JS="package/waynesg/luci-app-quickfile-go/luci-app-quickfile-go/htdocs/luci-static/resources/view/quickfile-go.js"
+if [[ -f "${QUICKFILE_GO_JS}" ]] && grep -q "theme: 'dark'" "${QUICKFILE_GO_JS}"; then
+	patch -p1 < "${PATH1}/patches/quickfile-go-theme-sync.patch"
+fi
 
 # #Argon主题修改
 # sed -i 's/(<%= ver.luciversion %>)//g' package/waynesg/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm

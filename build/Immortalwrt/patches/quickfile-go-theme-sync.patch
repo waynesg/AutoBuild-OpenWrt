@@ -1,0 +1,107 @@
+diff --git a/package/waynesg/luci-app-quickfile-go/luci-app-quickfile-go/htdocs/luci-static/resources/view/quickfile-go.js b/package/waynesg/luci-app-quickfile-go/luci-app-quickfile-go/htdocs/luci-static/resources/view/quickfile-go.js
+index ce826a7..1921cce 100644
+--- a/package/waynesg/luci-app-quickfile-go/luci-app-quickfile-go/htdocs/luci-static/resources/view/quickfile-go.js
++++ b/package/waynesg/luci-app-quickfile-go/luci-app-quickfile-go/htdocs/luci-static/resources/view/quickfile-go.js
+@@ -250,7 +250,9 @@ return view.extend({
+     currentPath: '/',
+     viewMode: 'grid',
+     clipboard: null,
+-    theme: 'dark',
++    theme: null,
++    themeMediaQuery: null,
++    themeObserver: null,
+     fileInput: null,
+     selectedFiles: new Set(),
+     toolbarRefs: null,
+@@ -258,6 +260,66 @@ return view.extend({
+     sortDir: 'asc',
+     settingsRefs: null,
+ 
++    detectTheme: function() {
++        const readTheme = value => {
++            value = String(value || '').toLowerCase();
++            if (value.includes('dark') || value.includes('深色')) return 'dark';
++            if (value.includes('light') || value.includes('浅色')) return 'light';
++            return '';
++        };
++        const doc = document.documentElement;
++        const body = document.body;
++        const cleanClassName = node => Array.from(node.classList || []).filter(cls => !cls.startsWith('qf-')).join(' ');
++        const explicit = readTheme(doc.getAttribute('data-theme')) ||
++            readTheme(doc.getAttribute('data-bs-theme')) ||
++            readTheme(body.getAttribute('data-theme')) ||
++            readTheme(body.getAttribute('data-bs-theme')) ||
++            readTheme(cleanClassName(doc)) ||
++            readTheme(cleanClassName(body));
++        if (explicit) return explicit;
++        const parseBg = value => {
++            const m = String(value || '').match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i);
++            if (!m) return '';
++            const yiq = (Number(m[1]) * 299 + Number(m[2]) * 587 + Number(m[3]) * 114) / 1000;
++            return yiq < 128 ? 'dark' : 'light';
++        };
++        const computed = parseBg(getComputedStyle(body).backgroundColor) ||
++            parseBg(getComputedStyle(doc).backgroundColor);
++        if (computed) return computed;
++        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
++        return 'light';
++    },
++
++    applyTheme: function() {
++        const theme = this.detectTheme();
++        this.theme = theme;
++        const isLight = theme === 'light';
++        document.body.classList.toggle('qf-quickfile-light', isLight);
++        document.body.classList.toggle('qf-quickfile-dark', !isLight);
++        document.querySelectorAll('.qf-app').forEach(app => app.classList.toggle('qf-light', isLight));
++        if (window.monaco && window.monaco.editor) {
++            try { window.monaco.editor.setTheme(isLight ? 'vs' : 'vs-dark'); } catch (e) {}
++        }
++        return theme;
++    },
++
++    bindThemeSync: function() {
++        if (this.themeObserver) {
++            this.applyTheme();
++            return;
++        }
++        const sync = () => this.applyTheme();
++        if (window.matchMedia) {
++            this.themeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
++            if (this.themeMediaQuery.addEventListener) this.themeMediaQuery.addEventListener('change', sync);
++            else if (this.themeMediaQuery.addListener) this.themeMediaQuery.addListener(sync);
++        }
++        this.themeObserver = new MutationObserver(sync);
++        this.themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'style', 'data-theme', 'data-bs-theme'] });
++        this.themeObserver.observe(document.body, { attributes: true, attributeFilter: ['class', 'style', 'data-theme', 'data-bs-theme'] });
++        sync();
++    },
++
+     injectCSS: function() {
+         if (document.getElementById('qf-custom-css')) return;
+         const css = `
+@@ -954,12 +1016,12 @@ return view.extend({
+     },
+ 
+     render: function(files) {
+-        document.body.classList.toggle('qf-quickfile-light', this.theme === 'light');
+-        document.body.classList.toggle('qf-quickfile-dark', this.theme !== 'light');
++        this.bindThemeSync();
++        const theme = this.applyTheme();
+         this.fileInput = E('input', { type: 'file', multiple: 'multiple', style: 'display:none', change: ev => this.uploadFiles(ev.target.files) });
+         const btnRefresh = E('span', { click: () => this.refresh(this.currentPath) }, '↻ 刷新');
+         const btnView = E('span', { click: () => { this.viewMode = this.viewMode === 'grid' ? 'list' : 'grid'; this.refresh(this.currentPath); } }, this.viewMode === 'grid' ? '☶ 列表' : '☷ 网格');
+-        const btnTheme = E('span', { click: () => { this.theme = this.theme === 'dark' ? 'light' : 'dark'; this.refresh(this.currentPath); } }, this.theme === 'light' ? '🌙 深色模式' : '☀ 浅色模式');
++        const btnTheme = E('span', { click: () => this.applyTheme() }, theme === 'light' ? '☀ 浅色模式' : '🌙 深色模式');
+         const btnTasks = E('span', { click: () => this.showTaskCenter() }, '▣ 任务');
+         const btnSettings = E('span', { click: () => this.openSettingsDialog() }, '⚙ 设置');
+ 
+@@ -1026,7 +1088,7 @@ return view.extend({
+         });
+ 
+         const mainCard = E('div', { class: 'qf-card' }, [toolbar, grid]);
+-        const appWrapper = E('div', { class: 'qf-app' + (this.theme === 'light' ? ' qf-light' : '') }, [this.fileInput, header, breadcrumbCard, mainCard]);
++        const appWrapper = E('div', { class: 'qf-app' + (theme === 'light' ? ' qf-light' : '') }, [this.fileInput, header, breadcrumbCard, mainCard]);
+         appWrapper.addEventListener('click', ev => {
+             if (ev.target.closest('.qf-context-menu') || ev.target.closest('.qf-toolbar') || ev.target.closest('.qf-settings') || ev.target.closest('.qf-item')) return;
+             this.clearContextTarget();
