@@ -89,11 +89,6 @@ git clone --depth=1 -b main https://github.com/sirpdboy/luci-app-timecontrol pac
 # git checkout 9e433a2
 #subconverter
 git clone --depth=1 https://github.com/kiddin9/openwrt-subconverter package/waynesg/luci-app-subconverter
-#cups-web
-git clone --depth=1 https://github.com/waynesg/luci-app-cups-web package/waynesg/luci-app-cups-web-repo
-cp -a package/waynesg/luci-app-cups-web-repo/cups-web package/waynesg/cups-web
-cp -a package/waynesg/luci-app-cups-web-repo/luci-app-cups-web package/waynesg/luci-app-cups-web
-rm -rf package/waynesg/luci-app-cups-web-repo
 #tn-netports
 #git clone --depth=1 https://github.com/muink/luci-app-tn-netports package/waynesg/luci-app-tn-netports
 #tailscale
