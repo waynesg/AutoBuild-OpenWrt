@@ -1,6 +1,8 @@
+diff --git a/feeds/luci/applications/luci-app-ddns/root/usr/share/rpcd/ucode/ddns.uc b/feeds/luci/applications/luci-app-ddns/root/usr/share/rpcd/ucode/ddns.uc
+index d7b0af2..91e9de4 100644
 --- a/feeds/luci/applications/luci-app-ddns/root/usr/share/rpcd/ucode/ddns.uc
 +++ b/feeds/luci/applications/luci-app-ddns/root/usr/share/rpcd/ucode/ddns.uc
-@@ -224,42 +224,62 @@
+@@ -224,42 +224,62 @@ const methods = {
  			let res = {};
  			let cache = {};
  
@@ -15,7 +17,7 @@
 +				if (cache.has_wget == null)
 +					cache.has_wget = hasCommand('wget');
 +				return cache.has_wget;
- 			}
+ 			};
  
 -			const hasWgetSsl = () => {
 -				return cache.has_wgetssl ??= hasWget() && system(`wget 2>&1 | grep -iqF 'https'`) == 0 ? true : false;
@@ -82,7 +84,7 @@
  			};
  
  
-@@ -271,7 +291,7 @@
+@@ -271,7 +291,7 @@ const methods = {
  			res['has_forceip'] = hasGNUWgetSsl() || hasWgetSsl() || hasCurl() || hasFetch();
  			res['has_bindnet'] = hasCurl() || hasGNUWgetSsl();
  
@@ -91,7 +93,7 @@
  				if (cache['has_bindhost']) return cache['has_bindhost'];
  				const commands = ['host', 'khost', 'drill'];
  				for (let command in commands) {
-@@ -287,17 +307,17 @@
+@@ -287,17 +307,17 @@ const methods = {
  
  			res['has_bindhost'] = cache['has_bindhost'] || hasBindHost();
  
