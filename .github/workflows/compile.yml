@@ -85,6 +85,9 @@ jobs:
           echo "CODE=Immortalwrt" >> $GITHUB_ENV
           echo "LUCI_EDITION=25.12" >> $GITHUB_ENV
         fi
+        if [[ "${CONFIG_FILE}" == ".config-docker" ]]; then
+          echo "LUCI_EDITION=25.12-Docker" >> $GITHUB_ENV
+        fi
         source build/${{matrix.target}}/common.sh && Diy_variable
 
     - name: 释放空间
@@ -209,7 +212,7 @@ jobs:
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
-        mixkey: ${{ matrix.target }}-${{ env.REPO_BRANCH }}
+        mixkey: ${{ matrix.target }}-${{ env.REPO_BRANCH }}-${{ env.CONFIG_FILE }}
 
     - name: 生成配置
       run: |

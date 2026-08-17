@@ -339,3 +339,13 @@ CONFIG_boost-runtime-shared=y
 CONFIG_boost-static-and-shared-libs=y
 CONFIG_boost-variant-release=y
 # CONFIG_RUBY_ENABLE_YJIT is not set
+
+# Docker profile
+CONFIG_PACKAGE_cgroupfs-mount=y
+CONFIG_PACKAGE_containerd=y
+CONFIG_PACKAGE_docker=y
+CONFIG_PACKAGE_docker-compose=y
+CONFIG_PACKAGE_dockerd=y
+CONFIG_PACKAGE_kmod-fs-overlayfs=y
+CONFIG_PACKAGE_luci-app-dockerman=y
+CONFIG_PACKAGE_luci-i18n-dockerman-zh-cn=y
