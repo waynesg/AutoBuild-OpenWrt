@@ -38,7 +38,6 @@ clone_or_update_git_repo() {
 }
 
 # theme
-git clone --depth=1 -b master https://github.com/jerrykuku/luci-theme-argon package/waynesg/luci-theme-argon
 git clone --depth=1 https://github.com/eamonxg/luci-theme-shadcn package/waynesg/luci-theme-shadcn
 # git clone --depth=1 -b js https://github.com/sirpdboy/luci-theme-kucat package/waynesg/luci-theme-kucat
 # git clone --depth=1 -b js https://github.com/0x676e67/luci-theme-design package/waynesg/luci-theme-design
@@ -102,5 +101,3 @@ git clone --depth=1 https://github.com/kiddin9/openwrt-subconverter package/wayn
 #git clone --depth=1 https://github.com/timsaya/luci-app-bandix package/waynesg/luci-app-bandix
 #git clone --depth=1 https://github.com/timsaya/openwrt-bandix package/waynesg/openwrt-bandix
 #rm -f "package/waynesg/openwrt-bandix/.github/workflows/Auto compile with openwrt sdk.yml"
- # argon-theme-config
-git clone --depth=1 -b master https://github.com/jerrykuku/luci-app-argon-config package/waynesg/luci-app-argon-config
