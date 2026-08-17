@@ -25,6 +25,11 @@ apply_patch_if_needed \
 	"${PATCH_DIR}/quickfile-go-theme-sync.patch"
 
 apply_patch_if_needed \
+	"feeds/packages/utils/dockerd/Makefile" \
+	"PKG_NAME:=dockerd" \
+	"${PATCH_DIR}/dockerd-openwrt-cross-compile.patch"
+
+apply_patch_if_needed \
 	"package/waynesg/luci-theme-shadcn/Makefile" \
 	"LUCI_DEPENDS:=+luci-base$" \
 	"${PATCH_DIR}/shadcn-customizations.patch"
