@@ -39,7 +39,7 @@ clone_or_update_git_repo() {
 
 # theme
 git clone --depth=1 -b master https://github.com/jerrykuku/luci-theme-argon package/waynesg/luci-theme-argon
-git clone --depth=1 https://github.com/waynesg/luci-theme-shadcn package/waynesg/luci-theme-shadcn
+git clone --depth=1 https://github.com/eamonxg/luci-theme-shadcn package/waynesg/luci-theme-shadcn
 # git clone --depth=1 -b js https://github.com/sirpdboy/luci-theme-kucat package/waynesg/luci-theme-kucat
 # git clone --depth=1 -b js https://github.com/0x676e67/luci-theme-design package/waynesg/luci-theme-design
 # aurora
