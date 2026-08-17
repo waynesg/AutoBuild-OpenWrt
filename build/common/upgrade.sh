@@ -118,7 +118,7 @@ GET_TARGET_INFO() {
 }
 
 Diy_Part1() {
-sed -i 's/DEFAULT_PACKAGES +=/DEFAULT_PACKAGES += luci-app-autoupdate luci-app-ttyd/g' target/linux/*/Makefile
+sed -i 's/DEFAULT_PACKAGES +=/DEFAULT_PACKAGES += luci-app-autoupdate/g' target/linux/*/Makefile
 }
 
 Diy_Part2() {
