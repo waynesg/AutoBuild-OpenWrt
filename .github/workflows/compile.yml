@@ -45,6 +45,13 @@ jobs:
         cp -f build/common/*.sh build/${{matrix.target}}/
         sudo chmod -R +x build
         source "${GITHUB_WORKSPACE}/build/${{matrix.target}}/settings.ini"
+        TRIGGER_LINE="$(tail -n 1 "${GITHUB_WORKSPACE}/build/${{matrix.target}}/relevance/start" 2>/dev/null || true)"
+        if [[ "${TRIGGER_LINE}" == *-.config-docker-* ]]; then
+          CONFIG_FILE=".config-docker"
+        else
+          CONFIG_FILE=".config"
+        fi
+        echo "Selected profile: ${CONFIG_FILE}"
         echo "REPO_URL=${REPO_URL}" >> $GITHUB_ENV
         echo "REPO_BRANCH=${REPO_BRANCH}" >> $GITHUB_ENV
         echo "CONFIG_FILE=${CONFIG_FILE}" >> $GITHUB_ENV

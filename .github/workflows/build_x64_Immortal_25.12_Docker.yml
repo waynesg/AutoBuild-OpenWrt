@@ -24,6 +24,10 @@ env:
   WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
   TZ: Asia/Shanghai
 
+concurrency:
+  group: immortalwrt-25.12-profile-trigger
+  cancel-in-progress: false
+
 
 jobs:
   build:
