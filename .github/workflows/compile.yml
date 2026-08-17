@@ -315,14 +315,14 @@ jobs:
         artifacts: "${{ env.FIRMWARE }}/*"
         
     - name: 更新Step 1
-      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
+      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.CONFIG_FILE != '.config-docker' && env.REPO_TOKEN
       run: |
        cd openwrt
        source "${PATH1}/upgrade.sh" && Diy_Part3
         
     - name: 更新Step 2
       continue-on-error: true
-      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
+      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.CONFIG_FILE != '.config-docker' && env.REPO_TOKEN
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.REPO_TOKEN }}
@@ -344,14 +344,14 @@ jobs:
             ⏳ 编译用时 : ${{ env.BUILD_TIME }}
         
     - name: 更新Step 3
-      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true'
+      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.CONFIG_FILE != '.config-docker'
       run: |
         mkdir -p Github_Tags
         cd Github_Tags
         wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/AutoUpdate -O Github_Tags
         
     - name: 更新Step 4
-      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.REPO_TOKEN
+      if: env.COMPILESTATUS == 'success' && env.REGULAR_UPDATE == 'true' && env.CONFIG_FILE != '.config-docker' && env.REPO_TOKEN
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.REPO_TOKEN }}
