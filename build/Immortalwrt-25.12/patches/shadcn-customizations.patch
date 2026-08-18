@@ -19,26 +19,26 @@ index 0000000..83cc95f
 @@ -0,0 +1,23 @@
 +/* Readability adjustments. The sidebar brand keeps the upstream size. */
 +#main-wrapper {
-+  --text-xs: 0.8125rem;
-+  --text-xs--line-height: 1.125rem;
-+  --text-sm: 0.9375rem;
-+  --text-sm--line-height: 1.375rem;
-+  --text-base: 1.0625rem;
-+  --text-base--line-height: 1.625rem;
-+  --text-lg: 1.1875rem;
-+  --text-lg--line-height: 1.75rem;
-+  --text-xl: 1.375rem;
-+  --text-xl--line-height: 1.875rem;
-+  --text-2xl: 1.625rem;
-+  --text-2xl--line-height: 2.125rem;
-+}
-+
-+#sidebar .sidebar-nav,
-+.sidebar-collapsed-popover {
 +  --text-xs: 0.875rem;
 +  --text-xs--line-height: 1.25rem;
 +  --text-sm: 1rem;
 +  --text-sm--line-height: 1.5rem;
++  --text-base: 1.125rem;
++  --text-base--line-height: 1.75rem;
++  --text-lg: 1.25rem;
++  --text-lg--line-height: 1.875rem;
++  --text-xl: 1.5rem;
++  --text-xl--line-height: 2rem;
++  --text-2xl: 1.75rem;
++  --text-2xl--line-height: 2.25rem;
++}
++
++#sidebar .sidebar-nav,
++.sidebar-collapsed-popover {
++  --text-xs: 1rem;
++  --text-xs--line-height: 1.5rem;
++  --text-sm: 1.125rem;
++  --text-sm--line-height: 1.625rem;
 +}
 diff --git a/package/waynesg/luci-theme-shadcn/root/etc/uci-defaults/31_luci-theme-shadcn-background b/package/waynesg/luci-theme-shadcn/root/etc/uci-defaults/31_luci-theme-shadcn-background
 new file mode 100755
@@ -100,7 +100,7 @@ index fab1291..5d2daac 100644
  		<link rel="stylesheet" href="{{ media }}/login.css">
  		{% else %}
  		<link rel="stylesheet" href="{{ media }}/main.css" data-shadcn-shell>
-+		<link rel="stylesheet" href="{{ media }}/wayne-custom.css" data-shadcn-shell>
++		<link rel="stylesheet" href="{{ media }}/wayne-custom.css?v=font-20260818" data-shadcn-shell>
  		{% for (let patch in patch_files): %}
  		<link rel="stylesheet" href="{{ media }}/patches/{{ patch }}.css" data-shadcn-patch="{{ patch }}">
  		{% endfor %}
