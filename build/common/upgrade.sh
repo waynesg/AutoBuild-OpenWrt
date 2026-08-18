@@ -111,8 +111,10 @@ GET_TARGET_INFO() {
 		 AutoUpdate_Version=OFF
 	fi
 	In_Firmware_Info="${Home}/package/base-files/files/bin/openwrt_info"
-	Github_Release="${Github}/releases/download/AutoUpdate"
-	Github_UP_RELEASE="${Github}/releases/AutoUpdate"
+	Update_Tag="AutoUpdate"
+	[[ "${CONFIG_FILE}" == ".config-docker" ]] && Update_Tag="AutoUpdate-Docker"
+	Github_Release="${Github}/releases/download/${Update_Tag}"
+	Github_UP_RELEASE="${Github}/releases/${Update_Tag}"
 	Openwrt_Version="${REPO_Name}-${TARGET_PROFILE}-${Compile_Date}"
 	Egrep_Firmware="${LUCI_Name}-${REPO_Name}-${TARGET_PROFILE}"
 }
@@ -132,6 +134,7 @@ Diy_Part2() {
 	LUCI_Name=${LUCI_Name}
 	REPO_Name=${REPO_Name}
 	Github_Release=${Github_Release}
+	Update_Tag=${Update_Tag}
 	Egrep_Firmware=${Egrep_Firmware}
 	Download_Path=/tmp/Downloads
 	Version=${AutoUpdate_Version}
