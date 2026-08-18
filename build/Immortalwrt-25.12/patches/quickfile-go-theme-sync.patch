@@ -13,7 +13,7 @@ index ce826a7..1921cce 100644
      fileInput: null,
      selectedFiles: new Set(),
      toolbarRefs: null,
-@@ -258,6 +260,66 @@ return view.extend({
+@@ -258,6 +260,70 @@ return view.extend({
      sortDir: 'asc',
      settingsRefs: null,
  
@@ -26,6 +26,9 @@ index ce826a7..1921cce 100644
 +        };
 +        const doc = document.documentElement;
 +        const body = document.body;
++        const shadcnDarkMode = doc.getAttribute('data-darkmode');
++        if (shadcnDarkMode === 'true') return 'dark';
++        if (shadcnDarkMode === 'false') return 'light';
 +        const cleanClassName = node => Array.from(node.classList || []).filter(cls => !cls.startsWith('qf-')).join(' ');
 +        const explicit = readTheme(doc.getAttribute('data-theme')) ||
 +            readTheme(doc.getAttribute('data-bs-theme')) ||
@@ -35,8 +38,9 @@ index ce826a7..1921cce 100644
 +            readTheme(cleanClassName(body));
 +        if (explicit) return explicit;
 +        const parseBg = value => {
-+            const m = String(value || '').match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i);
++            const m = String(value || '').match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?/i);
 +            if (!m) return '';
++            if (m[4] != null && Number(m[4]) === 0) return '';
 +            const yiq = (Number(m[1]) * 299 + Number(m[2]) * 587 + Number(m[3]) * 114) / 1000;
 +            return yiq < 128 ? 'dark' : 'light';
 +        };
@@ -72,7 +76,7 @@ index ce826a7..1921cce 100644
 +            else if (this.themeMediaQuery.addListener) this.themeMediaQuery.addListener(sync);
 +        }
 +        this.themeObserver = new MutationObserver(sync);
-+        this.themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'style', 'data-theme', 'data-bs-theme'] });
++        this.themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'style', 'data-theme', 'data-bs-theme', 'data-darkmode'] });
 +        this.themeObserver.observe(document.body, { attributes: true, attributeFilter: ['class', 'style', 'data-theme', 'data-bs-theme'] });
 +        sync();
 +    },
