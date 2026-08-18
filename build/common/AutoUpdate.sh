@@ -332,64 +332,42 @@ echo "下载保存：${Download_Path}"
 echo "固件体积：${CLOUD_Firmware_Size}M"
 cd ${Download_Path}
 UPDATE_STATUS "正在下载固件: ${Firmware}"
-if command -v curl >/dev/null 2>&1; then
-	export Google_Check=$(curl -I -s --connect-timeout 8 google.com -w %{http_code} | tail -n1)
-	if [ ! "$Google_Check" == 301 ];then
-		TIME g "正在下载云端固件,请耐心等待..."
-		wget -q "https://ghproxy.com/${Github_Release}/${Firmware}" -O ${Firmware}
-		if [[ $? -ne 0 ]];then
-			wget -q "https://pd.zwc365.com/${Github_Release}/${Firmware}" -O ${Firmware}
-			if [[ $? -ne 0 ]];then
-				UPDATE_STATUS "升级失败: 下载云端固件失败"
-				TIME r "下载云端固件失败,请尝试手动安装!"
-				echo
-				exit 1
-			else
-				TIME y "下载云端固件成功!"
-			fi
-		else
-			TIME y "下载云端固件成功!"
-		fi
+download_firmware() {
+	local url="$1"
+	local size
+	rm -f "${Firmware}"
+	if command -v curl >/dev/null 2>&1; then
+		curl -L --fail --silent --show-error --connect-timeout 15 --retry 2 "${url}" -o "${Firmware}" || return 1
 	else
-		TIME g "正在下载云端固件,请耐心等待..."
-		wget -q "${Github_Release}/${Firmware}" -O ${Firmware}
-		if [[ $? -ne 0 ]];then
-			wget -q "https://ghproxy.com/${Github_Release}/${Firmware}" -O ${Firmware}
-			if [[ $? -ne 0 ]];then
-				UPDATE_STATUS "升级失败: 下载云端固件失败"
-				TIME r "下载云端固件失败,请尝试手动安装!"
-				echo
-				exit 1
-			else
-				TIME y "下载云端固件成功!"
-			fi
-		else
-			TIME y "下载云端固件成功!"
-		fi
+		wget -q "${url}" -O "${Firmware}" || return 1
 	fi
-else
-	TIME g "正在下载云端固件,请耐心等待..."
-	wget -q "https://ghproxy.com/${Github_Release}/${Firmware}" -O ${Firmware}
-	if [[ $? -ne 0 ]];then
-		wget -q "https://pd.zwc365.com/${Github_Release}/${Firmware}" -O ${Firmware}
-		if [[ $? -ne 0 ]];then
-			UPDATE_STATUS "升级失败: 下载云端固件失败"
-			TIME r "下载云端固件失败,请尝试手动安装!"
-			echo
-			exit 1
-		else
-			TIME y "下载云端固件成功!"
-		fi
-	else
-		TIME y "下载云端固件成功!"
+	size=$(wc -c < "${Firmware}" 2>/dev/null)
+	[[ "${size:-0}" -ge 1048576 ]] || {
+		rm -f "${Firmware}"
+		return 1
+	}
+}
+
+TIME g "正在下载云端固件,请耐心等待..."
+Download_OK=0
+for Firmware_URL in \
+	"${Github_Release}/${Firmware}" \
+	"https://pd.zwc365.com/${Github_Release}/${Firmware}" \
+	"https://ghproxy.com/${Github_Release}/${Firmware}"
+do
+	if download_firmware "${Firmware_URL}"; then
+		Download_OK=1
+		break
 	fi
-fi
-if [[ ! -s "${Firmware}" ]]; then
-	UPDATE_STATUS "升级失败: 未找到下载后的固件文件"
-	TIME r "固件下载失败,未找到文件: ${Firmware}"
+done
+
+if [[ "${Download_OK}" != 1 ]]; then
+	UPDATE_STATUS "升级失败: 下载云端固件失败"
+	TIME r "下载云端固件失败或下载内容不是有效固件,请尝试手动安装!"
 	echo
 	exit 1
 fi
+TIME y "下载云端固件成功!"
 UPDATE_STATUS "固件下载完成，正在校验文件"
 export CLOUD_MD5=$(md5sum ${Firmware} | cut -c1-3)
 export CLOUD_256=$(sha256sum ${Firmware} | cut -c1-3)
