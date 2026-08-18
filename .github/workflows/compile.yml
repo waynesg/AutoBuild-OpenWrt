@@ -48,10 +48,14 @@ jobs:
         TRIGGER_LINE="$(tail -n 1 "${GITHUB_WORKSPACE}/build/${{matrix.target}}/relevance/start" 2>/dev/null || true)"
         if [[ "${TRIGGER_LINE}" == *-.config-docker-* ]]; then
           CONFIG_FILE=".config-docker"
+          UPLOAD_RELEASE="true"
+          RELEASE_SUFFIX="-Docker"
         else
           CONFIG_FILE=".config"
+          RELEASE_SUFFIX=""
         fi
         echo "Selected profile: ${CONFIG_FILE}"
+        echo "RELEASE_SUFFIX=${RELEASE_SUFFIX}" >> $GITHUB_ENV
         echo "REPO_URL=${REPO_URL}" >> $GITHUB_ENV
         echo "REPO_BRANCH=${REPO_BRANCH}" >> $GITHUB_ENV
         echo "CONFIG_FILE=${CONFIG_FILE}" >> $GITHUB_ENV
@@ -315,7 +319,7 @@ jobs:
       if: env.ORGANIZERSTATUS == 'success' && env.UPLOAD_RELEASE == 'true' && env.REPO_TOKEN
       uses: ncipollo/release-action@v1
       with:
-        name: ${{ env.CODE }}-${{ env.TARGET_PROFILE }}
+        name: ${{ env.CODE }}-${{ env.TARGET_PROFILE }}${{ env.RELEASE_SUFFIX }}
         tag: ${{ env.date }}
         token: ${{ secrets.REPO_TOKEN }}
         bodyFile: "update_log.txt"
