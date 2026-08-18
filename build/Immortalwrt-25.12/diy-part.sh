@@ -133,6 +133,11 @@ sed -i 's/"进程"/"进程管理"/g' `grep "进程" -rl ./`
 echo             
 TIME b "插件 重命名..."
 echo "重命名系统菜单"
+# Keep Dockerman as a standalone top-level Docker menu on 25.12.
+DOCKERMAN_MENU="feeds/luci/applications/luci-app-dockerman/root/usr/share/luci/menu.d/luci-app-dockerman.json"
+if [ -f "${DOCKERMAN_MENU}" ]; then
+	sed -i 's#admin/services/dockerman#admin/docker#g; s#"Dockerman JS"#"Docker"#g' "${DOCKERMAN_MENU}"
+fi
 #status menu
 sed -i 's/"概况"/"系统概览"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"路由"/"路由映射"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
