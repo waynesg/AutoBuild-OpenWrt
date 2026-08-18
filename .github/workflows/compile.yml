@@ -48,7 +48,7 @@ jobs:
         TRIGGER_LINE="$(tail -n 1 "${GITHUB_WORKSPACE}/build/${{matrix.target}}/relevance/start" 2>/dev/null || true)"
         if [[ "${TRIGGER_LINE}" == *-.config-docker-* ]]; then
           CONFIG_FILE=".config-docker"
-          UPLOAD_RELEASE="true"
+          UPLOAD_RELEASE="false"
           RELEASE_SUFFIX="-Docker"
           UPDATE_TAG="AutoUpdate-Docker"
         else
