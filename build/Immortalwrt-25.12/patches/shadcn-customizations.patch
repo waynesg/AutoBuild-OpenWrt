@@ -63,15 +63,24 @@ new file mode 100755
 index 0000000..a7d26a0
 --- /dev/null
 +++ b/package/waynesg/luci-theme-shadcn/root/usr/bin/shadcn-login-bg
-@@ -0,0 +1,28 @@
+@@ -0,0 +1,38 @@
 +#!/bin/sh
 +
 +DEST=/www/luci-static/shadcn/images/login-bg.jpeg
 +FALLBACK=/www/luci-static/shadcn/images/login-bg-fallback.jpeg
 +TMP=/tmp/shadcn-login-bg.jpeg
-+DAY=$(date +%j)
++STATE=/etc/shadcn-login-bg-index
++RANDOM_SOURCE=$(od -An -N4 -tu4 /dev/urandom 2>/dev/null | tr -d ' ')
++[ -n "$RANDOM_SOURCE" ] || RANDOM_SOURCE=$(date +%s)
++INDEX=$((RANDOM_SOURCE % 7))
++LAST_INDEX=$(cat "$STATE" 2>/dev/null)
++case "$LAST_INDEX" in
++	0|1|2|3|4|5|6)
++		[ "$INDEX" -eq "$LAST_INDEX" ] && INDEX=$(((INDEX + 1 + RANDOM_SOURCE % 6) % 7))
++	;;
++esac
 +
-+case $((DAY % 7)) in
++case "$INDEX" in
 +	0) URL='https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1600&q=85&auto=format' ;;
 +	1) URL='https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=1600&q=85&auto=format' ;;
 +	2) URL='https://images.unsplash.com/photo-1500534623283-312aadd485b7?w=1600&q=85&auto=format' ;;
@@ -88,6 +97,7 @@ index 0000000..a7d26a0
 +if curl -L --fail --silent --max-time 45 "$URL" -o "$TMP" && test -s "$TMP"; then
 +	mv "$TMP" "$DEST"
 +	chmod 0644 "$DEST"
++	echo "$INDEX" > "$STATE"
 +else
 +	rm -f "$TMP"
 +	test -s "$FALLBACK" && cp "$FALLBACK" "$DEST"
