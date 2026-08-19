@@ -1,4 +1,4 @@
-# AutoBuild-OpenWrt Changes
+# AutoBuild-OpenWrt Maintenance Record
 
 ## 2026-08-19
 
