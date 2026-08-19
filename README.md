@@ -34,16 +34,6 @@ bash /bin/AutoUpdate.sh -h          # 列出帮助信息
 
 ---
 
-## 近期构建变更
-
-- ImmortalWrt 25.12 普通版和 Docker 版均加入官方 Passwall2，LuCI 菜单显示为 `Passwall`。
-- Passwall2 依赖优先使用 `Openwrt-Passwall/openwrt-passwall-packages`，构建时会移除 feeds 中的同名依赖，避免重复包定义。
-- 为控制 GitHub Actions 编译时长，默认关闭 Passwall2 的 Shadowsocks Rust 客户端和服务端，保留 Xray、Sing-box、Hysteria 等核心。
-- Shadcn 登录背景改为每日随机选择图片，避免连续重复，并保留下载失败时的内置背景回退。
-- Docker 固件使用独立的 `AutoUpdate-Docker` 更新通道，不再创建额外的日期版 Docker Release。
-
----
-
 ## 使用 tools 固件工具箱
 
 打开 `TTYD` 终端或者使用 `SSH`，执行 `tools` 或 `bash /bin/AutoBuild_Tools.sh` 即可启动固件工具箱。
