@@ -52,6 +52,12 @@ git clone --depth=1 -b v5 https://github.com/sbwml/luci-app-mosdns package/wayne
 #clone_or_update_git_repo https://github.com/Openwrt-Passwall/openwrt-passwall package/waynesg/luci-app-passwall main luci-app-passwall
 git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall2 package/waynesg/luci-app-passwall2
 git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall-packages package/waynesg/luci-app-passwall-packages
+# Prefer Passwall's official dependency builds over same-named feed packages.
+find package/waynesg/luci-app-passwall-packages -mindepth 2 -maxdepth 2 -name Makefile -print0 | \
+  while IFS= read -r -d '' makefile; do
+    package_dir=$(basename "$(dirname "$makefile")")
+    find feeds -mindepth 2 -type d -name "$package_dir" -prune -exec rm -rf {} +
+  done
 git clone --depth=1 https://github.com/jerrykuku/node-request package/waynesg/luci-app-dependence/node-request
 #git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb package/waynesg/luci-app-dependence/lua-maxminddb
 #clone_or_update_git_repo https://github.com/fw876/helloworld package/waynesg/luci-app-dependence/lua-neturl master lua-neturl
