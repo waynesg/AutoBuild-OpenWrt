@@ -1,0 +1,28 @@
+diff --git a/feeds/packages/utils/dockerd/Makefile b/feeds/packages/utils/dockerd/Makefile
+--- a/feeds/packages/utils/dockerd/Makefile
++++ b/feeds/packages/utils/dockerd/Makefile
+@@ -112,6 +112,7 @@ endif
+ define Build/Compile
+ 	cd $(PKG_BUILD_DIR); \
+ 	$(GO_PKG_VARS) \
++	OPENWRT_BUILD=1 \
+ 	DOCKER_GITCOMMIT=$(PKG_GIT_SHORT_COMMIT) \
+ 	DOCKER_BUILDTAGS='$(BUILDTAGS)' \
+ 	VERSION=$(PKG_VERSION) \
+diff --git a/feeds/packages/utils/dockerd/patches/999-openwrt-skip-host-binaries.patch b/feeds/packages/utils/dockerd/patches/999-openwrt-skip-host-binaries.patch
+new file mode 100644
+--- /dev/null
++++ b/feeds/packages/utils/dockerd/patches/999-openwrt-skip-host-binaries.patch
+@@ -0,0 +1,8 @@
++--- a/hack/make/binary-daemon
+++++ b/hack/make/binary-daemon
++@@ -4,6 +4,11 @@ set -e
++ copy_binaries() {
++ 	local dir="${1:?}"
++
+++ 	# OpenWrt packages provide these binaries separately for the target.
+++ 	if [ "${OPENWRT_BUILD:-}" = "1" ]; then
+++ 		return
+++ 	fi
++
+ 	# Add nested executables to bundle dir so we have complete set of
