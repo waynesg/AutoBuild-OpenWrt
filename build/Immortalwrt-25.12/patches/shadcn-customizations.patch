@@ -102,16 +102,3 @@ index 0000000..a7d26a0
 +	rm -f "$TMP"
 +	test -s "$FALLBACK" && cp "$FALLBACK" "$DEST"
 +fi
-diff --git a/package/waynesg/luci-theme-shadcn/ucode/template/themes/shadcn/header.ut b/package/waynesg/luci-theme-shadcn/ucode/template/themes/shadcn/header.ut
-index fab1291..5d2daac 100644
---- a/package/waynesg/luci-theme-shadcn/ucode/template/themes/shadcn/header.ut
-+++ b/package/waynesg/luci-theme-shadcn/ucode/template/themes/shadcn/header.ut
-@@ -59,6 +59,7 @@
-		{% if (blank_page): %}
-		<link rel="stylesheet" href="{{ media }}/login.css">
-		{% else %}
-		<link rel="stylesheet" href="{{ media }}/main.css">
-+		<link rel="stylesheet" href="{{ media }}/wayne-custom.css?v=font-20260818">
-		{% for (let patch in patch_files): %}
-		<link rel="stylesheet" href="{{ media }}/patches/{{ patch }}.css">
- 		{% endfor %}
