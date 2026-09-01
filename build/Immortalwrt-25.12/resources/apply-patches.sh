@@ -33,3 +33,11 @@ apply_patch_if_needed \
 	"package/waynesg/luci-theme-shadcn/Makefile" \
 	"LUCI_DEPENDS:=+luci-base$" \
 	"${PATCH_DIR}/shadcn-customizations.patch"
+
+# The upstream header template changes frequently; inject the shared stylesheet
+# independently so unrelated upstream markup changes cannot break the build.
+SHADCN_HEADER="package/waynesg/luci-theme-shadcn/ucode/template/themes/shadcn/header.ut"
+if [[ -f "${SHADCN_HEADER}" ]] && ! grep -q 'wayne-custom.css' "${SHADCN_HEADER}"; then
+	awk '/<link rel="stylesheet" href="\{\{ media \}\}\/main\.css"/ { print; print "\t\t<link rel=\"stylesheet\" href=\"{{ media }}/wayne-custom.css?v=font-20260818\">"; next } { print }' "${SHADCN_HEADER}" > "${SHADCN_HEADER}.tmp"
+	mv "${SHADCN_HEADER}.tmp" "${SHADCN_HEADER}"
+fi
