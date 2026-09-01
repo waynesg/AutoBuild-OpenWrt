@@ -19,7 +19,12 @@ apply_patch_if_needed \
 	"theme: 'dark'" \
 	"${PATCH_DIR}/quickfile-go-theme-sync.patch"
 
-apply_patch_if_needed \
-	"feeds/packages/utils/dockerd/Makefile" \
-	"DOCKER_GITCOMMIT" \
-	"${PATCH_DIR}/dockerd-openwrt-cross-compile.patch"
+DOCKER_PATCH="feeds/packages/utils/dockerd/patches/999-openwrt-skip-host-binaries.patch"
+if [[ -f "${DOCKER_PATCH}" ]] && ! grep -q 'OpenWrt packages provide' "${DOCKER_PATCH}"; then
+	patch -p1 < "${PATCH_DIR}/dockerd-openwrt-cross-compile.patch"
+fi
+DOCKER_MAKEFILE="feeds/packages/utils/dockerd/Makefile"
+if [[ -f "${DOCKER_MAKEFILE}" ]] && ! grep -q 'OPENWRT_BUILD=1' "${DOCKER_MAKEFILE}"; then
+	awk '/\$\(GO_PKG_VARS\)/ { print; print "\tOPENWRT_BUILD=1 \\\\"; next } { print }' "${DOCKER_MAKEFILE}" > "${DOCKER_MAKEFILE}.tmp"
+	mv "${DOCKER_MAKEFILE}.tmp" "${DOCKER_MAKEFILE}"
+fi
