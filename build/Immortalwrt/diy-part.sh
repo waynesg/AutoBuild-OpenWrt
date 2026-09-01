@@ -96,7 +96,7 @@ sed -i 's|/services/|/control/|' feeds/luci/applications/luci-app-wol/root/usr/s
 sed -i 's/\"services\"/\"control\"/g'  package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/appfilter.lua
 for oaf_controller in package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/oaf*.lua; do
   [ -f "$oaf_controller" ] || continue
-  sed -i 's/\"admin\", \"services\", \"oaf\"/\"admin\", \"control\", \"oaf\"/g; s/\"admin\", \"control\", \"oaf\", \"api\"/\"admin\", \"services\", \"oaf\", \"api\"/g; s/_(\"Parental Control\")/_(\"行为管理\")/' "$oaf_controller"
+  sed -i 's/\"admin\", \"control\", \"oaf\"/\"admin\", \"services\", \"oaf\"/g; s/_(\"Parental Control\")/_(\"行为管理\")/' "$oaf_controller"
 done
 #sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
 #sed -i 's|/services/|/nas/|' feeds/luci/applications/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
