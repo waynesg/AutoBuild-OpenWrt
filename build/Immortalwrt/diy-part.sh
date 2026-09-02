@@ -187,6 +187,7 @@ TIME b "重命名 完成"
 
 rm -rf package/feeds/packages/exim
 rm -rf package/feeds/luci/luci-app-radicale
+rm -rf package/feeds/luci/luci-app-radicale3 feeds/luci/applications/luci-app-radicale3
 rm -rf package/feeds/luci/luci-app-radicale3
 rm -rf package/feeds/packages/onionshare-cli
 
