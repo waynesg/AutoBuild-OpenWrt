@@ -93,10 +93,9 @@ sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-3cat/root/usr/
 sed -i 's|/system/|/nas/|' feeds/luci/applications/luci-app-filemanager/root/usr/share/luci/menu.d/luci-app-filemanager.json
 #sed -i 's|/services/|/vpn/|' feeds/luci/applications/luci-app-tailscale-community/root/usr/share/luci/menu.d/luci-app-tailscale-community.json
 sed -i 's|/services/|/control/|' feeds/luci/applications/luci-app-wol/root/usr/share/luci/menu.d/luci-app-wol.json
-sed -i 's/\"services\"/\"control\"/g'  package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/appfilter.lua
 for oaf_controller in package/waynesg/luci-app-oaf/luci-app-oaf/luasrc/controller/oaf*.lua; do
   [ -f "$oaf_controller" ] || continue
-  sed -i 's/\"admin\", \"control\", \"oaf\"/\"admin\", \"services\", \"oaf\"/g; s/_(\"Parental Control\")/_(\"行为管理\")/' "$oaf_controller"
+  sed -i 's/_("Parental Control")/_("行为管理")/g' "$oaf_controller"
 done
 #sed -i 's|/services/|/network/|' feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
 #sed -i 's|/services/|/nas/|' feeds/luci/applications/luci-app-alist/root/usr/share/luci/menu.d/luci-app-alist.json
