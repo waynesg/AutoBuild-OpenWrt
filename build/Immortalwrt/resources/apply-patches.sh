@@ -30,7 +30,7 @@ if [[ -f "${DOCKER_MAKEFILE}" ]]; then
 		cat > "${DOCKER_PATCH}" <<'EOF'
 --- a/hack/make/binary-daemon
 +++ b/hack/make/binary-daemon
-@@ -4,6 +4,11 @@ set -e
+@@ -4,6 +4,16 @@ set -e
  copy_binaries() {
 	local dir="${1:?}"
 
@@ -38,6 +38,11 @@ if [[ -f "${DOCKER_MAKEFILE}" ]]; then
 +	if [ "${OPENWRT_BUILD:-}" = "1" ]; then
 +		return
 +	fi
+
+	# Never copy an unset command path in cross-build environments.
+	if [ "$(go env GOOS)/$(go env GOARCH)" != "$(go env GOHOSTOS)/$(go env GOHOSTARCH)" ] || [ ! -x /usr/local/bin/runc ]; then
+		return
+	fi
 
 	# Add nested executables to bundle dir so we have complete set of
 EOF
