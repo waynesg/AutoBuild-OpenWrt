@@ -308,7 +308,7 @@ jobs:
         
     - name: 上传固件
       if: env.ORGANIZERSTATUS == 'success' && env.UPLOAD_FIRMWARE == 'true'
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@v5
       with:
         name: ${{ env.LUCI_EDITION }}-${{ env.CODE }}-${{ env.TARGET_PROFILE }}-firmware-${{ env.Compile_Date }}
         path: ${{ env.FIRMWARE }}

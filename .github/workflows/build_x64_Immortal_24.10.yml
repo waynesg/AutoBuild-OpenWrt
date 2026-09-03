@@ -152,7 +152,7 @@ jobs:
 
     - name: 上传配置
       if: env.UPLOAD_CONFIG == 'true'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: .config_${{ env.CODE }}_${{ env.TARGET_PROFILE }}_${{ env.Compile_Date }}
         path: config.txt
@@ -183,7 +183,7 @@ jobs:
     - name: 删除发布
       continue-on-error: true
       if: env.REPO_TOKEN
-      uses: dev-drprasad/delete-older-releases@master
+      uses: dev-drprasad/delete-older-releases@v0.3.4
       with:
         repo: ${{ github.repository }}
         keep_latest: ${{ env.KEEP_LATEST }}
