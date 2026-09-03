@@ -20,7 +20,7 @@ apply_patch_if_needed \
 	"${PATCH_DIR}/quickfile-go-theme-sync.patch"
 
 DOCKER_PATCH="feeds/packages/utils/dockerd/patches/999-openwrt-skip-host-binaries.patch"
-if [[ -f "${DOCKER_PATCH}" ]] && ! grep -q 'OpenWrt packages provide' "${DOCKER_PATCH}"; then
+if [[ -f "feeds/packages/utils/dockerd/Makefile" ]] && ! grep -q 'OpenWrt packages provide' "${DOCKER_PATCH}"; then
 	patch -p1 < "${PATCH_DIR}/dockerd-openwrt-cross-compile.patch"
 fi
 DOCKER_MAKEFILE="feeds/packages/utils/dockerd/Makefile"
