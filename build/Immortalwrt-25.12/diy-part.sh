@@ -156,6 +156,19 @@ sed -i 's/"备份与更新"/"备份更新"/g' feeds/luci/modules/luci-base/po/zh
 sed -i 's/"挂载点"/"挂载路径"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"启动项"/"启动管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"软件包"/"软件管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
+mkdir -p files/etc/uci-defaults
+cat > files/etc/uci-defaults/97-rename-ttyd-menu <<'EOF'
+#!/bin/sh
+
+menu_file=/usr/share/luci/menu.d/luci-app-ttyd.json
+if [ -f "$menu_file" ]; then
+	sed -i 's/"title": "Terminal"/"title": "命令终端"/g' "$menu_file"
+	rm -f /tmp/luci-indexcache /tmp/luci-modulecache/* 2>/dev/null
+fi
+
+exit 0
+EOF
+chmod 0755 files/etc/uci-defaults/97-rename-ttyd-menu
 sed -i 's/"QuickFile-Go"/"文件管理"/g' package/waynesg/luci-app-quickfile-go/luci-app-quickfile-go/root/usr/share/luci/menu.d/luci-app-quickfile-go.json
 
 # echo "重命名服务菜单"
