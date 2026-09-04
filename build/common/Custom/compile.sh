@@ -444,9 +444,6 @@ sed -i 's/"Argon 主题设置"/"主题设置"/g' `grep "Argon 主题设置" -rl 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
 ./scripts/feeds install -a
-if [[ "${REPO_BRANCH}" == "openwrt-25.12" ]]; then
-	sed -i 's/msgstr "终端"/msgstr "命令终端"/' feeds/luci/applications/luci-app-ttyd/po/zh_Hans/ttyd.po
-fi
 [[ ! -e ${Home}/.bf_config ]] && {
 	cp -rf ${Home}/build/${firmware}/.config ${Home}/.config
 } || {
