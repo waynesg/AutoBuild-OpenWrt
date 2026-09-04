@@ -215,6 +215,9 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a > /dev/null 2>&1
         ./scripts/feeds install -a
+        if [[ "${REPO_BRANCH}" == "openwrt-25.12" ]]; then
+          sed -i 's/msgstr "终端"/msgstr "命令终端"/' feeds/luci/applications/luci-app-ttyd/po/zh_Hans/ttyd.po
+        fi
         mv "$PATH1/$CONFIG_FILE" .config
         if [[ "${REGULAR_UPDATE}" == "true" ]]; then
           source "${PATH1}/upgrade.sh" && Diy_Part1

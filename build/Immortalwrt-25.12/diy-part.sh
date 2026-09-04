@@ -156,7 +156,6 @@ sed -i 's/"备份与更新"/"备份更新"/g' feeds/luci/modules/luci-base/po/zh
 sed -i 's/"挂载点"/"挂载路径"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"启动项"/"启动管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
 sed -i 's/"软件包"/"软件管理"/g' feeds/luci/modules/luci-base/po/zh_Hans/base.po
-sed -i 's/"终端"/"命令终端"/g' feeds/luci/applications/luci-app-ttyd/po/zh_Hans/ttyd.po
 sed -i 's/"QuickFile-Go"/"文件管理"/g' package/waynesg/luci-app-quickfile-go/luci-app-quickfile-go/root/usr/share/luci/menu.d/luci-app-quickfile-go.json
 
 # echo "重命名服务菜单"
