@@ -107,3 +107,5 @@ git clone --depth=1 https://github.com/kiddin9/openwrt-subconverter package/wayn
 #git clone --depth=1 https://github.com/timsaya/luci-app-bandix package/waynesg/luci-app-bandix
 #git clone --depth=1 https://github.com/timsaya/openwrt-bandix package/waynesg/openwrt-bandix
 #rm -f "package/waynesg/openwrt-bandix/.github/workflows/Auto compile with openwrt sdk.yml"
+#honk
+git clone --depth=1 https://github.com/kenzok8/openwrt-honk package/waynesg/openwrt-honk
