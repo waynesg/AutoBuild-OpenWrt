@@ -128,7 +128,7 @@ jobs:
 
     - name: SSH连接
       if: env.SSH_ == 'true' || (github.event.inputs.ssh == 'ssh')
-      uses: danshui-git/debugger-action@main
+      uses: authon/Mine-debugger-action@main
       env:
          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
