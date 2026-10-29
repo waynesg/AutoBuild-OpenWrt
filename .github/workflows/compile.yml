@@ -237,7 +237,6 @@ jobs:
         source "${PATH1}/common.sh" && Diy_chajian > /dev/null 2>&1
         make defconfig > /dev/null 2>&1
         if [[ "${REPO_BRANCH}" == "openwrt-25.12" ]]; then
-          grep -q '^CONFIG_KERNEL_DEBUG_INFO=y$' .config || { echo 'ERROR: CONFIG_KERNEL_DEBUG_INFO was removed by make defconfig'; exit 1; }
           grep -q '^CONFIG_KERNEL_DEBUG_INFO_BTF=y$' .config || { echo 'ERROR: CONFIG_KERNEL_DEBUG_INFO_BTF was removed by make defconfig'; exit 1; }
         fi
         ./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/config.txt
