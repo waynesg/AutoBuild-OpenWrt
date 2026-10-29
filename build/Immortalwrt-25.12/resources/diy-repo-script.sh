@@ -109,3 +109,7 @@ git clone --depth=1 https://github.com/kiddin9/openwrt-subconverter package/wayn
 #rm -f "package/waynesg/openwrt-bandix/.github/workflows/Auto compile with openwrt sdk.yml"
 #honk
 git clone --depth=1 https://github.com/kenzok8/openwrt-honk package/waynesg/openwrt-honk
+curl -fsSL https://github.com/kenzok8/openwrt-honk/releases/download/staging/generated-stage.mk \
+  -o package/waynesg/openwrt-honk/honk/generated-stage.mk
+curl -fsSL https://github.com/kenzok8/openwrt-honk/releases/download/staging/generated-provenance.json \
+  -o package/waynesg/openwrt-honk/honk/generated-provenance.json
