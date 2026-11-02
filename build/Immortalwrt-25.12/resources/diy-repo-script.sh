@@ -107,22 +107,3 @@ git clone --depth=1 https://github.com/kiddin9/openwrt-subconverter package/wayn
 #git clone --depth=1 https://github.com/timsaya/luci-app-bandix package/waynesg/luci-app-bandix
 #git clone --depth=1 https://github.com/timsaya/openwrt-bandix package/waynesg/openwrt-bandix
 #rm -f "package/waynesg/openwrt-bandix/.github/workflows/Auto compile with openwrt sdk.yml"
-#honk
-HONK_DIR="package/waynesg/openwrt-honk"
-git clone --depth=1 https://github.com/kenzok8/openwrt-honk "$HONK_DIR"
-
-# Staged Honk builds used to publish these two generated files under the
-# `staging` release alias. The alias is removed when a build is promoted, so
-# a 404 here must not abort the whole firmware build. The current Honk
-# Makefile has pinned defaults and includes these files only when present.
-HONK_STAGE_URL="https://github.com/kenzok8/openwrt-honk/releases/download/staging"
-for honk_asset in generated-stage.mk generated-provenance.json; do
-	if curl -fsSL --retry 2 --connect-timeout 10 \
-		"${HONK_STAGE_URL}/${honk_asset}" \
-		-o "${HONK_DIR}/honk/${honk_asset}"; then
-		echo "Honk: downloaded ${honk_asset}"
-	else
-		rm -f "${HONK_DIR}/honk/${honk_asset}"
-		echo "Honk: ${honk_asset} is unavailable; using repository defaults" >&2
-	fi
-done
