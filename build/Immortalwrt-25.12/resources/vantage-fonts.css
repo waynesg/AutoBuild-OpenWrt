@@ -1,0 +1,12 @@
+
+/* WAYNE FONT OVERRIDE: same sizing as the company router. */
+:root {
+  --fs-micro: 12px;
+  --fs-sm: 14px;
+  --fs-base: 15px;
+  --fs-md: 16px;
+  --fs-lg: 18px;
+  --fs-xl: 24px;
+  --fs-2xl: 28px;
+}
+.vt-host b { font-size: 10.5px; }
