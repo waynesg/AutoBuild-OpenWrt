@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ -d /www/luci-static/vantage ]; then
+	uci -q set luci.main.mediaurlbase='/luci-static/vantage'
+	uci -q set luci.main.lang='zh_cn'
+	uci -q commit luci
+fi
+
+# Remove the previous theme's scheduled background job on retained configs.
+if [ -f /etc/crontabs/root ]; then
+	sed -i '\|/usr/bin/shadcn-login-bg|d' /etc/crontabs/root
+fi
+
+exit 0
