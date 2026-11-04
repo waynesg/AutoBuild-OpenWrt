@@ -30,6 +30,6 @@ apply_patch_if_needed \
 	"${PATCH_DIR}/dockerd-openwrt-cross-compile.patch"
 
 VANTAGE_CSS="package/waynesg/luci-theme-vantage/htdocs/luci-static/vantage/vantage.css"
-if ! grep -q 'WAYNE FONT OVERRIDE' "${VANTAGE_CSS}"; then
+if [[ -f "${VANTAGE_CSS}" ]] && ! grep -q 'WAYNE FONT OVERRIDE' "${VANTAGE_CSS}"; then
 	cat "${PATH1}/resources/vantage-fonts.css" >> "${VANTAGE_CSS}"
 fi
