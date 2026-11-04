@@ -39,8 +39,9 @@ clone_or_update_git_repo() {
 
 # theme
 git clone --depth=1 https://github.com/anothaDev/luci-theme-vantage repos/luci-theme-vantage
-cp -a repos/luci-theme-vantage/luci-theme-vantage package/waynesg/luci-theme-vantage
-cp -a repos/luci-theme-vantage/luci-app-vantage package/waynesg/luci-app-vantage
+mkdir -p package/waynesg/luci-theme-vantage package/waynesg/luci-app-vantage
+cp -a repos/luci-theme-vantage/luci-theme-vantage/. package/waynesg/luci-theme-vantage/
+cp -a repos/luci-theme-vantage/luci-app-vantage/. package/waynesg/luci-app-vantage/
 # git clone --depth=1 -b js https://github.com/sirpdboy/luci-theme-kucat package/waynesg/luci-theme-kucat
 # git clone --depth=1 -b js https://github.com/0x676e67/luci-theme-design package/waynesg/luci-theme-design
 # aurora
