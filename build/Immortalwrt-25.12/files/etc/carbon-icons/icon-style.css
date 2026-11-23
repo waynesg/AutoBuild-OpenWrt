@@ -1,0 +1,29 @@
+/* === device icon uniform style v2 (persisted by /etc/carbon-icons/apply-style.sh) === */
+/* 所有品牌图标统一 + 圆形边界可见：亮色白底黑标 / 暗色黑底白标 */
+.cb-avatar.cb-avatar-brand,
+.cb-avatar.cb-avatar-brand.inv,
+.cb-avatar[style*="--c:"] {
+  background: var(--cb-card-solid) !important;
+  color: var(--cb-text) !important;
+  border: 1px solid var(--cb-border-strong) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .18) !important;
+}
+:root[data-darkmode=true] .cb-avatar.cb-avatar-brand,
+:root[data-darkmode=true] .cb-avatar.cb-avatar-brand.inv,
+:root[data-darkmode=true] .cb-avatar[style*="--c:"] {
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, .28) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .5) !important;
+}
+/* 图标加轮廓：描边在外、填充在内，14px 下形状更清晰 */
+.cb-avatar .cb-logo path {
+  stroke: var(--cb-text) !important;
+  stroke-width: 1.6 !important;
+  stroke-linejoin: round !important;
+  paint-order: stroke fill !important;
+}
+/* 暗色模式：图标填充与轮廓都用纯白 */
+:root[data-darkmode=true] .cb-avatar .cb-logo path {
+  stroke: #fff !important;
+}
+/* === end device icon uniform style === */

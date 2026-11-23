@@ -46,6 +46,8 @@ cp -a repos/luci-theme-vantage/luci-app-vantage/. package/waynesg/luci-app-vanta
 # git clone --depth=1 -b js https://github.com/0x676e67/luci-theme-design package/waynesg/luci-theme-design
 # aurora
 git clone --depth=1 https://github.com/eamonxg/luci-theme-aurora package/waynesg/luci-theme-aurora
+# carbon theme (Apple-style). Static assets are overridden by files/www/luci-static/carbon/ (fonts + device icons).
+git clone --depth=1 -b v1.1.8 https://github.com/mrjoechen/luci-theme-carbon package/waynesg/luci-theme-carbon
 #theme-config
 # git clone --depth=1 https://github.com/sirpdboy/luci-app-advancedplus package/waynesg/luci-app-advancedplus
 #git clone --depth=1 https://github.com/eamonxg/luci-app-aurora-config package/waynesg/luci-app-aurora-config
