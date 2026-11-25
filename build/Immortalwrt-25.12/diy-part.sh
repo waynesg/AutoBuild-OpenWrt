@@ -167,6 +167,11 @@ fi
 exit 0
 EOF
 chmod 0755 files/etc/uci-defaults/97-rename-ttyd-menu
+# Carbon 主题菜单改名：直接改 menu JSON 的 title 为「主题管理」，
+# LuCI 查不到该中文翻译 key 时会原样显示，比改 i18n 更可靠。
+for carbon_menu in $(find package/waynesg/luci-theme-carbon -path '*/menu.d/luci-theme-carbon.json' 2>/dev/null); do
+	sed -i 's/"title": "Carbon Theme Settings"/"title": "主题管理"/g' "$carbon_menu"
+done
 sed -i 's/"QuickFile-Go"/"文件管理"/g' package/waynesg/luci-app-quickfile-go/luci-app-quickfile-go/root/usr/share/luci/menu.d/luci-app-quickfile-go.json
 
 # echo "重命名服务菜单"
