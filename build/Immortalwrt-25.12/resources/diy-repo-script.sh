@@ -48,6 +48,14 @@ cp -a repos/luci-theme-vantage/luci-app-vantage/. package/waynesg/luci-app-vanta
 git clone --depth=1 https://github.com/eamonxg/luci-theme-aurora package/waynesg/luci-theme-aurora
 # carbon theme (Apple-style). Static assets are overridden by files/www/luci-static/carbon/ (fonts + device icons).
 git clone --depth=1 -b v1.1.8 https://github.com/mrjoechen/luci-theme-carbon package/waynesg/luci-theme-carbon
+# boxadb (LuCI UI + backend for Android TV boxes); repo holds two separate packages.
+git clone --depth=1 -b main https://github.com/waynesg/luci-app-boxadb.git repos/luci-app-boxadb
+mkdir -p package/waynesg/boxadb package/waynesg/luci-app-boxadb
+cp -a repos/luci-app-boxadb/boxadb/. package/waynesg/boxadb/
+cp -a repos/luci-app-boxadb/luci-app-boxadb/. package/waynesg/luci-app-boxadb/
+# Keep license inside the package source dir (Makefile uses PKG_LICENSE_FILE).
+cp -a repos/luci-app-boxadb/LICENSE package/waynesg/boxadb/LICENSE
+sed -i 's|PKG_LICENSE_FILE:=../LICENSE|PKG_LICENSE_FILE:=LICENSE|' package/waynesg/boxadb/Makefile
 #theme-config
 # git clone --depth=1 https://github.com/sirpdboy/luci-app-advancedplus package/waynesg/luci-app-advancedplus
 #git clone --depth=1 https://github.com/eamonxg/luci-app-aurora-config package/waynesg/luci-app-aurora-config
